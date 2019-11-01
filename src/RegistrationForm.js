@@ -1,9 +1,10 @@
 import React from "react";
 import InputField from "./InputField";
+import Button from "./Button";
 
 //Для ФИО текст, возраст цифры, почта по регэкспу
 
-class LoginForm extends React.Component {
+class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,22 +26,34 @@ class LoginForm extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  renderInput(manReadingName, name, value, onChange, validate) {
+  renderInput(placeholder, name, value, onChange, validate) {
+    var borderColor = "rgba(216, 216, 216, 0.56)";
+
+    if (validate !== "") {
+      borderColor = "rgba(175, 4, 4, 0.63)";
+    }
+
     return (
       <InputField
-        manReadingName={manReadingName}
+        placeholder={placeholder}
         name={name}
         value={value}
         onChange={onChange}
         validate={validate}
+        borderColor={borderColor}
       />
     );
+  }
+
+  renderButton(value) {
+    return <Button value={value} />;
   }
 
   onSubmit(event) {
     ////Регулярки для проверки полей
     //Поиск цифр
     const textReg = /[0-9]/g;
+    //Валидация email
     const emailReg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
 
     //Проверка имени
@@ -109,48 +122,61 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form
+        onSubmit={this.onSubmit}
+        style={{
+          textAlign: "center",
+          textalign: "center",
+          width: "260px",
+          margin: "auto",
+          border: "1px solid rgba(70, 132, 156, 0.49)",
+          padding: "10px",
+          borderRadius: "4px",
+          marginTop: "25%",
+          boxShadow: "0px 4px 8px #cecdcd"
+        }}
+      >
+        <h1>Укажите ваши данные</h1>
         {this.renderInput(
-          "Имя: ",
+          "Введите имя ",
           "name",
           this.state.name,
           event => this.onChange(event),
           this.state.nameValidate
         )}
         {this.renderInput(
-          "Фамилия: ",
+          "Введите фамилию ",
           "secondName",
           this.state.secondName,
           event => this.onChange(event),
           this.state.secondNameValidate
         )}
         {this.renderInput(
-          "Отчество: ",
+          "Введите отчество ",
           "thirdName",
           this.state.thirdName,
           event => this.onChange(event),
           this.state.thirdNameValidate
         )}
         {this.renderInput(
-          "Возраст: ",
+          "Введите возраст ",
           "age",
           this.state.age,
           event => this.onChange(event),
           this.state.ageValidate
         )}
         {this.renderInput(
-          "Почта: ",
+          "Введите почту ",
           "email",
           this.state.email,
           event => this.onChange(event),
           this.state.emailValidate
         )}
-        <p>
-          <input type="submit" value="Отправить" />
-        </p>
+
+        {this.renderButton("ОТПРАВИТЬ")}
       </form>
     );
   }
 }
 
-export default LoginForm;
+export default RegistrationForm;

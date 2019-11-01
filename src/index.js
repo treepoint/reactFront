@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import LoginForm from "./LoginForm";
+import Registration from "./RegistrationForm";
 
-ReactDOM.render(<LoginForm />, document.getElementById("root"));
+ReactDOM.render(<Registration />, document.getElementById("root"));
