@@ -6,8 +6,6 @@ class ValidateLable extends React.Component {
       <div>
         <p
           style={{
-            // backgroundColor: "rgba(255, 205, 205, 0.34)",
-            //borderBottom: "1px solid rgba(220, 41, 41, 0.63)",
             fontSize: "13.3333px",
             fontFamily: "sans-serif",
             padding: "4px",

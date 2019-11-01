@@ -132,7 +132,7 @@ class RegistrationForm extends React.Component {
           border: "1px solid rgba(70, 132, 156, 0.49)",
           padding: "10px",
           borderRadius: "4px",
-          marginTop: "25%",
+          marginTop: "200px",
           boxShadow: "0px 4px 8px #cecdcd"
         }}
       >
