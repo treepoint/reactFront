@@ -126,7 +126,6 @@ class RegistrationForm extends React.Component {
         onSubmit={this.onSubmit}
         style={{
           textAlign: "center",
-          textalign: "center",
           width: "260px",
           margin: "auto",
           border: "1px solid rgba(70, 132, 156, 0.49)",
