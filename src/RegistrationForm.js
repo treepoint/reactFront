@@ -1,6 +1,7 @@
 import React from "react";
 import InputField from "./InputField";
 import Button from "./Button";
+import "./styles.css";
 
 //Для ФИО текст, возраст цифры, почта по регэкспу
 
@@ -122,20 +123,8 @@ class RegistrationForm extends React.Component {
 
   render() {
     return (
-      <form
-        onSubmit={this.onSubmit}
-        style={{
-          textAlign: "center",
-          width: "260px",
-          margin: "auto",
-          border: "1px solid rgba(70, 132, 156, 0.49)",
-          padding: "10px",
-          borderRadius: "4px",
-          marginTop: "200px",
-          boxShadow: "0px 4px 8px #cecdcd"
-        }}
-      >
-        <h1>Укажите ваши данные</h1>
+      <form onSubmit={this.onSubmit} className="form">
+        <h1 className="h1">Укажите ваши данные</h1>
         {this.renderInput(
           "Введите имя ",
           "name",

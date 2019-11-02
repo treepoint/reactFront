@@ -14,28 +14,21 @@ class InputField extends React.Component {
 
   render() {
     return (
-      <div style={{ textAlign: "left" }}>
-        <p style={{ marginBottom: "0px" }}>
-          <label style={{ display: "flex" }}>
-            <input
-              style={{
-                display: "flex",
-                width: "100%",
-                background: "rgba(247, 247, 247, 0.28)",
-                border: "1px solid " + this.props.borderColor,
-                height: "20px",
-                paddingLeft: "4px",
-                fontSize: "14px"
-              }}
-              type="text"
-              name={this.props.name}
-              placeholder={this.props.placeholder}
-              onChange={event => {
-                this.props.onChange(event);
-              }}
-            />
-          </label>
-        </p>
+      <div>
+        <label style={{ display: "flex" }}>
+          <input
+            className="input"
+            style={{
+              border: "1px solid " + this.props.borderColor
+            }}
+            type="text"
+            name={this.props.name}
+            placeholder={this.props.placeholder}
+            onChange={event => {
+              this.props.onChange(event);
+            }}
+          />
+        </label>
         {this.renderValidateLable(this.props.validate)}
       </div>
     );
