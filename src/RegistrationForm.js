@@ -28,12 +28,6 @@ class RegistrationForm extends React.Component {
   }
 
   renderInput(placeholder, name, value, onChange, validate) {
-    var borderColor = "rgba(216, 216, 216, 0.56)";
-
-    if (validate !== "") {
-      borderColor = "rgba(175, 4, 4, 0.63)";
-    }
-
     return (
       <InputField
         placeholder={placeholder}
@@ -41,7 +35,6 @@ class RegistrationForm extends React.Component {
         value={value}
         onChange={onChange}
         validate={validate}
-        borderColor={borderColor}
       />
     );
   }

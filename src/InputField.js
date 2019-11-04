@@ -13,13 +13,19 @@ class InputField extends React.Component {
   }
 
   render() {
+    let borderColor = "rgba(216, 216, 216, 0.56)";
+
+    if (this.props.validate !== "") {
+      borderColor = "rgba(175, 4, 4, 0.63)";
+    }
+
     return (
       <div>
         <label style={{ display: "flex" }}>
           <input
             className="input"
             style={{
-              border: "1px solid " + this.props.borderColor
+              border: "1px solid " + borderColor
             }}
             type="text"
             name={this.props.name}
