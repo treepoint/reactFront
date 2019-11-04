@@ -27,18 +27,6 @@ class RegistrationForm extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  renderInput(placeholder, name, value, onChange, validate) {
-    return (
-      <InputField
-        placeholder={placeholder}
-        name={name}
-        value={value}
-        onChange={onChange}
-        validate={validate}
-      />
-    );
-  }
-
   renderButton(value) {
     return <Button value={value} />;
   }
@@ -118,42 +106,44 @@ class RegistrationForm extends React.Component {
     return (
       <form onSubmit={this.onSubmit} className="form">
         <h1 className="h1">Укажите ваши данные</h1>
-        {this.renderInput(
-          "Введите имя ",
-          "name",
-          this.state.name,
-          event => this.onChange(event),
-          this.state.nameValidate
-        )}
-        {this.renderInput(
-          "Введите фамилию ",
-          "secondName",
-          this.state.secondName,
-          event => this.onChange(event),
-          this.state.secondNameValidate
-        )}
-        {this.renderInput(
-          "Введите отчество ",
-          "thirdName",
-          this.state.thirdName,
-          event => this.onChange(event),
-          this.state.thirdNameValidate
-        )}
-        {this.renderInput(
-          "Введите возраст ",
-          "age",
-          this.state.age,
-          event => this.onChange(event),
-          this.state.ageValidate
-        )}
-        {this.renderInput(
-          "Введите почту ",
-          "email",
-          this.state.email,
-          event => this.onChange(event),
-          this.state.emailValidate
-        )}
 
+        <InputField
+          placeholder="Введите имя "
+          name="name"
+          value={this.state.name}
+          onChange={event => this.onChange(event)}
+          validate={this.state.nameValidate}
+        />
+
+        <InputField
+          placeholder="Введите фамилию "
+          name="secondName"
+          value={this.state.secondName}
+          onChange={event => this.onChange(event)}
+          validate={this.state.secondNameValidate}
+        />
+
+        <InputField
+          placeholder="Введите отчество "
+          name="thirdName"
+          value={this.state.thirdName}
+          onChange={event => this.onChange(event)}
+          validate={this.state.thirdNameValidate}
+        />
+        <InputField
+          placeholder="Введите возраст "
+          name="age"
+          value={this.state.age}
+          onChange={event => this.onChange(event)}
+          validate={this.state.ageValidate}
+        />
+        <InputField
+          placeholder="Введите почту "
+          name="email"
+          value={this.state.email}
+          onChange={event => this.onChange(event)}
+          validate={this.state.emailValidate}
+        />
         {this.renderButton("ОТПРАВИТЬ")}
       </form>
     );
