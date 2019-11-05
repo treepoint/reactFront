@@ -49,6 +49,11 @@
   margin-bottom: 4px;
   color: #404040;
   text-align: left;
+  display: none;
+}
+
+.validationLable.error {
+  display: block;
 }
 
 .h1 {

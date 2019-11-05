@@ -2,16 +2,9 @@ import React from "react";
 
 class ValidateLable extends React.Component {
   render() {
-    return (
-      <div
-        className="validationLable"
-        style={{
-          display: this.props.display
-        }}
-      >
-        {this.props.validate}
-      </div>
-    );
+    let error = !!this.props.value ? " error" : "";
+
+    return <div className={"validationLable" + error}>{this.props.value}</div>;
   }
 }
 

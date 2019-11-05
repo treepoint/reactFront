@@ -3,23 +3,72 @@ import InputField from "./InputField";
 import Button from "./Button";
 import "./styles.css";
 
-//Для ФИО текст, возраст цифры, почта по регэкспу
+////Регулярки для проверки полей
+//Поиск цифр
+const numReg = /\d+/;
+//Поиск цифр
+const charReg = /^[0-9]+$/;
+//Валидация email
+const emailReg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+
+const REG_INPUTS = [
+  {
+    name: "name",
+    placeholder: "Введите имя",
+    isValid: value =>
+      !!value
+        ? !numReg.test(value)
+          ? ""
+          : "В имени могут быть только буквы!"
+        : "Имя должно быть заполнено!"
+  },
+  {
+    name: "secondName",
+    placeholder: "Введите фамилию",
+    isValid: value =>
+      !!value
+        ? !numReg.test(value)
+          ? ""
+          : "В фамилии могут быть только буквы!"
+        : "Фамилия должна быть заполнена!"
+  },
+  {
+    name: "thirdName",
+    placeholder: "Введите отчество",
+    isValid: value =>
+      !!value
+        ? !numReg.test(value)
+          ? ""
+          : "В отчестве могут быть только буквы!"
+        : "Отчество должно быть заполнено!"
+  },
+  {
+    name: "age",
+    placeholder: "Введите возраст",
+    isValid: value =>
+      !!value
+        ? charReg.test(value)
+          ? ""
+          : "В возрасте могут быть только цифры!"
+        : "Возраст должен быть заполнен!"
+  },
+  {
+    name: "email",
+    placeholder: "Введите email",
+    isValid: value =>
+      !!value
+        ? emailReg.test(value)
+          ? ""
+          : "Введите корректный email!"
+        : "Email должен быть заполнен!"
+  }
+];
 
 class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      secondName: "",
-      thirdName: "",
-      age: "",
-      email: "",
-      nameValidate: "",
-      secondNameValidate: "",
-      thirdNameValidate: "",
-      ageValidate: "",
-      emailValidate: ""
-    };
+    this.state = {};
+
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -27,124 +76,30 @@ class RegistrationForm extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  renderButton(value) {
-    return <Button value={value} />;
-  }
-
   onSubmit(event) {
-    ////Регулярки для проверки полей
-    //Поиск цифр
-    const textReg = /[0-9]/g;
-    //Валидация email
-    const emailReg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+    //Как по ТЗ — выводим все в консоль
+    console.log(this.state);
 
-    //Проверка имени
-    if (textReg.test(this.state.name)) {
-      this.setState({ nameValidate: "Должны быть только буквы" });
-    } else {
-      if (this.state.name === "") {
-        this.setState({ nameValidate: "Имя должно быть заполнено!" });
-      } else {
-        this.setState({ nameValidate: "" });
-      }
-    }
-
-    //Проверка фамилии
-    if (textReg.test(this.state.secondName)) {
-      this.setState({ secondNameValidate: "Должны быть только буквы" });
-    } else {
-      if (this.state.secondName === "") {
-        this.setState({ secondNameValidate: "Фамилия должна быть заполнена!" });
-      } else {
-        this.setState({ secondNameValidate: "" });
-      }
-    }
-
-    //Проверка отчества
-    if (textReg.test(this.state.thirdName)) {
-      this.setState({ thirdNameValidate: "Должны быть только буквы" });
-    } else {
-      if (this.state.thirdName === "") {
-        this.setState({ thirdNameValidate: "Отчество должно быть заполнено!" });
-      } else {
-        this.setState({ thirdNameValidate: "" });
-      }
-    }
-
-    //Проверка возраста
-    if (this.state.age === "") {
-      this.setState({ ageValidate: "Возраст должен быть заполнен!" });
-    } else {
-      if (!textReg.test(this.state.age)) {
-        this.setState({ ageValidate: "Должны быть только цифры" });
-      } else {
-        this.setState({ ageValidate: "" });
-      }
-    }
-
-    //Проверка email
-    if (this.state.email === "") {
-      this.setState({ emailValidate: "Email должен быть заполнен!" });
-    } else {
-      if (!emailReg.test(this.state.email)) {
-        this.setState({ emailValidate: "Введите корректный email" });
-      } else {
-        this.setState({ emailValidate: "" });
-      }
-    }
-
-    console.log("Имя: " + this.state.name);
-    console.log("Фамилия: " + this.state.secondName);
-    console.log("Отчество: " + this.state.thirdName);
-    console.log("Возраст: " + this.state.age);
-    console.log("Почта: " + this.state.email);
-
+    //Отключаем стандартный обработчик данного события
     event.preventDefault();
   }
 
   render() {
+    var regInputs = REG_INPUTS.map(regInputs => (
+      <InputField
+        placeholder={regInputs.placeholder}
+        name={regInputs.name}
+        value={this.state[regInputs.name]}
+        onChange={event => this.onChange(event)}
+        isValid={regInputs.isValid}
+      />
+    ));
+
     return (
       <form onSubmit={this.onSubmit} className="form">
         <h1 className="h1">Укажите ваши данные</h1>
-
-        <InputField
-          placeholder="Введите имя "
-          name="name"
-          value={this.state.name}
-          onChange={event => this.onChange(event)}
-          validate={this.state.nameValidate}
-        />
-
-        <InputField
-          placeholder="Введите фамилию "
-          name="secondName"
-          value={this.state.secondName}
-          onChange={event => this.onChange(event)}
-          validate={this.state.secondNameValidate}
-        />
-
-        <InputField
-          placeholder="Введите отчество "
-          name="thirdName"
-          value={this.state.thirdName}
-          onChange={event => this.onChange(event)}
-          validate={this.state.thirdNameValidate}
-        />
-        <InputField
-          placeholder="Введите возраст "
-          name="age"
-          value={this.state.age}
-          onChange={event => this.onChange(event)}
-          validate={this.state.ageValidate}
-        />
-        <InputField
-          placeholder="Введите почту "
-          name="email"
-          value={this.state.email}
-          onChange={event => this.onChange(event)}
-          validate={this.state.emailValidate}
-        />
-        {this.renderButton("ОТПРАВИТЬ")}
+        {regInputs}
+        <Button value="Отправить" />
       </form>
     );
   }

@@ -13,7 +13,14 @@ class InputField extends React.Component {
   }
 
   render() {
-    let error = !!this.props.validate ? " error" : "";
+    let error = !!this.props.isValid(this.props.value) ? " error" : "";
+
+    console.log(
+      "Значение:" +
+        this.props.isValid(this.props.value) +
+        "Второе значение: " +
+        !!this.props.isValid(this.props.value)
+    );
 
     return (
       <div>
@@ -28,7 +35,7 @@ class InputField extends React.Component {
             }}
           />
         </label>
-        {this.renderValidateLable(this.props.validate)}
+        <ValidateLable value={this.props.isValid(this.props.value)} />
       </div>
     );
   }
