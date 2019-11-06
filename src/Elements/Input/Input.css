@@ -1,0 +1,18 @@
+.input {
+  width: 100%;
+  background: rgba(138, 138, 138, 0);
+  border-bottom: 1px solid rgba(138, 138, 138, 0.73);
+  height: 20px;
+  font-size: 14px;
+  margin: 6px 0;
+  border-top: 1px solid rgba(138, 138, 138, 0);
+  border-left: 1px solid rgba(138, 138, 138, 0);
+  border-right: 1px solid rgba(138, 138, 138, 0);
+}
+
+.input.error {
+  border: 1px solid rgba(175, 4, 4, 0.63);
+  border-top: 1px solid rgba(138, 138, 138, 0);
+  border-left: 1px solid rgba(138, 138, 138, 0);
+  border-right: 1px solid rgba(138, 138, 138, 0);
+}

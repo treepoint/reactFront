@@ -1,7 +1,7 @@
 import React from "react";
-import InputField from "./InputField";
-import Button from "./Button";
-import "./styles.css";
+import Input from "../Elements/Input/Input";
+import Button from "../Elements/Button/Button";
+import "./Registration.css";
 
 ////Регулярки для проверки полей
 //Поиск цифр
@@ -14,57 +14,57 @@ const emailReg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
 const REG_INPUTS = [
   {
     name: "name",
-    placeholder: "Введите имя",
+    placeholder: "Твое имя",
     isValid: value =>
       !!value
         ? !numReg.test(value)
           ? ""
-          : "В имени могут быть только буквы!"
-        : "Имя должно быть заполнено!"
+          : "В имени могут быть только буквы"
+        : "Имя должно быть заполнено"
   },
   {
     name: "secondName",
-    placeholder: "Введите фамилию",
+    placeholder: "Фамилия",
     isValid: value =>
       !!value
         ? !numReg.test(value)
           ? ""
-          : "В фамилии могут быть только буквы!"
-        : "Фамилия должна быть заполнена!"
+          : "В фамилии могут быть только буквы"
+        : "Фамилия должна быть заполнена"
   },
   {
     name: "thirdName",
-    placeholder: "Введите отчество",
+    placeholder: "Отчество",
     isValid: value =>
       !!value
         ? !numReg.test(value)
           ? ""
-          : "В отчестве могут быть только буквы!"
-        : "Отчество должно быть заполнено!"
+          : "В отчестве могут быть только буквы"
+        : "Отчество должно быть заполнено"
   },
   {
     name: "age",
-    placeholder: "Введите возраст",
+    placeholder: "Возраст",
     isValid: value =>
       !!value
         ? charReg.test(value)
           ? ""
-          : "В возрасте могут быть только цифры!"
-        : "Возраст должен быть заполнен!"
+          : "В возрасте могут быть только цифры"
+        : "Возраст должен быть заполнен"
   },
   {
     name: "email",
-    placeholder: "Введите email",
+    placeholder: "Email для связи",
     isValid: value =>
       !!value
         ? emailReg.test(value)
           ? ""
-          : "Введите корректный email!"
-        : "Email должен быть заполнен!"
+          : "Введите корректный email"
+        : "Email должен быть заполнен"
   }
 ];
 
-class RegistrationForm extends React.Component {
+class Registration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -86,7 +86,7 @@ class RegistrationForm extends React.Component {
 
   render() {
     var regInputs = REG_INPUTS.map(regInputs => (
-      <InputField
+      <Input
         placeholder={regInputs.placeholder}
         name={regInputs.name}
         value={this.state[regInputs.name]}
@@ -96,13 +96,13 @@ class RegistrationForm extends React.Component {
     ));
 
     return (
-      <form onSubmit={this.onSubmit} className="form">
-        <h1 className="h1">Укажите ваши данные</h1>
+      <form onSubmit={this.onSubmit} className="Registration">
+        <h1 className="h1">Расскажи о себе</h1>
         {regInputs}
-        <Button value="Отправить" />
+        <Button value="ОТПРАВИТЬ" />
       </form>
     );
   }
 }
 
-export default RegistrationForm;
+export default Registration;

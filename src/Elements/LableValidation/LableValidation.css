@@ -1,0 +1,13 @@
+.validation {
+  font-size: 13.3333px;
+  font-family: "Open Sans";
+  margin-top: 2px;
+  margin-bottom: 4px;
+  color: #863636;
+  text-align: left;
+  display: none;
+}
+
+.validation.error {
+  display: block;
+}
