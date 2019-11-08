@@ -6,7 +6,7 @@ class Input extends React.Component {
   render() {
     //Проходимся по массиву функций валидации. Если что-то вернулось — значит поле не валидное
     let isNotValid = this.props.validationFunctions.find(
-      item => item.check(this.props.value) !== ""
+      item => item.getInvalidMessage(this.props.value) !== ""
     );
 
     return (
@@ -23,7 +23,9 @@ class Input extends React.Component {
           />
         </label>
         <LableValidation
-          value={!!isNotValid ? isNotValid.check(this.props.value) : ""}
+          value={
+            !!isNotValid ? isNotValid.getInvalidMessage(this.props.value) : ""
+          }
         />
       </div>
     );

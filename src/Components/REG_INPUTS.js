@@ -12,10 +12,10 @@ const REG_INPUTS = [
     placeholder: "Твое имя",
     validationFunctions: [
       {
-        check: value => (!!value ? "" : "Имя должно быть заполнено")
+        getInvalidMessage: value => (!!value ? "" : "Имя должно быть заполнено")
       },
       {
-        check: value =>
+        getInvalidMessage: value =>
           !numReg.test(value) ? "" : "В имени могут быть только буквы"
       }
     ]
@@ -26,10 +26,11 @@ const REG_INPUTS = [
     placeholder: "Фамилия",
     validationFunctions: [
       {
-        check: value => (!!value ? "" : "Фамилия должна быть заполнена")
+        getInvalidMessage: value =>
+          !!value ? "" : "Фамилия должна быть заполнена"
       },
       {
-        check: value =>
+        getInvalidMessage: value =>
           !numReg.test(value) ? "" : "В фамилии могут быть только буквы"
       }
     ]
@@ -39,10 +40,11 @@ const REG_INPUTS = [
     placeholder: "Отчество",
     validationFunctions: [
       {
-        check: value => (!!value ? "" : "Отчество должно быть заполнено")
+        getInvalidMessage: value =>
+          !!value ? "" : "Отчество должно быть заполнено"
       },
       {
-        check: value =>
+        getInvalidMessage: value =>
           !numReg.test(value) ? "" : "В отчестве могут быть только буквы"
       }
     ]
@@ -52,10 +54,11 @@ const REG_INPUTS = [
     placeholder: "Возраст",
     validationFunctions: [
       {
-        check: value => (!!value ? "" : "Возраст должен быть заполнен")
+        getInvalidMessage: value =>
+          !!value ? "" : "Возраст должен быть заполнен"
       },
       {
-        check: value =>
+        getInvalidMessage: value =>
           charReg.test(value) ? "" : "В возрасте могут быть только цифры"
       }
     ]
@@ -65,10 +68,12 @@ const REG_INPUTS = [
     placeholder: "Email для связи",
     validationFunctions: [
       {
-        check: value => (!!value ? "" : "Email должен быть заполнен")
+        getInvalidMessage: value =>
+          !!value ? "" : "Email должен быть заполнен"
       },
       {
-        check: value => (emailReg.test(value) ? "" : "Введите корректный email")
+        getInvalidMessage: value =>
+          emailReg.test(value) ? "" : "Введите корректный email"
       }
     ]
   }
