@@ -1,68 +1,8 @@
 import React from "react";
 import Input from "../Elements/Input/Input";
 import Button from "../Elements/Button/Button";
+import REG_INPUTS from "./REG_INPUTS";
 import "./Registration.css";
-
-////Регулярки для проверки полей
-//Поиск цифр
-const numReg = /\d+/;
-//Поиск цифр
-const charReg = /^[0-9]+$/;
-//Валидация email
-const emailReg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
-
-const REG_INPUTS = [
-  {
-    name: "name",
-    placeholder: "Твое имя",
-    isValid: value =>
-      !!value
-        ? !numReg.test(value)
-          ? ""
-          : "В имени могут быть только буквы"
-        : "Имя должно быть заполнено"
-  },
-  {
-    name: "secondName",
-    placeholder: "Фамилия",
-    isValid: value =>
-      !!value
-        ? !numReg.test(value)
-          ? ""
-          : "В фамилии могут быть только буквы"
-        : "Фамилия должна быть заполнена"
-  },
-  {
-    name: "thirdName",
-    placeholder: "Отчество",
-    isValid: value =>
-      !!value
-        ? !numReg.test(value)
-          ? ""
-          : "В отчестве могут быть только буквы"
-        : "Отчество должно быть заполнено"
-  },
-  {
-    name: "age",
-    placeholder: "Возраст",
-    isValid: value =>
-      !!value
-        ? charReg.test(value)
-          ? ""
-          : "В возрасте могут быть только цифры"
-        : "Возраст должен быть заполнен"
-  },
-  {
-    name: "email",
-    placeholder: "Email для связи",
-    isValid: value =>
-      !!value
-        ? emailReg.test(value)
-          ? ""
-          : "Введите корректный email"
-        : "Email должен быть заполнен"
-  }
-];
 
 class Registration extends React.Component {
   constructor(props) {
@@ -77,8 +17,12 @@ class Registration extends React.Component {
   }
 
   onSubmit(event) {
-    //Как по ТЗ — выводим все в консоль
-    console.log(this.state);
+    //Выводим все существующее в консоль списком
+    REG_INPUTS.forEach(item => {
+      if (!!this.state[item.name]) {
+        console.log(item.name + ":" + this.state[item.name]);
+      }
+    });
 
     //Отключаем стандартный обработчик данного события
     event.preventDefault();
@@ -92,6 +36,7 @@ class Registration extends React.Component {
         value={this.state[regInputs.name]}
         onChange={event => this.onChange(event)}
         isValid={regInputs.isValid}
+        validationFunctions={regInputs.validationFunctions}
       />
     ));
 
