@@ -18,7 +18,8 @@ const REG_INPUTS = [
         getInvalidMessage: value =>
           !numReg.test(value) ? "" : "В имени могут быть только буквы"
       }
-    ]
+    ],
+    defaultValue: ""
   },
 
   {
@@ -33,7 +34,8 @@ const REG_INPUTS = [
         getInvalidMessage: value =>
           !numReg.test(value) ? "" : "В фамилии могут быть только буквы"
       }
-    ]
+    ],
+    defaultValue: ""
   },
   {
     name: "thirdName",
@@ -47,7 +49,8 @@ const REG_INPUTS = [
         getInvalidMessage: value =>
           !numReg.test(value) ? "" : "В отчестве могут быть только буквы"
       }
-    ]
+    ],
+    defaultValue: ""
   },
   {
     name: "age",
@@ -61,7 +64,8 @@ const REG_INPUTS = [
         getInvalidMessage: value =>
           charReg.test(value) ? "" : "В возрасте могут быть только цифры"
       }
-    ]
+    ],
+    defaultValue: ""
   },
   {
     name: "email",
@@ -75,7 +79,8 @@ const REG_INPUTS = [
         getInvalidMessage: value =>
           emailReg.test(value) ? "" : "Введите корректный email"
       }
-    ]
+    ],
+    defaultValue: ""
   }
 ];
 

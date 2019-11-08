@@ -16,6 +16,7 @@ class Input extends React.Component {
             className={"input" + (!!isNotValid ? " error" : "")}
             type="text"
             name={this.props.name}
+            defaultValue={this.props.defaultValue}
             placeholder={this.props.placeholder}
             onChange={event => {
               this.props.onChange(event);

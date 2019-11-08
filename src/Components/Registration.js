@@ -34,8 +34,8 @@ class Registration extends React.Component {
         placeholder={regInputs.placeholder}
         name={regInputs.name}
         value={this.state[regInputs.name]}
+        defaultValue={regInputs.defaultValue}
         onChange={event => this.onChange(event)}
-        isValid={regInputs.isValid}
         validationFunctions={regInputs.validationFunctions}
       />
     ));
