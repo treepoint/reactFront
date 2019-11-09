@@ -17,6 +17,8 @@ class Registration extends React.Component {
   }
 
   onSubmit(event) {
+    this.setState({ isTouched: true });
+
     //Выводим все существующее в консоль списком
     REG_INPUTS.forEach(item => {
       if (!!this.state[item.name]) {
@@ -37,8 +39,14 @@ class Registration extends React.Component {
         defaultValue={regInputs.defaultValue}
         onChange={event => this.onChange(event)}
         validationFunctions={regInputs.validationFunctions}
+        isTouched={this.state.isTouched}
       />
     ));
+
+    //Если кнопкой было установлено состоение в true, то сразу после рендеринга сменим его на false.
+    if (this.state.isTouched) {
+      this.setState({ isTouched: false });
+    }
 
     return (
       <form onSubmit={this.onSubmit} className="Registration">
