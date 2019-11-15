@@ -27,29 +27,19 @@ class Registration extends React.Component {
 
   //Собираем значения валидации в ассоциативный массив
   getInvalidMessagesAsAssocArray() {
-    let validation = new Map();
+    let validation = {};
 
     REG_INPUTS.forEach(input => {
-      validation.set(
-        input.name,
-        input.validationFunctions
-          .map(func => func.getInvalidMessage(this.state[input.name]))
-          .filter(value => value)
-      );
+      input.validationFunctions
+        .map(func => func.getInvalidMessage(this.state[input.name]))
+        .filter(value => {
+          if (value !== "") return (validation[input.name] = value);
+        });
 
       return validation;
     });
 
     return validation;
-  }
-
-  //Получим количество ошибок в формеы
-  getFormErrorCount() {
-    let cnt = 0;
-    this.state.validation.forEach(item => {
-      cnt = cnt + Object.keys(item).length;
-    });
-    return cnt;
   }
 
   onSubmit(event) {
@@ -59,8 +49,8 @@ class Registration extends React.Component {
     this.setState(
       { isTouched: true, validation: this.getInvalidMessagesAsAssocArray() },
       () => {
-        //Шлем в консоль только если все корректно
-        if (this.getFormErrorCount() === 0) {
+        //Шлем в консоль только если ошибок нет
+        if (Object.keys(this.state.validation).length === 0) {
           console.log(this.getValuesAsObject());
         }
       }
@@ -80,7 +70,7 @@ class Registration extends React.Component {
             onChange={event => this.onChange(event)}
             invalidMessage={
               !!this.state.isTouched
-                ? this.state.validation.get(regInputs.name)[0]
+                ? this.state.validation[regInputs.name]
                 : ""
             }
           />
