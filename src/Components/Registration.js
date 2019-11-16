@@ -26,7 +26,7 @@ class Registration extends React.Component {
   }
 
   //Собираем значения валидации в ассоциативный массив
-  getInvalidMessagesAsAssocArray() {
+  getInvalidMessagesAsObj() {
     let validation = {};
 
     REG_INPUTS.forEach(input => {
@@ -47,7 +47,7 @@ class Registration extends React.Component {
     event.preventDefault();
 
     this.setState(
-      { isTouched: true, validation: this.getInvalidMessagesAsAssocArray() },
+      { isTouched: true, validation: this.getInvalidMessagesAsObj() },
       () => {
         //Шлем в консоль только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
