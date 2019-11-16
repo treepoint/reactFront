@@ -8,8 +8,6 @@ class Registration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(event) {
@@ -59,7 +57,7 @@ class Registration extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} className="Registration">
+      <form onSubmit={event => this.onSubmit(event)} className="Registration">
         <h1 className="h1">Расскажи о себе</h1>
         {REG_INPUTS.map(regInputs => (
           <Input
