@@ -15,7 +15,7 @@ class Registration extends React.Component {
   }
 
   //Собираем значения в объект
-  getValuesAsObject() {
+  getValuesAsObj() {
     let values = {};
     REG_INPUTS.forEach(input => {
       values[input.name] = this.state[input.name];
@@ -49,7 +49,7 @@ class Registration extends React.Component {
       () => {
         //Шлем в консоль только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
-          console.log(this.getValuesAsObject());
+          console.log(this.getValuesAsObj());
         }
       }
     );
