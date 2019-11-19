@@ -1,6 +1,6 @@
 import React from "react";
-import Input from "../Components/Input/Input";
-import Button from "../Components/Button/Button";
+import Input from "../../Components/Input/Input";
+import Button from "../../Components/Button/Button";
 import REG_INPUTS from "./REG_INPUTS";
 import "./Registration.css";
 
