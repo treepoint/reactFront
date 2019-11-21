@@ -9,9 +9,9 @@ import {
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import REG_INPUTS from "./REG_INPUTS";
-import "./registration.css";
+import "./registrationForm.css";
 
-class Registration extends React.Component {
+class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -49,7 +49,6 @@ class Registration extends React.Component {
   }
 
   onSubmit(event) {
-    //Отключаем стандартный обработчик данного события
     event.preventDefault();
 
     this.setState(
@@ -72,7 +71,11 @@ class Registration extends React.Component {
 
   render() {
     return (
-      <form onSubmit={event => this.onSubmit(event)} className="Registration">
+      <form
+        onSubmit={event => this.onSubmit(event)}
+        onClick={event => event.stopPropagation()}
+        className="registration_form"
+      >
         <h1 className="h1">Расскажи о себе</h1>
         {REG_INPUTS.map(regInputs => (
           <Input
@@ -122,4 +125,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Registration);
+)(RegistrationForm);

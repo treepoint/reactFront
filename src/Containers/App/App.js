@@ -1,7 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import Header from "../Header/Header";
-import Registration from "../Registration/Registration";
+import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import ModalWindowBlur from "../../Components/ModalWindowBlur/ModalWindowBlur";
+import ContentBlock from "../ContentBlock/ContentBlock";
+
 import "./app.css";
 
 class App extends React.Component {
@@ -9,8 +12,12 @@ class App extends React.Component {
     return (
       <body>
         <Header />
-
-        {!!this.props.isRegistrationModalWindowActive ? <Registration /> : ""}
+        <ContentBlock />
+        {!!this.props.isRegistrationModalWindowActive ? (
+          <ModalWindowBlur windowToWrap={<RegistrationForm />} />
+        ) : (
+          ""
+        )}
       </body>
     );
   }
