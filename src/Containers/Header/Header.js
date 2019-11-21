@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { setRegistrationWindowState } from "../../Store/actions";
 import userIcon from "../../Images/user_icon.png";
 import "./header.css";
 
@@ -50,4 +52,25 @@ class Header extends React.Component {
     );
   }
 }
-export default Header;
+
+const mapStateToProps = state => {
+  return {
+    userName: state.userName,
+    userSecondName: state.userSecondName,
+    userThirdName: state.userThirdName,
+    isRegistrationModalWindowActive: state.registrationWindowState
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onClick: isRegistrationModalWindowActive => {
+      dispatch(setRegistrationWindowState(isRegistrationModalWindowActive));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

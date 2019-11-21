@@ -1,4 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
+import {
+  setUserName,
+  setUserSecondName,
+  setUserThirdName,
+  setRegistrationWindowState
+} from "../../Store/actions";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import REG_INPUTS from "./REG_INPUTS";
@@ -87,4 +94,32 @@ class Registration extends React.Component {
   }
 }
 
-export default Registration;
+const mapStateToProps = state => {
+  return {
+    userName: state.userName,
+    userSecondName: state.userSecondName,
+    userThirdName: state.userThirdName,
+    isRegistrationModalWindowActive: state.registrationWindowState
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmit: (
+      userName,
+      userSecondName,
+      userThirdName,
+      isRegistrationModalWindowActive
+    ) => {
+      dispatch(setUserName(userName));
+      dispatch(setUserSecondName(userSecondName));
+      dispatch(setUserThirdName(userThirdName));
+      dispatch(setRegistrationWindowState(isRegistrationModalWindowActive));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Registration);

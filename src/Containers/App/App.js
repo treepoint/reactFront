@@ -1,21 +1,25 @@
 import React from "react";
-import ReduxHeader from "../Header/ReduxHeader";
-import ReduxRegistration from "../Registration/ReduxRegistration";
+import { connect } from "react-redux";
+import Header from "../Header/Header";
+import Registration from "../Registration/Registration";
 import "./app.css";
 
 class App extends React.Component {
   render() {
     return (
       <body>
-        <ReduxHeader />
+        <Header />
 
-        {!!this.props.isRegistrationModalWindowActive ? (
-          <ReduxRegistration />
-        ) : (
-          ""
-        )}
+        {!!this.props.isRegistrationModalWindowActive ? <Registration /> : ""}
       </body>
     );
   }
 }
-export default App;
+
+const mapStateToProps = state => {
+  return {
+    isRegistrationModalWindowActive: state.registrationWindowState
+  };
+};
+
+export default connect(mapStateToProps)(App);

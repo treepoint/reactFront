@@ -28,3 +28,7 @@
 .fullUserName:hover {
   color: #000;
 }
+
+.fullUserName:active {
+  color: rgb(56, 56, 56);
+}
