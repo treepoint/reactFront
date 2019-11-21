@@ -1,7 +1,7 @@
 import React from "react";
-import "./LableValidation.css";
+import "./labelValidation.css";
 
-class LableValidation extends React.Component {
+class LabelValidation extends React.Component {
   render() {
     let error = !!this.props.value ? " error" : "";
 
@@ -9,4 +9,4 @@ class LableValidation extends React.Component {
   }
 }
 
-export default LableValidation;
+export default LabelValidation;

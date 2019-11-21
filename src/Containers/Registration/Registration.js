@@ -2,7 +2,7 @@ import React from "react";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import REG_INPUTS from "./REG_INPUTS";
-import "./Registration.css";
+import "./registration.css";
 
 class Registration extends React.Component {
   constructor(props) {
@@ -32,6 +32,7 @@ class Registration extends React.Component {
         .map(func => func.getInvalidMessage(this.state[input.name]))
         .filter(value => {
           if (value !== "") return (validation[input.name] = value);
+          return null;
         });
 
       return validation;
@@ -50,6 +51,13 @@ class Registration extends React.Component {
         //Шлем в консоль только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
           console.log(this.getValuesAsObj());
+
+          this.props.onSubmit(
+            this.state.name,
+            this.state.secondName,
+            this.state.thirdName,
+            false
+          );
         }
       }
     );

@@ -1,6 +1,6 @@
 import React from "react";
-import LableValidation from "../LableValidation/LableValidation";
-import "./Input.css";
+import LabelValidation from "../LabelValidation/LabelValidation";
+import "./input.css";
 
 class Input extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class Input extends React.Component {
             }}
           />
         </label>
-        <LableValidation value={this.props.invalidMessage} />
+        <LabelValidation value={this.props.invalidMessage} />
       </div>
     );
   }
