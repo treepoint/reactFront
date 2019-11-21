@@ -2,10 +2,12 @@ import React from "react";
 import ReactHtmlParser from "react-html-parser";
 import "./page.css";
 
-//Храним описание страниц пока так. Потом, возможно, вынесем в базу
+/* Храним описание страниц пока так. Потом, возможно, вынесем в базу
+ * code указываем в формате, который потом можно будет без проблем использовать для url
+ */
 const PAGES_SUBSCRIPTION = [
   {
-    code: "home page",
+    code: "home_page",
     title: "Домашняя страница",
     content:
       "<div style='margin-top: 25vh'><center><p>Этот проект есть на Github <a href='https://github.com/treepoint/reactFront'>https://github.com/treepoint/reactFront</a>.</p>" +

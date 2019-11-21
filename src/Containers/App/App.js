@@ -12,7 +12,7 @@ class App extends React.Component {
     return (
       <body>
         <Header />
-        <Page pageCode="home page" />
+        <Page pageCode="home_page" />
         {!!this.props.isRegistrationModalWindowActive ? (
           <ModalWindowBlur windowToWrap={<RegistrationForm />} />
         ) : (
