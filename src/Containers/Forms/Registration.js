@@ -74,7 +74,7 @@ class RegistrationForm extends React.Component {
         onSubmit={event => this.onSubmit(event)}
         onClick={event => event.stopPropagation()}
       >
-        <h1 className="h1">Расскажи о себе</h1>
+        <h1 className="h1">Регистрация</h1>
         {REG_INPUTS.map(regInputs => (
           <Input
             placeholder={regInputs.placeholder}

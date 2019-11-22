@@ -1,18 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
-import { setRegistrationWindowState } from "../../Store/actions";
 import "./modalWindow.css";
 
-class ModalWindowBlur extends React.Component {
-  onClick(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    this.props.onClick(false);
-  }
-
+class ModalWindow extends React.Component {
   render() {
     return (
-      <div className="blur" onClick={event => this.onClick(event)}>
+      <div className="blur" onClick={event => this.props.onClick(event)}>
         <div className="close" />
         <div className="modal">{this.props.contentToWrap}</div>
       </div>
@@ -20,21 +12,4 @@ class ModalWindowBlur extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isRegistrationModalWindowActive: state.registrationWindowState
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onClick: isRegistrationModalWindowActive => {
-      dispatch(setRegistrationWindowState(isRegistrationModalWindowActive));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalWindowBlur);
+export default ModalWindow;
