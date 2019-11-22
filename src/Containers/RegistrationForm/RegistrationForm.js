@@ -9,7 +9,6 @@ import {
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import REG_INPUTS from "./REG_INPUTS";
-import "./registrationForm.css";
 
 class RegistrationForm extends React.Component {
   constructor(props) {
@@ -74,7 +73,6 @@ class RegistrationForm extends React.Component {
       <form
         onSubmit={event => this.onSubmit(event)}
         onClick={event => event.stopPropagation()}
-        className="registration_form"
       >
         <h1 className="h1">Расскажи о себе</h1>
         {REG_INPUTS.map(regInputs => (

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Header from "../Header/Header";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
-import ModalWindowBlur from "../../Components/ModalWindowBlur/ModalWindowBlur";
+import ModalWindow from "../../Components/ModalWindow/ModalWindow";
 import Page from "../../Containers/Page/Page";
 
 import "./app.css";
@@ -14,7 +14,7 @@ class App extends React.Component {
         <Header />
         <Page pageCode="home_page" />
         {!!this.props.isRegistrationModalWindowActive ? (
-          <ModalWindowBlur windowToWrap={<RegistrationForm />} />
+          <ModalWindow windowToWrap={<RegistrationForm />} />
         ) : (
           ""
         )}

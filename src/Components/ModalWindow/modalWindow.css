@@ -1,4 +1,4 @@
-.modalWindowBlur {
+.blur {
   background: rgba(0, 0, 0, 0.2);
   display: block;
   overflow-x: hidden;
@@ -8,6 +8,17 @@
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.modal {
+  text-align: center;
+  width: 260px;
+  margin: auto;
+  border: 1px solid rgba(138, 138, 138, 0.73);
+  padding: 12px 24px;
+  margin-top: 25vh;
+  box-shadow: 0px 4px 8px #00000017;
+  background: #ffffff;
 }
 
 .close {
