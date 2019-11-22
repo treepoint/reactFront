@@ -14,7 +14,7 @@ class ModalWindowBlur extends React.Component {
     return (
       <div className="blur" onClick={event => this.onClick(event)}>
         <div className="close" />
-        <div className="modal">{this.props.windowToWrap}</div>
+        <div className="modal">{this.props.contentToWrap}</div>
       </div>
     );
   }

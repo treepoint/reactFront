@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import Header from "../Header/Header";
-import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import Registration from "../Forms/Registration";
 import ModalWindow from "../../Components/ModalWindow/ModalWindow";
-import Page from "../../Containers/Page/Page";
+import HomePage from "../../Containers/Contents/HomePage";
 
 import "./app.css";
 
@@ -12,9 +12,9 @@ class App extends React.Component {
     return (
       <body>
         <Header />
-        <Page pageCode="home_page" />
+        <HomePage />
         {!!this.props.isRegistrationModalWindowActive ? (
-          <ModalWindow windowToWrap={<RegistrationForm />} />
+          <ModalWindow contentToWrap={<Registration />} />
         ) : (
           ""
         )}
