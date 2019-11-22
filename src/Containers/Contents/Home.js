@@ -1,7 +1,7 @@
 import React from "react";
 import Page from "../../Components/Page/Page";
 
-class HomePage extends React.Component {
+class Home extends React.Component {
   render() {
     return (
       <Page title="Домашняя страница">
@@ -22,4 +22,4 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+export default Home;
