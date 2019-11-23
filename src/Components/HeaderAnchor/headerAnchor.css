@@ -1,19 +1,19 @@
-.headerButton {
+.headerAnchor {
   color: rgb(230, 230, 230);
   text-decoration: underline;
-  margin-right: 3px;
-  margin-left: 3px;
+  margin: 0 3px;
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
   text-decoration-color: #8e8e8e;
+  display: inline-flex;
 }
 
-.headerButton:hover {
+.headerAnchor:hover {
   color: rgb(173, 173, 173);
 }
 
-.headerButton:active {
+.headerAnchor:active {
   color: rgb(150, 150, 150);
 }

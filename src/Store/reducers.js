@@ -1,4 +1,5 @@
 import {
+  SET_USER_LOGIN_STATE,
   SET_USER_EMAIL,
   SET_USER_PASSWORD,
   SET_REGISTRATION_WINDOW_STATE,
@@ -6,6 +7,15 @@ import {
 } from "./actions";
 
 import { combineReducers } from "redux";
+
+function isUserLogin(state = false, action) {
+  switch (action.type) {
+    case SET_USER_LOGIN_STATE:
+      return action.boolean;
+    default:
+      return state;
+  }
+}
 
 function userEmail(state = "", action) {
   switch (action.type) {
@@ -44,6 +54,8 @@ function loginWindowState(state = false, action) {
 }
 
 const appReducer = combineReducers({
+  //Управление состоянием приложения
+  isUserLogin,
   //Управление пользовательскими данными
   userEmail,
   userPassword,

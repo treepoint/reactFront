@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setLoginWindowState } from "../../Store/actions";
-import HeaderButton from "../../Components/HeaderButton/HeaderButton";
 
-class LoginButton extends React.Component {
+class LoginAnchor extends React.Component {
   onClick(event) {
     event.stopPropagation();
     event.preventDefault();
@@ -11,9 +10,7 @@ class LoginButton extends React.Component {
   }
 
   render() {
-    return (
-      <HeaderButton value="Войти" onClick={event => this.onClick(event)} />
-    );
+    return <div onClick={event => this.onClick(event)}>Войти</div>;
   }
 }
 
@@ -34,4 +31,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginButton);
+)(LoginAnchor);

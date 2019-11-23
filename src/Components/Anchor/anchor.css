@@ -1,0 +1,19 @@
+.anchor {
+  color: rgb(20, 20, 20);
+  text-decoration: underline;
+  margin: 0 3px;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  text-decoration-color: #2b2b2b;
+  display: inline-flex;
+}
+
+.anchor:hover {
+  color: rgb(65, 65, 65);
+}
+
+.anchor:active {
+  color: rgb(56, 56, 56);
+}

@@ -9,6 +9,9 @@ import {
 
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
+import LoginAnchor from "../LoginAnchor/LoginAnchor";
+import Anchor from "../../Components/Anchor/Anchor";
+import "./registration.css";
 
 const INPUTS = [email, password];
 
@@ -76,6 +79,12 @@ class Registration extends React.Component {
             }
           />
         ))}
+        {/*  <div className="login">
+          Уже есть учетная запись?{" "}
+          <Anchor>
+            <LoginAnchor />
+          </Anchor>
+        </div> */}
         <Button value="ОТПРАВИТЬ" />
       </form>
     );

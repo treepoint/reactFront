@@ -1,20 +1,39 @@
 import React from "react";
-import RegistrationButton from "../RegistrationButton/RegistrationButton";
-import LoginButton from "../LoginButton/LoginButton";
+import HeaderAnchor from "../../Components/HeaderAnchor/HeaderAnchor";
+import RegistrationAnchor from "../RegistrationAnchor/RegistrationAnchor";
+import LoginAnchor from "../LoginAnchor/LoginAnchor";
 import UserIcon from "../../Components/UserIcon/UserIcon";
+import { connect } from "react-redux";
 import "./userMenu.css";
 
 class UserMenu extends React.Component {
   render() {
     return (
       <div className="userMenu">
-        <RegistrationButton />
-        /
-        <LoginButton />
+        {!!this.props.isUserLogin ? (
+          this.props.userEmail
+        ) : (
+          <div>
+            <HeaderAnchor>
+              <RegistrationAnchor />
+            </HeaderAnchor>
+            /
+            <HeaderAnchor>
+              <LoginAnchor />
+            </HeaderAnchor>
+          </div>
+        )}
         <UserIcon />
       </div>
     );
   }
 }
 
-export default UserMenu;
+const mapStateToProps = state => {
+  return {
+    isUserLogin: state.isUserLogin,
+    userEmail: state.userEmail
+  };
+};
+
+export default connect(mapStateToProps)(UserMenu);

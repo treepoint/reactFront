@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setRegistrationWindowState } from "../../Store/actions";
-import HeaderButton from "../../Components/HeaderButton/HeaderButton";
 
-class RegistrationButton extends React.Component {
+class RegistrationAnchor extends React.Component {
   onClick(event) {
     event.stopPropagation();
     event.preventDefault();
@@ -11,12 +10,7 @@ class RegistrationButton extends React.Component {
   }
 
   render() {
-    return (
-      <HeaderButton
-        value="Регистрация"
-        onClick={event => this.onClick(event)}
-      />
-    );
+    return <div onClick={event => this.onClick(event)}>Регистрация</div>;
   }
 }
 
@@ -37,4 +31,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RegistrationButton);
+)(RegistrationAnchor);
