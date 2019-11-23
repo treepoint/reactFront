@@ -1,5 +1,5 @@
 import React from "react";
-import "./headerAnchor.css";
+import "./HeaderAnchor.css";
 
 class HeaderAnchor extends React.Component {
   render() {

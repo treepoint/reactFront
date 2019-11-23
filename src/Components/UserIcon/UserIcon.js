@@ -1,6 +1,6 @@
 import React from "react";
 import userIcon from "../../Images/user_icon.png";
-import "./userIcon.css";
+import "./UserIcon.css";
 
 class UserIcon extends React.Component {
   render() {

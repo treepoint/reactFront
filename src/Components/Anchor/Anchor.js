@@ -1,5 +1,5 @@
 import React from "react";
-import "./anchor.css";
+import "./Anchor.css";
 
 class Anchor extends React.Component {
   render() {

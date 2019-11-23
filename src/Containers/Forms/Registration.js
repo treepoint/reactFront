@@ -12,7 +12,7 @@ import Button from "../../Components/Button/Button";
 import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
 import Anchor from "../../Components/Anchor/Anchor";
 import { login } from "../App/MODAL_WINDOWS";
-import "./registration.css";
+import "./Registration.css";
 import { getInvalidMessagesAsObj, getUser } from "./UTILS";
 
 const INPUTS = [email, password];

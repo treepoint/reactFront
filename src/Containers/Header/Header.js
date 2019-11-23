@@ -3,7 +3,7 @@ import UserMenu from "../UserMenu/UserMenu";
 import Spacer from "../../Components/Spacer/Spacer";
 import MainMenu from "../../Components/MainMenu/MainMenu";
 import logo from "../../Images/logo.png";
-import "./header.css";
+import "./Header.css";
 
 class Header extends React.Component {
   render() {

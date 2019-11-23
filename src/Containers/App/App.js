@@ -12,7 +12,7 @@ import Home from "../Contents/Home";
 import About from "../../Containers/Contents/About";
 import { registration, login, profile } from "./MODAL_WINDOWS";
 
-import "./app.css";
+import "./App.css";
 
 class App extends React.Component {
   hideModalWindow(event) {

@@ -1,5 +1,5 @@
 import React from "react";
-import "./mainMenu.css";
+import "./MainMenu.css";
 
 class MainMenu extends React.Component {
   render() {

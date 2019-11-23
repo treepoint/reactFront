@@ -1,0 +1,27 @@
+.loginButton {
+  margin-left: auto;
+  width: max-content;
+  text-align: center;
+  height: 20px;
+  margin-top: 10px;
+  display: flex;
+  color: #535353;
+  padding-right: 26px;
+  border: 0;
+  font-family: "Open Sans";
+  font-size: 14px;
+  text-decoration: underline;
+  margin-right: 6px;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.loginButton:hover {
+  color: #000;
+}
+
+.loginButton:active {
+  color: rgb(56, 56, 56);
+}
