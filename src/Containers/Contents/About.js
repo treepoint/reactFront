@@ -5,11 +5,16 @@ class About extends React.Component {
   render() {
     return (
       <Page title="Справка">
-        <div style={{ marginTop: "25vh" }}>
-          <center>
-            <p>Справка</p>
-          </center>
-        </div>
+        <center>
+          <p>
+            Этот проект написан на React и есть на Github{" "}
+            <a href="https://github.com/treepoint/reactFront">
+              https://github.com/treepoint/reactFront
+            </a>
+            .
+          </p>
+          <p>Спасибо за посещение!</p>
+        </center>
       </Page>
     );
   }

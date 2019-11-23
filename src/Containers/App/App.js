@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { setModalWindowState } from "../../Store/actions";
 import Header from "../Header/Header";
+import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
 import ModalWindow from "../../Components/ModalWindow/ModalWindow";
 import Registration from "../Forms/Registration";
 import Login from "../Forms/Login";
@@ -71,6 +72,7 @@ class App extends React.Component {
           </Switch>
         </Router>
         {this.getModalWindowToShow()};
+        <BroadCastMessage message="Веб-приложение находится в разработке" />
       </body>
     );
   }
