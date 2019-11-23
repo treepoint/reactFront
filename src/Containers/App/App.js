@@ -18,8 +18,6 @@ class App extends React.Component {
     event.stopPropagation();
     event.preventDefault();
     this.props.setModalWindowState(false);
-
-    console.log(this.props.modalWindowState);
   }
 
   getModalWindowToShow() {
@@ -59,7 +57,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props.user);
     return (
       <body>
         <Header />

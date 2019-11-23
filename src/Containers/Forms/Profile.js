@@ -9,6 +9,7 @@ import {
 
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
+import { getInvalidMessagesAsObj, getUser } from "./UTILS";
 
 const INPUTS = [email, password];
 
@@ -18,47 +19,30 @@ class Profile extends React.Component {
     this.state = {};
   }
 
+  logoff(event) {
+    event.preventDefault();
+    this.props.onSubmit({}, false, false);
+  }
+
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
-  }
-
-  //Собираем пользователя
-  getUser() {
-    let values = {};
-    INPUTS.forEach(input => {
-      values[input.name] = this.state[input.name];
-    });
-    return values;
-  }
-
-  //Собираем значения валидации в объект
-  getInvalidMessagesAsObj() {
-    let validation = {};
-
-    INPUTS.forEach(input => {
-      input.validationFunctions
-        .map(func => func.getInvalidMessage(this.state[input.name]))
-        .filter(value => {
-          if (value !== "") return (validation[input.name] = value);
-          return null;
-        });
-
-      return validation;
-    });
-
-    return validation;
   }
 
   onSubmit(event) {
     event.preventDefault();
 
+    console.log(event.name);
+
     this.setState(
-      { isTouched: true, validation: this.getInvalidMessagesAsObj() },
+      {
+        isTouched: true,
+        validation: getInvalidMessagesAsObj(INPUTS, this.state)
+      },
       () => {
         //Сохраняем только если ошибок нет
-        //Да да, пока никуда не отправляем. Можно считать, что это кривой мок
+        //Да да, пока никуда кроме стора не отправляем
         if (Object.keys(this.state.validation).length === 0) {
-          this.props.onSubmit(this.getUser(), true, false);
+          this.props.onSubmit(getUser(INPUTS, this.state), true, false);
         }
       }
     );
@@ -66,28 +50,32 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <form
-        onSubmit={event => this.onSubmit(event)}
-        onClick={event => event.stopPropagation()}
-      >
-        <h1 className="h1">Профиль</h1>
-        {INPUTS.map(regInputs => (
-          <Input
-            placeholder={regInputs.placeholder}
-            name={regInputs.name}
-            type={regInputs.type}
-            value={this.state[regInputs.name]}
-            defaultValue={regInputs.defaultValue}
-            onChange={event => this.onChange(event)}
-            invalidMessage={
-              !!this.state.isTouched
-                ? this.state.validation[regInputs.name]
-                : ""
-            }
+      <div>
+        <form onClick={event => event.stopPropagation()}>
+          <h1 className="h1">Профиль</h1>
+          {INPUTS.map(regInputs => (
+            <Input
+              placeholder={regInputs.placeholder}
+              name={regInputs.name}
+              type={regInputs.type}
+              value={this.state[regInputs.name]}
+              defaultValue={this.props.user[regInputs.name]}
+              onChange={event => this.onChange(event)}
+              invalidMessage={
+                !!this.state.isTouched
+                  ? this.state.validation[regInputs.name]
+                  : ""
+              }
+            />
+          ))}
+          <Button
+            isPrimary={true}
+            value="Сохранить"
+            onClick={event => this.onSubmit(event)}
           />
-        ))}
-        <Button value="Сохранить" />
-      </form>
+          <Button value="Выйти" onClick={event => this.logoff(event)} />
+        </form>
+      </div>
     );
   }
 }

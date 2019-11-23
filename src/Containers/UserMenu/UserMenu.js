@@ -8,7 +8,6 @@ import { registration, login, profile } from "../App/MODAL_WINDOWS";
 
 class UserMenu extends React.Component {
   render() {
-    console.log(this.props.isUserLogin);
     return (
       <div className="userMenu">
         {!!this.props.isUserLogin ? (
