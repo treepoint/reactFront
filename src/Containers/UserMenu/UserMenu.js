@@ -1,10 +1,10 @@
 import React from "react";
-import HeaderAnchor from "../../../Components/HeaderAnchor/back/HeaderAnchor";
-import AnchorModalWindow from "../../AnchorModalWindow/AnchorModalWindow";
-import UserIcon from "../../../Components/UserIcon/back/UserIcon";
+import HeaderAnchor from "../../Components/HeaderAnchor/HeaderAnchor";
+import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
+import UserIcon from "../../Components/UserIcon/UserIcon";
 import { connect } from "react-redux";
 import "./UserMenu.css";
-import { registration, login, profile } from "../../App/MODAL_WINDOWS";
+import { registration, login, profile } from "../App/MODAL_WINDOWS";
 
 class UserMenu extends React.Component {
   render() {

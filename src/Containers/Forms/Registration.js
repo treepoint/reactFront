@@ -1,19 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { email, password } from "../USER_INPUTS";
+import { email, password } from "./USER_INPUTS";
 import {
   setUser,
   setUserLoginState,
   setModalWindowState
-} from "../../../Store/actions";
+} from "../../Store/actions";
 
-import Input from "../../../Components/Input/back/Input";
-import Button from "../../../Components/Button/back/Button";
-import AnchorModalWindow from "../../AnchorModalWindow/AnchorModalWindow";
-import Anchor from "../../../Components/Anchor/back/Anchor";
-import { login } from "../../App/MODAL_WINDOWS";
+import Input from "../../Components/Input/Input";
+import Button from "../../Components/Button/Button";
+import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
+import Anchor from "../../Components/Anchor/Anchor";
+import { login } from "../App/MODAL_WINDOWS";
 import "./Registration.css";
-import { getInvalidMessagesAsObj, getUser } from "../UTILS";
+import { getInvalidMessagesAsObj, getUser } from "./UTILS";
 
 const INPUTS = [email, password];
 

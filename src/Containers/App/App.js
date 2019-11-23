@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { setModalWindowState } from "../../../Store/actions";
-import Header from "../../Header/back/Header";
-import BroadCastMessage from "../../../Components/BroadCastMessage/back/BroadCastMessage";
-import ModalWindow from "../../../Components/ModalWindow/back/ModalWindow";
-import Registration from "../../Forms/back/Registration";
-import Login from "../../Forms/Login";
-import Profile from "../../Forms/Profile";
-import Home from "../../Contents/Home";
-import About from "../../Contents/About";
-import { registration, login, profile } from "../MODAL_WINDOWS";
+import { setModalWindowState } from "../../Store/actions";
+import Header from "../Header/Header";
+import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
+import ModalWindow from "../../Components/ModalWindow/ModalWindow";
+import Registration from "../Forms/Registration";
+import Login from "../Forms/Login";
+import Profile from "../Forms/Profile";
+import Home from "../Contents/Home";
+import About from "../Contents/About";
+import { registration, login, profile } from "./MODAL_WINDOWS";
 
 import "./App.css";
 
