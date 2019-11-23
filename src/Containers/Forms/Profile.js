@@ -19,19 +19,29 @@ class Profile extends React.Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    INPUTS.forEach(input => {
+      this.setState({
+        [input.name]: this.props.user[input.name]
+      });
+    });
+  }
+
   logoff(event) {
     event.preventDefault();
     this.props.onSubmit({}, false, false);
   }
 
   onChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   }
 
   onSubmit(event) {
     event.preventDefault();
 
-    console.log(event.name);
+    console.log(this.state.email);
 
     this.setState(
       {
@@ -53,18 +63,16 @@ class Profile extends React.Component {
       <div>
         <form onClick={event => event.stopPropagation()}>
           <h1 className="h1">Профиль</h1>
-          {INPUTS.map(regInputs => (
+          {INPUTS.map(inputs => (
             <Input
-              placeholder={regInputs.placeholder}
-              name={regInputs.name}
-              type={regInputs.type}
-              value={this.state[regInputs.name]}
-              defaultValue={this.props.user[regInputs.name]}
+              placeholder={inputs.placeholder}
+              name={inputs.name}
+              type={inputs.type}
+              value={this.state[inputs.name]}
+              defaultValue={this.props.user[inputs.name]}
               onChange={event => this.onChange(event)}
               invalidMessage={
-                !!this.state.isTouched
-                  ? this.state.validation[regInputs.name]
-                  : ""
+                !!this.state.isTouched ? this.state.validation[inputs.name] : ""
               }
             />
           ))}

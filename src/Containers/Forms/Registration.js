@@ -51,18 +51,16 @@ class Registration extends React.Component {
         onClick={event => event.stopPropagation()}
       >
         <h1 className="h1">Регистрация</h1>
-        {INPUTS.map(regInputs => (
+        {INPUTS.map(inputs => (
           <Input
-            placeholder={regInputs.placeholder}
-            name={regInputs.name}
-            type={regInputs.type}
-            value={this.state[regInputs.name]}
-            defaultValue={regInputs.defaultValue}
+            placeholder={inputs.placeholder}
+            name={inputs.name}
+            type={inputs.type}
+            value={this.state[inputs.name]}
+            defaultValue={inputs.defaultValue}
             onChange={event => this.onChange(event)}
             invalidMessage={
-              !!this.state.isTouched
-                ? this.state.validation[regInputs.name]
-                : ""
+              !!this.state.isTouched ? this.state.validation[inputs.name] : ""
             }
           />
         ))}
