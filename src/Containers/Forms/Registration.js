@@ -2,15 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { email, password } from "./USER_INPUTS";
 import {
-  setUserEmail,
-  setUserPassword,
-  setRegistrationWindowState
+  setUser,
+  setUserLoginState,
+  setModalWindowState
 } from "../../Store/actions";
 
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
-import LoginAnchor from "../LoginAnchor/LoginAnchor";
+import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
 import Anchor from "../../Components/Anchor/Anchor";
+import { login } from "../App/MODAL_WINDOWS";
 import "./registration.css";
 
 const INPUTS = [email, password];
@@ -23,6 +24,15 @@ class Registration extends React.Component {
 
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  //Собираем пользователя
+  getUser() {
+    let values = {};
+    INPUTS.forEach(input => {
+      values[input.name] = this.state[input.name];
+    });
+    return values;
   }
 
   //Собираем значения валидации в объект
@@ -51,7 +61,7 @@ class Registration extends React.Component {
       () => {
         //Сохраняем только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
-          this.props.onSubmit(this.state.email, this.state.password, false);
+          this.props.onSubmit(this.getUser(), true, false);
         }
       }
     );
@@ -79,12 +89,12 @@ class Registration extends React.Component {
             }
           />
         ))}
-        {/*  <div className="login">
+        <div className="login">
           Уже есть учетная запись?{" "}
           <Anchor>
-            <LoginAnchor />
+            <AnchorModalWindow value="Войти" modalWindowName={login} />
           </Anchor>
-        </div> */}
+        </div>
         <Button value="ОТПРАВИТЬ" />
       </form>
     );
@@ -93,18 +103,16 @@ class Registration extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    userEmail: state.userEmail,
-    userPassword: state.userPassword,
-    isRegistrationModalWindowActive: state.registrationWindowState
+    user: state.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (userEmail, userPassword, isRegistrationModalWindowActive) => {
-      dispatch(setUserEmail(userEmail));
-      dispatch(setUserPassword(userPassword));
-      dispatch(setRegistrationWindowState(isRegistrationModalWindowActive));
+    onSubmit: (user, userLoginState, modalWindowState) => {
+      dispatch(setUser(user));
+      dispatch(setUserLoginState(userLoginState));
+      dispatch(setModalWindowState(modalWindowState));
     }
   };
 };

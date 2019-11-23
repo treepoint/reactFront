@@ -1,9 +1,8 @@
 import {
   SET_USER_LOGIN_STATE,
-  SET_USER_EMAIL,
-  SET_USER_PASSWORD,
-  SET_REGISTRATION_WINDOW_STATE,
-  SET_LOGIN_WINDOW_STATE
+  SET_USER,
+  SET_MODAL_WINDOW_STATE,
+  SET_MODAL_WINDOW_NAME
 } from "./actions";
 
 import { combineReducers } from "redux";
@@ -17,37 +16,28 @@ function isUserLogin(state = false, action) {
   }
 }
 
-function userEmail(state = "", action) {
+function user(state = {}, action) {
   switch (action.type) {
-    case SET_USER_EMAIL:
-      return action.text;
+    case SET_USER:
+      return Object.assign({}, state, action.object);
     default:
       return state;
   }
 }
 
-function userPassword(state = "", action) {
+function modalWindowState(state = false, action) {
   switch (action.type) {
-    case SET_USER_PASSWORD:
-      return action.text;
-    default:
-      return state;
-  }
-}
-
-function registrationWindowState(state = false, action) {
-  switch (action.type) {
-    case SET_REGISTRATION_WINDOW_STATE:
+    case SET_MODAL_WINDOW_STATE:
       return action.boolean;
     default:
       return state;
   }
 }
 
-function loginWindowState(state = false, action) {
+function modalWindowName(state = "", action) {
   switch (action.type) {
-    case SET_LOGIN_WINDOW_STATE:
-      return action.boolean;
+    case SET_MODAL_WINDOW_NAME:
+      return action.text;
     default:
       return state;
   }
@@ -57,11 +47,10 @@ const appReducer = combineReducers({
   //Управление состоянием приложения
   isUserLogin,
   //Управление пользовательскими данными
-  userEmail,
-  userPassword,
-  //Управление состояниями модалок
-  registrationWindowState,
-  loginWindowState
+  user,
+  //Управление модалкой
+  modalWindowState,
+  modalWindowName
 });
 
 export default appReducer;

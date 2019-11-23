@@ -1,25 +1,34 @@
 import React from "react";
 import HeaderAnchor from "../../Components/HeaderAnchor/HeaderAnchor";
-import RegistrationAnchor from "../RegistrationAnchor/RegistrationAnchor";
-import LoginAnchor from "../LoginAnchor/LoginAnchor";
+import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
 import UserIcon from "../../Components/UserIcon/UserIcon";
 import { connect } from "react-redux";
 import "./userMenu.css";
+import { registration, login, profile } from "../App/MODAL_WINDOWS";
 
 class UserMenu extends React.Component {
   render() {
+    console.log(this.props.isUserLogin);
     return (
       <div className="userMenu">
         {!!this.props.isUserLogin ? (
-          this.props.userEmail
+          <HeaderAnchor>
+            <AnchorModalWindow
+              value={this.props.user.email}
+              modalWindowName={profile}
+            />
+          </HeaderAnchor>
         ) : (
           <div>
             <HeaderAnchor>
-              <RegistrationAnchor />
+              <AnchorModalWindow
+                value="Регистрация"
+                modalWindowName={registration}
+              />
             </HeaderAnchor>
             /
             <HeaderAnchor>
-              <LoginAnchor />
+              <AnchorModalWindow value="Войти" modalWindowName={login} />
             </HeaderAnchor>
           </div>
         )}
@@ -32,7 +41,7 @@ class UserMenu extends React.Component {
 const mapStateToProps = state => {
   return {
     isUserLogin: state.isUserLogin,
-    userEmail: state.userEmail
+    user: state.user
   };
 };
 

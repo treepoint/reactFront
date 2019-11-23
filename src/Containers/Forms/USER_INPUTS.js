@@ -1,4 +1,4 @@
-import { numReg, charReg, emailReg } from "./REGULAR_EXP";
+import { emailReg } from "./REGULAR_EXP";
 
 //Пользовательские поля
 export const email = {

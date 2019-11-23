@@ -1,9 +1,11 @@
 .page {
   width: 80%;
-  min-height: 75vh;
+  min-height: calc(100vh - 106px);
   overflow-x: hidden;
   overflow-y: auto;
-  margin: auto;
+  margin: 0 auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
   margin-top: 12px;
   margin-bottom: 12px;
   box-shadow: 0px 4px 8px #00000017;

@@ -1,16 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  setRegistrationWindowState,
-  setLoginWindowState
-} from "../../Store/actions";
+import { setModalWindowState } from "../../Store/actions";
 import Header from "../Header/Header";
 import ModalWindow from "../../Components/ModalWindow/ModalWindow";
 import Registration from "../Forms/Registration";
 import Login from "../Forms/Login";
+import Profile from "../Forms/Profile";
 import Home from "../Contents/Home";
 import About from "../../Containers/Contents/About";
+import { registration, login, profile } from "./MODAL_WINDOWS";
 
 import "./app.css";
 
@@ -18,41 +17,49 @@ class App extends React.Component {
   hideModalWindow(event) {
     event.stopPropagation();
     event.preventDefault();
+    this.props.setModalWindowState(false);
 
-    switch (true) {
-      case this.props.isRegistrationModalWindowActive:
-        this.props.setRegistrationWindowState(false);
-        break;
-      case this.props.isLoginModalWindowActive:
-        this.props.setLoginWindowState(false);
-        break;
-      default:
-        break;
-    }
+    console.log(this.props.modalWindowState);
   }
 
   getModalWindowToShow() {
-    switch (true) {
-      case this.props.isRegistrationModalWindowActive:
-        return (
-          <ModalWindow
-            contentToWrap={<Registration />}
-            onClick={event => this.hideModalWindow(event)}
-          />
-        );
-      case this.props.isLoginModalWindowActive:
-        return (
-          <ModalWindow
-            contentToWrap={<Login />}
-            onClick={event => this.hideModalWindow(event)}
-          />
-        );
-      default:
-        return "";
+    //Если показывать ничего не нужно — выйдем сразу
+    if (this.props.modalWindowState === false) {
+      return;
     }
+
+    if (this.props.modalWindowName === registration) {
+      return (
+        <ModalWindow
+          contentToWrap={<Registration />}
+          onClick={event => this.hideModalWindow(event)}
+        />
+      );
+    }
+
+    if (this.props.modalWindowName === login) {
+      return (
+        <ModalWindow
+          contentToWrap={<Login />}
+          onClick={event => this.hideModalWindow(event)}
+        />
+      );
+    }
+
+    if (this.props.modalWindowName === profile) {
+      return (
+        <ModalWindow
+          contentToWrap={<Profile />}
+          onClick={event => this.hideModalWindow(event)}
+        />
+      );
+    }
+
+    return;
   }
 
   render() {
+    console.log(this.props.user);
     return (
       <body>
         <Header />
@@ -74,18 +81,16 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isRegistrationModalWindowActive: state.registrationWindowState,
-    isLoginModalWindowActive: state.loginWindowState
+    user: state.user,
+    modalWindowState: state.modalWindowState,
+    modalWindowName: state.modalWindowName
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setRegistrationWindowState: isRegistrationModalWindowActive => {
-      dispatch(setRegistrationWindowState(isRegistrationModalWindowActive));
-    },
-    setLoginWindowState: isLoginModalWindowActive => {
-      dispatch(setLoginWindowState(isLoginModalWindowActive));
+    setModalWindowState: modalWindowState => {
+      dispatch(setModalWindowState(modalWindowState));
     }
   };
 };

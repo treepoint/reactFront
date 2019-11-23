@@ -6,12 +6,13 @@ import {
   setUserLoginState,
   setModalWindowState
 } from "../../Store/actions";
+
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 
 const INPUTS = [email, password];
 
-class Login extends React.Component {
+class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -69,7 +70,7 @@ class Login extends React.Component {
         onSubmit={event => this.onSubmit(event)}
         onClick={event => event.stopPropagation()}
       >
-        <h1 className="h1">Вход</h1>
+        <h1 className="h1">Профиль</h1>
         {INPUTS.map(regInputs => (
           <Input
             placeholder={regInputs.placeholder}
@@ -85,7 +86,7 @@ class Login extends React.Component {
             }
           />
         ))}
-        <Button value="ОТПРАВИТЬ" />
+        <Button value="Сохранить" />
       </form>
     );
   }
@@ -110,4 +111,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(Profile);
