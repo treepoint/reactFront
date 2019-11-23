@@ -1,5 +1,5 @@
 import React from "react";
-import LabelValidation from "../LabelValidation/LabelValidation";
+import LabelValidation from "../../LabelValidation/back/LabelValidation";
 import "./Input.css";
 
 class Input extends React.Component {

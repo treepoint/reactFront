@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setRegistrationWindowState } from "../../Store/actions";
+import { setRegistrationWindowState } from "../../../Store/actions";
 import userIcon from "../../Images/user_icon.png";
 import "./LoginButton.css";
 

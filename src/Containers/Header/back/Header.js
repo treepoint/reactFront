@@ -1,7 +1,7 @@
 import React from "react";
-import UserMenu from "../UserMenu/UserMenu";
-import Spacer from "../../Components/Spacer/Spacer";
-import MainMenu from "../../Components/MainMenu/MainMenu";
+import UserMenu from "../../UserMenu/back/UserMenu";
+import Spacer from "../../../Components/Spacer/back/Spacer";
+import MainMenu from "../../../Components/MainMenu/back/MainMenu";
 import logo from "../../Images/logo.png";
 import "./Header.css";
 

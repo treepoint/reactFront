@@ -6,8 +6,8 @@ import {
   setUserLoginState,
   setModalWindowState
 } from "../../Store/actions";
-import Input from "../../Components/Input/Input";
-import Button from "../../Components/Button/Button";
+import Input from "../../Components/Input/back/Input";
+import Button from "../../Components/Button/back/Button";
 import { getInvalidMessagesAsObj, getUser } from "./UTILS";
 
 const INPUTS = [email, password];

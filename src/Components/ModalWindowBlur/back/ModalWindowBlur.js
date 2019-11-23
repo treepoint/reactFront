@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setRegistrationWindowState } from "../../Store/actions";
+import { setRegistrationWindowState } from "../../../Store/actions";
 import "./ModalWindow.css";
 
 class ModalWindowBlur extends React.Component {
