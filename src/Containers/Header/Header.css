@@ -6,11 +6,12 @@
   background: #24292e;
   display: flex;
   font-family: "Source Sans Pro";
+  font-size: 16px;
 }
 
 .logo {
-  width: 40px;
-  margin-top: 4px;
+  width: 101px;
+  margin-top: 10px;
   margin-left: 8px;
   opacity: 1;
   display: "contents";

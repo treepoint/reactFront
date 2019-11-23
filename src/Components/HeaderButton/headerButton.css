@@ -1,15 +1,8 @@
-.loginButton {
-  margin-left: auto;
-  width: max-content;
-  text-align: center;
-  height: 20px;
-  margin-top: 10px;
-  display: flex;
+.headerButton {
   color: rgb(230, 230, 230);
-  padding-right: 26px;
-  border: 0;
   text-decoration: underline;
-  margin-right: 6px;
+  margin-right: 3px;
+  margin-left: 3px;
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
@@ -17,10 +10,10 @@
   text-decoration-color: #8e8e8e;
 }
 
-.loginButton:hover {
+.headerButton:hover {
   color: rgb(173, 173, 173);
 }
 
-.loginButton:active {
+.headerButton:active {
   color: rgb(150, 150, 150);
 }

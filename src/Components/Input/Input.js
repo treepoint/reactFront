@@ -9,7 +9,7 @@ class Input extends React.Component {
         <label style={{ display: "flex" }}>
           <input
             className={"input" + (this.props.invalidMessage ? " error" : "")}
-            type="text"
+            type={this.props.type}
             name={this.props.name}
             defaultValue={this.props.defaultValue}
             placeholder={this.props.placeholder}

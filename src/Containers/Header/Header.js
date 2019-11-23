@@ -1,5 +1,6 @@
 import React from "react";
-import LoginButton from "../../Components/LoginButton/LoginButton";
+import UserMenu from "../UserMenu/UserMenu";
+import Spacer from "../../Components/Spacer/Spacer";
 import MainMenu from "../../Components/MainMenu/MainMenu";
 import logo from "../../Images/logo.png";
 import "./header.css";
@@ -14,12 +15,13 @@ class Header extends React.Component {
             style={{
               background:
                 "url(" + logo + ") no-repeat scroll 100% 0 transparent",
-              backgroundSize: "32px 32px"
+              backgroundSize: "101px 17px"
             }}
           />
         </a>
         <MainMenu />
-        <LoginButton />
+        <Spacer />
+        <UserMenu />
       </div>
     );
   }
