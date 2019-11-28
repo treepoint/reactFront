@@ -1,4 +1,5 @@
 import { read_cookie } from "sfcookies";
+import { APIURL } from "./Settings";
 
 /*
  * Методы для работы с API
@@ -11,8 +12,6 @@ const Axios = axios.create({
     Authorization: "Bearer " + read_cookie("token")
   }
 });
-
-const APIURL = "http://localhost/api";
 
 /*
  * Создание пользователя
