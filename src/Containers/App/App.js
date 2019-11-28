@@ -111,7 +111,7 @@ class App extends React.Component {
             </Route>
           </Switch>
         </Router>
-        {this.getModalWindowToShow()};
+        {this.getModalWindowToShow()}
         <BroadCastMessage message="Веб-приложение находится в разработке" />
       </body>
     );
