@@ -8,7 +8,7 @@ import {
 } from "../../Store/actions";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
-import { getInvalidMessagesAsObj } from "../Contents/Utils";
+import { getInvalidMessagesAsObj } from "./Utils";
 import { updateUser } from "../../APIController/APIController";
 import { delete_cookie } from "sfcookies";
 
