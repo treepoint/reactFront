@@ -21,7 +21,7 @@ export function createUser(user) {
     return false;
   }
 
-  let url = APIURL + "/users";
+  let url = APIURL + "/users/registration";
 
   return Axios.post(url, user).then(response => {
     return response.data;
