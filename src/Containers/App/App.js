@@ -26,8 +26,6 @@ class App extends React.Component {
     let token = read_cookie("token");
     let userId = read_cookie("user_id");
 
-    console.log(userId);
-
     if (token.length !== 0) {
       this.props.setAuthToken(token);
     }

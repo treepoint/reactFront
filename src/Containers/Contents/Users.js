@@ -23,7 +23,9 @@ class Users extends React.Component {
     let promise = getUsers();
 
     promise.then(result => {
-      this.setState({ userList: result });
+      if (Array.isArray(result)) {
+        this.setState({ userList: result });
+      }
     });
   }
 
