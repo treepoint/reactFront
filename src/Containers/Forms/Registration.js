@@ -9,7 +9,7 @@ import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
 import Anchor from "../../Components/Anchor/Anchor";
 import { login } from "../App/MODAL_WINDOWS";
 import "./Registration.css";
-import { getInvalidMessagesAsObj } from "./Utils";
+import { getInvalidMessagesAsObj } from "../Contents/Utils";
 import { createUser } from "../../APIController/APIController";
 
 const INPUTS = [email, password];

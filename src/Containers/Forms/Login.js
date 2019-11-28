@@ -9,7 +9,7 @@ import {
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
-import { getInvalidMessagesAsObj } from "./Utils";
+import { getInvalidMessagesAsObj } from "../Contents/Utils";
 import { createToken } from "../../APIController/APIController";
 
 const INPUTS = [email, password];
