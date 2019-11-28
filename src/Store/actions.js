@@ -1,9 +1,9 @@
 //Состояние приложения
-export const SET_USER_LOGIN_STATE = "SET_USER_LOGIN_STATE";
+export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
 
 //Генераторы действий для состояния приложения
-export function setUserLoginState(boolean) {
-  return { type: SET_USER_LOGIN_STATE, boolean };
+export function setAuthToken(text) {
+  return { type: SET_AUTH_TOKEN, text };
 }
 
 //Типы действий для пользовательской информации

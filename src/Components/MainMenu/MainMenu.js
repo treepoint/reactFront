@@ -11,6 +11,9 @@ class MainMenu extends React.Component {
         <a className="link" href="/about">
           Справка
         </a>
+        <a className="link" href="/users">
+          Пользователи
+        </a>
       </div>
     );
   }

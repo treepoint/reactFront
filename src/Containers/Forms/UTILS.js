@@ -2,7 +2,7 @@
  * Вспомогательная функциональность для работы с формами
  */
 
-//Собираем значения валидации в объект
+//Собираем значения валидации объекта в другой в объект
 export function getInvalidMessagesAsObj(array, state) {
   let validationArray = {};
 
@@ -18,13 +18,4 @@ export function getInvalidMessagesAsObj(array, state) {
   });
 
   return validationArray;
-}
-
-//Собираем пользователя
-export function getUser(array, state) {
-  let values = {};
-  array.forEach(input => {
-    values[input.name] = state[input.name];
-  });
-  return values;
 }

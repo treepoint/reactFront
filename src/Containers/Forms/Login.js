@@ -3,38 +3,61 @@ import { connect } from "react-redux";
 import { email, password } from "./USER_INPUTS";
 import {
   setUser,
-  setUserLoginState,
+  setAuthToken,
   setModalWindowState
 } from "../../Store/actions";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
-import { getInvalidMessagesAsObj, getUser } from "./UTILS";
+import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
+import { getInvalidMessagesAsObj } from "./Utils";
+import { createToken } from "../../APIController/APIController";
 
 const INPUTS = [email, password];
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { user: {} };
   }
 
   onChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    let newUser = { [event.target.name]: event.target.value };
+
+    this.setState({ user: Object.assign(this.state.user, newUser) });
   }
 
-  onSubmit(event) {
+  login(event) {
     event.preventDefault();
 
     this.setState(
       {
         isTouched: true,
-        validation: getInvalidMessagesAsObj(INPUTS, this.state)
+        validation: getInvalidMessagesAsObj(INPUTS, this.state.user)
       },
       () => {
-        //Сохраняем только если ошибок нет
-        //Да да, пока никуда не отправляем. Можно считать, что это кривой мок
+        //Переходим к аутентификации если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
-          this.props.onSubmit(getUser(INPUTS, this.state), true, false);
+          //Создаем токен
+          let promise = createToken(this.state.user);
+          //Если запрос выполнен успешно — пишем пользователя и токен в стор
+          promise.then(result => {
+            if (typeof result.response !== "undefined") {
+              switch (result.response.status) {
+                case 404:
+                  this.setState({
+                    errorMessage:
+                      "Пользователь с таким логином и паролем не найден"
+                  });
+                  break;
+                default:
+                  this.setState({
+                    errorMessage: "Произошла неизвестная ошибка"
+                  });
+              }
+            } else {
+              this.props.onSuccess(result.user, result.token, false);
+            }
+          });
         }
       }
     );
@@ -42,10 +65,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <form
-        onSubmit={event => this.onSubmit(event)}
-        onClick={event => event.stopPropagation()}
-      >
+      <form onClick={event => event.stopPropagation()}>
         <h1 className="h1">Вход</h1>
         {INPUTS.map(inputs => (
           <Input
@@ -60,7 +80,12 @@ class Login extends React.Component {
             }
           />
         ))}
-        <Button isPrimary={true} value="ОТПРАВИТЬ" />
+        <ErrorMessage message={this.state.errorMessage} />
+        <Button
+          isPrimary={true}
+          value="ОТПРАВИТЬ"
+          onClick={event => this.login(event)}
+        />
       </form>
     );
   }
@@ -74,9 +99,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (user, userLoginState, modalWindowState) => {
+    onSuccess: (user, authToken, modalWindowState) => {
       dispatch(setUser(user));
-      dispatch(setUserLoginState(userLoginState));
+      dispatch(setAuthToken(authToken));
       dispatch(setModalWindowState(modalWindowState));
     }
   };

@@ -10,7 +10,7 @@ class UserMenu extends React.Component {
   render() {
     return (
       <div className="userMenu">
-        {!!this.props.isUserLogin ? (
+        {!!this.props.authToken ? (
           <HeaderAnchor>
             <AnchorModalWindow
               value={this.props.user.email}
@@ -39,7 +39,7 @@ class UserMenu extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isUserLogin: state.isUserLogin,
+    authToken: state.authToken,
     user: state.user
   };
 };

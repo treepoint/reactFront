@@ -3,56 +3,54 @@ import { connect } from "react-redux";
 import { email, password } from "./USER_INPUTS";
 import {
   setUser,
-  setUserLoginState,
+  setAuthToken,
   setModalWindowState
 } from "../../Store/actions";
-
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
-import { getInvalidMessagesAsObj, getUser } from "./UTILS";
+import { getInvalidMessagesAsObj } from "./Utils";
+import { updateUser } from "../../APIController/APIController";
+import { delete_cookie } from "sfcookies";
 
 const INPUTS = [email, password];
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { user: {} };
+  }
+
+  onChange(event) {
+    let newUser = { [event.target.name]: event.target.value };
+
+    this.setState({ user: Object.assign(this.state.user, newUser) });
   }
 
   componentDidMount() {
-    INPUTS.forEach(input => {
-      this.setState({
-        [input.name]: this.props.user[input.name]
-      });
-    });
+    this.setState({ user: this.props.user });
   }
 
   logoff(event) {
     event.preventDefault();
+    delete_cookie("token");
     this.props.onSubmit({}, false, false);
   }
 
-  onChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  onSubmit(event) {
+  saveProfile(event) {
     event.preventDefault();
-
-    console.log(this.state.email);
-
     this.setState(
       {
         isTouched: true,
-        validation: getInvalidMessagesAsObj(INPUTS, this.state)
+        validation: getInvalidMessagesAsObj(INPUTS, this.state.user)
       },
       () => {
         //Сохраняем только если ошибок нет
-        //Да да, пока никуда кроме стора не отправляем
         if (Object.keys(this.state.validation).length === 0) {
-          this.props.onSubmit(getUser(INPUTS, this.state), true, false);
+          //Отправляем в стор
+          this.props.onSubmit(this.state.user, true, false);
+
+          //Обновляем пользователя в базе
+          updateUser(this.state.user.id, this.state.user);
         }
       }
     );
@@ -68,7 +66,7 @@ class Profile extends React.Component {
               placeholder={inputs.placeholder}
               name={inputs.name}
               type={inputs.type}
-              value={this.state[inputs.name]}
+              value={this.state.user[inputs.name]}
               defaultValue={this.props.user[inputs.name]}
               onChange={event => this.onChange(event)}
               invalidMessage={
@@ -79,7 +77,7 @@ class Profile extends React.Component {
           <Button
             isPrimary={true}
             value="Сохранить"
-            onClick={event => this.onSubmit(event)}
+            onClick={event => this.saveProfile(event)}
           />
           <Button value="Выйти" onClick={event => this.logoff(event)} />
         </form>
@@ -96,9 +94,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (user, userLoginState, modalWindowState) => {
+    onSubmit: (user, authToken, modalWindowState) => {
       dispatch(setUser(user));
-      dispatch(setUserLoginState(userLoginState));
+      dispatch(setAuthToken(authToken));
       dispatch(setModalWindowState(modalWindowState));
     }
   };

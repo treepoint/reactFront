@@ -1,11 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { email, password } from "./USER_INPUTS";
-import {
-  setUser,
-  setUserLoginState,
-  setModalWindowState
-} from "../../Store/actions";
+import { setModalWindowName } from "../../Store/actions";
 
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
@@ -13,32 +9,39 @@ import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
 import Anchor from "../../Components/Anchor/Anchor";
 import { login } from "../App/MODAL_WINDOWS";
 import "./Registration.css";
-import { getInvalidMessagesAsObj, getUser } from "./UTILS";
+import { getInvalidMessagesAsObj } from "./Utils";
+import { createUser } from "../../APIController/APIController";
 
 const INPUTS = [email, password];
 
 class Registration extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { user: {} };
   }
 
   onChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    let newUser = { [event.target.name]: event.target.value };
+
+    this.setState({ user: Object.assign(this.state.user, newUser) });
   }
 
-  onSubmit(event) {
+  createUser(event) {
     event.preventDefault();
 
     this.setState(
       {
         isTouched: true,
-        validation: getInvalidMessagesAsObj(INPUTS, this.state)
+        validation: getInvalidMessagesAsObj(INPUTS, this.state.user)
       },
       () => {
         //Сохраняем только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
-          this.props.onSubmit(getUser(INPUTS, this.state), true, false);
+          //Пока пишем и в store
+          this.props.onSuccess();
+
+          //И в базу
+          createUser(this.state.user);
         }
       }
     );
@@ -46,10 +49,7 @@ class Registration extends React.Component {
 
   render() {
     return (
-      <form
-        onSubmit={event => this.onSubmit(event)}
-        onClick={event => event.stopPropagation()}
-      >
+      <form onClick={event => event.stopPropagation()}>
         <h1 className="h1">Регистрация</h1>
         {INPUTS.map(inputs => (
           <Input
@@ -70,7 +70,11 @@ class Registration extends React.Component {
             <AnchorModalWindow value="Войти" modalWindowName={login} />
           </Anchor>
         </div>
-        <Button isPrimary={true} value="ОТПРАВИТЬ" />
+        <Button
+          isPrimary={true}
+          value="ОТПРАВИТЬ"
+          onClick={event => this.createUser(event)}
+        />
       </form>
     );
   }
@@ -84,10 +88,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (user, userLoginState, modalWindowState) => {
-      dispatch(setUser(user));
-      dispatch(setUserLoginState(userLoginState));
-      dispatch(setModalWindowState(modalWindowState));
+    onSuccess: () => {
+      //Если успешно — просто открываем окно входа
+      dispatch(setModalWindowName(login));
     }
   };
 };

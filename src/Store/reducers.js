@@ -1,5 +1,5 @@
 import {
-  SET_USER_LOGIN_STATE,
+  SET_AUTH_TOKEN,
   SET_USER,
   SET_MODAL_WINDOW_STATE,
   SET_MODAL_WINDOW_NAME
@@ -7,10 +7,10 @@ import {
 
 import { combineReducers } from "redux";
 
-function isUserLogin(state = false, action) {
+function authToken(state = null, action) {
   switch (action.type) {
-    case SET_USER_LOGIN_STATE:
-      return action.boolean;
+    case SET_AUTH_TOKEN:
+      return action.text;
     default:
       return state;
   }
@@ -45,7 +45,7 @@ function modalWindowName(state = "", action) {
 
 const appReducer = combineReducers({
   //Управление состоянием приложения
-  isUserLogin,
+  authToken,
   //Управление пользовательскими данными
   user,
   //Управление модалкой
