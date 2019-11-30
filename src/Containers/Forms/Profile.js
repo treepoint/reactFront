@@ -1,11 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { email, password } from "./USER_INPUTS";
-import {
-  setUser,
-  setAuthToken,
-  setModalWindowState
-} from "../../Store/actions";
+import { setUser, setToken, setModalWindowState } from "../../Store/actions";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import { getInvalidMessagesAsObj } from "./Utils";
@@ -33,6 +29,7 @@ class Profile extends React.Component {
   logoff(event) {
     event.preventDefault();
     delete_cookie("token");
+    delete_cookie("user_id");
     this.props.onSubmit({}, false, false);
   }
 
@@ -94,9 +91,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (user, authToken, modalWindowState) => {
+    onSubmit: (user, token, modalWindowState) => {
       dispatch(setUser(user));
-      dispatch(setAuthToken(authToken));
+      dispatch(setToken(token));
       dispatch(setModalWindowState(modalWindowState));
     }
   };

@@ -1,5 +1,5 @@
 import {
-  SET_AUTH_TOKEN,
+  SET_TOKEN,
   SET_USER,
   SET_MODAL_WINDOW_STATE,
   SET_MODAL_WINDOW_NAME
@@ -7,9 +7,9 @@ import {
 
 import { combineReducers } from "redux";
 
-function authToken(state = null, action) {
+function token(state = null, action) {
   switch (action.type) {
-    case SET_AUTH_TOKEN:
+    case SET_TOKEN:
       return action.text;
     default:
       return state;
@@ -45,7 +45,7 @@ function modalWindowName(state = "", action) {
 
 const appReducer = combineReducers({
   //Управление состоянием приложения
-  authToken,
+  token,
   //Управление пользовательскими данными
   user,
   //Управление модалкой

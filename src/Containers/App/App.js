@@ -1,11 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  setModalWindowState,
-  setAuthToken,
-  setUser
-} from "../../Store/actions";
+import { setModalWindowState, setToken, setUser } from "../../Store/actions";
 import Header from "../Header/Header";
 import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
 import ModalWindow from "../../Components/ModalWindow/ModalWindow";
@@ -16,7 +12,7 @@ import Home from "../Contents/Home";
 import About from "../Contents/About";
 import Users from "../Contents/Users";
 import { registration, login, profile } from "./MODAL_WINDOWS";
-import { bake_cookie, read_cookie /*, delete_cookie */ } from "sfcookies";
+import { read_cookie } from "../../Cookies/Sfcookies";
 import { getUserByID } from "../../APIController/APIController";
 
 import "./App.css";
@@ -27,7 +23,7 @@ class App extends React.Component {
     let userId = read_cookie("user_id");
 
     if (token.length !== 0) {
-      this.props.setAuthToken(token);
+      this.props.setToken(token);
     }
 
     if (userId.lenght !== 0) {
@@ -36,17 +32,6 @@ class App extends React.Component {
       promise.then(user => {
         this.props.setUser(user);
       });
-    }
-  }
-
-  componentDidUpdate() {
-    //Если появился токен — сделаем куку с ним
-    if (this.props.authToken !== null) {
-      bake_cookie("token", this.props.authToken);
-    }
-
-    if (this.props.user !== {}) {
-      bake_cookie("user_id", this.props.user.id);
     }
   }
 
@@ -119,7 +104,7 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    authToken: state.authToken,
+    token: state.token,
     modalWindowState: state.modalWindowState,
     modalWindowName: state.modalWindowName
   };
@@ -130,8 +115,8 @@ const mapDispatchToProps = dispatch => {
     setModalWindowState: modalWindowState => {
       dispatch(setModalWindowState(modalWindowState));
     },
-    setAuthToken: authToken => {
-      dispatch(setAuthToken(authToken));
+    setToken: token => {
+      dispatch(setToken(token));
     },
     setUser: user => {
       dispatch(setUser(user));

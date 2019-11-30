@@ -1,9 +1,9 @@
 //Состояние приложения
-export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
+export const SET_TOKEN = "SET_TOKEN";
 
 //Генераторы действий для состояния приложения
-export function setAuthToken(text) {
-  return { type: SET_AUTH_TOKEN, text };
+export function setToken(text) {
+  return { type: SET_TOKEN, text };
 }
 
 //Типы действий для пользовательской информации

@@ -1,16 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { email, password } from "./USER_INPUTS";
-import {
-  setUser,
-  setAuthToken,
-  setModalWindowState
-} from "../../Store/actions";
+import { setUser, setToken, setModalWindowState } from "../../Store/actions";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 import { getInvalidMessagesAsObj } from "./Utils";
 import { createToken } from "../../APIController/APIController";
+import { bake_cookie } from "../../Cookies/Sfcookies";
 
 const INPUTS = [email, password];
 
@@ -24,6 +21,17 @@ class Login extends React.Component {
     let newUser = { [event.target.name]: event.target.value };
 
     this.setState({ user: Object.assign(this.state.user, newUser) });
+  }
+
+  onSuccess(user, token) {
+    //Unixtime в обычное время
+    let date = new Date(token.exp * 1000);
+
+    bake_cookie("token", token.token, date);
+
+    bake_cookie("user_id", user.id, date);
+
+    this.props.writeToStore(user, token.token, false);
   }
 
   login(event) {
@@ -55,7 +63,8 @@ class Login extends React.Component {
                   });
               }
             } else {
-              this.props.onSuccess(result.user, result.token, false);
+              //Создадим cookies, запишем в стор
+              this.onSuccess(result.user, result.token);
             }
           });
         }
@@ -99,9 +108,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSuccess: (user, authToken, modalWindowState) => {
+    writeToStore: (user, token, modalWindowState) => {
       dispatch(setUser(user));
-      dispatch(setAuthToken(authToken));
+      dispatch(setToken(token));
       dispatch(setModalWindowState(modalWindowState));
     }
   };

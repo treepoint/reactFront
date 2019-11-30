@@ -1,12 +1,6 @@
 import React from "react";
 import Page from "../../Components/Page/Page";
 import Button from "../../Components/Button/Button";
-import { connect } from "react-redux";
-import {
-  setUser,
-  setAuthToken,
-  setModalWindowState
-} from "../../Store/actions";
 import { getUsers } from "../../APIController/APIController";
 
 class Users extends React.Component {
@@ -51,23 +45,4 @@ class Users extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onSubmit: (user, authToken, modalWindowState) => {
-      dispatch(setUser(user));
-      dispatch(setAuthToken(authToken));
-      dispatch(setModalWindowState(modalWindowState));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Users);
+export default Users;
