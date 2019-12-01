@@ -80,8 +80,6 @@ class App extends React.Component {
   }
 
   render() {
-    let buildDate = new Date(Date.now());
-
     return (
       <body>
         <Header />
@@ -102,12 +100,7 @@ class App extends React.Component {
           this.props.modalWindowState,
           this.props.modalWindowName
         )}
-        <BroadCastMessage
-          message={
-            "Веб-приложение находится в разработке. Дата версии: " +
-            buildDate.toString()
-          }
-        />
+        <BroadCastMessage message="Веб-приложение находится в разработке. Номер сборки: 0.1.1" />
       </body>
     );
   }
