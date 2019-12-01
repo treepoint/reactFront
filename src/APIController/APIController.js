@@ -7,6 +7,7 @@ import { APIURL } from "./Settings";
 
 import axios from "axios";
 
+//Добавляем отправку авторизационного токена
 const Axios = axios.create({
   headers: {
     Authorization: "Bearer " + read_cookie("token")
@@ -90,7 +91,7 @@ export function getTokenByID(tokenID) {
 /*
  * Создание токена
  */
-export function createToken(user) {
+export function getToken(user) {
   let url = APIURL + "/auth";
 
   return Axios.post(url, user)
@@ -100,4 +101,25 @@ export function createToken(user) {
     .catch(error => {
       return error;
     });
+}
+
+/*
+ * Обновить токен
+ */
+export function refreshToken() {
+  let url = APIURL + "/reauth";
+
+  let refreshToken = read_cookie("refresh_token");
+
+  //Если есть refresh токен
+  if (refreshToken !== null) {
+    //Пытаемся обновить данные по нему
+    return Axios.post(url, { refreshToken })
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        return error;
+      });
+  }
 }

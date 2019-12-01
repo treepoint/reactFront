@@ -6,7 +6,7 @@ import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 import { getInvalidMessagesAsObj } from "./Utils";
-import { createToken } from "../../APIController/APIController";
+import { getToken } from "../../APIController/APIController";
 import { bake_cookie } from "../../Cookies/Sfcookies";
 
 const INPUTS = [email, password];
@@ -23,15 +23,18 @@ class Login extends React.Component {
     this.setState({ user: Object.assign(this.state.user, newUser) });
   }
 
-  onSuccess(user, token) {
+  onSuccess(user, token, refreshToken) {
     //Unixtime в обычное время
-    let date = new Date(token.exp * 1000);
+    let tokenExp = new Date(token.exp * 1000);
 
-    bake_cookie("token", token.token, date);
+    //Unixtime в обычное время
+    let refreshTokenExp = new Date(refreshToken.exp * 1000);
 
-    bake_cookie("user_id", user.id, date);
+    bake_cookie("token", token.value, tokenExp);
+    bake_cookie("refresh_token", refreshToken.value, refreshTokenExp);
+    bake_cookie("user_id", user.id, tokenExp);
 
-    this.props.writeToStore(user, token.token, false);
+    this.props.writeToStore(user, token.value, false);
   }
 
   login(event) {
@@ -46,9 +49,10 @@ class Login extends React.Component {
         //Переходим к аутентификации если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
           //Создаем токен
-          let promise = createToken(this.state.user);
+          let promise = getToken(this.state.user);
           //Если запрос выполнен успешно — пишем пользователя и токен в стор
           promise.then(result => {
+            //Если есть ошибки
             if (typeof result.response !== "undefined") {
               switch (result.response.status) {
                 case 404:
@@ -64,7 +68,7 @@ class Login extends React.Component {
               }
             } else {
               //Создадим cookies, запишем в стор
-              this.onSuccess(result.user, result.token);
+              this.onSuccess(result.user, result.token, result.refreshToken);
             }
           });
         }

@@ -29,6 +29,7 @@ class Profile extends React.Component {
   logoff(event) {
     event.preventDefault();
     delete_cookie("token");
+    delete_cookie("refresh_token");
     delete_cookie("user_id");
     this.props.onSubmit({}, false, false);
   }

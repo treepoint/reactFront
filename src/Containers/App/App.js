@@ -12,8 +12,8 @@ import Home from "../Contents/Home";
 import About from "../Contents/About";
 import Users from "../Contents/Users";
 import { registration, login, profile } from "./MODAL_WINDOWS";
-import { read_cookie } from "../../Cookies/Sfcookies";
-import { getUserByID } from "../../APIController/APIController";
+import { bake_cookie, read_cookie } from "../../Cookies/Sfcookies";
+import { getUserByID, refreshToken } from "../../APIController/APIController";
 
 import "./App.css";
 
@@ -24,6 +24,37 @@ class App extends React.Component {
 
     if (token.length !== 0) {
       this.props.setToken(token);
+    } else {
+      let promise = refreshToken();
+
+      promise.then(result => {
+        //Если есть ошибки
+        if (typeof result.response !== "undefined") {
+          switch (result.response.status) {
+            case 404:
+              return;
+            default:
+              return;
+          }
+        }
+
+        this.props.setToken(result.token.value);
+        this.props.setUser(result.user);
+
+        //Unixtime в обычное время
+        let tokenExp = new Date(result.token.exp * 1000);
+
+        //Unixtime в обычное время
+        let refreshTokenExp = new Date(result.refreshToken.exp * 1000);
+
+        bake_cookie("token", result.token.value, tokenExp);
+        bake_cookie("user_id", result.user.id, tokenExp);
+        bake_cookie(
+          "refresh_token",
+          result.refreshToken.value,
+          refreshTokenExp
+        );
+      });
     }
 
     if (userId.lenght !== 0) {
