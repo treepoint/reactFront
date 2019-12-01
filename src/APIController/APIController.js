@@ -1,4 +1,4 @@
-import { read_cookie } from "sfcookies";
+import { read_cookie } from "../Lib/Sfcookies";
 import { APIURL } from "./Settings";
 
 /*

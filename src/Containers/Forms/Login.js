@@ -7,7 +7,7 @@ import Button from "../../Components/Button/Button";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 import { getInvalidMessagesAsObj } from "./Utils";
 import { getToken } from "../../APIController/APIController";
-import { bake_cookie } from "../../Cookies/Sfcookies";
+import { bake_cookie } from "../../Lib/Sfcookies";
 
 const INPUTS = [email, password];
 

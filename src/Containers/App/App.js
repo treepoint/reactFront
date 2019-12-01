@@ -12,7 +12,7 @@ import Home from "../Contents/Home";
 import About from "../Contents/About";
 import Users from "../Contents/Users";
 import { registration, login, profile } from "./MODAL_WINDOWS";
-import { bake_cookie, read_cookie } from "../../Cookies/Sfcookies";
+import { bake_cookie, read_cookie } from "../../Lib/Sfcookies";
 import { getUserByID, refreshToken } from "../../APIController/APIController";
 
 import "./App.css";
