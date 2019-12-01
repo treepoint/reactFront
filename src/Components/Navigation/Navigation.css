@@ -1,6 +1,6 @@
 .navigation {
   height: 20px;
-  margin-top: 10px;
+  margin-top: 11px;
   margin-left: 12px;
 }
 
@@ -11,14 +11,17 @@
   user-select: none;
 }
 
-.navigation.link.current {
-  border-bottom: 1px solid #e6e6e6;
-}
-
 .navigation.link:hover {
   color: rgb(173, 173, 173);
 }
 
 .navigation.link:active {
   color: rgb(150, 150, 150);
+}
+.navigation.link.current {
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.navigation.link.current:hover {
+  border-bottom: 1px solid rgb(173, 173, 173);
 }
