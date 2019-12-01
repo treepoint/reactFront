@@ -1,11 +1,13 @@
-import { read_cookie } from "../Lib/Sfcookies";
-import { APIURL } from "./Settings";
-
 /*
  * Методы для работы с API
  */
-
+import { read_cookie } from "../Lib/Sfcookies";
 import axios from "axios";
+import { APIURL } from "./Settings";
+
+/*
+ * Токены
+ */
 
 //Добавляем отправку авторизационного токена
 const Axios = axios.create({
@@ -14,83 +16,7 @@ const Axios = axios.create({
   }
 });
 
-/*
- * Создание пользователя
- */
-export function createUser(user) {
-  if (typeof user !== "object") {
-    return false;
-  }
-
-  let url = APIURL + "/users/registration";
-
-  return Axios.post(url, user).then(response => {
-    return response.data;
-  });
-}
-
-/*
- * Обновление пользователя
- */
-export function updateUser(userID, user) {
-  if (typeof user !== "object") {
-    return false;
-  }
-
-  let url = APIURL + "/users/" + userID;
-
-  return Axios.put(url, user).then(response => {
-    return response.data;
-  });
-}
-
-/*
- * Получение токена как объекта по ID
- */
-export function getUserByID(userID) {
-  let url = APIURL + "/users/" + userID;
-
-  return Axios.get(url).then(response => {
-    return response.data[0];
-  });
-}
-
-/*
- * Получение пользователя как объекта по имени и паролю
- */
-export function getUserByEmailPassword(user) {
-  let url = APIURL + "/users/token";
-
-  return Axios.post(url, user).then(response => {
-    return response.data;
-  });
-}
-
-/*
- * Получение списка пользователей как объектов в массиве
- */
-export function getUsers() {
-  let url = APIURL + "/users";
-
-  return Axios.get(url).then(response => {
-    return response.data;
-  });
-}
-
-/*
- * Получение токена как объекта по ID
- */
-export function getTokenByID(tokenID) {
-  let url = APIURL + "/tokens/" + tokenID;
-
-  return Axios.get(url).then(response => {
-    return response.data;
-  });
-}
-
-/*
- * Создание токена
- */
+//Создание токена
 export function getToken(user) {
   let url = APIURL + "/auth";
 
@@ -103,9 +29,7 @@ export function getToken(user) {
     });
 }
 
-/*
- * Обновить токен
- */
+//Обновить токен
 export function reauth() {
   let url = APIURL + "/reauth";
 
@@ -122,4 +46,109 @@ export function reauth() {
         return error;
       });
   }
+}
+
+/*
+ * Пользователи
+ */
+
+//Создать пользователя
+export function createUser(user) {
+  if (typeof user !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/users/registration";
+
+  return Axios.post(url, user).then(response => {
+    return response.data;
+  });
+}
+
+//Обновить пользователя
+export function updateUser(userID, user) {
+  if (typeof user !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/users/" + userID;
+
+  return Axios.put(url, user).then(response => {
+    return response.data;
+  });
+}
+
+//Получить категорию как объекта по ID
+export function getUserByID(userID) {
+  let url = APIURL + "/users/" + userID;
+
+  return Axios.get(url).then(response => {
+    return response.data[0];
+  });
+}
+
+//Получить пользователя как объекта по имени и паролю
+export function getUserByEmailPassword(user) {
+  let url = APIURL + "/users/token";
+
+  return Axios.post(url, user).then(response => {
+    return response.data;
+  });
+}
+
+//Получение списка пользователей как объектов в массиве
+export function getUsers() {
+  let url = APIURL + "/users";
+
+  return Axios.get(url).then(response => {
+    return response.data;
+  });
+}
+
+/*
+ * Категории
+ */
+
+//Создать категорию
+export function createCategory(user) {
+  if (typeof user !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/categories";
+
+  return Axios.post(url, user).then(response => {
+    return response.data;
+  });
+}
+
+//Обновить категорию
+export function updateCategory(userID, user) {
+  if (typeof user !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/categories/" + userID;
+
+  return Axios.put(url, user).then(response => {
+    return response.data;
+  });
+}
+
+//Получить категорию как объект по ID
+export function getCategoryByID(userID) {
+  let url = APIURL + "/categories/" + userID;
+
+  return Axios.get(url).then(response => {
+    return response.data[0];
+  });
+}
+
+//Получить все категории пользователя как объекты в массиве
+export function getUserCategories() {
+  let url = APIURL + "/categories";
+
+  return Axios.get(url).then(response => {
+    return response.data;
+  });
 }

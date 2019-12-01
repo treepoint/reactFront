@@ -19,6 +19,14 @@ class Navigation extends React.Component {
         <NavLink
           className="navigation link"
           exact
+          to="/categories"
+          activeClassName="current"
+        >
+          Категории задач
+        </NavLink>
+        <NavLink
+          className="navigation link"
+          exact
           to="/about"
           activeClassName="current"
         >

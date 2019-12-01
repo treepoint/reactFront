@@ -13,6 +13,7 @@ import { getModalWindow } from "../../Components/ModalWindow/MODAL_WINDOWS";
 //Подключаем компоненты и контейнеры
 import Header from "../Header/Header";
 import Home from "../Contents/Home";
+import Categories from "../Contents/Categories";
 import About from "../Contents/About";
 import Users from "../Contents/Users";
 import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
@@ -83,6 +84,7 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/categories" component={Categories} />
           <Route path="/about" component={About} />
           <Route path="/users" component={Users} />
         </Switch>
@@ -90,7 +92,7 @@ class App extends React.Component {
           this.props.modalWindowState,
           this.props.modalWindowName
         )}
-        <BroadCastMessage message="Веб-приложение находится в разработке. Номер сборки: 0.1.1" />
+        <BroadCastMessage message="Веб-приложение находится в разработке. Номер сборки: 0.1.2" />
       </body>
     );
   }
