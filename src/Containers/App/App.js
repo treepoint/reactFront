@@ -1,6 +1,6 @@
 import React from "react";
 //Подключаем роутинг
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 //Подключаем redux
 import { connect } from "react-redux";
 import { setToken, setUser } from "../../Store/actions";
@@ -8,15 +8,13 @@ import { setToken, setUser } from "../../Store/actions";
 import { bake_cookie, read_cookie } from "../../Lib/Sfcookies";
 //Подключаем API
 import { getUserByID, reauth } from "../../APIController/APIController";
-//Шапка
+//Подключаем модальные окна
+import { getModalWindow } from "../../Components/ModalWindow/MODAL_WINDOWS";
+//Подключаем компоненты и контейнеры
 import Header from "../Header/Header";
-//Страницы
 import Home from "../Contents/Home";
 import About from "../Contents/About";
 import Users from "../Contents/Users";
-//Подключаем модальные окна
-import { getModalWindow } from "../../Components/ModalWindow/MODAL_WINDOWS";
-//Сообщение—уведомление
 import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
 //CSS
 import "./App.css";
@@ -83,19 +81,11 @@ class App extends React.Component {
     return (
       <body>
         <Header />
-        <Router>
-          <Switch>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/users" component={Users} />
+        </Switch>
         {getModalWindow(
           this.props.modalWindowState,
           this.props.modalWindowName

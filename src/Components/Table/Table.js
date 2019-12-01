@@ -27,17 +27,17 @@ class Table extends React.Component {
     return (
       <table className="table">
         <tbody>
-          <tr>
+          <tr className="tr">
             {/* Отрисовываем шапку */
             tableHeader.map(item => (
-              <th>{item}</th>
+              <th className="th">{item}</th>
             ))}
           </tr>
           {/* Отрисовываем тело таблицы */
           Object.keys(tableBody).map(row => (
-            <tr>
+            <tr className="tr">
               {tableBody[row].map(item => (
-                <td>{item}</td>
+                <td className="td">{item}</td>
               ))}
             </tr>
           ))}

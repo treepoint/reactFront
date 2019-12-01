@@ -1,20 +1,24 @@
-.menu {
+.navigation {
   height: 20px;
   margin-top: 10px;
   margin-left: 12px;
 }
 
-.link {
+.navigation.link {
   padding: 4px;
   color: rgb(230, 230, 230);
   text-decoration: none;
   user-select: none;
 }
 
-.link:hover {
+.navigation.link.current {
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.navigation.link:hover {
   color: rgb(173, 173, 173);
 }
 
-.link:active {
+.navigation.link:active {
   color: rgb(150, 150, 150);
 }

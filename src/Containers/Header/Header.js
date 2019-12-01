@@ -1,25 +1,16 @@
 import React from "react";
-import UserMenu from "../UserMenu/UserMenu";
+import Navigation from "../../Components/Navigation/Navigation";
 import Spacer from "../../Components/Spacer/Spacer";
-import MainMenu from "../../Components/MainMenu/MainMenu";
-import logo from "../../Images/logo.png";
+import Logo from "../../Components/Logo/Logo";
+import UserMenu from "../UserMenu/UserMenu";
 import "./Header.css";
 
 class Header extends React.Component {
   render() {
     return (
       <div className="header">
-        <a href="/" style={{ display: "contents" }}>
-          <div
-            className="logo"
-            style={{
-              background:
-                "url(" + logo + ") no-repeat scroll 100% 0 transparent",
-              backgroundSize: "101px 17px"
-            }}
-          />
-        </a>
-        <MainMenu />
+        <Logo />
+        <Navigation />
         <Spacer />
         <UserMenu />
       </div>
