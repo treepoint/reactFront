@@ -1,114 +1,87 @@
 import React from "react";
+//Подключаем роутинг
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+//Подключаем redux
 import { connect } from "react-redux";
-import { setModalWindowState, setToken, setUser } from "../../Store/actions";
+import { setToken, setUser } from "../../Store/actions";
+//Подключаем cookies
+import { bake_cookie, read_cookie } from "../../Lib/Sfcookies";
+//Подключаем API
+import { getUserByID, reauth } from "../../APIController/APIController";
+//Шапка
 import Header from "../Header/Header";
-import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
-import ModalWindow from "../../Components/ModalWindow/ModalWindow";
-import Registration from "../Forms/Registration";
-import Login from "../Forms/Login";
-import Profile from "../Forms/Profile";
+//Страницы
 import Home from "../Contents/Home";
 import About from "../Contents/About";
 import Users from "../Contents/Users";
-import { registration, login, profile } from "./MODAL_WINDOWS";
-import { bake_cookie, read_cookie } from "../../Lib/Sfcookies";
-import { getUserByID, refreshToken } from "../../APIController/APIController";
-
+//Подключаем модальные окна
+import { getModalWindow } from "../../Components/ModalWindow/MODAL_WINDOWS";
+//Сообщение—уведомление
+import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
+//CSS
 import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
+    //Попробуем подтянуть часть стора из cookies по обычному токену и ID пользователя
+    this.setStoreFromCookies(isSuccess => {
+      if (!isSuccess) {
+        //Если не получилось — попробуем подтянуть по refresh токену
+        this.setStoreAndCookiesFromAPI();
+      }
+      //Если и здесь не получилось, значит ничего из этого нет — игнорируем ситуацию
+    });
+  }
+
+  //Обновим стор по значениям токена и userID
+  setStoreFromCookies(callback) {
     let token = read_cookie("token");
     let userId = read_cookie("user_id");
 
-    if (token.length !== 0) {
+    if (token.lenght !== 0 && userId.lenght !== 0) {
+      //Токен просто запишем
       this.props.setToken(token);
-    } else {
-      let promise = refreshToken();
 
-      promise.then(result => {
-        //Если есть ошибки
-        if (typeof result.response !== "undefined") {
-          switch (result.response.status) {
-            case 404:
-              return;
-            default:
-              return;
-          }
-        }
-
-        this.props.setToken(result.token.value);
-        this.props.setUser(result.user);
-
-        //Unixtime в обычное время
-        let tokenExp = new Date(result.token.exp * 1000);
-
-        //Unixtime в обычное время
-        let refreshTokenExp = new Date(result.refreshToken.exp * 1000);
-
-        bake_cookie("token", result.token.value, tokenExp);
-        bake_cookie("user_id", result.user.id, tokenExp);
-        bake_cookie(
-          "refresh_token",
-          result.refreshToken.value,
-          refreshTokenExp
-        );
-      });
-    }
-
-    if (userId.lenght !== 0) {
+      //Пользователя получим по ID и запишем
       let promise = getUserByID(userId);
 
       promise.then(user => {
         this.props.setUser(user);
+        callback(true);
       });
+    } else {
+      callback(false);
     }
   }
 
-  hideModalWindow(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    this.props.setModalWindowState(false);
-  }
+  //Обновим стор и куки из API
+  setStoreAndCookiesFromAPI() {
+    let promise = reauth();
 
-  getModalWindowToShow() {
-    //Если показывать ничего не нужно — выйдем сразу
-    if (this.props.modalWindowState === false) {
-      return;
-    }
+    promise.then(result => {
+      //Если есть ошибки
+      if (typeof result.response !== "undefined") {
+        return;
+      }
 
-    if (this.props.modalWindowName === registration) {
-      return (
-        <ModalWindow
-          contentToWrap={<Registration />}
-          onClick={event => this.hideModalWindow(event)}
-        />
-      );
-    }
+      //Unixtime в обычное время
+      let tokenExp = new Date(result.token.exp * 1000);
 
-    if (this.props.modalWindowName === login) {
-      return (
-        <ModalWindow
-          contentToWrap={<Login />}
-          onClick={event => this.hideModalWindow(event)}
-        />
-      );
-    }
+      //Unixtime в обычное время
+      let refreshTokenExp = new Date(result.refreshToken.exp * 1000);
 
-    if (this.props.modalWindowName === profile) {
-      return (
-        <ModalWindow
-          contentToWrap={<Profile />}
-          onClick={event => this.hideModalWindow(event)}
-        />
-      );
-    }
+      bake_cookie("token", result.token.value, tokenExp);
+      bake_cookie("user_id", result.user.id, tokenExp);
+      bake_cookie("refresh_token", result.refreshToken.value, refreshTokenExp);
 
-    return;
+      this.props.setToken(result.token.value);
+      this.props.setUser(result.user);
+    });
   }
 
   render() {
+    let buildDate = new Date(Date.now());
+
     return (
       <body>
         <Header />
@@ -125,8 +98,16 @@ class App extends React.Component {
             </Route>
           </Switch>
         </Router>
-        {this.getModalWindowToShow()}
-        <BroadCastMessage message="Веб-приложение находится в разработке" />
+        {getModalWindow(
+          this.props.modalWindowState,
+          this.props.modalWindowName
+        )}
+        <BroadCastMessage
+          message={
+            "Веб-приложение находится в разработке. Дата версии: " +
+            buildDate.toString()
+          }
+        />
       </body>
     );
   }
@@ -143,9 +124,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setModalWindowState: modalWindowState => {
-      dispatch(setModalWindowState(modalWindowState));
-    },
     setToken: token => {
       dispatch(setToken(token));
     },

@@ -106,7 +106,7 @@ export function getToken(user) {
 /*
  * Обновить токен
  */
-export function refreshToken() {
+export function reauth() {
   let url = APIURL + "/reauth";
 
   let refreshToken = read_cookie("refresh_token");

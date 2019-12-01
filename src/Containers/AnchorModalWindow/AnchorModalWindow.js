@@ -3,24 +3,24 @@ import { connect } from "react-redux";
 import { setModalWindowState, setModalWindowName } from "../../Store/actions";
 
 class AnchorModalWindow extends React.Component {
-  onClick(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    this.props.onClick(true, this.props.modalWindowName);
-  }
-
   render() {
-    return <div onClick={event => this.onClick(event)}>{this.props.value}</div>;
+    return (
+      <div
+        onClick={event =>
+          this.props.setModalWindow(event, true, this.props.modalWindowName)
+        }
+      >
+        {this.props.value}
+      </div>
+    );
   }
 }
 
-const mapStateToProps = state => {
-  return {};
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    onClick: (isActive, modalWindowName) => {
+    setModalWindow: (event, isActive, modalWindowName) => {
+      event.stopPropagation();
+      event.preventDefault();
       dispatch(setModalWindowState(isActive));
       dispatch(setModalWindowName(modalWindowName));
     }
@@ -28,6 +28,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(AnchorModalWindow);

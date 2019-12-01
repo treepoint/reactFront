@@ -1,17 +1,23 @@
 import React from "react";
+//Подключаем redux
 import { connect } from "react-redux";
-import { email, password } from "./USER_INPUTS";
 import { setModalWindowName } from "../../Store/actions";
-
+//Подключаем API
+import { createUser } from "../../APIController/APIController";
+//Подключаем модалки
+import { login } from "../../Components/ModalWindow/MODAL_WINDOWS";
+//Импортируем компоненты
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
 import Anchor from "../../Components/Anchor/Anchor";
-import { login } from "../App/MODAL_WINDOWS";
+//Подрубаем вспомогательную функциональность
+import { getInvalidMessagesAsObj } from "./FormsUtils";
+import { email, password } from "./USER_INPUTS";
+//Подключаем CSS
 import "./Registration.css";
-import { getInvalidMessagesAsObj } from "./Utils";
-import { createUser } from "../../APIController/APIController";
 
+//Массив инпутов, на основании которого будем отрисовывать форму
 const INPUTS = [email, password];
 
 class Registration extends React.Component {
@@ -20,10 +26,9 @@ class Registration extends React.Component {
     this.state = { user: {} };
   }
 
-  onChange(event) {
-    let newUser = { [event.target.name]: event.target.value };
-
-    this.setState({ user: Object.assign(this.state.user, newUser) });
+  updateUserInState(event) {
+    let user = { [event.target.name]: event.target.value };
+    this.setState({ user: Object.assign(this.state.user, user) });
   }
 
   createUser(event) {
@@ -37,11 +42,11 @@ class Registration extends React.Component {
       () => {
         //Сохраняем только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
-          //Пока пишем и в store
-          this.props.onSuccess();
-
-          //И в базу
+          //Создаем пользователя
           createUser(this.state.user);
+
+          //Открываем окно входа
+          this.props.openLoginWindow();
         }
       }
     );
@@ -58,7 +63,7 @@ class Registration extends React.Component {
             type={inputs.type}
             value={this.state[inputs.name]}
             defaultValue={inputs.defaultValue}
-            onChange={event => this.onChange(event)}
+            onChange={event => this.updateUserInState(event)}
             invalidMessage={
               !!this.state.isTouched ? this.state.validation[inputs.name] : ""
             }
@@ -80,22 +85,15 @@ class Registration extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    onSuccess: () => {
-      //Если успешно — просто открываем окно входа
+    openLoginWindow: () => {
       dispatch(setModalWindowName(login));
     }
   };
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Registration);

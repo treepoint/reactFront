@@ -1,6 +1,6 @@
 import { emailReg } from "./REGULAR_EXP";
 
-//Пользовательские поля
+//Поля для «пользовательских»  форм
 export const email = {
   name: "email",
   type: "text",

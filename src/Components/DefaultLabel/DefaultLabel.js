@@ -1,5 +1,4 @@
 import React from "react";
-import "./DefaultLabel.css";
 
 class DefaultLabel extends React.Component {
   render() {

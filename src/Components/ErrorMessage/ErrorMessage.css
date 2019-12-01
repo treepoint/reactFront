@@ -1,9 +1,8 @@
 .errorMessage {
   color: rgb(115, 1, 1);
   background: #fbf1f1;
-  padding: 4px;
-  border-radius: 4px;
-  border: 1px solid #d06969a8;
+  padding: 4px 4px;
+  border: 1px solid #d0696942;
   margin: 8px 0;
 }
 

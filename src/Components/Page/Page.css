@@ -1,17 +1,12 @@
 .page {
   width: 80%;
-  /*min-height: calc(100vh - 106px);*/
+  max-height: calc(100vh - 106px);
   overflow-x: auto;
   overflow-y: auto;
-  margin: 0 auto;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin: 12px auto;
   box-shadow: 0px 4px 8px #00000017;
   background: #ffffff;
   padding: 12px;
-  max-height: calc(100vh - 106px);
 }
 .content {
   margin: 6px;
@@ -19,7 +14,6 @@
 }
 
 .title {
-  margin-top: 0;
   font-size: 18px;
   margin-left: 4px;
   color: #6c6c6c;

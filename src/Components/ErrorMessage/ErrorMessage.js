@@ -3,14 +3,11 @@ import "./ErrorMessage.css";
 
 class ErrorMessage extends React.Component {
   render() {
-    let className = !!this.props.isWarning
-      ? "errorMessage warning"
-      : "errorMessage";
-
     return (
       <div
-        className={className}
+        className={"errorMessage" + (!!this.props.isWarning ? " warning" : "")}
         style={{
+          //Если нет сообщения — скрываем отображение
           display: !!this.props.message ? "" : "none"
         }}
       >

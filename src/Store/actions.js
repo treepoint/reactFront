@@ -1,24 +1,21 @@
-//Состояние приложения
+//Токен
 export const SET_TOKEN = "SET_TOKEN";
 
-//Генераторы действий для состояния приложения
 export function setToken(text) {
   return { type: SET_TOKEN, text };
 }
 
-//Типы действий для пользовательской информации
+//Пользователь
 export const SET_USER = "SET_USER";
 
-//Генераторы действий для пользовательской информации
 export function setUser(object) {
   return { type: SET_USER, object };
 }
 
-//Генераторы действий для модального окона
+//Модальное окно
 export const SET_MODAL_WINDOW_STATE = "SET_MODAL_WINDOW_STATE";
 export const SET_MODAL_WINDOW_NAME = "SET_MODAL_WINDOW_NAME";
 
-//Типы действий для модального окна
 export function setModalWindowState(boolean) {
   return { type: SET_MODAL_WINDOW_STATE, boolean };
 }

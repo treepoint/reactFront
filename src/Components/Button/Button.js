@@ -2,13 +2,6 @@ import React from "react";
 import "./Button.css";
 
 class Button extends React.Component {
-  onClick(event) {
-    if (!!this.props.onClick) {
-      return this.props.onClick(event);
-    }
-    return () => {};
-  }
-
   render() {
     return (
       <input
@@ -16,7 +9,7 @@ class Button extends React.Component {
         className={!!this.props.isPrimary ? "button primary" : "button"}
         value={this.props.value}
         onClick={event => {
-          this.onClick(event);
+          this.props.onClick(event);
         }}
       />
     );

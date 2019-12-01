@@ -44,11 +44,8 @@ function modalWindowName(state = "", action) {
 }
 
 const appReducer = combineReducers({
-  //Управление состоянием приложения
   token,
-  //Управление пользовательскими данными
   user,
-  //Управление модалкой
   modalWindowState,
   modalWindowName
 });

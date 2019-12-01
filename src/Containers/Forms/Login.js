@@ -1,14 +1,20 @@
 import React from "react";
+//Подключаем redux
 import { connect } from "react-redux";
-import { email, password } from "./USER_INPUTS";
 import { setUser, setToken, setModalWindowState } from "../../Store/actions";
+//Подключаем API
+import { getToken } from "../../APIController/APIController";
+//Подключаем cookies
+import { bake_cookie } from "../../Lib/Sfcookies";
+//Импортируем компоненты
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
-import { getInvalidMessagesAsObj } from "./Utils";
-import { getToken } from "../../APIController/APIController";
-import { bake_cookie } from "../../Lib/Sfcookies";
+//Подрубаем вспомогательную функциональность
+import { email, password } from "./USER_INPUTS";
+import { getInvalidMessagesAsObj } from "./FormsUtils";
 
+//Массив инпутов, на основании которого будем отрисовывать форму
 const INPUTS = [email, password];
 
 class Login extends React.Component {
@@ -17,24 +23,9 @@ class Login extends React.Component {
     this.state = { user: {} };
   }
 
-  onChange(event) {
-    let newUser = { [event.target.name]: event.target.value };
-
-    this.setState({ user: Object.assign(this.state.user, newUser) });
-  }
-
-  onSuccess(user, token, refreshToken) {
-    //Unixtime в обычное время
-    let tokenExp = new Date(token.exp * 1000);
-
-    //Unixtime в обычное время
-    let refreshTokenExp = new Date(refreshToken.exp * 1000);
-
-    bake_cookie("token", token.value, tokenExp);
-    bake_cookie("refresh_token", refreshToken.value, refreshTokenExp);
-    bake_cookie("user_id", user.id, tokenExp);
-
-    this.props.writeToStore(user, token.value, false);
+  updateUserInState(event) {
+    let user = { [event.target.name]: event.target.value };
+    this.setState({ user: Object.assign(this.state.user, user) });
   }
 
   login(event) {
@@ -50,7 +41,7 @@ class Login extends React.Component {
         if (Object.keys(this.state.validation).length === 0) {
           //Создаем токен
           let promise = getToken(this.state.user);
-          //Если запрос выполнен успешно — пишем пользователя и токен в стор
+
           promise.then(result => {
             //Если есть ошибки
             if (typeof result.response !== "undefined") {
@@ -76,6 +67,24 @@ class Login extends React.Component {
     );
   }
 
+  onSuccess(user, token, refreshToken) {
+    //Unixtime в обычное время
+    let tokenExp = new Date(token.exp * 1000);
+
+    //Unixtime в обычное время
+    let refreshTokenExp = new Date(refreshToken.exp * 1000);
+
+    //Пишем куки
+    bake_cookie("token", token.value, tokenExp);
+    bake_cookie("refresh_token", refreshToken.value, refreshTokenExp);
+    bake_cookie("user_id", user.id, tokenExp);
+
+    //Пишем в стор
+    this.props.writeToStore(user, token.value);
+    //Закрываем модалку
+    this.props.closeModalWindow();
+  }
+
   render() {
     return (
       <form onClick={event => event.stopPropagation()}>
@@ -87,7 +96,7 @@ class Login extends React.Component {
             type={inputs.type}
             value={this.state[inputs.name]}
             defaultValue={inputs.defaultValue}
-            onChange={event => this.onChange(event)}
+            onChange={event => this.updateUserInState(event)}
             invalidMessage={
               !!this.state.isTouched ? this.state.validation[inputs.name] : ""
             }
@@ -96,7 +105,7 @@ class Login extends React.Component {
         <ErrorMessage message={this.state.errorMessage} />
         <Button
           isPrimary={true}
-          value="ОТПРАВИТЬ"
+          value="ВОЙТИ"
           onClick={event => this.login(event)}
         />
       </form>
@@ -104,23 +113,19 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    writeToStore: (user, token, modalWindowState) => {
+    writeToStore: (user, token) => {
       dispatch(setUser(user));
       dispatch(setToken(token));
-      dispatch(setModalWindowState(modalWindowState));
+    },
+    closeModalWindow: () => {
+      dispatch(setModalWindowState(false));
     }
   };
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Login);
