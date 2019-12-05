@@ -2,25 +2,27 @@
  * Методы для работы с API
  */
 import { read_cookie } from "../Lib/Sfcookies";
-import axios from "axios";
+import Axios from "axios";
 import { APIURL } from "./Settings";
 
 /*
  * Токены
  */
 
-//Добавляем отправку авторизационного токена
-const Axios = axios.create({
-  headers: {
-    Authorization: "Bearer " + read_cookie("token")
-  }
-});
+//Получим заголовки
+function getHeaders() {
+  return {
+    headers: {
+      Authorization: "Bearer " + read_cookie("token")
+    }
+  };
+}
 
 //Создание токена
 export function getToken(user) {
   let url = APIURL + "/auth";
 
-  return Axios.post(url, user)
+  return Axios.post(url, user, getHeaders())
     .then(response => {
       return response.data;
     })
@@ -38,7 +40,7 @@ export function reauth() {
   //Если есть refresh токен
   if (refreshToken !== null) {
     //Пытаемся обновить данные по нему
-    return Axios.post(url, { refreshToken })
+    return Axios.post(url, { refreshToken }, getHeaders())
       .then(response => {
         return response.data;
       })
@@ -60,20 +62,20 @@ export function createUser(user) {
 
   let url = APIURL + "/users/registration";
 
-  return Axios.post(url, user).then(response => {
+  return Axios.post(url, user, getHeaders()).then(response => {
     return response.data;
   });
 }
 
 //Обновить пользователя
-export function updateUser(userID, user) {
+export function updateUser(userID, user, headers) {
   if (typeof user !== "object") {
     return false;
   }
 
   let url = APIURL + "/users/" + userID;
 
-  return Axios.put(url, user).then(response => {
+  return Axios.put(url, user, headers).then(response => {
     return response.data;
   });
 }
@@ -82,7 +84,7 @@ export function updateUser(userID, user) {
 export function getUserByID(userID) {
   let url = APIURL + "/users/" + userID;
 
-  return Axios.get(url).then(response => {
+  return Axios.get(url, getHeaders()).then(response => {
     return response.data[0];
   });
 }
@@ -91,7 +93,7 @@ export function getUserByID(userID) {
 export function getUserByEmailPassword(user) {
   let url = APIURL + "/users/token";
 
-  return Axios.post(url, user).then(response => {
+  return Axios.post(url, user, getHeaders()).then(response => {
     return response.data;
   });
 }
@@ -100,7 +102,7 @@ export function getUserByEmailPassword(user) {
 export function getUsers() {
   let url = APIURL + "/users";
 
-  return Axios.get(url).then(response => {
+  return Axios.get(url, getHeaders()).then(response => {
     return response.data;
   });
 }
@@ -117,7 +119,7 @@ export function createCategory(user) {
 
   let url = APIURL + "/categories";
 
-  return Axios.post(url, user).then(response => {
+  return Axios.post(url, user, getHeaders()).then(response => {
     return response.data;
   });
 }
@@ -130,7 +132,7 @@ export function updateCategory(userID, user) {
 
   let url = APIURL + "/categories/" + userID;
 
-  return Axios.put(url, user).then(response => {
+  return Axios.put(url, user, getHeaders()).then(response => {
     return response.data;
   });
 }
@@ -139,7 +141,7 @@ export function updateCategory(userID, user) {
 export function getCategoryByID(userID) {
   let url = APIURL + "/categories/" + userID;
 
-  return Axios.get(url).then(response => {
+  return Axios.get(url, getHeaders()).then(response => {
     return response.data[0];
   });
 }
@@ -148,7 +150,7 @@ export function getCategoryByID(userID) {
 export function getUserCategories() {
   let url = APIURL + "/categories";
 
-  return Axios.get(url).then(response => {
+  return Axios.get(url, getHeaders()).then(response => {
     return response.data;
   });
 }
