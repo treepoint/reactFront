@@ -9,11 +9,11 @@ class ModalWindow extends React.Component {
   render() {
     return (
       <div
-        className="blur"
+        className="modalWindowBlur"
         onClick={event => this.props.hideModalWindow(event)}
       >
-        <div className="close" />
-        <div className="modal">{this.props.contentToWrap}</div>
+        <div className="modalWindowClose" />
+        <div className="modalWindow">{this.props.contentToWrap}</div>
       </div>
     );
   }

@@ -62,9 +62,13 @@ export function createUser(user) {
 
   let url = APIURL + "/users/registration";
 
-  return Axios.post(url, user, getHeaders()).then(response => {
-    return response.data;
-  });
+  return Axios.post(url, user, getHeaders())
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
 }
 
 //Обновить пользователя

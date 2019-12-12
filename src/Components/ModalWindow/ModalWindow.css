@@ -1,4 +1,4 @@
-.blur {
+.modalWindowBlur {
   background: rgba(0, 0, 0, 0.2);
   display: block;
   overflow-x: hidden;
@@ -10,8 +10,9 @@
   bottom: 0;
 }
 
-.modal {
-  width: 260px;
+.modalWindow {
+  min-width: 320px;
+  max-width: max-content;
   margin: auto;
   border: 1px solid rgba(138, 138, 138, 0.73);
   padding: 12px 24px;
@@ -20,7 +21,7 @@
   background: #ffffff;
 }
 
-.close {
+.modalWindowClose {
   position: absolute;
   right: 0px;
   top: 60px;
@@ -28,11 +29,11 @@
   height: 47px;
   opacity: 0.6;
 }
-.close:hover {
+.modalWindowClose:hover {
   opacity: 1;
 }
-.close:before,
-.close:after {
+.modalWindowClose:before,
+.modalWindowClose:after {
   position: absolute;
   left: 6px;
   content: " ";
@@ -40,9 +41,9 @@
   width: 2px;
   background-color: #000;
 }
-.close:before {
+.modalWindowClose:before {
   transform: rotate(45deg);
 }
-.close:after {
+.modalWindowClose:after {
   transform: rotate(-45deg);
 }

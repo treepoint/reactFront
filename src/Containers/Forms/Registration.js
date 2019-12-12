@@ -11,6 +11,7 @@ import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
 import Anchor from "../../Components/Anchor/Anchor";
+import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 //Подрубаем вспомогательную функциональность
 import { getInvalidMessagesAsObj } from "./FormsUtils";
 import { email, password } from "./USER_INPUTS";
@@ -23,7 +24,7 @@ const INPUTS = [email, password];
 class Registration extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: {} };
+    this.state = { user: {}, errorMessage: "" };
   }
 
   updateUserInState(event) {
@@ -43,10 +44,28 @@ class Registration extends React.Component {
         //Сохраняем только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
           //Создаем пользователя
-          createUser(this.state.user);
+          let promise = createUser(this.state.user);
 
-          //Открываем окно входа
-          this.props.openLoginWindow();
+          promise.then(result => {
+            //Если есть ошибки
+            if (typeof result.response !== "undefined") {
+              switch (result.response.status) {
+                case 409:
+                  this.setState({
+                    errorMessage:
+                      "Пользователь с таким email уже зарегистрирован"
+                  });
+                  break;
+                default:
+                  this.setState({
+                    errorMessage: "Произошла неизвестная ошибка"
+                  });
+              }
+            } else {
+              //Открываем окно входа
+              this.props.openLoginWindow();
+            }
+          });
         }
       }
     );
@@ -75,6 +94,7 @@ class Registration extends React.Component {
             <AnchorModalWindow value="Войти" modalWindowName={login} />
           </Anchor>
         </div>
+        <ErrorMessage message={this.state.errorMessage} />
         <Button
           isPrimary={true}
           value="ОТПРАВИТЬ"
