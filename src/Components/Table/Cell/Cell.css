@@ -4,6 +4,11 @@
   margin: 0px !important;
 }
 
+.td.chosen {
+  display: inline-table;
+  background: white;
+}
+
 .td:focus {
   background: rgb(219, 219, 219);
 }
@@ -36,4 +41,14 @@ b {
 
 .inner:focus {
   background: rgb(219, 219, 219);
+}
+
+.inner.chosen {
+  display: inline-table;
+  background: white;
+  z-index: 1000;
+  min-height: max-content !important;
+  position: fixed;
+  border-bottom: 1px solid black;
+  box-shadow: 0px 0px 4px black;
 }
