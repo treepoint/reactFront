@@ -25,9 +25,11 @@ b {
 }
 
 .inner {
-  position: absolute;
-  padding-left: 2px;
-  padding-top: 2px;
+  padding-left: 4px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-overflow: ellipsis;
 }
 
 .inner:focus {
