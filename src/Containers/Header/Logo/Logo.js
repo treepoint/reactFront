@@ -1,7 +1,7 @@
 import React from "react";
 //Подключаем роутинг
 import { NavLink } from "react-router-dom";
-import logo from "../../Images/logo.png";
+import logo from "../../../Images/logo.png";
 
 class Logo extends React.Component {
   render() {

@@ -35,7 +35,7 @@ class Categories extends React.Component {
 
     return (
       <div>
-        <Page title="Список категорий">
+        <Page title="Список категорий" isPrivate={true}>
           <Table
             headerEditable={false}
             bodyEditable={false}

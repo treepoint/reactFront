@@ -1,8 +1,8 @@
 import React from "react";
-import Navigation from "../../Components/Navigation/Navigation";
+import Navigation from "./Navigation/Navigation";
 import Spacer from "../../Components/Spacer/Spacer";
-import Logo from "../../Components/Logo/Logo";
-import UserMenu from "../UserMenu/UserMenu";
+import Logo from "./Logo/Logo";
+import UserMenu from "./UserMenu/UserMenu";
 import "./Header.css";
 
 class Header extends React.Component {

@@ -16,7 +16,7 @@ import Home from "../Contents/Home";
 import Categories from "../Contents/Categories";
 import About from "../Contents/About";
 import Users from "../Contents/Users";
-import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
+import Bottom from "../Bottom/Bottom";
 //CSS
 import "./App.css";
 
@@ -92,7 +92,7 @@ class App extends React.Component {
           this.props.modalWindowState,
           this.props.modalWindowName
         )}
-        <BroadCastMessage message="Веб-приложение находится в разработке. Номер сборки: 0.1.6" />
+        <Bottom />
       </body>
     );
   }
