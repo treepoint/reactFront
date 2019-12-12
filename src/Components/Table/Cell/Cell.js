@@ -87,7 +87,7 @@ class Cell extends React.Component {
           style={{
             //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
             width: this.state.width - 5 + "px",
-            height: this.state.height + "px"
+            height: this.state.height - 12 + "px"
           }}
           //Задаем контент
           html={this.state.htmlContent}

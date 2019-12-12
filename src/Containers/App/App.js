@@ -92,7 +92,7 @@ class App extends React.Component {
           this.props.modalWindowState,
           this.props.modalWindowName
         )}
-        <BroadCastMessage message="Веб-приложение находится в разработке. Номер сборки: 0.1.4" />
+        <BroadCastMessage message="Веб-приложение находится в разработке. Номер сборки: 0.1.5" />
       </body>
     );
   }

@@ -25,6 +25,8 @@ b {
 }
 
 .inner {
+  padding-top: 6px;
+  padding-bottom: 6px;
   padding-left: 4px;
   white-space: nowrap;
   overflow-x: hidden;
