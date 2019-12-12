@@ -1,3 +1,7 @@
+/* Немного переделанный код отсюда https://github.com/15Dkatz/sfcookies
+ * Спасибо 15Dkatz!
+ */
+
 export function bake_cookie(name, value, date) {
   let expirey = date instanceof Date ? " expires=" + date : null;
 

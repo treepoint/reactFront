@@ -7,7 +7,7 @@ import { getUsers } from "../../APIController/APIController";
 class Users extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { userList: [] };
+    this.state = { usersList: [] };
   }
 
   componentDidMount() {
@@ -19,24 +19,29 @@ class Users extends React.Component {
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ userList: result });
+        this.setState({ usersList: result });
       }
     });
   }
 
   render() {
     //Соберем таблицу для отображения
-    let users = [];
-    users[0] = ["ID", "Email", "Пароль"];
+    let users = [["ID", "Email", "Пароль"]];
 
-    this.state.userList.forEach(user => {
+    this.state.usersList.forEach(user => {
       users.push([user.id, user.email, user.password]);
     });
 
     return (
       <div>
         <Page title="Список пользователей">
-          <Table>{users}</Table>
+          <Table
+            headerEditable={false}
+            bodyEditable={false}
+            isResizeble={false}
+          >
+            {users}
+          </Table>
           <Button
             value="Обновить список пользователей"
             isPrimary={true}

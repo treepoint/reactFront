@@ -1,19 +1,6 @@
 .table {
-  border-spacing: 0px;
-  border-collapse: collapse;
-}
-
-.td {
-  border: 1px solid rgba(138, 138, 138, 0.73);
-  padding: 4px;
-}
-.tr {
-  border: 1px solid rgba(138, 138, 138, 0.73);
-  padding: 4px;
-}
-
-.th {
-  border: 1px solid rgba(138, 138, 138, 0.73);
-  padding: 4px;
-  background-color: rgb(240, 240, 240);
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  width: max-content;
+  height: max-content;
 }

@@ -36,7 +36,13 @@ class Categories extends React.Component {
     return (
       <div>
         <Page title="Список категорий">
-          <Table>{categories}</Table>
+          <Table
+            headerEditable={false}
+            bodyEditable={false}
+            isResizeble={false}
+          >
+            {categories}
+          </Table>
           <Button
             value="Обновить список категорий"
             isPrimary={true}

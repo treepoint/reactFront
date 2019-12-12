@@ -1,0 +1,15 @@
+.row {
+  display: flex;
+  justify-content: left;
+  border-bottom: 1px solid black;
+}
+
+.row.header {
+  display: flex;
+  justify-content: left;
+  border-bottom: 1px solid black;
+}
+
+.row:focus {
+  background: rgb(219, 219, 219);
+}

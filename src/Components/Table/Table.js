@@ -1,48 +1,171 @@
 import React from "react";
+import Row from "./Row/Row";
 import "./Table.css";
 
-/*
- * Концепция какая. Таблица — массив массивов. Примерно так:
- * table = [] //объявляем таблицу
- * table[0] = ["item", "item2", "item3"] //шапка
- * table[1] = ["value", "value", "value"] //строка
- *
- * Собственно поэтому сначало отдельно рисуем шапку, потом тушку.
- *
- * В перспективе будет компонент, который умеет:
- * 1. Принять в себя таблицу
- * 2. Запихать её в стейт
- * 3. Отрисовать содержимое
- * 4. Изменять содержимое и оформление содержимого
- *
- * В идеале каждая ячейка будет объектом из которых потом будет воссоздана таблица
- *
- */
-
 class Table extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      tableWidth: 0,
+      //Описание столбцов — ширина и прошлая ширина. Можно считать служебным
+      columnsDescription: [],
+      tableHeader: [],
+      tableBody: []
+    };
+  }
+
+  componentDidMount() {
+    let rowTable = this.isValidTable(this.props.children);
+    this.setDescription(rowTable);
+  }
+
+  setHeader(table) {
+    //Первый элемент — всегда заголовок таблицы. Достанем его
+    let tableHeader = table[0];
+    if (
+      JSON.stringify(tableHeader) !== JSON.stringify(this.state.tableHeader)
+    ) {
+      this.setState({
+        tableHeader
+      });
+    }
+  }
+
+  setBody(table) {
+    let tableBody = table.slice(1);
+    if (JSON.stringify(tableBody) !== JSON.stringify(this.state.tableBody)) {
+      this.setState({
+        tableBody
+      });
+    }
+  }
+
+  setDescription(table) {
+    //Соберем массив, описывающий столбцы
+    let columnsDescription = table[0].map(() => {
+      return {
+        //Текущая, ну или начальная ширина
+        width: 240,
+        //И прошлая ширина. По умолчанию всегда 0
+        prevWidth: 0
+      };
+    });
+
+    //Запишем в стейт описание столбцов
+    if (
+      JSON.stringify(columnsDescription) !==
+      JSON.stringify(this.state.columnsDescription)
+    ) {
+      this.setState({
+        columnsDescription: columnsDescription
+      });
+    }
+  }
+
+  //Изменяем ширину столбцов
+  changeColumnWidth(width, column) {
+    //Если прилетело это событие, но ширина — ноль. Не отрабатываем. Это бессмысленно и скорее всего меняли высоту
+    if (width === 0) {
+      return;
+    }
+
+    //Скопируем текущий стейт
+    let columnsDescription = this.state.columnsDescription;
+    //Обновим состояние нужного столбца
+    columnsDescription[column] = {
+      //Ширину перезапишем
+      width:
+        columnsDescription[column].width +
+        width -
+        columnsDescription[column].prevWidth,
+      //Заменим прошлую ширину на текущую, которая после этого станет прошлой
+      prevWidth: width
+    };
+
+    //Обновим состояние
+    this.setState({
+      columnsDescription
+    });
+  }
+
+  //Сбрасываем предыдушие длины как только закончили изменение размеров
+  stopChangeDimensions() {
+    //Скопируем текущий стейт
+    let columnsDescription = this.state.columnsDescription;
+
+    //Сбросим все изменения размеров
+    columnsDescription = columnsDescription.map(column => {
+      return Object.assign(column, { prevWidth: 0 });
+    });
+
+    //Обновим стейт
+    this.setState({ columnsDescription });
+  }
+
+  isValidTable(table) {
+    if (typeof table !== "object") {
+      return [["Ошибка"], ["Передан не массив"]];
+    }
+
+    if (table.length === 0) {
+      return [["Ошибка"], ["Передан пустой массив"]];
+    }
+
+    return table;
+  }
+
   render() {
-    let tableBody = this.props.children;
-    let tableHeader = tableBody.shift();
+    let rowTable = this.isValidTable(this.props.children);
+
+    this.setHeader(rowTable);
+    this.setBody(rowTable);
+
+    //Соберем шапку для отрисовки
+    let tableHeader = (
+      <Row
+        //Указываем, что это шапка
+        isHeader={true}
+        //Задаем возможность редактирования контента в ячейках
+        isEditable={this.props.headerEditable}
+        //Задаем возможность изменения размеров ячеек
+        isResizeble={this.props.isResizeble}
+        //Ширина всей таблицы, ну или ширина каждой строки
+        width={this.state.tableWidth}
+        //Передадим содержимое столбцов из шапки
+        rowsContent={this.state.tableHeader}
+        //Так же передадим описание столбцов — ширину и подобное
+        columnsDescription={this.state.columnsDescription}
+        //И callback'и на обработку изменения ширины столбца
+        changeColumnWidth={(width, column) =>
+          this.changeColumnWidth(width, column)
+        }
+        //и остановку изменения
+        stopChangeDimensions={() => this.stopChangeDimensions()}
+      />
+    );
+
+    //Соберем тушку для отрисовки
+    let tableBody = this.state.tableBody.map(row => {
+      return (
+        <Row
+          isEditable={this.props.bodyEditable}
+          isResizeble={this.props.isResizeble}
+          width={this.state.tableWidth}
+          rowsContent={row}
+          columnsDescription={this.state.columnsDescription}
+          changeColumnWidth={(width, column) =>
+            this.changeColumnWidth(width, column)
+          }
+          stopChangeDimensions={() => this.stopChangeDimensions()}
+        />
+      );
+    });
 
     return (
-      <table className="table">
-        <tbody>
-          <tr className="tr">
-            {/* Отрисовываем шапку */
-            tableHeader.map(item => (
-              <th className="th">{item}</th>
-            ))}
-          </tr>
-          {/* Отрисовываем тело таблицы */
-          Object.keys(tableBody).map(row => (
-            <tr className="tr">
-              {tableBody[row].map(item => (
-                <td className="td">{item}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="table">
+        {tableHeader}
+        {tableBody}
+      </div>
     );
   }
 }

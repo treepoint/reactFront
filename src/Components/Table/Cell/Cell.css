@@ -1,0 +1,35 @@
+.td {
+  vertical-align: middle;
+  border-left: 1px solid #000;
+  margin: 0px !important;
+}
+
+.td:focus {
+  background: rgb(219, 219, 219);
+}
+
+.th {
+  font-weight: 700;
+  vertical-align: middle;
+  border-left: 1px solid #000;
+  background: rgb(224, 224, 224);
+  margin: 0px !important;
+}
+
+.th:focus {
+  background: rgb(219, 219, 219);
+}
+
+b {
+  font-weight: bold;
+}
+
+.inner {
+  position: absolute;
+  padding-left: 2px;
+  padding-top: 2px;
+}
+
+.inner:focus {
+  background: rgb(219, 219, 219);
+}
