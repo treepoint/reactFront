@@ -11,7 +11,7 @@ class Cell extends React.Component {
     this.state = {
       htmlContent: " ",
       innerClassName: "inner",
-      contextMenuClassName: "contextMenu hidden",
+      contextMenuIsHidden: true,
       uuid: ""
     };
   }
@@ -45,15 +45,21 @@ class Cell extends React.Component {
   showContextMenu(event) {
     if (this.props.isEditable) {
       event.preventDefault();
-      this.setState({ contextMenuClassName: "contextMenu" });
+      this.setState({ contextMenuIsHidden: false });
     }
   }
 
   //Срабатывает при потере фокуса
-  setDefaultClassName() {
+  setDefaultClassNameForInner() {
     this.setState({
-      innerClassName: "inner",
-      contextMenuClassName: "contextMenu hidden"
+      innerClassName: "inner"
+    });
+  }
+
+  //Срабатывает при потере фокуса
+  setContextMenuHidden() {
+    this.setState({
+      contextMenuIsHidden: true
     });
   }
 
@@ -116,7 +122,11 @@ class Cell extends React.Component {
           this.props.stopChangeDimensions();
         }}
       >
-        <ContextMenu className={this.state.contextMenuClassName} />
+        <ContextMenu
+          className={this.state.contextMenuClassName}
+          setContextMenuHidden={() => this.setContextMenuHidden()}
+          contextMenuIsHidden={this.state.contextMenuIsHidden}
+        />
         {/*Отображаем само поле с редактируемым контентом */}
         <ContentEditable
           spellcheck="false"
@@ -134,7 +144,7 @@ class Cell extends React.Component {
           //Обрабатываем двойной клик
           onDoubleClick={event => this.setChosenClassName(event)}
           //При уходе фокуса задаем стандартный стиль. Нужно чтобы сбросить последствия двойного клика
-          onBlur={event => this.setDefaultClassName(event)}
+          onBlur={event => this.setDefaultClassNameForInner(event)}
           //Обрабатываем контекстное меню
           onContextMenu={event => this.showContextMenu(event)}
         ></ContentEditable>
