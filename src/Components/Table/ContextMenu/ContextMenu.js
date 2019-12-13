@@ -118,7 +118,7 @@ class ContextMenu extends React.Component {
             isPressed={!!this.state.isBackgroundPickerActive ? true : false}
             onClick={() => this.showBackgroundColorPicker()}
           />
-          <div style={{ position: "absolute", top: "44px", left: "48px" }}>
+          <div style={{ position: "absolute", top: "51px", left: "83px" }}>
             <TwitterPicker
               className={
                 !!this.state.isBackgroundPickerActive
