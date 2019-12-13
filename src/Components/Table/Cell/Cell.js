@@ -63,28 +63,24 @@ class Cell extends React.Component {
     this.setState({ htmlContent });
   }
 
-  setDimensions() {
-    //Если из вне пришли значения ширины и высоты и они отличаются от текущих — засетим
-    if (this.state.height !== this.props.height) {
-      this.setState({ height: this.props.height });
+  changeDimensions(width, height) {
+    if (height !== 0) {
+      this.props.changeHeight(height);
     }
-
-    if (this.state.width !== this.props.width) {
-      this.setState({ width: this.props.width });
+    if (width !== 0) {
+      this.props.changeWidth(width);
     }
   }
 
   render() {
-    this.setDimensions();
-
     return (
       <Resizable
         className={!!this.props.isTh ? "th" : "td"}
         uuid={this.state.uuid}
         //Выставляем размеры ячейки
         size={{
-          width: this.state.width + "px",
-          height: this.state.height + "px"
+          width: this.props.width + "px",
+          height: this.props.height + "px"
         }}
         //Задаем минимальную высоту
         minHeight={34}
@@ -92,7 +88,7 @@ class Cell extends React.Component {
         enable={this.setEnabled()}
         //При резайзе отправляем размеры вверх, в строку
         onResize={(e, direction, ref, d) => {
-          this.props.changeDimensions(d.width, d.height);
+          this.changeDimensions(d.width, d.height);
         }}
         //Если закончили ресайз — прокинем событие выше. Столбец на
         //основании этого при следующем резайзе будет считать размеры заново
@@ -104,8 +100,8 @@ class Cell extends React.Component {
         <CellContent
           htmlContent={this.state.htmlContent}
           disabled={!this.props.isEditable}
-          width={this.state.width}
-          height={this.state.height}
+          width={this.props.width}
+          height={this.props.height}
           isTh={this.props.isTh}
           style={this.state.style}
           setStyle={style => {
