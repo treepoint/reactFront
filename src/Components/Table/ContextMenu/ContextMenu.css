@@ -1,0 +1,34 @@
+.contextMenu {
+  position: absolute;
+  width: max-content;
+  margin-left: 4px;
+  margin-top: -38px;
+  background: #f7f7f7;
+  padding: 4px;
+  border: 1px solid #797979;
+  min-width: 40px;
+  box-shadow: 0px 0px 2px #919191;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.contextMenu:before {
+  border: 8px solid transparent;
+  border-top-color: #797979;
+  position: absolute;
+  top: 100%;
+  left: 8px;
+  content: "";
+}
+.contextMenu:after {
+  border: 6px solid transparent;
+  border-top-color: #f7f7f7;
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  content: "";
+}
+
+.contextMenu.hidden {
+  display: none;
+}

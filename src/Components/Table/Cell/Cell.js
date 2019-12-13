@@ -2,6 +2,7 @@ import React from "react";
 import ContentEditable from "react-contenteditable";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
+import ContextMenu from "../ContextMenu/ContextMenu";
 import "./Cell.css";
 
 class Cell extends React.Component {
@@ -9,7 +10,8 @@ class Cell extends React.Component {
     super();
     this.state = {
       htmlContent: " ",
-      className: "inner",
+      innerClassName: "inner",
+      contextMenuClassName: "contextMenu hidden",
       uuid: ""
     };
   }
@@ -36,12 +38,23 @@ class Cell extends React.Component {
       return;
     }
 
-    this.setState({ className: "inner chosen" });
+    this.setState({ innerClassName: "inner chosen" });
+  }
+
+  //Срабатывает при вызове контекстного меню
+  showContextMenu(event) {
+    if (this.props.isEditable) {
+      event.preventDefault();
+      this.setState({ contextMenuClassName: "contextMenu" });
+    }
   }
 
   //Срабатывает при потере фокуса
   setDefaultClassName() {
-    this.setState({ className: "inner" });
+    this.setState({
+      innerClassName: "inner",
+      contextMenuClassName: "contextMenu hidden"
+    });
   }
 
   render() {
@@ -103,10 +116,11 @@ class Cell extends React.Component {
           this.props.stopChangeDimensions();
         }}
       >
+        <ContextMenu className={this.state.contextMenuClassName} />
         {/*Отображаем само поле с редактируемым контентом */}
         <ContentEditable
           spellcheck="false"
-          className={this.state.className}
+          className={this.state.innerClassName}
           style={{
             //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
             width: this.state.width - 5 + "px",
@@ -121,6 +135,8 @@ class Cell extends React.Component {
           onDoubleClick={event => this.setChosenClassName(event)}
           //При уходе фокуса задаем стандартный стиль. Нужно чтобы сбросить последствия двойного клика
           onBlur={event => this.setDefaultClassName(event)}
+          //Обрабатываем контекстное меню
+          onContextMenu={event => this.showContextMenu(event)}
         ></ContentEditable>
       </Resizable>
     );
