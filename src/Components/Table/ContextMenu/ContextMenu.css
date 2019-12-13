@@ -45,3 +45,22 @@
 .blurContextMenu.hidden {
   display: none;
 }
+
+.twitterPicker {
+  background: #f7f7f7 !important;
+  border: 1px solid #797979 !important;
+}
+
+.twitterPicker.hidden {
+  display: none;
+}
+
+.twitterPicker:before {
+  border: 11px solid transparent;
+  border-bottom-color: transparent;
+  border-bottom-color: #797979;
+  position: absolute;
+  bottom: 100%;
+  left: 10px;
+  content: "";
+}

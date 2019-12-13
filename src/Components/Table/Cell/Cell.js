@@ -1,8 +1,7 @@
 import React from "react";
-import ContentEditable from "react-contenteditable";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
-import ContextMenu from "../ContextMenu/ContextMenu";
+import CellContent from "./CellContent/CellContent";
 import "./Cell.css";
 
 class Cell extends React.Component {
@@ -10,9 +9,9 @@ class Cell extends React.Component {
     super();
     this.state = {
       htmlContent: " ",
-      innerClassName: "inner",
-      contextMenuIsHidden: true,
-      uuid: ""
+      uuid: "",
+      //Стиль по умолчанию
+      style: { bold: false, italic: false, backgroundColor: "#ffffff" }
     };
   }
 
@@ -27,56 +26,10 @@ class Cell extends React.Component {
     this.setState({ uuid: uuid() });
   }
 
-  //Изменяем контент по вводу
-  onChange(event) {
-    this.setState({ htmlContent: event.target.value });
-  }
-
-  //Срабатывает при двойном клике
-  setChosenClassName() {
-    if (!this.props.isEditable) {
-      return;
-    }
-
-    this.setState({ innerClassName: "inner chosen" });
-  }
-
-  //Срабатывает при вызове контекстного меню
-  showContextMenu(event) {
-    if (this.props.isEditable) {
-      event.preventDefault();
-      this.setState({ contextMenuIsHidden: false });
-    }
-  }
-
-  //Срабатывает при потере фокуса
-  setDefaultClassNameForInner() {
-    this.setState({
-      innerClassName: "inner"
-    });
-  }
-
-  //Срабатывает при потере фокуса
-  setContextMenuHidden() {
-    this.setState({
-      contextMenuIsHidden: true
-    });
-  }
-
-  render() {
-    //Если из вне пришли значения ширины и высоты и они отличаются от текущих — засетим
-    if (this.state.height !== this.props.height) {
-      this.setState({ height: this.props.height });
-    }
-
-    if (this.state.width !== this.props.width) {
-      this.setState({ width: this.props.width });
-    }
-
-    let enable;
-
+  //Задаем возможность изменяться
+  setEnabled() {
     if (this.props.isResizeble) {
-      enable = {
+      return {
         top: false,
         right: true,
         bottom: true,
@@ -87,7 +40,7 @@ class Cell extends React.Component {
         topLeft: false
       };
     } else {
-      enable = {
+      return {
         top: false,
         right: false,
         bottom: false,
@@ -98,6 +51,31 @@ class Cell extends React.Component {
         topLeft: false
       };
     }
+  }
+
+  //Обрабатываем изменения стиля контента в ячейке
+  setStyle(style) {
+    this.setState({ style });
+  }
+
+  //Обрабатываем изменения контента в ячейке
+  setHtmlContent(htmlContent) {
+    this.setState({ htmlContent });
+  }
+
+  setDimensions() {
+    //Если из вне пришли значения ширины и высоты и они отличаются от текущих — засетим
+    if (this.state.height !== this.props.height) {
+      this.setState({ height: this.props.height });
+    }
+
+    if (this.state.width !== this.props.width) {
+      this.setState({ width: this.props.width });
+    }
+  }
+
+  render() {
+    this.setDimensions();
 
     return (
       <Resizable
@@ -111,7 +89,7 @@ class Cell extends React.Component {
         //Задаем минимальную высоту
         minHeight={34}
         //Указываем какие грани ячейки активны для изменения размеров
-        enable={enable}
+        enable={this.setEnabled()}
         //При резайзе отправляем размеры вверх, в строку
         onResize={(e, direction, ref, d) => {
           this.props.changeDimensions(d.width, d.height);
@@ -122,32 +100,19 @@ class Cell extends React.Component {
           this.props.stopChangeDimensions();
         }}
       >
-        <ContextMenu
-          className={this.state.contextMenuClassName}
-          setContextMenuHidden={() => this.setContextMenuHidden()}
-          contextMenuIsHidden={this.state.contextMenuIsHidden}
-        />
-        {/*Отображаем само поле с редактируемым контентом */}
-        <ContentEditable
-          spellcheck="false"
-          className={this.state.innerClassName}
-          style={{
-            //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
-            width: this.state.width - 5 + "px",
-            height: this.state.height - 12 + "px"
-          }}
-          //Задаем контент
-          html={this.state.htmlContent}
-          //Задаем редактируемость. Не редактируем === отключено
+        {/*Добавляем сам контент в ячейке*/}
+        <CellContent
+          htmlContent={this.state.htmlContent}
           disabled={!this.props.isEditable}
-          onChange={event => this.onChange(event)}
-          //Обрабатываем двойной клик
-          onDoubleClick={event => this.setChosenClassName(event)}
-          //При уходе фокуса задаем стандартный стиль. Нужно чтобы сбросить последствия двойного клика
-          onBlur={event => this.setDefaultClassNameForInner(event)}
-          //Обрабатываем контекстное меню
-          onContextMenu={event => this.showContextMenu(event)}
-        ></ContentEditable>
+          width={this.state.width}
+          height={this.state.height}
+          isTh={this.props.isTh}
+          style={this.state.style}
+          setStyle={style => {
+            this.setStyle(style);
+          }}
+          setHtmlContent={htmlContent => this.setHtmlContent(htmlContent)}
+        />
       </Resizable>
     );
   }

@@ -5,12 +5,13 @@ class Action extends React.Component {
   render() {
     return (
       <div
-        className="action"
+        className={!!this.props.isPressed ? "action pressed" : "action"}
         style={{
           background:
-            "url(" + this.props.icon + ") no-repeat scroll 100% 0 transparent",
-          backgroundSize: "18px 18px"
+            "url(" + this.props.icon + ") no-repeat scroll 2px 2px transparent",
+          backgroundSize: "22px 22px"
         }}
+        onClick={() => this.props.onClick()}
       ></div>
     );
   }

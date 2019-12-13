@@ -35,7 +35,7 @@ class Users extends React.Component {
     return (
       <div>
         <Page title="Список пользователей" isPrivate={true}>
-          <Table headerEditable={true} bodyEditable={true} isResizeble={true}>
+          <Table headerEditable={false} bodyEditable={true} isResizeble={true}>
             {users}
           </Table>
           <Button
