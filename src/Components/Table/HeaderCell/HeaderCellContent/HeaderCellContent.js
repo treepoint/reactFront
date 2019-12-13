@@ -1,13 +1,13 @@
 import React from "react";
 import ContentEditable from "react-contenteditable";
 import ContextMenu from "../../ContextMenu/ContextMenu";
-import "./CellContent.css";
+import "./HeaderCellContent.css";
 
-class CellContent extends React.Component {
+class HeaderCellContent extends React.Component {
   constructor() {
     super();
     this.state = {
-      className: "cellContent",
+      className: "headerCellContent",
       contextMenuIsHidden: true
     };
   }
@@ -47,7 +47,7 @@ class CellContent extends React.Component {
     };
 
     //Если ячейка входит в состав заголовка и заголовок не редактируемый, тогда стиль всегда один
-    if (this.props.isTh && this.props.disabled) {
+    if (this.props.disabled) {
       style = Object.assign(style, { fontWeight: "900" });
     } else {
       //Иначе у нас все вариативно
@@ -64,7 +64,7 @@ class CellContent extends React.Component {
   //Срабатывает при потере фокуса
   setDefaultClassName() {
     this.setState({
-      className: "cellContent"
+      className: "headerCellContent"
     });
   }
 
@@ -74,19 +74,27 @@ class CellContent extends React.Component {
       return;
     }
 
-    this.setState({ className: "cellContent chosen" });
+    this.setState({ className: "headerCellContent chosen" });
   }
 
   render() {
-    return (
-      <div>
+    //Контекстное меню рисуем только если нужно
+    let contextMenu;
+
+    if (!this.state.contextMenuIsHidden) {
+      contextMenu = (
         <ContextMenu
           className={this.state.contextMenuClassName}
-          contextMenuIsHidden={this.state.contextMenuIsHidden}
           cellStyle={this.props.style}
           setContextMenuHidden={event => this.setContextMenuHidden(event)}
           setCellStyle={style => this.setStyle(style)}
         />
+      );
+    }
+
+    return (
+      <div>
+        {contextMenu}
 
         <ContentEditable
           spellCheck="false"
@@ -109,4 +117,4 @@ class CellContent extends React.Component {
   }
 }
 
-export default CellContent;
+export default HeaderCellContent;

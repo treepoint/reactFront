@@ -96,11 +96,7 @@ class ContextMenu extends React.Component {
         />
         <div
           tabIndex="1"
-          className={
-            !!this.props.contextMenuIsHidden
-              ? "contextMenu hidden"
-              : "contextMenu"
-          }
+          className="contextMenu"
           onClick={event => this.onClick(event)}
         >
           <Action

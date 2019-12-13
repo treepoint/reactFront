@@ -1,5 +1,6 @@
 import React from "react";
-import Cell from "../Cell/Cell";
+import RegularCell from "../RegularCell/RegularCell";
+import HeaderCell from "../HeaderCell/HeaderCell";
 import "./Row.css";
 
 class Row extends React.Component {
@@ -21,6 +22,10 @@ class Row extends React.Component {
     });
   }
 
+  changeUUID(uuid) {
+    this.props.changeUUID(uuid);
+  }
+
   changeWidth(width, column) {
     //А вот длину пробрасываем выше, чтобы обработать на
     //уровне таблицы и поменять размеры ячеек во всех строках
@@ -40,19 +45,36 @@ class Row extends React.Component {
   render() {
     //Из пришедшего описания столбцов соберем ячейки
     let cells = this.props.columnsDescription.map((column, index) => {
-      return (
-        <Cell
-          isEditable={this.props.isEditable}
-          isResizeble={this.props.isResizeble}
-          isTh={this.props.isHeader}
-          height={this.state.height}
-          width={column.width}
-          htmlContent={this.props.rowsContent[index]}
-          changeWidth={width => this.changeWidth(width, index)}
-          changeHeight={height => this.changeHeight(height)}
-          stopChangeDimensions={() => this.stopChangeDimensions()}
-        />
-      );
+      if (!this.props.isHeader) {
+        return (
+          <RegularCell
+            isEditable={this.props.isEditable}
+            isResizeble={this.props.isResizeble}
+            uuid={this.props.uuid}
+            width={column.width}
+            height={this.state.height}
+            htmlContent={this.props.rowsContent[index]}
+            changeUUID={uuid => this.changeUUID(uuid)}
+            changeWidth={width => this.changeWidth(width, index)}
+            changeHeight={height => this.changeHeight(height)}
+            stopChangeDimensions={() => this.stopChangeDimensions()}
+          />
+        );
+      } else
+        return (
+          <HeaderCell
+            isEditable={this.props.isEditable}
+            isResizeble={this.props.isResizeble}
+            uuid={this.props.uuid}
+            width={column.width}
+            height={this.state.height}
+            htmlContent={this.props.rowsContent[index]}
+            changeUUID={uuid => this.changeUUID(uuid)}
+            changeWidth={width => this.changeWidth(width, index)}
+            changeHeight={height => this.changeHeight(height)}
+            stopChangeDimensions={() => this.stopChangeDimensions()}
+          />
+        );
     });
 
     return <div className="row">{cells}</div>;

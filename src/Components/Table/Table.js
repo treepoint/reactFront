@@ -10,7 +10,8 @@ class Table extends React.Component {
       //Описание столбцов — ширина и прошлая ширина. Можно считать служебным
       columnsDescription: [],
       tableHeader: [],
-      tableBody: []
+      tableBody: [],
+      uuid: ""
     };
   }
 
@@ -52,14 +53,9 @@ class Table extends React.Component {
     });
 
     //Запишем в стейт описание столбцов
-    if (
-      JSON.stringify(columnsDescription) !==
-      JSON.stringify(this.state.columnsDescription)
-    ) {
-      this.setState({
-        columnsDescription: columnsDescription
-      });
-    }
+    this.setState({
+      columnsDescription
+    });
   }
 
   //Изменяем ширину столбцов
@@ -88,6 +84,12 @@ class Table extends React.Component {
     });
   }
 
+  changeUUID(uuid) {
+    this.setState({
+      uuid
+    });
+  }
+
   //Сбрасываем предыдушие длины как только закончили изменение размеров
   stopChangeDimensions() {
     //Скопируем текущий стейт
@@ -99,7 +101,7 @@ class Table extends React.Component {
     });
 
     //Обновим стейт
-    this.setState({ columnsDescription });
+    this.setState({ columnsDescription, uuid: "" });
   }
 
   isValidTable(table) {
@@ -129,6 +131,7 @@ class Table extends React.Component {
         isEditable={this.props.headerEditable}
         //Задаем возможность изменения размеров ячеек
         isResizeble={this.props.isResizeble}
+        uuid={this.state.uuid}
         //Ширина всей таблицы, ну или ширина каждой строки
         width={this.state.tableWidth}
         //Передадим содержимое столбцов из шапки
@@ -141,6 +144,7 @@ class Table extends React.Component {
         }
         //и остановку изменения
         stopChangeDimensions={() => this.stopChangeDimensions()}
+        changeUUID={uuid => this.changeUUID(uuid)}
       />
     );
 
@@ -150,6 +154,7 @@ class Table extends React.Component {
         <Row
           isEditable={this.props.bodyEditable}
           isResizeble={this.props.isResizeble}
+          uuid={this.state.uuid}
           width={this.state.tableWidth}
           rowsContent={row}
           columnsDescription={this.state.columnsDescription}
@@ -157,6 +162,7 @@ class Table extends React.Component {
             this.changeColumnWidth(width, column)
           }
           stopChangeDimensions={() => this.stopChangeDimensions()}
+          changeUUID={uuid => this.changeUUID(uuid)}
         />
       );
     });

@@ -1,4 +1,4 @@
-.cellContent {
+.headerCellContent {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 4px;
@@ -8,11 +8,11 @@
   text-overflow: ellipsis;
 }
 
-.cellContent:focus {
+.headerCellContent:focus {
   background: rgb(240, 240, 240);
 }
 
-.cellContent.chosen {
+.headerCellContent.chosen {
   display: inline-table;
   background: white;
   z-index: 1000;

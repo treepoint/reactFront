@@ -1,10 +1,10 @@
 import React from "react";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
-import CellContent from "./CellContent/CellContent";
-import "./Cell.css";
+import CellContent from "./HeaderCellContent/HeaderCellContent";
+import "./HeaderCell.css";
 
-class Cell extends React.Component {
+class HeaderCell extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -64,10 +64,27 @@ class Cell extends React.Component {
   }
 
   changeDimensions(width, height) {
+    if (!this.props.isResizeble) {
+      return;
+    }
+
+    ///Отправляем uuid ячейки, которая меняет всех
+    if (this.props.uuid === "") {
+      this.props.changeUUID(this.state.uuid);
+    }
+
+    //Если сейчас изменяется не эта ячейка — размеры никуда не прокидываем
+    if (this.props.uuid !== this.state.uuid) {
+      return;
+    }
+
+    //Если что-то поменялось и это не высота, значит длина
     if (height !== 0) {
       this.props.changeHeight(height);
-    }
-    if (width !== 0) {
+    } else {
+      /*Отправляем uuid ячейки, которая меняет всех. Если сейчас
+       *изменяется не эта ячейка — размеры никуда не прокидываем
+       */
       this.props.changeWidth(width);
     }
   }
@@ -75,8 +92,7 @@ class Cell extends React.Component {
   render() {
     return (
       <Resizable
-        className={!!this.props.isTh ? "th" : "td"}
-        uuid={this.state.uuid}
+        className="th"
         //Выставляем размеры ячейки
         size={{
           width: this.props.width + "px",
@@ -102,7 +118,6 @@ class Cell extends React.Component {
           disabled={!this.props.isEditable}
           width={this.props.width}
           height={this.props.height}
-          isTh={this.props.isTh}
           style={this.state.style}
           setStyle={style => {
             this.setStyle(style);
@@ -114,4 +129,4 @@ class Cell extends React.Component {
   }
 }
 
-export default Cell;
+export default HeaderCell;
