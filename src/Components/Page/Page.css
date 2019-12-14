@@ -1,12 +1,10 @@
 .page {
-  width: 80%;
+  width: calc(90% - 48px);
   max-height: calc(100vh - 106px);
   overflow-x: auto;
   overflow-y: auto;
   margin: 12px auto;
-  box-shadow: 0px 4px 8px #00000017;
-  background: #ffffff;
-  padding: 12px;
+  padding: 12px 24px;
 }
 .content {
   margin: 6px;

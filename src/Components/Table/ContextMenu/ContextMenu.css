@@ -1,5 +1,5 @@
 .contextMenu {
-  position: absolute;
+  position: fixed;
   width: max-content;
   margin-left: 4px;
   margin-top: -38px;

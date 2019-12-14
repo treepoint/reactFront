@@ -1,13 +1,13 @@
 .row {
   display: flex;
   justify-content: left;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #979797;
 }
 
 .row.header {
   display: flex;
   justify-content: left;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #979797;
 }
 
 .row:focus {

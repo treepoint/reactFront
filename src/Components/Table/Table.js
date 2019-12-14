@@ -1,4 +1,5 @@
 import React from "react";
+import { Scrollbars } from "react-custom-scrollbars";
 import Row from "./Row/Row";
 import "./Table.css";
 
@@ -168,9 +169,21 @@ class Table extends React.Component {
     });
 
     return (
-      <div className="table">
-        {tableHeader}
-        {tableBody}
+      <div>
+        <Scrollbars
+          style={{ width: "100%" }}
+          autoHeight={true}
+          autoHeightMax={20000}
+        >
+          <div className="scrollWrapper">
+            <div className="tableWrapper">
+              <div className="table">
+                {tableHeader}
+                {tableBody}
+              </div>
+            </div>
+          </div>
+        </Scrollbars>
       </div>
     );
   }

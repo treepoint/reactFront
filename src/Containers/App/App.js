@@ -80,8 +80,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <body>
+      <div>
         <Header />
+        <div />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/categories" component={Categories} />
@@ -93,7 +94,7 @@ class App extends React.Component {
           this.props.modalWindowName
         )}
         <Bottom />
-      </body>
+      </div>
     );
   }
 }
