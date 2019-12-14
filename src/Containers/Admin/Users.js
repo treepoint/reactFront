@@ -1,5 +1,4 @@
 import React from "react";
-import Page from "../../Components/Page/Page";
 import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
 import { getUsers } from "../../APIController/APIController";
@@ -34,16 +33,14 @@ class Users extends React.Component {
 
     return (
       <div>
-        <Page title="Список пользователей" isPrivate={true}>
-          <Table headerEditable={false} bodyEditable={true} isResizeble={true}>
-            {users}
-          </Table>
-          <Button
-            value="Обновить список пользователей"
-            isPrimary={true}
-            onClick={() => this.getUsers()}
-          />
-        </Page>
+        <Table headerEditable={false} bodyEditable={true} isResizeble={true}>
+          {users}
+        </Table>
+        <Button
+          value="Обновить список пользователей"
+          isPrimary={true}
+          onClick={() => this.getUsers()}
+        />
       </div>
     );
   }

@@ -37,7 +37,6 @@ class Navigation extends React.Component {
         {!!this.props.token && this.props.user.role === "admin" ? (
           <NavLink
             className="navigation link"
-            exact
             to="/admin"
             activeClassName="current"
           >

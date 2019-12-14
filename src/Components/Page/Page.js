@@ -70,7 +70,10 @@ class Page extends React.Component {
   render() {
     return (
       <div className="page">
-        <div className="title">{this.props.title}</div>
+        <div className="title">
+          {this.props.title}{" "}
+          <div className="pageMenu">{this.props.pageMenu}</div>
+        </div>
         <div className="hr" />
         <div className="content">{this.getContent()}</div>
       </div>

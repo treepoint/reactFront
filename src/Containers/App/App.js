@@ -15,7 +15,7 @@ import Header from "../Header/Header";
 import Home from "../Contents/Home";
 import Categories from "../Contents/Categories";
 import About from "../Contents/About";
-import Admin from "../Contents/Admin";
+import Admin from "../Admin/Admin";
 import Bottom from "../Bottom/Bottom";
 //CSS
 import "./App.css";
