@@ -8,8 +8,8 @@ class Action extends React.Component {
         className={!!this.props.isPressed ? "action pressed" : "action"}
         style={{
           background:
-            "url(" + this.props.icon + ") no-repeat scroll 4px 3px transparent",
-          backgroundSize: "22px 22px"
+            "url(" + this.props.icon + ") no-repeat scroll 4px 2px transparent",
+          backgroundSize: "24px 24px"
         }}
         onClick={() => this.props.onClick()}
       ></div>

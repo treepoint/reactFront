@@ -40,15 +40,11 @@ class HeaderCellContent extends React.Component {
 
   //Задаем стиль ячейки на основании стиля контента
   getStyle() {
-    let style = {
-      //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
-      width: this.props.width - 5 + "px",
-      height: this.props.height - 12 + "px"
-    };
+    let style;
 
     //Если ячейка входит в состав заголовка и заголовок не редактируемый, тогда стиль всегда один
     if (this.props.disabled) {
-      style = Object.assign(style, { fontWeight: "900" });
+      style = { fontWeight: "900" };
     } else {
       //Иначе у нас все вариативно
       style = Object.assign(style, {

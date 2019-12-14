@@ -1,7 +1,7 @@
 import React from "react";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
-import CellContent from "./CellContent/RegularCellContent";
+import RegularCellContent from "./RegularCellContent/RegularCellContent";
 import "./RegularCell.css";
 
 class RegularCell extends React.Component {
@@ -111,11 +111,9 @@ class RegularCell extends React.Component {
         }}
       >
         {/*Добавляем сам контент в ячейке*/}
-        <CellContent
+        <RegularCellContent
           htmlContent={this.state.htmlContent}
           disabled={!this.props.isEditable}
-          width={this.props.width}
-          height={this.props.height}
           style={this.state.style}
           setStyle={style => {
             this.setStyle(style);

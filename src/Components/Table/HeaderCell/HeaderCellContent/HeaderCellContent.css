@@ -6,6 +6,9 @@
   overflow-x: hidden;
   overflow-y: auto;
   text-overflow: ellipsis;
+  width: calc(100% - 5px);
+  height: calc(100% - 12px);
+  position: absolute !important;
 }
 
 .headerCellContent:focus {

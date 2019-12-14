@@ -75,11 +75,7 @@ class ContextMenu extends React.Component {
     return (
       <div>
         <div
-          className={
-            !!this.props.contextMenuIsHidden
-              ? "blurContextMenu hidden"
-              : "blurContextMenu"
-          }
+          className={"blurContextMenu"}
           onClick={event => {
             this.props.setContextMenuHidden(event);
             this.setState({

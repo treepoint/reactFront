@@ -42,8 +42,6 @@ class RegularCellContent extends React.Component {
   getStyle() {
     return {
       //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
-      width: this.props.width - 5 + "px",
-      height: this.props.height - 12 + "px",
       background: this.props.style.backgroundColor,
       fontWeight: !!this.props.style.bold ? "900" : "200",
       fontStyle: !!this.props.style.italic ? "italic" : "normal"
