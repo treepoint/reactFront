@@ -26,10 +26,10 @@ class Users extends React.Component {
 
   render() {
     //Соберем таблицу для отображения
-    let users = [["ID", "Email", "Пароль"]];
+    let users = [["ID", "Email", "Пароль", "Роль"]];
 
     this.state.usersList.forEach(user => {
-      users.push([user.id, user.email, user.password]);
+      users.push([user.id, user.email, user.password, user.role]);
     });
 
     return (

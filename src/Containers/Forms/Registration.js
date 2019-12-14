@@ -29,7 +29,9 @@ class Registration extends React.Component {
 
   updateUserInState(event) {
     let user = { [event.target.name]: event.target.value };
-    this.setState({ user: Object.assign(this.state.user, user) });
+    this.setState({
+      user: Object.assign(this.state.user, user)
+    });
   }
 
   createUser(event) {
