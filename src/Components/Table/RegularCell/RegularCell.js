@@ -113,6 +113,9 @@ class RegularCell extends React.Component {
         {/*Добавляем сам контент в ячейке*/}
         <RegularCellContent
           htmlContent={this.state.htmlContent}
+          scrollLeft={this.props.scrollLeft}
+          width={this.props.width}
+          height={this.props.height}
           disabled={!this.props.isEditable}
           style={this.state.style}
           setStyle={style => {

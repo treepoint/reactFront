@@ -7,8 +7,8 @@ class HeaderCellContent extends React.Component {
   constructor() {
     super();
     this.state = {
-      className: "headerCellContent",
-      contextMenuIsHidden: true
+      contextMenuIsHidden: true,
+      isChosen: false
     };
   }
 
@@ -27,7 +27,7 @@ class HeaderCellContent extends React.Component {
   showContextMenu(event) {
     if (!this.props.disabled) {
       event.preventDefault();
-      this.setState({ contextMenuIsHidden: false });
+      this.setState({ contextMenuIsHidden: !this.state.contextMenuIsHidden });
     }
   }
 
@@ -44,14 +44,23 @@ class HeaderCellContent extends React.Component {
 
     //Если ячейка входит в состав заголовка и заголовок не редактируемый, тогда стиль всегда один
     if (this.props.disabled) {
-      style = { fontWeight: "900" };
+      style = {
+        fontWeight: "900",
+        width: this.props.width - 4 + "px",
+        height: this.props.height - 12 + "px"
+      };
     } else {
       //Иначе у нас все вариативно
-      style = Object.assign(style, {
+      style = {
+        marginLeft: !!this.state.isChosen
+          ? -this.props.scrollLeft + "px"
+          : 0 + "px",
+        width: this.props.width - 5 + "px",
+        height: this.props.height - 12 + "px",
         background: this.props.style.backgroundColor,
         fontWeight: !!this.props.style.bold ? "900" : "200",
         fontStyle: !!this.props.style.italic ? "italic" : "normal"
-      });
+      };
     }
 
     return style;
@@ -60,17 +69,20 @@ class HeaderCellContent extends React.Component {
   //Срабатывает при потере фокуса
   setDefaultClassName() {
     this.setState({
-      className: "headerCellContent"
+      isChosen: false
     });
   }
 
   //Срабатывает при двойном клике
   setChosenClassName() {
-    if (this.props.disable) {
+    if (this.props.disabled) {
       return;
     }
 
-    this.setState({ className: "headerCellContent chosen" });
+    this.setState({
+      className: true,
+      contextMenuIsHidden: true
+    });
   }
 
   render() {
@@ -82,6 +94,7 @@ class HeaderCellContent extends React.Component {
         <ContextMenu
           className={this.state.contextMenuClassName}
           cellStyle={this.props.style}
+          scrollLeft={this.props.scrollLeft}
           setContextMenuHidden={event => this.setContextMenuHidden(event)}
           setCellStyle={style => this.setStyle(style)}
         />
@@ -94,7 +107,11 @@ class HeaderCellContent extends React.Component {
 
         <ContentEditable
           spellCheck="false"
-          className={this.state.className}
+          className={
+            !!this.state.isChosen
+              ? "headerCellContent chosen"
+              : "headerCellContent"
+          }
           style={this.getStyle()}
           //Задаем контент
           html={this.props.htmlContent}

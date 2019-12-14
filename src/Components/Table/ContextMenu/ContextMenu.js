@@ -91,6 +91,7 @@ class ContextMenu extends React.Component {
           }}
         />
         <div
+          style={{ marginLeft: -this.props.scrollLeft + 4 + "px" }}
           tabIndex="1"
           className="contextMenu"
           onClick={event => this.onClick(event)}

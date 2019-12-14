@@ -116,6 +116,9 @@ class HeaderCell extends React.Component {
         <HeaderCellContent
           htmlContent={this.state.htmlContent}
           disabled={!this.props.isEditable}
+          scrollLeft={this.props.scrollLeft}
+          width={this.props.width}
+          height={this.props.height}
           style={this.state.style}
           setStyle={style => {
             this.setStyle(style);

@@ -2,6 +2,7 @@
   display: flex;
   justify-content: left;
   border-bottom: 1px solid #979797;
+  border-right: 1px solid #979797;
 }
 
 .row.header {

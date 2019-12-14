@@ -7,8 +7,8 @@ class RegularCellContent extends React.Component {
   constructor() {
     super();
     this.state = {
-      className: "regularCellContent",
-      contextMenuIsHidden: true
+      contextMenuIsHidden: true,
+      isChosen: false
     };
   }
 
@@ -27,7 +27,7 @@ class RegularCellContent extends React.Component {
   showContextMenu(event) {
     if (!this.props.disabled) {
       event.preventDefault();
-      this.setState({ contextMenuIsHidden: false });
+      this.setState({ contextMenuIsHidden: !this.state.contextMenuIsHidden });
     }
   }
 
@@ -42,6 +42,11 @@ class RegularCellContent extends React.Component {
   getStyle() {
     return {
       //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
+      marginLeft: !!this.state.isChosen
+        ? -this.props.scrollLeft + "px"
+        : 0 + "px",
+      width: this.props.width - 5 + "px",
+      height: this.props.height - 12 + "px",
       background: this.props.style.backgroundColor,
       fontWeight: !!this.props.style.bold ? "900" : "200",
       fontStyle: !!this.props.style.italic ? "italic" : "normal"
@@ -51,7 +56,7 @@ class RegularCellContent extends React.Component {
   //Срабатывает при потере фокуса
   setDefaultClassName() {
     this.setState({
-      className: "regularCellContent"
+      isChosen: false
     });
   }
 
@@ -61,7 +66,10 @@ class RegularCellContent extends React.Component {
       return;
     }
 
-    this.setState({ className: "regularCellContent chosen" });
+    this.setState({
+      isChosen: true,
+      contextMenuIsHidden: true
+    });
   }
 
   render() {
@@ -72,19 +80,23 @@ class RegularCellContent extends React.Component {
       contextMenu = (
         <ContextMenu
           className={this.state.contextMenuClassName}
+          scrollLeft={this.props.scrollLeft}
           cellStyle={this.props.style}
           setContextMenuHidden={event => this.setContextMenuHidden(event)}
           setCellStyle={style => this.setStyle(style)}
         />
       );
     }
-
     return (
       <div>
         {contextMenu}
         <ContentEditable
           spellCheck="false"
-          className={this.state.className}
+          className={
+            !!this.state.isChosen
+              ? "regularCellContent chosen"
+              : "regularCellContent"
+          }
           style={this.getStyle()}
           //Задаем контент
           html={this.props.htmlContent}

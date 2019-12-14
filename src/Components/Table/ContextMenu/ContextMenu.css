@@ -1,7 +1,6 @@
 .contextMenu {
   position: fixed;
   width: max-content;
-  margin-left: 4px;
   margin-top: -38px;
   background: #f7f7f7;
   padding: 2px;

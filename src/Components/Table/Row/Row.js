@@ -50,6 +50,7 @@ class Row extends React.Component {
           <RegularCell
             isEditable={this.props.isEditable}
             isResizeble={this.props.isResizeble}
+            scrollLeft={this.props.scrollLeft}
             uuid={this.props.uuid}
             width={column.width}
             height={this.state.height}
@@ -65,6 +66,7 @@ class Row extends React.Component {
           <HeaderCell
             isEditable={this.props.isEditable}
             isResizeble={this.props.isResizeble}
+            scrollLeft={this.props.scrollLeft}
             uuid={this.props.uuid}
             width={column.width}
             height={this.state.height}

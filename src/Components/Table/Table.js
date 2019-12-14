@@ -12,7 +12,8 @@ class Table extends React.Component {
       columnsDescription: [],
       tableHeader: [],
       tableBody: [],
-      uuid: ""
+      uuid: "",
+      scrollLeft: 0
     };
   }
 
@@ -117,6 +118,10 @@ class Table extends React.Component {
     return table;
   }
 
+  handleScroll(event) {
+    this.setState({ scrollLeft: event.scrollLeft });
+  }
+
   render() {
     let rowTable = this.isValidTable(this.props.children);
 
@@ -146,6 +151,7 @@ class Table extends React.Component {
         //и остановку изменения
         stopChangeDimensions={() => this.stopChangeDimensions()}
         changeUUID={uuid => this.changeUUID(uuid)}
+        scrollLeft={this.state.scrollLeft}
       />
     );
 
@@ -164,6 +170,7 @@ class Table extends React.Component {
           }
           stopChangeDimensions={() => this.stopChangeDimensions()}
           changeUUID={uuid => this.changeUUID(uuid)}
+          scrollLeft={this.state.scrollLeft}
         />
       );
     });
@@ -171,6 +178,7 @@ class Table extends React.Component {
     return (
       <div>
         <Scrollbars
+          onScrollFrame={event => this.handleScroll(event)}
           style={{ width: "100%" }}
           autoHeight={true}
           autoHeightMax={20000}
