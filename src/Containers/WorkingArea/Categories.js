@@ -1,5 +1,4 @@
 import React from "react";
-import Page from "../../Components/Page/Page";
 import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
 import { getUserCategories } from "../../APIController/APIController";
@@ -35,20 +34,14 @@ class Categories extends React.Component {
 
     return (
       <div>
-        <Page title="Список категорий" isPrivate={true}>
-          <Table
-            headerEditable={false}
-            bodyEditable={false}
-            isResizeble={false}
-          >
-            {categories}
-          </Table>
-          <Button
-            value="Обновить список категорий"
-            isPrimary={true}
-            onClick={() => this.getCategories()}
-          />
-        </Page>
+        <Table headerEditable={false} bodyEditable={false} isResizeble={false}>
+          {categories}
+        </Table>
+        <Button
+          value="Обновить список категорий"
+          isPrimary={true}
+          onClick={() => this.getCategories()}
+        />
       </div>
     );
   }

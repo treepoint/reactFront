@@ -13,7 +13,7 @@ import { getModalWindow } from "../../Components/ModalWindow/MODAL_WINDOWS";
 //Подключаем компоненты и контейнеры
 import Header from "../Header/Header";
 import Home from "../Contents/Home";
-import Categories from "../Contents/Categories";
+import WorkingArea from "../WorkingArea/WorkingArea";
 import About from "../Contents/About";
 import Admin from "../Admin/Admin";
 import Bottom from "../Bottom/Bottom";
@@ -85,9 +85,9 @@ class App extends React.Component {
         <div />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/categories" component={Categories} />
-          <Route path="/about" component={About} />
+          <Route path="/working" component={WorkingArea} />
           <Route path="/admin" component={Admin} />
+          <Route path="/about" component={About} />
         </Switch>
         {getModalWindow(
           this.props.modalWindowState,
