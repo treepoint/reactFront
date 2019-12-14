@@ -15,7 +15,7 @@ import Header from "../Header/Header";
 import Home from "../Contents/Home";
 import Categories from "../Contents/Categories";
 import About from "../Contents/About";
-import Users from "../Contents/Users";
+import Admin from "../Contents/Admin";
 import Bottom from "../Bottom/Bottom";
 //CSS
 import "./App.css";
@@ -87,7 +87,7 @@ class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route path="/categories" component={Categories} />
           <Route path="/about" component={About} />
-          <Route path="/users" component={Users} />
+          <Route path="/admin" component={Admin} />
         </Switch>
         {getModalWindow(
           this.props.modalWindowState,

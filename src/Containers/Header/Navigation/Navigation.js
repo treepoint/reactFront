@@ -1,4 +1,6 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
 //Подключаем роутинг
 import { NavLink } from "react-router-dom";
 //CSS
@@ -32,17 +34,28 @@ class Navigation extends React.Component {
         >
           Справка
         </NavLink>
-        <NavLink
-          className="navigation link"
-          exact
-          to="/users"
-          activeClassName="current"
-        >
-          Пользователи
-        </NavLink>
+        {!!this.props.token && this.props.user.role === "admin" ? (
+          <NavLink
+            className="navigation link"
+            exact
+            to="/admin"
+            activeClassName="current"
+          >
+            Админ.панель
+          </NavLink>
+        ) : (
+          ""
+        )}
       </div>
     );
   }
 }
 
-export default Navigation;
+const mapStateToProps = state => {
+  return {
+    token: state.token,
+    user: state.user
+  };
+};
+
+export default connect(mapStateToProps)(Navigation);

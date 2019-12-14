@@ -9,21 +9,43 @@ import Anchor from "../Anchor/Anchor";
 import "./Page.css";
 
 class Page extends React.Component {
-  isAccesseble() {
-    //Если страница не приватная — ничего не проверяем
-    if (!this.props.isPrivate) {
-      return true;
+  getContent() {
+    //Если страница не приватная и доступна не только админам — cразу отдадим контент
+    if (!this.props.isPrivate && !this.props.isAdmin) {
+      return this.props.children;
     }
 
     //Иначе нужен токен и email как минимум
     if (!!this.props.token && !!this.props.user.email) {
-      return true;
+      //Но если нужны еще и админские права — чекнем их
+      if (this.props.isAdmin) {
+        if (this.props.user.role !== "admin") {
+          return this.getAdminPageMessage();
+        }
+      }
+      //Если не админка и есть токен и email — так же отдадим контент
+      return this.props.children;
     }
 
-    return false;
+    return this.getAuthPageMessage();
   }
 
-  getPrivatePageMessage() {
+  getAdminPageMessage() {
+    return (
+      <div>
+        <p>Страница доступна только администраторам.</p>
+        <p>
+          Пожалуйста,{" "}
+          <Anchor>
+            <AnchorModalWindow value="войдите" modalWindowName={login} />
+          </Anchor>{" "}
+          под учетной записью администратора.
+        </p>
+      </div>
+    );
+  }
+
+  getAuthPageMessage() {
     return (
       <div>
         <p>Страница доступна только зарегистрированным пользователям.</p>
@@ -50,11 +72,7 @@ class Page extends React.Component {
       <div className="page">
         <div className="title">{this.props.title}</div>
         <div className="hr" />
-        <div className="content">
-          {this.isAccesseble()
-            ? this.props.children
-            : this.getPrivatePageMessage()}
-        </div>
+        <div className="content">{this.getContent()}</div>
       </div>
     );
   }
