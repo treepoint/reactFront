@@ -16,7 +16,7 @@
 .headerCellContent.chosen {
   display: inline-table;
   background: white;
-  z-index: 999;
+  z-index: 1000;
   min-height: max-content !important;
   position: fixed !important;
   border-bottom: 1px solid #979797;
@@ -41,7 +41,7 @@
 .regularCellContent.chosen {
   display: inline-table;
   background: white;
-  z-index: 999;
+  z-index: 1000;
   min-height: max-content !important;
   position: fixed !important;
   border-bottom: 1px solid #979797;

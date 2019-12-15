@@ -41,30 +41,39 @@ class ContextMenu extends React.Component {
   }
 
   //Выставляем жирное начертание
-  setBold() {
+  setBold(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
     this.assignCellStyle({
       bold: !this.state.cellStyle.bold
     });
   }
 
   //Выставляем курсивное начертание
-  setItalic() {
+  setItalic(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
     this.assignCellStyle({
       italic: !this.state.cellStyle.italic
     });
   }
 
   //Задаем цвет ячейки
-  setCellBackgroundColor(color) {
+  setCellBackgroundColor(color, event) {
     this.assignCellStyle({
       backgroundColor: color.hex
     });
 
-    this.showBackgroundColorPicker();
+    this.showBackgroundColorPicker(event);
   }
 
   //Показываем или скрываем выбор цвета заливки
-  showBackgroundColorPicker() {
+  showBackgroundColorPicker(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
     this.setState({
       isBackgroundColorPickerActive: !this.state.isBackgroundColorPickerActive
     });
@@ -79,7 +88,7 @@ class ContextMenu extends React.Component {
               ? "twitterPicker"
               : "twitterPicker hidden"
           }
-          onChange={color => this.setCellBackgroundColor(color)}
+          onChange={(color, event) => this.setCellBackgroundColor(color, event)}
         />
       </div>
     );
@@ -121,17 +130,17 @@ class ContextMenu extends React.Component {
           <Action
             icon={iconBold}
             isPressed={this.state.cellStyle.bold}
-            onClick={() => this.setBold()}
+            onClick={event => this.setBold(event)}
           />
           <Action
             icon={iconItalic}
             isPressed={this.state.cellStyle.italic}
-            onClick={() => this.setItalic()}
+            onClick={event => this.setItalic(event)}
           />
           <Action
             icon={iconBackgroundColor}
             isPressed={this.state.isBackgroundColorPickerActive}
-            onClick={() => this.showBackgroundColorPicker()}
+            onClick={event => this.showBackgroundColorPicker(event)}
           />
           {this.getBackgroundColorPicker()}
         </div>

@@ -11,7 +11,7 @@ class Action extends React.Component {
             "url(" + this.props.icon + ") no-repeat scroll 4px 2px transparent",
           backgroundSize: "24px 24px"
         }}
-        onClick={() => this.props.onClick()}
+        onClick={event => this.props.onClick(event)}
       ></div>
     );
   }

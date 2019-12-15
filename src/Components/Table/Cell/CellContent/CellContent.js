@@ -30,6 +30,7 @@ class RegularCellContent extends React.Component {
   //Срабатывает при вызове контекстного меню
   showContextMenu(event) {
     if (!this.props.disabled) {
+      event.stopPropagation();
       event.preventDefault();
       this.setState({ contextMenuIsHidden: !this.state.contextMenuIsHidden });
     }
@@ -150,8 +151,6 @@ class RegularCellContent extends React.Component {
         onChange={event => this.onChange(event)}
         //Обрабатываем двойной клик
         onDoubleClick={event => this.showWideEditArea(event)}
-        //При уходе фокуса задаем стандартный стиль. Нужно чтобы сбросить последствия двойного клика
-        onBlur={event => this.hideWideEditArea(event)}
         //Обрабатываем контекстное меню
         onContextMenu={event => this.showContextMenu(event)}
       ></ContentEditable>
@@ -181,7 +180,6 @@ class RegularCellContent extends React.Component {
             this.hideAllEditing();
           }}
           onContextMenu={event => {
-            event.preventDefault(event);
             this.showContextMenu(event);
           }}
         />
