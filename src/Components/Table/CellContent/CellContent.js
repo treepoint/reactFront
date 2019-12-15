@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 //Подключаем компоненты
 import ContentEditable from "react-contenteditable";
-import ContextMenu from "../ContextMenu/ContextMenu";
+import ContextMenu from "../../ContextMenu/ContextMenu";
 import "./CellContent.css";
 
 class RegularCellContent extends React.Component {
@@ -11,7 +11,7 @@ class RegularCellContent extends React.Component {
     super();
     this.state = {
       contextMenuIsHidden: true,
-      isChosen: false
+      wideEditAreaIsHidden: true
     };
   }
 
@@ -93,7 +93,7 @@ class RegularCellContent extends React.Component {
   //Срабатывает при потере фокуса
   setDefaultClassName() {
     this.setState({
-      isChosen: false
+      iwideEditAreaIsHidden: false
     });
   }
 
@@ -104,7 +104,7 @@ class RegularCellContent extends React.Component {
     }
 
     this.setState({
-      isChosen: true,
+      iwideEditAreaIsHidden: false,
       contextMenuIsHidden: true
     });
   }

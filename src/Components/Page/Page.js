@@ -74,7 +74,7 @@ class Page extends React.Component {
     );
   }
 
-  handleScroll() {
+  handleScrollStop() {
     this.props.setScrollTop(this._scrollBarRef.scrollTop);
   }
 
@@ -88,10 +88,10 @@ class Page extends React.Component {
         <div className="hr" />
         <RSC
           style={{ width: "100%", height: "calc(100vh - 126px)" }}
-          onScroll={event => this.handleScroll(event)}
           ref={ref => {
             this._scrollBarRef = ref;
           }}
+          onScrollStop={event => this.handleScrollStop(event)}
         >
           <div className="content">{this.getContent()}</div>
         </RSC>

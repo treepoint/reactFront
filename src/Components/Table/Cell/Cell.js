@@ -1,7 +1,7 @@
 import React from "react";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
-import CellContent from "../CellContent/CellContent";
+import CellContent from "./CellContent/CellContent";
 import "./Cell.css";
 
 class Cell extends React.Component {
