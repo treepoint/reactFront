@@ -159,3 +159,51 @@ export function getUserCategories() {
     return response.data;
   });
 }
+
+/*
+ * Задачи
+ */
+
+//Создать задачу
+export function createTask(user) {
+  if (typeof user !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/tasks";
+
+  return Axios.post(url, user, getHeaders()).then(response => {
+    return response.data;
+  });
+}
+
+//Обновить задачу
+export function updateTask(userID, user) {
+  if (typeof user !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/tasks/" + userID;
+
+  return Axios.put(url, user, getHeaders()).then(response => {
+    return response.data;
+  });
+}
+
+//Получить задачу как объект по ID
+export function getTaskByID(userID) {
+  let url = APIURL + "/tasks/" + userID;
+
+  return Axios.get(url, getHeaders()).then(response => {
+    return response.data[0];
+  });
+}
+
+//Получить все задачи пользователя как объекты в массиве
+export function getUserTasks() {
+  let url = APIURL + "/tasks";
+
+  return Axios.get(url, getHeaders()).then(response => {
+    return response.data;
+  });
+}
