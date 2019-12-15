@@ -2,7 +2,7 @@ import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
 import ContentEditable from "react-contenteditable";
-import ContextMenu from "../../ContextMenu/ContextMenu";
+import ContextMenu from "../ContextMenu/ContextMenu";
 import "./HeaderCellContent.css";
 
 class HeaderCellContent extends React.Component {

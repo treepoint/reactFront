@@ -1,7 +1,7 @@
 import React from "react";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
-import HeaderCellContent from "./HeaderCellContent/HeaderCellContent";
+import HeaderCellContent from "../CellContent/HeaderCellContent";
 import "./HeaderCell.css";
 
 class HeaderCell extends React.Component {

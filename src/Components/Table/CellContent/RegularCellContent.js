@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 //Подключаем компоненты
 import ContentEditable from "react-contenteditable";
-import ContextMenu from "../../ContextMenu/ContextMenu";
+import ContextMenu from "../ContextMenu/ContextMenu";
 import "./RegularCellContent.css";
 
 class RegularCellContent extends React.Component {

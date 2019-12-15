@@ -1,10 +1,11 @@
 import React from "react";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
-import RegularCellContent from "./RegularCellContent/RegularCellContent";
-import "./RegularCell.css";
+import RegularCellContent from "../CellContent/RegularCellContent";
+import HeaderCellContent from "../CellContent/HeaderCellContent";
+import "./Cell.css";
 
-class RegularCell extends React.Component {
+class Cell extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -88,9 +89,43 @@ class RegularCell extends React.Component {
   }
 
   render() {
+    let content;
+
+    if (this.props.isHeader) {
+      content = (
+        <RegularCellContent
+          htmlContent={this.state.htmlContent}
+          scrollLeft={this.props.scrollLeft}
+          width={this.props.width}
+          height={this.props.height}
+          disabled={!this.props.isEditable}
+          style={this.state.style}
+          setStyle={style => {
+            this.setStyle(style);
+          }}
+          setHtmlContent={htmlContent => this.setHtmlContent(htmlContent)}
+        />
+      );
+    } else {
+      content = (
+        <HeaderCellContent
+          htmlContent={this.state.htmlContent}
+          disabled={!this.props.isEditable}
+          scrollLeft={this.props.scrollLeft}
+          width={this.props.width}
+          height={this.props.height}
+          style={this.state.style}
+          setStyle={style => {
+            this.setStyle(style);
+          }}
+          setHtmlContent={htmlContent => this.setHtmlContent(htmlContent)}
+        />
+      );
+    }
+
     return (
       <Resizable
-        className="td"
+        className={!!this.props.isHeader ? "th" : "td"}
         //Выставляем размеры ячейки
         size={{
           width: this.props.width + "px",
@@ -110,22 +145,10 @@ class RegularCell extends React.Component {
           this.props.stopChangeDimensions();
         }}
       >
-        {/*Добавляем сам контент в ячейке*/}
-        <RegularCellContent
-          htmlContent={this.state.htmlContent}
-          scrollLeft={this.props.scrollLeft}
-          width={this.props.width}
-          height={this.props.height}
-          disabled={!this.props.isEditable}
-          style={this.state.style}
-          setStyle={style => {
-            this.setStyle(style);
-          }}
-          setHtmlContent={htmlContent => this.setHtmlContent(htmlContent)}
-        />
+        {content}
       </Resizable>
     );
   }
 }
 
-export default RegularCell;
+export default Cell;

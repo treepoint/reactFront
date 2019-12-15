@@ -1,5 +1,5 @@
 import React from "react";
-import RegularCell from "../RegularCell/RegularCell";
+import Cell from "../Cell/Cell";
 import HeaderCell from "../HeaderCell/HeaderCell";
 import "./Row.css";
 
@@ -47,9 +47,10 @@ class Row extends React.Component {
     let cells = this.props.columnsDescription.map((column, index) => {
       if (!this.props.isHeader) {
         return (
-          <RegularCell
+          <Cell
             isEditable={this.props.isEditable}
             isResizeble={this.props.isResizeble}
+            isHeader={!this.props.isHeader}
             scrollLeft={this.props.scrollLeft}
             uuid={this.props.uuid}
             width={column.width}
