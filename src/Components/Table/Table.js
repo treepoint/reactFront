@@ -1,6 +1,6 @@
 import React from "react";
 //Подключаем красивые скроллы
-import { Scrollbars } from "react-custom-scrollbars";
+import RCS from "react-scrollbars-custom";
 //Подключаем компоненты
 import Row from "./Row/Row";
 import "./Table.css";
@@ -121,7 +121,7 @@ class Table extends React.Component {
   }
 
   handleScroll(event) {
-    this.setState({ scrollLeft: event.scrollLeft });
+    this.setState({ scrollLeft: this._scrollBarRef.scrollLeft });
   }
 
   render() {
@@ -179,9 +179,14 @@ class Table extends React.Component {
 
     return (
       <div>
-        <Scrollbars
-          onScrollFrame={event => this.handleScroll(event)}
-          style={{ width: "100%" }}
+        <RCS
+          noScrollY
+          translateContentSizeYToHolder
+          onScroll={event => this.handleScroll(event)}
+          ref={ref => {
+            this._scrollBarRef = ref;
+          }}
+          style={{ width: "100%", height: "calc(40vh - 126px)" }}
           autoHeight={true}
           autoHeightMax={20000}
         >
@@ -193,7 +198,7 @@ class Table extends React.Component {
               </div>
             </div>
           </div>
-        </Scrollbars>
+        </RCS>
       </div>
     );
   }

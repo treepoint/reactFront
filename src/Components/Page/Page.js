@@ -1,6 +1,6 @@
 import React from "react";
 //Подключаем красивые скроллы
-import { Scrollbars } from "react-custom-scrollbars";
+import RSC from "react-scrollbars-custom";
 //Подключаем redux
 import { connect } from "react-redux";
 //Подключаем модалки
@@ -74,24 +74,18 @@ class Page extends React.Component {
   }
 
   render() {
-    //Если redux еще не загрузился — будем возвращать ничего
-    if (this.props.loading === true) {
-      return null;
-    } else {
-      //Но если у нас уже есть данные — будем возвращать контент
-      return (
-        <div className="page">
-          <div className="title">
-            {this.props.title}{" "}
-            <div className="pageMenu">{this.props.pageMenu}</div>
-          </div>
-          <div className="hr" />
-          <Scrollbars style={{ width: "100%", height: "calc(100vh - 126px)" }}>
-            <div className="content">{this.getContent()}</div>
-          </Scrollbars>
+    return (
+      <div className="page">
+        <div className="title">
+          {this.props.title}{" "}
+          <div className="pageMenu">{this.props.pageMenu}</div>
         </div>
-      );
-    }
+        <div className="hr" />
+        <RSC style={{ width: "100%", height: "calc(100vh - 126px)" }}>
+          <div className="content">{this.getContent()}</div>
+        </RSC>
+      </div>
+    );
   }
 }
 

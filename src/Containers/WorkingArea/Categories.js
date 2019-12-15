@@ -34,7 +34,7 @@ class Categories extends React.Component {
 
     return (
       <div>
-        <Table headerEditable={false} bodyEditable={false} isResizeble={false}>
+        <Table headerEditable={false} bodyEditable={true} isResizeble={true}>
           {categories}
         </Table>
         <Button
