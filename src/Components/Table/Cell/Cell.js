@@ -1,8 +1,7 @@
 import React from "react";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
-import RegularCellContent from "../CellContent/RegularCellContent";
-import HeaderCellContent from "../CellContent/HeaderCellContent";
+import CellContent from "../CellContent/CellContent";
 import "./Cell.css";
 
 class Cell extends React.Component {
@@ -89,40 +88,6 @@ class Cell extends React.Component {
   }
 
   render() {
-    let content;
-
-    if (this.props.isHeader) {
-      content = (
-        <RegularCellContent
-          htmlContent={this.state.htmlContent}
-          scrollLeft={this.props.scrollLeft}
-          width={this.props.width}
-          height={this.props.height}
-          disabled={!this.props.isEditable}
-          style={this.state.style}
-          setStyle={style => {
-            this.setStyle(style);
-          }}
-          setHtmlContent={htmlContent => this.setHtmlContent(htmlContent)}
-        />
-      );
-    } else {
-      content = (
-        <HeaderCellContent
-          htmlContent={this.state.htmlContent}
-          disabled={!this.props.isEditable}
-          scrollLeft={this.props.scrollLeft}
-          width={this.props.width}
-          height={this.props.height}
-          style={this.state.style}
-          setStyle={style => {
-            this.setStyle(style);
-          }}
-          setHtmlContent={htmlContent => this.setHtmlContent(htmlContent)}
-        />
-      );
-    }
-
     return (
       <Resizable
         className={!!this.props.isHeader ? "th" : "td"}
@@ -145,7 +110,19 @@ class Cell extends React.Component {
           this.props.stopChangeDimensions();
         }}
       >
-        {content}
+        <CellContent
+          htmlContent={this.state.htmlContent}
+          scrollLeft={this.props.scrollLeft}
+          isHeader={this.props.isHeader}
+          width={this.props.width}
+          height={this.props.height}
+          disabled={!this.props.isEditable}
+          style={this.state.style}
+          setStyle={style => {
+            this.setStyle(style);
+          }}
+          setHtmlContent={htmlContent => this.setHtmlContent(htmlContent)}
+        />
       </Resizable>
     );
   }

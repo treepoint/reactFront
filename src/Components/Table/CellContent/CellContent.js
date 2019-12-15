@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 //Подключаем компоненты
 import ContentEditable from "react-contenteditable";
 import ContextMenu from "../ContextMenu/ContextMenu";
-import "./RegularCellContent.css";
+import "./CellContent.css";
 
 class RegularCellContent extends React.Component {
   constructor() {
@@ -41,8 +41,39 @@ class RegularCellContent extends React.Component {
     });
   }
 
-  //Задаем стиль ячейки на основании стиля контента
-  getStyle() {
+  //Задаем стиль ячейки заголовка на основании стиля контента
+  getHeaderStyle() {
+    let style;
+
+    //Если ячейка входит в состав заголовка и заголовок не редактируемый, тогда стиль всегда один
+    if (this.props.disabled) {
+      style = {
+        fontWeight: "900",
+        width: this.props.width - 4 + "px",
+        height: this.props.height - 12 + "px"
+      };
+    } else {
+      //Иначе у нас все вариативно
+      style = {
+        marginLeft: !!this.state.isChosen
+          ? -this.props.scrollLeft + "px"
+          : 0 + "px",
+        marginTop: !!this.state.isChosen
+          ? -this.props.scrollTop + "px"
+          : 0 + "px",
+        width: this.props.width - 5 + "px",
+        height: this.props.height - 12 + "px",
+        background: this.props.style.backgroundColor,
+        fontWeight: !!this.props.style.bold ? "900" : "200",
+        fontStyle: !!this.props.style.italic ? "italic" : "normal"
+      };
+    }
+
+    return style;
+  }
+
+  //Задаем стиль обычной ячейки на основании стиля контента
+  getRegularStyle() {
     return {
       //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
       marginLeft: !!this.state.isChosen
@@ -93,17 +124,18 @@ class RegularCellContent extends React.Component {
         />
       );
     }
-    return (
-      <div>
-        {contextMenu}
+
+    let cellContent;
+    if (this.props.isHeader) {
+      cellContent = (
         <ContentEditable
           spellCheck="false"
           className={
             !!this.state.isChosen
-              ? "regularCellContent chosen"
-              : "regularCellContent"
+              ? "headerCellContent chosen"
+              : "headerCellContent"
           }
-          style={this.getStyle()}
+          style={this.getHeaderStyle()}
           //Задаем контент
           html={this.props.htmlContent}
           //Задаем редактируемость
@@ -116,6 +148,36 @@ class RegularCellContent extends React.Component {
           //Обрабатываем контекстное меню
           onContextMenu={event => this.showContextMenu(event)}
         ></ContentEditable>
+      );
+    } else {
+      cellContent = (
+        <ContentEditable
+          spellCheck="false"
+          className={
+            !!this.state.isChosen
+              ? "regularCellContent chosen"
+              : "regularCellContent"
+          }
+          style={this.getRegularStyle()}
+          //Задаем контент
+          html={this.props.htmlContent}
+          //Задаем редактируемость
+          disabled={this.props.disabled}
+          onChange={event => this.onChange(event)}
+          //Обрабатываем двойной клик
+          onDoubleClick={event => this.setChosenClassName(event)}
+          //При уходе фокуса задаем стандартный стиль. Нужно чтобы сбросить последствия двойного клика
+          onBlur={event => this.setDefaultClassName(event)}
+          //Обрабатываем контекстное меню
+          onContextMenu={event => this.showContextMenu(event)}
+        ></ContentEditable>
+      );
+    }
+
+    return (
+      <div>
+        {contextMenu}
+        {cellContent}
       </div>
     );
   }
