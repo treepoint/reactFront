@@ -1,4 +1,6 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
 import ContentEditable from "react-contenteditable";
 import ContextMenu from "../../ContextMenu/ContextMenu";
 import "./HeaderCellContent.css";
@@ -54,6 +56,9 @@ class HeaderCellContent extends React.Component {
       style = {
         marginLeft: !!this.state.isChosen
           ? -this.props.scrollLeft + "px"
+          : 0 + "px",
+        marginTop: !!this.state.isChosen
+          ? -this.props.scrollTop + "px"
           : 0 + "px",
         width: this.props.width - 5 + "px",
         height: this.props.height - 12 + "px",
@@ -130,4 +135,10 @@ class HeaderCellContent extends React.Component {
   }
 }
 
-export default HeaderCellContent;
+const mapStateToProps = state => {
+  return {
+    scrollTop: state.scrollTop
+  };
+};
+
+export default connect(mapStateToProps)(HeaderCellContent);

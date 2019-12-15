@@ -1,6 +1,10 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
+//Подключаем компоненты
 import { TwitterPicker } from "react-color";
 import Action from "./Action/Action";
+//Подключаем изображения иконок и CSS
 import iconBold from "../../../Images/icon_bold.png";
 import iconItalic from "../../../Images/icon_italic.png";
 import iconBackgroundColor from "../../../Images/icon_backgroundColor.png";
@@ -72,6 +76,7 @@ class ContextMenu extends React.Component {
   }
 
   render() {
+    console.log(this.props.scrollTop);
     return (
       <div>
         <div
@@ -91,7 +96,10 @@ class ContextMenu extends React.Component {
           }}
         />
         <div
-          style={{ marginLeft: -this.props.scrollLeft + 4 + "px" }}
+          style={{
+            marginLeft: -this.props.scrollLeft + 4 + "px",
+            marginTop: -this.props.scrollTop - 36 + "px"
+          }}
           tabIndex="1"
           className="contextMenu"
           onClick={event => this.onClick(event)}
@@ -128,4 +136,10 @@ class ContextMenu extends React.Component {
   }
 }
 
-export default ContextMenu;
+const mapStateToProps = state => {
+  return {
+    scrollTop: state.scrollTop
+  };
+};
+
+export default connect(mapStateToProps)(ContextMenu);

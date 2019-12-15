@@ -3,6 +3,7 @@ import React from "react";
 import RSC from "react-scrollbars-custom";
 //Подключаем redux
 import { connect } from "react-redux";
+import { setScrollTop } from "../../Store/actions";
 //Подключаем модалки
 import { login, registration } from "../ModalWindow/MODAL_WINDOWS";
 import AnchorModalWindow from "../../Containers/AnchorModalWindow/AnchorModalWindow";
@@ -73,6 +74,10 @@ class Page extends React.Component {
     );
   }
 
+  handleScroll() {
+    this.props.setScrollTop(this._scrollBarRef.scrollTop);
+  }
+
   render() {
     return (
       <div className="page">
@@ -81,7 +86,13 @@ class Page extends React.Component {
           <div className="pageMenu">{this.props.pageMenu}</div>
         </div>
         <div className="hr" />
-        <RSC style={{ width: "100%", height: "calc(100vh - 126px)" }}>
+        <RSC
+          style={{ width: "100%", height: "calc(100vh - 126px)" }}
+          onScroll={event => this.handleScroll(event)}
+          ref={ref => {
+            this._scrollBarRef = ref;
+          }}
+        >
           <div className="content">{this.getContent()}</div>
         </RSC>
       </div>
@@ -93,8 +104,20 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     token: state.token,
-    loading: state.loading
+    loading: state.loading,
+    scrollTop: state.scrollTop
   };
 };
 
-export default connect(mapStateToProps)(Page);
+const mapDispatchToProps = dispatch => {
+  return {
+    setScrollTop: number => {
+      dispatch(setScrollTop(number));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Page);

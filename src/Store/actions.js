@@ -30,3 +30,10 @@ export const LOADING = "LOADING";
 export function setLoading(boolean) {
   return { type: LOADING, boolean };
 }
+
+//Состояние страницы
+export const SCROLL_TOP = "SCROLL_TOP";
+
+export function setScrollTop(number) {
+  return { type: SCROLL_TOP, number };
+}

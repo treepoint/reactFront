@@ -120,7 +120,7 @@ class Table extends React.Component {
     return table;
   }
 
-  handleScroll(event) {
+  handleScroll() {
     this.setState({ scrollLeft: this._scrollBarRef.scrollLeft });
   }
 

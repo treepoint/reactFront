@@ -1,4 +1,7 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
+//Подключаем компоненты
 import ContentEditable from "react-contenteditable";
 import ContextMenu from "../../ContextMenu/ContextMenu";
 import "./RegularCellContent.css";
@@ -44,6 +47,9 @@ class RegularCellContent extends React.Component {
       //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
       marginLeft: !!this.state.isChosen
         ? -this.props.scrollLeft + "px"
+        : 0 + "px",
+      marginTop: !!this.state.isChosen
+        ? -this.props.scrollTop + "px"
         : 0 + "px",
       width: this.props.width - 5 + "px",
       height: this.props.height - 12 + "px",
@@ -115,4 +121,10 @@ class RegularCellContent extends React.Component {
   }
 }
 
-export default RegularCellContent;
+const mapStateToProps = state => {
+  return {
+    scrollTop: state.scrollTop
+  };
+};
+
+export default connect(mapStateToProps)(RegularCellContent);
