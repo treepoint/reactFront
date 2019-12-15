@@ -1,4 +1,6 @@
 import React from "react";
+//Подключаем красивые скроллы
+import { Scrollbars } from "react-custom-scrollbars";
 //Подключаем redux
 import { connect } from "react-redux";
 //Подключаем модалки
@@ -75,7 +77,9 @@ class Page extends React.Component {
           <div className="pageMenu">{this.props.pageMenu}</div>
         </div>
         <div className="hr" />
-        <div className="content">{this.getContent()}</div>
+        <Scrollbars style={{ width: "100%", height: "calc(100vh - 126px)" }}>
+          <div className="content">{this.getContent()}</div>
+        </Scrollbars>
       </div>
     );
   }

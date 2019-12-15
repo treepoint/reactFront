@@ -62,7 +62,7 @@ class RegularCellContent extends React.Component {
 
   //Срабатывает при двойном клике
   setChosenClassName() {
-    if (this.props.disable) {
+    if (this.props.disabled) {
       return;
     }
 

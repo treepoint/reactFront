@@ -1,14 +1,12 @@
 .page {
   width: calc(90% - 48px);
-  max-height: calc(100vh - 106px);
-  overflow-x: auto;
-  overflow-y: auto;
   margin: 12px auto;
   padding: 0 24px;
 }
 .content {
   margin: 6px;
   color: #222;
+  height: max-content;
 }
 
 .title {

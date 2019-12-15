@@ -1,5 +1,7 @@
 import React from "react";
+//Подключаем красивые скроллы
 import { Scrollbars } from "react-custom-scrollbars";
+//Подключаем компоненты
 import Row from "./Row/Row";
 import "./Table.css";
 
