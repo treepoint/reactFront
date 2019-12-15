@@ -3,7 +3,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setToken, setUser } from "../../Store/actions";
+import { setToken, setUser, setLoading } from "../../Store/actions";
 //Подключаем cookies
 import { bake_cookie, read_cookie } from "../../Lib/Sfcookies";
 //Подключаем API
@@ -30,6 +30,12 @@ class App extends React.Component {
       }
       //Если и здесь не получилось, значит ничего из этого нет — игнорируем ситуацию
     });
+
+    /* Установим статус загрузки redux. Так сможем проверять на
+     * страницах можно ли уже работать с данными или нет.
+     * Если идет загрузка — значение true, оно же дефолтное. Если загрузилось — false
+     */
+    this.props.setLoading();
   }
 
   //Обновим стор по значениям токена и userID
@@ -104,7 +110,8 @@ const mapStateToProps = state => {
     user: state.user,
     token: state.token,
     modalWindowState: state.modalWindowState,
-    modalWindowName: state.modalWindowName
+    modalWindowName: state.modalWindowName,
+    loading: state.loading
   };
 };
 
@@ -115,6 +122,9 @@ const mapDispatchToProps = dispatch => {
     },
     setUser: user => {
       dispatch(setUser(user));
+    },
+    setLoading: () => {
+      dispatch(setLoading(false));
     }
   };
 };

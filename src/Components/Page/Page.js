@@ -12,6 +12,10 @@ import "./Page.css";
 
 class Page extends React.Component {
   getContent() {
+    if (this.props.loading === true) {
+      return;
+    }
+
     //Если страница не приватная и доступна не только админам — cразу отдадим контент
     if (!this.props.isPrivate && !this.props.isAdmin) {
       return this.props.children;
@@ -70,25 +74,32 @@ class Page extends React.Component {
   }
 
   render() {
-    return (
-      <div className="page">
-        <div className="title">
-          {this.props.title}{" "}
-          <div className="pageMenu">{this.props.pageMenu}</div>
+    //Если redux еще не загрузился — будем возвращать ничего
+    if (this.props.loading === true) {
+      return null;
+    } else {
+      //Но если у нас уже есть данные — будем возвращать контент
+      return (
+        <div className="page">
+          <div className="title">
+            {this.props.title}{" "}
+            <div className="pageMenu">{this.props.pageMenu}</div>
+          </div>
+          <div className="hr" />
+          <Scrollbars style={{ width: "100%", height: "calc(100vh - 126px)" }}>
+            <div className="content">{this.getContent()}</div>
+          </Scrollbars>
         </div>
-        <div className="hr" />
-        <Scrollbars style={{ width: "100%", height: "calc(100vh - 126px)" }}>
-          <div className="content">{this.getContent()}</div>
-        </Scrollbars>
-      </div>
-    );
+      );
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
     user: state.user,
-    token: state.token
+    token: state.token,
+    loading: state.loading
   };
 };
 

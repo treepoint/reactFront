@@ -23,3 +23,10 @@ export function setModalWindowState(boolean) {
 export function setModalWindowName(text) {
   return { type: SET_MODAL_WINDOW_NAME, text };
 }
+
+//Состояние загрузки
+export const LOADING = "LOADING";
+
+export function setLoading(boolean) {
+  return { type: LOADING, boolean };
+}
