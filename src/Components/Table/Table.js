@@ -50,7 +50,7 @@ class Table extends React.Component {
     let columnsDescription = table[0].map(() => {
       return {
         //Текущая, ну или начальная ширина
-        width: 240,
+        width: 200,
         //И прошлая ширина. По умолчанию всегда 0
         prevWidth: 0
       };
