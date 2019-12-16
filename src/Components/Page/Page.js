@@ -21,7 +21,7 @@ class Page extends React.Component {
       <div className="page">
         <PageTitle
           title={this.props.title}
-          pageNavigation={this.props.pageNavigation}
+          menuLinksArray={this.props.menuLinksArray}
         />
         <div className="page hr" />
         <ReactCustomScroll
@@ -33,7 +33,12 @@ class Page extends React.Component {
           }}
           onScrollStop={event => this.handleVerticalScroll(event)}
         >
-          <PageContent>{this.props.children}</PageContent>
+          <PageContent
+            isAdmin={this.props.isAdmin}
+            isPrivate={this.props.isPrivate}
+          >
+            {this.props.children}
+          </PageContent>
         </ReactCustomScroll>
       </div>
     );

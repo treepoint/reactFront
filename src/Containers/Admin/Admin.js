@@ -1,6 +1,6 @@
 import React from "react";
 //Подключаем роутинг
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 //Подключаем компоненты
 import Page from "../../Components/Page/Page";
 import Users from "./Users";
@@ -12,23 +12,14 @@ class Admin extends React.Component {
   }
 
   render() {
-    let pageNavigation = (
-      <NavLink
-        className="pageNavigation link"
-        exact
-        to="/admin"
-        activeClassName="current"
-      >
-        Пользователи
-      </NavLink>
-    );
+    //Соберем меню страницы
+    let menuLinksArray = [{ to: "/admin", value: "Пользователи" }];
 
     return (
       <div>
         <Page
           title="Административная панель:"
-          pageNavigation={pageNavigation}
-          isPrivate={true}
+          menuLinksArray={menuLinksArray}
           isAdmin={true}
         >
           <Switch>

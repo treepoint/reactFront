@@ -1,6 +1,6 @@
 import React from "react";
 //Подключаем роутинг
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 //Подключаем компоненты
 import Page from "../../Components/Page/Page";
 import Categories from "./Categories";
@@ -13,35 +13,15 @@ class WorkingArea extends React.Component {
   }
 
   render() {
-    let pageNavigation = (
-      <div>
-        <NavLink
-          className="pageNavigation link"
-          exact
-          to="/working"
-          activeClassName="current"
-        >
-          Список
-        </NavLink>
-        <NavLink
-          className="pageNavigation link"
-          exact
-          to="/working/categories"
-          activeClassName="current"
-        >
-          Категории
-        </NavLink>
-      </div>
-    );
+    //Соберем меню страницы
+    let menuLinksArray = [
+      { to: "/working", value: "Список" },
+      { to: "/working/categories", value: "Категории" }
+    ];
 
     return (
       <div>
-        <Page
-          title="Задачи:"
-          pageNavigation={pageNavigation}
-          isPrivate={true}
-          isAdmin={true}
-        >
+        <Page title="Задачи:" menuLinksArray={menuLinksArray} isPrivate={true}>
           <Switch>
             <Route exact to path="/working" component={Tasks} />
             <Route path="/working/categories" component={Categories} />

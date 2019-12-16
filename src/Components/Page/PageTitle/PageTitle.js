@@ -9,7 +9,11 @@ class PageTitle extends React.Component {
         {/*Рисуем основной заголовок*/}
         {this.props.title}
         {/*Добавляем меню, если есть*/}
-        <PageNavigation>{this.props.pageNavigation}</PageNavigation>
+        <PageNavigation
+          linksArray={
+            !!this.props.menuLinksArray ? this.props.menuLinksArray : []
+          }
+        />
       </div>
     );
   }

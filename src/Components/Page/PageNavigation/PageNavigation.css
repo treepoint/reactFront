@@ -9,17 +9,3 @@
   text-decoration: none;
   margin-right: 6px;
 }
-
-.pageNavigation.link:hover {
-  color: rgb(65, 65, 65);
-}
-
-.pageNavigation.link:active {
-  color: rgb(56, 56, 56);
-}
-
-.pageNavigation.link.current {
-  color: rgb(20, 20, 20);
-  text-decoration: none;
-  border-bottom: 1px solid #2b2b2b;
-}

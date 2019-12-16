@@ -34,7 +34,7 @@ class PageContent extends React.Component {
   }
 
   render() {
-    return <div className="pageContent">{this.props.children}</div>;
+    return <div className="pageContent">{this.getContent()}</div>;
   }
 }
 
