@@ -1,49 +1,11 @@
 .page {
   width: calc(90% - 48px);
   margin: 12px auto;
-  padding: 0 24px;
-}
-.content {
-  margin: 6px;
-  color: #222;
-  height: max-content;
-  overflow: hidden;
 }
 
-.title {
-  font-size: 18px;
-  margin-left: 4px;
-  color: #6c6c6c;
-}
-.hr {
+.page.hr {
   display: block;
   width: 100%;
   margin-top: 6px;
   border-bottom: 1px solid rgba(138, 138, 138, 0.73);
-}
-
-.pageMenu {
-  color: #6c6c6c;
-  margin: 0 3px;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  display: inline-flex;
-  text-decoration: none;
-  margin-right: 6px;
-}
-
-.pageMenu.link:hover {
-  color: rgb(65, 65, 65);
-}
-
-.pageMenu.link:active {
-  color: rgb(56, 56, 56);
-}
-
-.pageMenu.link.current {
-  color: rgb(20, 20, 20);
-  text-decoration: none;
-  border-bottom: 1px solid #2b2b2b;
 }

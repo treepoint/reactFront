@@ -13,10 +13,10 @@ class WorkingArea extends React.Component {
   }
 
   render() {
-    let pageMenu = (
+    let pageNavigation = (
       <div>
         <NavLink
-          className="pageMenu link"
+          className="pageNavigation link"
           exact
           to="/working"
           activeClassName="current"
@@ -24,7 +24,7 @@ class WorkingArea extends React.Component {
           Список
         </NavLink>
         <NavLink
-          className="pageMenu link"
+          className="pageNavigation link"
           exact
           to="/working/categories"
           activeClassName="current"
@@ -38,7 +38,7 @@ class WorkingArea extends React.Component {
       <div>
         <Page
           title="Задачи:"
-          pageMenu={pageMenu}
+          pageNavigation={pageNavigation}
           isPrivate={true}
           isAdmin={true}
         >

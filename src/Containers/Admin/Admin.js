@@ -12,9 +12,9 @@ class Admin extends React.Component {
   }
 
   render() {
-    let pageMenu = (
+    let pageNavigation = (
       <NavLink
-        className="pageMenu link"
+        className="pageNavigation link"
         exact
         to="/admin"
         activeClassName="current"
@@ -27,7 +27,7 @@ class Admin extends React.Component {
       <div>
         <Page
           title="Административная панель:"
-          pageMenu={pageMenu}
+          pageNavigation={pageNavigation}
           isPrivate={true}
           isAdmin={true}
         >

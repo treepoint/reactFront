@@ -1,6 +1,6 @@
 import React from "react";
 //Подключаем красивые скроллы
-import RCS from "react-scrollbars-custom";
+import ReactCustomScroll from "react-scrollbars-custom";
 //Подключаем компоненты
 import Row from "./Row/Row";
 import "./Table.css";
@@ -108,6 +108,7 @@ class Table extends React.Component {
     this.setState({ columnsDescription, uuid: "" });
   }
 
+  //Чекаем, что нам передали валидную таблицу
   isValidTable(table) {
     if (typeof table !== "object") {
       return [["Ошибка"], ["Передан не массив"]];
@@ -120,7 +121,8 @@ class Table extends React.Component {
     return table;
   }
 
-  handleScroll() {
+  //Обрабатываем горизонтальный скролл для правильного позиционирования элементов в таблице
+  handleHorizonalScroll() {
     this.setState({ scrollLeft: this._scrollBarRef.scrollLeft });
   }
 
@@ -178,28 +180,26 @@ class Table extends React.Component {
     });
 
     return (
-      <div>
-        <RCS
-          noScrollY
-          translateContentSizeYToHolder
-          onScroll={event => this.handleScroll(event)}
-          ref={ref => {
-            this._scrollBarRef = ref;
-          }}
-          style={{ width: "100%", height: "calc(40vh - 126px)" }}
-          autoHeight={true}
-          autoHeightMax={20000}
-        >
-          <div className="scrollWrapper">
-            <div className="tableWrapper">
-              <div className="table">
-                {tableHeader}
-                {tableBody}
-              </div>
-            </div>
+      <ReactCustomScroll
+        //Убираем вертикальный скролл
+        noScrollY
+        //Добавление определение высоты блока со скроллами на основании контента внутри
+        translateContentSizeYToHolder
+        //Обрабатываем скролл
+        onScroll={event => this.handleHorizonalScroll(event)}
+        ref={ref => {
+          this._scrollBarRef = ref;
+        }}
+        //Задаем стиль
+        style={{ width: "100%", height: "calc(40vh - 126px)" }}
+      >
+        <div className="tableWrapper">
+          <div className="table">
+            {tableHeader}
+            {tableBody}
           </div>
-        </RCS>
-      </div>
+        </div>
+      </ReactCustomScroll>
     );
   }
 }

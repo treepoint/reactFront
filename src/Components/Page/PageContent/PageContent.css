@@ -1,0 +1,6 @@
+.pageContent {
+  margin: 6px;
+  color: #222;
+  height: max-content;
+  overflow: hidden;
+}
