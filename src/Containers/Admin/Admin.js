@@ -14,9 +14,9 @@ class Admin extends React.Component {
   render() {
     let pageMenu = (
       <NavLink
-        className="pageMenu"
+        className="pageMenu link"
         exact
-        to="/admin/users"
+        to="/admin"
         activeClassName="current"
       >
         Пользователи
@@ -32,7 +32,7 @@ class Admin extends React.Component {
           isAdmin={true}
         >
           <Switch>
-            <Route path="/admin/users" component={Users} />
+            <Route path="/admin" component={Users} />
           </Switch>
         </Page>
       </div>

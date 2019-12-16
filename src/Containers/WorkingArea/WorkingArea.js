@@ -16,15 +16,15 @@ class WorkingArea extends React.Component {
     let pageMenu = (
       <div>
         <NavLink
-          className="pageMenu"
+          className="pageMenu link"
           exact
-          to="/working/tasks"
+          to="/working"
           activeClassName="current"
         >
           Список
         </NavLink>
         <NavLink
-          className="pageMenu"
+          className="pageMenu link"
           exact
           to="/working/categories"
           activeClassName="current"
@@ -43,8 +43,8 @@ class WorkingArea extends React.Component {
           isAdmin={true}
         >
           <Switch>
+            <Route path="/working" component={Tasks} />
             <Route path="/working/categories" component={Categories} />
-            <Route path="/working/tasks" component={Tasks} />
           </Switch>
         </Page>
       </div>

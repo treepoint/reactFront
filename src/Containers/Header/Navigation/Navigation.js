@@ -7,13 +7,9 @@ class Navigation extends React.Component {
   render() {
     return (
       <div className="navigation">
-        <NavigationLink to="/working" value="Работа" />
+        <NavigationLink to="/working" value="Задачи" />
         <NavigationLink to="/about" value="Справка" />
-        <NavigationLink
-          to="/admin/users"
-          value="Админ.панель"
-          onlyAdmin={true}
-        />
+        <NavigationLink to="/admin" value="Админ.панель" onlyAdmin={true} />
       </div>
     );
   }

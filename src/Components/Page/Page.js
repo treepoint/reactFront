@@ -82,7 +82,7 @@ class Page extends React.Component {
     return (
       <div className="page">
         <div className="title">
-          {this.props.title}{" "}
+          {this.props.title}
           <div className="pageMenu">{this.props.pageMenu}</div>
         </div>
         <div className="hr" />

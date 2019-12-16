@@ -31,20 +31,19 @@
   user-select: none;
   display: inline-flex;
   text-decoration: none;
-  text-decoration: underline;
-  text-decoration-color: #6c6c6c;
+  margin-right: 6px;
 }
 
-.pageMenu:hover {
+.pageMenu.link:hover {
   color: rgb(65, 65, 65);
 }
 
-.pageMenu:active {
+.pageMenu.link:active {
   color: rgb(56, 56, 56);
 }
 
-.pageMenu.current {
+.pageMenu.link.current {
   color: rgb(20, 20, 20);
-  text-decoration: underline;
-  text-decoration-color: #2b2b2b;
+  text-decoration: none;
+  border-bottom: 1px solid #2b2b2b;
 }
