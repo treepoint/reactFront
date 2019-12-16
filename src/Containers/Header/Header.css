@@ -8,15 +8,3 @@
   font-family: "Source Sans Pro";
   font-size: 16px;
 }
-
-.logo {
-  width: 101px;
-  margin-top: 10px;
-  margin-left: 8px;
-  opacity: 1;
-  display: "contents";
-}
-
-.logo:hover {
-  opacity: 0.8;
-}

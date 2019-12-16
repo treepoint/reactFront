@@ -2,6 +2,7 @@ import React from "react";
 //Подключаем роутинг
 import { NavLink } from "react-router-dom";
 import logo from "../../../Images/logo.png";
+import "./Logo.css";
 
 class Logo extends React.Component {
   render() {
@@ -16,7 +17,7 @@ class Logo extends React.Component {
           className="logo"
           style={{
             background: "url(" + logo + ") no-repeat scroll 100% 0 transparent",
-            backgroundSize: "101px 17px"
+            backgroundSize: "120px 26px"
           }}
         />
       </NavLink>
