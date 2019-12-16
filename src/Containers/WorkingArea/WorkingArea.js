@@ -43,7 +43,7 @@ class WorkingArea extends React.Component {
           isAdmin={true}
         >
           <Switch>
-            <Route path="/working" component={Tasks} />
+            <Route exact to path="/working" component={Tasks} />
             <Route path="/working/categories" component={Categories} />
           </Switch>
         </Page>

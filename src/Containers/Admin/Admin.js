@@ -32,7 +32,7 @@ class Admin extends React.Component {
           isAdmin={true}
         >
           <Switch>
-            <Route path="/admin" component={Users} />
+            <Route exact to path="/admin" component={Users} />
           </Switch>
         </Page>
       </div>
