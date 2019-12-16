@@ -153,6 +153,7 @@ class RegularCellContent extends React.Component {
         onDoubleClick={event => this.showWideEditArea(event)}
         //Обрабатываем контекстное меню
         onContextMenu={event => this.showContextMenu(event)}
+        onWheel={event => this.hideAllEditing(event)}
       ></ContentEditable>
     );
   }
@@ -166,6 +167,7 @@ class RegularCellContent extends React.Component {
           cellStyle={this.props.style}
           setContextMenuHidden={event => this.setContextMenuHidden(event)}
           setCellStyle={style => this.setStyle(style)}
+          onWheel={event => this.setContextMenuHidden(event)}
         />
       );
     }

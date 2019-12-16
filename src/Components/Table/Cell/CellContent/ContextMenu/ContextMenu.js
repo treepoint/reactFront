@@ -126,6 +126,9 @@ class ContextMenu extends React.Component {
           }}
           tabIndex="1"
           onClick={event => this.onClick(event)}
+          onWheel={event => {
+            this.props.onWheel(event);
+          }}
         >
           <Action
             icon={iconBold}
