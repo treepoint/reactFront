@@ -1,4 +1,4 @@
-.headerCellContent {
+.CellContent {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 4px;
@@ -9,36 +9,11 @@
   position: absolute !important;
 }
 
-.headerCellContent:focus {
+.CellContent:focus {
   background: rgb(240, 240, 240);
 }
 
-.headerCellContent.chosen {
-  display: inline-table;
-  background: white;
-  z-index: 1000;
-  min-height: max-content !important;
-  position: fixed !important;
-  border-bottom: 1px solid #979797;
-  box-shadow: 0px 0px 4px black;
-}
-
-.regularCellContent {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 4px;
-  white-space: nowrap;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-overflow: ellipsis;
-  position: absolute !important;
-}
-
-.regularCellContent:focus {
-  background: rgb(240, 240, 240);
-}
-
-.regularCellContent.chosen {
+.CellContent.chosen {
   display: inline-table;
   background: white;
   z-index: 1000;

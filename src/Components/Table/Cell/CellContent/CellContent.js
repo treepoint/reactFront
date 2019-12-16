@@ -126,9 +126,7 @@ class RegularCellContent extends React.Component {
   }
 
   getClassName() {
-    let className = !!this.props.isHeader
-      ? "headerCellContent"
-      : "regularCellContent";
+    let className = "CellContent";
     if (!this.state.wideEditAreaIsHidden) {
       className = className + " chosen";
     }
