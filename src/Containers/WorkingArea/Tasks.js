@@ -3,18 +3,20 @@ import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
 import {
   getUserTasks,
-  getUserCategories
+  getUserCategories,
+  getTasksLog
 } from "../../APIController/APIController";
 
 class Tasks extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasksList: [], categoriesList: [] };
+    this.state = { tasksList: [], categoriesList: [], tasksLogList: [] };
   }
 
   componentDidMount() {
     this.getTasks();
     this.getUserCategories();
+    this.getTasksLog();
   }
 
   getTasks() {
@@ -37,9 +39,27 @@ class Tasks extends React.Component {
     });
   }
 
+  getTasksLog() {
+    let promise = getTasksLog();
+
+    promise.then(result => {
+      if (Array.isArray(result)) {
+        this.setState({ tasksLogList: result });
+      }
+    });
+  }
+
   updateData() {
     this.getTasks();
     this.getUserCategories();
+    this.getTasksLog();
+  }
+
+  //Преобразуем минуты в читаемый вид
+  getTimeFromMins(mins) {
+    let hours = Math.trunc(mins / 60);
+    let minutes = mins % 60;
+    return hours + "ч. " + minutes + "м.";
   }
 
   render() {
@@ -82,10 +102,20 @@ class Tasks extends React.Component {
     tasksLog[0] = [
       { value: "ID", style: { width: 30 } },
       { value: "Название задачи", style: { width: 220 } },
-      { value: "Начал", style: { width: 164 } },
-      { value: "Закончил", style: { width: 164 } },
+      { value: "Начал", style: { width: 120 } },
+      { value: "Закончил", style: { width: 120 } },
       { value: "Затрачено времени", style: { width: 164 } }
     ];
+
+    this.state.tasksLogList.forEach(tasksLogList => {
+      tasksLog.push([
+        { value: tasksLogList.id, style: {} },
+        { value: tasksLogList.task_name, style: {} },
+        { value: tasksLogList.execution_start, style: {} },
+        { value: tasksLogList.execution_end, style: {} },
+        { value: this.getTimeFromMins(tasksLogList.execution_time), style: {} }
+      ]);
+    });
 
     return (
       <div>

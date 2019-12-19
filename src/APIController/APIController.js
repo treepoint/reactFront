@@ -229,3 +229,16 @@ export function getAllTaskStatuses() {
     return response.data;
   });
 }
+
+/*
+ * Лог выполнения задач
+ */
+
+//Получить весь лог выполнения задач
+export function getTasksLog() {
+  let url = APIURL + "/tasks_log";
+
+  return Axios.get(url, getHeaders()).then(response => {
+    return response.data;
+  });
+}
