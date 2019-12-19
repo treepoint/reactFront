@@ -207,3 +207,25 @@ export function getUserTasks() {
     return response.data;
   });
 }
+
+/*
+ * Статусы задач
+ */
+
+//Получить статус как объект по ID
+export function getTaskStatusByID(statusID) {
+  let url = APIURL + "/task_statuses/" + statusID;
+
+  return Axios.get(url, getHeaders()).then(response => {
+    return response.data[0];
+  });
+}
+
+//Получить все статусы
+export function getAllTaskStatuses() {
+  let url = APIURL + "/task_statuses";
+
+  return Axios.get(url, getHeaders()).then(response => {
+    return response.data;
+  });
+}

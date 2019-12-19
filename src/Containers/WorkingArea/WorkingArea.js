@@ -9,7 +9,10 @@ import Tasks from "./Tasks";
 class WorkingArea extends React.Component {
   constructor(props) {
     super(props);
+    //Список пользователей
     this.state = { usersList: [] };
+    //Список категорий
+    this.state = { categoriesList: [] };
   }
 
   render() {

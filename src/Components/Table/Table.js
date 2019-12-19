@@ -47,13 +47,23 @@ class Table extends React.Component {
 
   setDescription(table) {
     //Соберем массив, описывающий столбцы
-    let columnsDescription = table[0].map(() => {
-      return {
-        //Текущая, ну или начальная ширина
-        width: 200,
-        //И прошлая ширина. По умолчанию всегда 0
-        prevWidth: 0
-      };
+    let columnsDescription = table[0].map(column => {
+      //Если есть описание — получим данные оттуда. Иначе — стандартные
+      try {
+        return {
+          //Текущая, ну или начальная ширина
+          width: column.style.width,
+          //И прошлая ширина. По умолчанию всегда 0
+          prevWidth: 0
+        };
+      } catch {
+        return {
+          //Текущая, ну или начальная ширина
+          width: 200,
+          //И прошлая ширина. По умолчанию всегда 0
+          prevWidth: 0
+        };
+      }
     });
 
     //Запишем в стейт описание столбцов

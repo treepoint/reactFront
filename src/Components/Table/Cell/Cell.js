@@ -19,7 +19,7 @@ class Cell extends React.Component {
     //Добавляем в ячейку контент, если он есть
     if (typeof this.props.htmlContent !== "undefined") {
       //Чтобы нам не прилетело — мы здесь со строками работаем
-      this.setState({ htmlContent: String(this.props.htmlContent) });
+      this.setState({ htmlContent: String(this.props.htmlContent.value) });
     }
 
     //Генерируем UUID для ячейки

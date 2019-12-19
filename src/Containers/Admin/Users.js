@@ -24,11 +24,22 @@ class Users extends React.Component {
   }
 
   render() {
-    //Соберем таблицу для отображения
-    let users = [["ID", "Email", "Пароль", "Роль"]];
+    let users = [
+      [
+        { value: "ID", style: { width: 30 } },
+        { value: "Email", style: { width: 220 } },
+        { value: "Пароль", style: { width: 120 } },
+        { value: "Роль", style: { width: 120 } }
+      ]
+    ];
 
     this.state.usersList.forEach(user => {
-      users.push([user.id, user.email, user.password, user.role]);
+      users.push([
+        { value: user.id, style: {} },
+        { value: user.email, style: {} },
+        { value: user.password, style: {} },
+        { value: user.role, style: {} }
+      ]);
     });
 
     return (

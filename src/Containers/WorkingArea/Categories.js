@@ -10,10 +10,10 @@ class Categories extends React.Component {
   }
 
   componentDidMount() {
-    this.getCategories();
+    this.getUserCategories();
   }
 
-  getCategories() {
+  getUserCategories() {
     let promise = getUserCategories();
 
     promise.then(result => {
@@ -26,10 +26,18 @@ class Categories extends React.Component {
   render() {
     //Соберем таблицу для отображения
     let categories = [];
-    categories[0] = ["ID", "Название", "Описание"];
+    categories[0] = [
+      { value: "ID", style: { width: 30 } },
+      { value: "Название", style: { width: 220 } },
+      { value: "Описание", style: { width: 220 } }
+    ];
 
     this.state.categoriesList.forEach(category => {
-      categories.push([category.id, category.name, category.description]);
+      categories.push([
+        { value: category.id, style: {} },
+        { value: category.name, style: {} },
+        { value: category.description, style: {} }
+      ]);
     });
 
     return (
@@ -40,7 +48,7 @@ class Categories extends React.Component {
         <Button
           value="Обновить список категорий"
           isPrimary={true}
-          onClick={() => this.getCategories()}
+          onClick={() => this.getUserCategories()}
         />
       </div>
     );

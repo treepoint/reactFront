@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 //Подключаем компоненты
 import Page from "../../Components/Page/Page";
 import Users from "./Users";
+import TaskStatuses from "./TaskStatuses";
 
 class Admin extends React.Component {
   constructor(props) {
@@ -13,7 +14,10 @@ class Admin extends React.Component {
 
   render() {
     //Соберем меню страницы
-    let menuLinksArray = [{ to: "/admin", value: "Пользователи" }];
+    let menuLinksArray = [
+      { to: "/admin", value: "Пользователи" },
+      { to: "/admin/task_statuses", value: "Статусы задач" }
+    ];
 
     return (
       <div>
@@ -24,6 +28,12 @@ class Admin extends React.Component {
         >
           <Switch>
             <Route exact to path="/admin" component={Users} />
+            <Route
+              exact
+              to
+              path="/admin/task_statuses"
+              component={TaskStatuses}
+            />
           </Switch>
         </Page>
       </div>

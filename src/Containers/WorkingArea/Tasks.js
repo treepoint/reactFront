@@ -1,16 +1,20 @@
 import React from "react";
 import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
-import { getUserTasks } from "../../APIController/APIController";
+import {
+  getUserTasks,
+  getUserCategories
+} from "../../APIController/APIController";
 
 class Tasks extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasksList: [] };
+    this.state = { tasksList: [], categoriesList: [] };
   }
 
   componentDidMount() {
     this.getTasks();
+    this.getUserCategories();
   }
 
   getTasks() {
@@ -23,24 +27,108 @@ class Tasks extends React.Component {
     });
   }
 
+  getUserCategories() {
+    let promise = getUserCategories();
+
+    promise.then(result => {
+      if (Array.isArray(result)) {
+        this.setState({ categoriesList: result });
+      }
+    });
+  }
+
+  updateData() {
+    this.getTasks();
+    this.getUserCategories();
+  }
+
   render() {
-    //Соберем таблицу для отображения
+    //Соберем таблицу для отображения задач
     let tasks = [];
-    tasks[0] = ["ID", "Название", "Описание", "Категория"];
+    tasks[0] = [
+      { value: "ID", style: { width: 30 } },
+      { value: "Название", style: { width: 200 } },
+      { value: "Описание", style: { width: 220 } },
+      { value: "Категория", style: { width: 120 } },
+      { value: "Статус", style: { width: 120 } }
+    ];
 
     this.state.tasksList.forEach(task => {
-      tasks.push([task.id, task.name, task.description, task.category_name]);
+      tasks.push([
+        { value: task.id, style: {} },
+        { value: task.name, style: {} },
+        { value: task.description, style: {} },
+        { value: task.category_name, style: {} },
+        { value: task.status_name, style: {} }
+      ]);
     });
+
+    //Соберем таблицу для статистики по категориям задач
+    let tasksStatistic = [];
+    tasksStatistic[0] = [
+      { value: "Категория", style: { width: 120 } },
+      { value: "Затрачено времени", style: { width: 164 } }
+    ];
+
+    this.state.categoriesList.forEach(categoriesList => {
+      tasksStatistic.push([
+        { value: categoriesList.name, style: {} },
+        { value: "0", style: {} }
+      ]);
+    });
+
+    //Соберем таблицу для отображения лога по задачам
+    let tasksLog = [];
+    tasksLog[0] = [
+      { value: "ID", style: { width: 30 } },
+      { value: "Название задачи", style: { width: 220 } },
+      { value: "Начал", style: { width: 164 } },
+      { value: "Закончил", style: { width: 164 } },
+      { value: "Затрачено времени", style: { width: 164 } }
+    ];
 
     return (
       <div>
-        <Table headerEditable={false} bodyEditable={true} isResizeble={true}>
-          {tasks}
-        </Table>
+        <table style={{ width: "100%" }}>
+          <tr>
+            <td style={{ verticalAlign: "top", width: "70%" }}>
+              {/*Таблица с задачами*/}
+              <Table
+                headerEditable={false}
+                bodyEditable={true}
+                isResizeble={true}
+              >
+                {tasks}
+              </Table>
+            </td>
+            <td style={{ verticalAlign: "top", width: "30%" }}>
+              {/*Таблица со статистикой по задачам*/}
+              <Table
+                headerEditable={false}
+                bodyEditable={false}
+                isResizeble={true}
+              >
+                {tasksStatistic}
+              </Table>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ verticalAlign: "top", width: "100%" }} colspan="2">
+              {/*Таблица с логом по задачам*/}
+              <Table
+                headerEditable={false}
+                bodyEditable={false}
+                isResizeble={true}
+              >
+                {tasksLog}
+              </Table>
+            </td>
+          </tr>
+        </table>
         <Button
-          value="Обновить список задач"
+          value="Обновить данные по задачам"
           isPrimary={true}
-          onClick={() => this.getTasks()}
+          onClick={() => this.updateData()}
         />
       </div>
     );
