@@ -127,6 +127,7 @@ class Tasks extends React.Component {
                 headerEditable={false}
                 bodyEditable={true}
                 isResizeble={true}
+                isStylable={true}
               >
                 {tasks}
               </Table>

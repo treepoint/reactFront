@@ -29,7 +29,8 @@ class RegularCellContent extends React.Component {
 
   //Срабатывает при вызове контекстного меню
   showContextMenu(event) {
-    if (!this.props.disabled) {
+    //Если не отключена возможно редактировать контент, и не отключена стилизация
+    if (!this.props.disabled && !!this.props.isStylable) {
       event.stopPropagation();
       event.preventDefault();
       this.setState({ contextMenuIsHidden: !this.state.contextMenuIsHidden });

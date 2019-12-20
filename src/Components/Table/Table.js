@@ -151,6 +151,9 @@ class Table extends React.Component {
         isEditable={this.props.headerEditable}
         //Задаем возможность изменения размеров ячеек
         isResizeble={this.props.isResizeble}
+        //Задаем возможность применения стилей
+        isStylable={this.props.isStylable}
+        //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
         uuid={this.state.uuid}
         //Ширина всей таблицы, ну или ширина каждой строки
         width={this.state.tableWidth}
@@ -175,6 +178,7 @@ class Table extends React.Component {
         <Row
           isEditable={this.props.bodyEditable}
           isResizeble={this.props.isResizeble}
+          isStylable={this.props.isStylable}
           uuid={this.state.uuid}
           width={this.state.tableWidth}
           rowsContent={row}
