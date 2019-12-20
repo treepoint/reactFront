@@ -16,14 +16,22 @@ class Cell extends React.Component {
   }
 
   componentDidMount() {
-    //Добавляем в ячейку контент, если он есть
-    if (typeof this.props.htmlContent !== "undefined") {
-      //Чтобы нам не прилетело — мы здесь со строками работаем
-      this.setState({ htmlContent: String(this.props.htmlContent.value) });
-    }
+    this.updateContent();
 
     //Генерируем UUID для ячейки
     this.setState({ uuid: uuid() });
+  }
+
+  //Обновляем контент в ячейке
+  updateContent() {
+    if (typeof this.props.htmlContent !== "undefined") {
+      //Чтобы нам не прилетело — мы здесь со строками работаем
+      let htmlContent = String(this.props.htmlContent.value);
+
+      if (htmlContent !== this.state.htmlContent) {
+        this.setState({ htmlContent: String(this.props.htmlContent.value) });
+      }
+    }
   }
 
   //Задаем возможность изменяться
@@ -88,6 +96,8 @@ class Cell extends React.Component {
   }
 
   render() {
+    this.updateContent();
+
     return (
       <Resizable
         className={!!this.props.isHeader ? "th" : "td"}
