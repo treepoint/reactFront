@@ -146,11 +146,14 @@ class Table extends React.Component {
   }
 
   saveRowToDataBase(rowContent) {
-    this.setState({ displaySaveMark: true });
+    //Если не функция — ничего делать не будем. Значит её не передали
+    if (typeof this.props.saveRowToDataBase === "function") {
+      this.setState({ displaySaveMark: true });
 
-    this.props.saveRowToDataBase(rowContent, () => {
-      this.setDisplaySaveMarkFalse();
-    });
+      this.props.saveRowToDataBase(rowContent, () => {
+        this.setDisplaySaveMarkFalse();
+      });
+    }
   }
 
   render() {
