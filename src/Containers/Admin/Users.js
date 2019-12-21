@@ -44,7 +44,7 @@ class Users extends React.Component {
 
     return (
       <div>
-        <Table isEditable={true} isResizeble={true}>
+        <Table isEditable={true} isResizeble={true} isSingleLineMode={true}>
           {users}
         </Table>
         <Button

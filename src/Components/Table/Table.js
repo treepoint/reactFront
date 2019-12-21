@@ -139,6 +139,8 @@ class Table extends React.Component {
           isResizeble={this.props.isResizeble}
           //Задаем возможность применения стилей
           isStylable={this.props.isStylable}
+          //Задаем однострочный режим
+          isSingleLineMode={this.props.isSingleLineMode}
           //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
           uuid={this.state.uuid}
           //Ширина всей таблицы, ну или ширина каждой строки

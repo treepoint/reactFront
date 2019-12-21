@@ -120,6 +120,14 @@ class RegularCellContent extends React.Component {
     return className;
   }
 
+  //Отрабатываем нажатия клавиш
+  onKeyPress(event) {
+    //Если это singleLineMode — отрубаем enter
+    if (event.key === "Enter" && this.props.isSingleLineMode) {
+      event.preventDefault();
+    }
+  }
+
   //Получаем контент ячейки в зависимости от того шапка таблицы это или обычная ячейка
   getCellContent() {
     return (
@@ -138,7 +146,10 @@ class RegularCellContent extends React.Component {
         onDoubleClick={event => this.showWideEditArea(event)}
         //Обрабатываем контекстное меню
         onContextMenu={event => this.showContextMenu(event)}
+        //Обрабатываем прокрутку
         onWheel={event => this.hideAllEditing(event)}
+        //Отрабатываем нажатия клавиш. В основном отрубаем enter если нужно
+        onKeyPress={event => this.onKeyPress(event)}
       ></ContentEditable>
     );
   }

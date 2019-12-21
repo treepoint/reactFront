@@ -40,7 +40,7 @@ class TaskStatuses extends React.Component {
 
     return (
       <div>
-        <Table isEditable={true} isResizeble={true}>
+        <Table isEditable={true} isResizeble={true} isSingleLineMode={true}>
           {taskStatusesList}
         </Table>
         <Button

@@ -138,6 +138,7 @@ class Cell extends React.Component {
           width={this.props.width}
           height={this.props.height}
           isStylable={this.props.isStylable}
+          isSingleLineMode={this.props.isSingleLineMode}
           disabled={!this.props.isEditable}
           style={this.state.style}
           setStyle={style => {
