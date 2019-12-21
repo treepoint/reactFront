@@ -159,6 +159,9 @@ class Table extends React.Component {
           changeUUID={uuid => this.changeUUID(uuid)}
           //Обработаем изменения скролла
           scrollLeft={this.state.scrollLeft}
+          saveRowToDataBase={rowContent =>
+            this.props.saveRowToDataBase(rowContent)
+          }
         />
       );
     });

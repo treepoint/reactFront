@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
-import { getAllTaskStatuses } from "../../APIController/APIController";
+import {
+  getAllTaskStatuses,
+  updateStatus
+} from "../../APIController/APIController";
 
 class TaskStatuses extends React.Component {
   constructor(props) {
@@ -23,6 +26,17 @@ class TaskStatuses extends React.Component {
     });
   }
 
+  //Сохраним изменяемую строку в ДБ
+  saveRowToDataBase(row) {
+    let task_status = {};
+
+    row.forEach(item => {
+      task_status[item.key] = item.value;
+    });
+
+    updateStatus(task_status.id, task_status);
+  }
+
   render() {
     let taskStatusesList = [
       [
@@ -40,7 +54,12 @@ class TaskStatuses extends React.Component {
 
     return (
       <div>
-        <Table isEditable={true} isResizeble={true} isSingleLineMode={true}>
+        <Table
+          isEditable={true}
+          isResizeble={true}
+          isSingleLineMode={true}
+          saveRowToDataBase={row => this.saveRowToDataBase(row)}
+        >
           {taskStatusesList}
         </Table>
         <Button

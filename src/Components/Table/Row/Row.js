@@ -53,9 +53,10 @@ class Row extends React.Component {
     //Обновим в нем нужное значение
     rowContent[index].value = HTMLContent;
     //Добавим его в state
-
-    console.log(rowContent);
     this.setState({ rowContent });
+
+    //Передадим выше, для сохранения в ДБ
+    this.props.saveRowToDataBase(rowContent);
   }
 
   //Обновим контент в ячейках, если он не совпадает с тем, что есть сейчас

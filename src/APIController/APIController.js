@@ -73,21 +73,21 @@ export function createUser(user) {
 }
 
 //Обновить пользователя
-export function updateUser(userID, user, headers) {
+export function updateUser(ID, user) {
   if (typeof user !== "object") {
     return false;
   }
 
-  let url = APIURL + "/users/" + userID;
+  let url = APIURL + "/users/" + ID;
 
-  return Axios.put(url, user, headers).then(response => {
+  return Axios.put(url, user, getHeaders()).then(response => {
     return response.data;
   });
 }
 
-//Получить категорию как объекта по ID
-export function getUserByID(userID) {
-  let url = APIURL + "/users/" + userID;
+//Получить пользователя как объекта по ID
+export function getUserByID(ID) {
+  let url = APIURL + "/users/" + ID;
 
   return Axios.get(url, getHeaders()).then(response => {
     return response.data[0];
@@ -130,12 +130,12 @@ export function createCategory(user) {
 }
 
 //Обновить категорию
-export function updateCategory(userID, user) {
+export function updateCategory(ID, user) {
   if (typeof user !== "object") {
     return false;
   }
 
-  let url = APIURL + "/categories/" + userID;
+  let url = APIURL + "/categories/" + ID;
 
   return Axios.put(url, user, getHeaders()).then(response => {
     return response.data;
@@ -143,8 +143,8 @@ export function updateCategory(userID, user) {
 }
 
 //Получить категорию как объект по ID
-export function getCategoryByID(userID) {
-  let url = APIURL + "/categories/" + userID;
+export function getCategoryByID(ID) {
+  let url = APIURL + "/categories/" + ID;
 
   return Axios.get(url, getHeaders()).then(response => {
     return response.data[0];
@@ -178,12 +178,12 @@ export function createTask(user) {
 }
 
 //Обновить задачу
-export function updateTask(userID, user) {
+export function updateTask(ID, user) {
   if (typeof user !== "object") {
     return false;
   }
 
-  let url = APIURL + "/tasks/" + userID;
+  let url = APIURL + "/tasks/" + ID;
 
   return Axios.put(url, user, getHeaders()).then(response => {
     return response.data;
@@ -191,8 +191,8 @@ export function updateTask(userID, user) {
 }
 
 //Получить задачу как объект по ID
-export function getTaskByID(userID) {
-  let url = APIURL + "/tasks/" + userID;
+export function getTaskByID(ID) {
+  let url = APIURL + "/tasks/" + ID;
 
   return Axios.get(url, getHeaders()).then(response => {
     return response.data[0];
@@ -213,8 +213,8 @@ export function getUserTasks() {
  */
 
 //Получить статус как объект по ID
-export function getTaskStatusByID(statusID) {
-  let url = APIURL + "/task_statuses/" + statusID;
+export function getTaskStatusByID(ID) {
+  let url = APIURL + "/task_statuses/" + ID;
 
   return Axios.get(url, getHeaders()).then(response => {
     return response.data[0];
@@ -226,6 +226,19 @@ export function getAllTaskStatuses() {
   let url = APIURL + "/task_statuses";
 
   return Axios.get(url, getHeaders()).then(response => {
+    return response.data;
+  });
+}
+
+//Обновить статус по ID
+export function updateStatus(ID, status) {
+  if (typeof status !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/task_statuses/" + ID;
+
+  return Axios.put(url, status, getHeaders()).then(response => {
     return response.data;
   });
 }
