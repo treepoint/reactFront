@@ -104,7 +104,11 @@ class Tasks extends React.Component {
       { key: "task_name", value: "Название задачи", style: { width: 220 } },
       { key: "execution_start", value: "Начал", style: { width: 120 } },
       { key: "execution_end", value: "Закончил", style: { width: 120 } },
-      { key: "execution_time", style: { width: 164 } }
+      {
+        key: "execution_time",
+        value: "Время выполнения",
+        style: { width: 164 }
+      }
     ];
 
     this.state.tasksLogList.forEach(tasksLogList => {
