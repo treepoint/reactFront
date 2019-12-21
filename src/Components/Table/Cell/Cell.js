@@ -26,13 +26,7 @@ class Cell extends React.Component {
   }
 
   //Обновляем контент в ячейке
-  updateContent(htmlContent) {
-    //Если изменение пришло из ячейки — запишем
-    if (typeof htmlContent !== "undefined") {
-      this.setState({ htmlContent });
-      return;
-    }
-
+  updateContent() {
     //Однако, изменение могло быть и при инициализации, тогда так
     if (typeof this.props.initHtmlContent !== "undefined") {
       //Чтобы нам не прилетело — мы здесь со строками работаем
@@ -80,6 +74,7 @@ class Cell extends React.Component {
   //Обрабатываем изменения контента в ячейке
   setHtmlContent(htmlContent) {
     this.setState({ htmlContent });
+    this.props.onChangeHTMLContent(htmlContent);
   }
 
   //Обрабатываем изменение размеров

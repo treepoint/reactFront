@@ -9,8 +9,13 @@ class Row extends React.Component {
       //Текущая высота строки. Если задано — считается значением по-умолчанию
       height: 34,
       //Прошлая ширина и высота. Нужны для вычисления смещения между текущей шириной\высотой и прошлой
-      prevHeight: 0
+      prevHeight: 0,
+      rowContent: []
     };
+  }
+
+  componentDidMount() {
+    this.updateRowContent();
   }
 
   changeHeight(height) {
@@ -41,7 +46,25 @@ class Row extends React.Component {
     );
   }
 
+  //Обрабатываем изменение контента
+  onChangeHTMLContent(HTMLContent, index) {
+    //Получим текущий массив, содержащий значения всех ячеек
+    let rowContent = this.state.rowContent;
+    //Обновим в нем нужное значение
+    rowContent[index].value = HTMLContent;
+    //Добавим его в state
+    this.setState({ rowContent });
+  }
+
+  //Обновим контент в ячейках, если он не совпадает с тем, что есть сейчас
+  updateRowContent() {
+    if (this.state.rowContent !== this.props.rowsContent) {
+      this.setState({ rowContent: this.props.rowsContent });
+    }
+  }
+
   render() {
+    this.updateRowContent();
     //Из пришедшего описания столбцов соберем ячейки
     let cells = this.props.colsDescription.map((column, index) => {
       return (
@@ -55,11 +78,14 @@ class Row extends React.Component {
           uuid={this.props.uuid}
           width={column.width}
           height={this.state.height}
-          initHtmlContent={this.props.rowsContent[index]}
+          initHtmlContent={this.state.rowContent[index]}
           changeUUID={uuid => this.changeUUID(uuid)}
           changeWidth={width => this.changeWidth(width, index)}
           changeHeight={height => this.changeHeight(height)}
           stopChangeDimensions={() => this.stopChangeDimensions()}
+          onChangeHTMLContent={HTMLContent =>
+            this.onChangeHTMLContent(HTMLContent, index)
+          }
         />
       );
     });
