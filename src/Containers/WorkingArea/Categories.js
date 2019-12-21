@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
-import { getUserCategories } from "../../APIController/APIController";
+import {
+  getUserCategories,
+  updateCategory
+} from "../../APIController/APIController";
 
 class Categories extends React.Component {
   constructor(props) {
@@ -21,6 +24,21 @@ class Categories extends React.Component {
         this.setState({ categoriesList: result });
       }
     });
+  }
+
+  //Сохраним изменяемую строку в ДБ
+  saveRowToDataBase(row, callback) {
+    let category = {};
+
+    row.forEach(item => {
+      category[item.key] = item.value;
+    });
+
+    updateCategory(category.id, category);
+
+    //Пока, если просто дошли до сюда, значит сохранили.
+    //Понятно, что это не самое хорошее решение, но тестим пока так
+    callback();
   }
 
   render() {
@@ -52,7 +70,13 @@ class Categories extends React.Component {
 
     return (
       <div>
-        <Table isEditable={true} isResizeble={true}>
+        <Table
+          isEditable={true}
+          isResizeble={true}
+          saveRowToDataBase={(row, callback) =>
+            this.saveRowToDataBase(row, callback)
+          }
+        >
           {categories}
         </Table>
         <Button

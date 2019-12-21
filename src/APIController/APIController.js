@@ -130,27 +130,27 @@ export function getRoles() {
  */
 
 //Создать категорию
-export function createCategory(user) {
-  if (typeof user !== "object") {
+export function createCategory(category) {
+  if (typeof category !== "object") {
     return false;
   }
 
   let url = APIURL + "/categories";
 
-  return Axios.post(url, user, getHeaders()).then(response => {
+  return Axios.post(url, category, getHeaders()).then(response => {
     return response.data;
   });
 }
 
 //Обновить категорию
-export function updateCategory(ID, user) {
-  if (typeof user !== "object") {
+export function updateCategory(ID, category) {
+  if (typeof category !== "object") {
     return false;
   }
 
   let url = APIURL + "/categories/" + ID;
 
-  return Axios.put(url, user, getHeaders()).then(response => {
+  return Axios.put(url, category, getHeaders()).then(response => {
     return response.data;
   });
 }
@@ -178,27 +178,27 @@ export function getUserCategories() {
  */
 
 //Создать задачу
-export function createTask(user) {
-  if (typeof user !== "object") {
+export function createTask(task) {
+  if (typeof task !== "object") {
     return false;
   }
 
   let url = APIURL + "/tasks";
 
-  return Axios.post(url, user, getHeaders()).then(response => {
+  return Axios.post(url, task, getHeaders()).then(response => {
     return response.data;
   });
 }
 
 //Обновить задачу
-export function updateTask(ID, user) {
-  if (typeof user !== "object") {
+export function updateTask(ID, task) {
+  if (typeof task !== "object") {
     return false;
   }
 
   let url = APIURL + "/tasks/" + ID;
 
-  return Axios.put(url, user, getHeaders()).then(response => {
+  return Axios.put(url, task, getHeaders()).then(response => {
     return response.data;
   });
 }
