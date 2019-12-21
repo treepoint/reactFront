@@ -1,6 +1,7 @@
 import React from "react";
 //Подключаем компоненты
 import TableWrapper from "./TableWrapper/TableWrapper";
+import SaveMark from "./SaveMark/SaveMark";
 import Row from "./Row/Row";
 import "./Table.css";
 
@@ -8,13 +9,13 @@ class Table extends React.Component {
   constructor() {
     super();
     this.state = {
-      tableWidth: 0,
       colsDescription: [],
       tableHeader: [],
       tableBody: [],
       table: [],
       uuid: "",
-      scrollLeft: 0
+      scrollLeft: 0,
+      displaySaveMark: "notInit"
     };
   }
 
@@ -55,6 +56,18 @@ class Table extends React.Component {
     this.setState({
       colsDescription
     });
+  }
+
+  getTableWidth() {
+    let tableWidth = 0;
+
+    this.state.colsDescription.forEach(col => {
+      if (typeof col.width === "number") {
+        tableWidth += col.width;
+      }
+    });
+
+    return tableWidth;
   }
 
   //Изменяем ширину столбцов
@@ -122,6 +135,24 @@ class Table extends React.Component {
     this.setState({ scrollLeft });
   }
 
+  setDisplaySaveMarkFalse() {
+    setTimeout(
+      function() {
+        //Start the timer
+        this.setState({ displaySaveMark: false }); //After 1 second, set render to true
+      }.bind(this),
+      30
+    );
+  }
+
+  saveRowToDataBase(rowContent) {
+    this.setState({ displaySaveMark: true });
+
+    this.props.saveRowToDataBase(rowContent, () => {
+      this.setDisplaySaveMarkFalse();
+    });
+  }
+
   render() {
     let rowTable = this.isValidTable(this.props.children);
 
@@ -143,8 +174,6 @@ class Table extends React.Component {
           isSingleLineMode={this.props.isSingleLineMode}
           //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
           uuid={this.state.uuid}
-          //Ширина всей таблицы, ну или ширина каждой строки
-          width={this.state.tableWidth}
           //Передадим содержимое столбцов из шапки
           rowsContent={row}
           //Так же передадим описание столбцов — ширину и подобное
@@ -159,9 +188,7 @@ class Table extends React.Component {
           changeUUID={uuid => this.changeUUID(uuid)}
           //Обработаем изменения скролла
           scrollLeft={this.state.scrollLeft}
-          saveRowToDataBase={rowContent =>
-            this.props.saveRowToDataBase(rowContent)
-          }
+          saveRowToDataBase={rowContent => this.saveRowToDataBase(rowContent)}
         />
       );
     });
@@ -172,7 +199,13 @@ class Table extends React.Component {
           this.handleHorizonalScroll(scrollLeft);
         }}
       >
-        <div className="table">{table}</div>
+        <div className="table">
+          {table}
+          <SaveMark
+            marginLeft={this.getTableWidth()}
+            isDisplayed={this.state.displaySaveMark}
+          />
+        </div>
       </TableWrapper>
     );
   }

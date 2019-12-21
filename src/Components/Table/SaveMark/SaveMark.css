@@ -1,0 +1,92 @@
+.saveMark {
+  width: 34px;
+  height: 34px;
+  background: #ececec;
+  position: absolute;
+  bottom: 13px;
+  margin-bottom: 2px;
+  opacity: 0.5;
+}
+
+@keyframes saveMark {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes saveMark {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes saveMark {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes saveMark {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.saveMark.hidden {
+  -webkit-animation: seconds 0.5s forwards;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-delay: 0.5s;
+  animation: seconds 0.5s forwards;
+  animation-iteration-count: 1;
+  animation-delay: 0.5s;
+
+  width: 34px;
+  height: 34px;
+  background: #ececec;
+  position: absolute;
+  bottom: 13px;
+  margin-bottom: 2px;
+  opacity: 0.5;
+}
+
+@-webkit-keyframes seconds {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    left: -9999px;
+    position: absolute;
+  }
+}
+@keyframes seconds {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    left: -9999px;
+    position: absolute;
+  }
+}

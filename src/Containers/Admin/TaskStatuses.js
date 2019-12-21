@@ -27,7 +27,7 @@ class TaskStatuses extends React.Component {
   }
 
   //Сохраним изменяемую строку в ДБ
-  saveRowToDataBase(row) {
+  saveRowToDataBase(row, callback) {
     let task_status = {};
 
     row.forEach(item => {
@@ -35,6 +35,10 @@ class TaskStatuses extends React.Component {
     });
 
     updateStatus(task_status.id, task_status);
+
+    //Пока, если просто дошли до сюда, значит сохранили.
+    //Понятно, что это не самое хорошее решение, но тестим пока так
+    callback();
   }
 
   render() {
@@ -58,7 +62,9 @@ class TaskStatuses extends React.Component {
           isEditable={true}
           isResizeble={true}
           isSingleLineMode={true}
-          saveRowToDataBase={row => this.saveRowToDataBase(row)}
+          saveRowToDataBase={(row, callback) =>
+            this.saveRowToDataBase(row, callback)
+          }
         >
           {taskStatusesList}
         </Table>

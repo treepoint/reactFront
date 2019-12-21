@@ -50,10 +50,10 @@ class Row extends React.Component {
   onChangeHTMLContent(HTMLContent, index) {
     //Получим текущий массив, содержащий значения всех ячеек
     let rowContent = this.state.rowContent;
+
     //Обновим в нем нужное значение
     rowContent[index].value = HTMLContent;
 
-    console.log(rowContent);
     //Добавим его в state
     this.setState({ rowContent });
 
