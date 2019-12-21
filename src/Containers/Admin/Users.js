@@ -26,19 +26,24 @@ class Users extends React.Component {
   render() {
     let users = [
       [
-        { key: "id", value: "ID", style: { width: 30 } },
-        { key: "email", value: "Email", style: { width: 220 } },
-        { key: "password", value: "Пароль", style: { width: 120 } },
-        { key: "role", value: "Роль", style: { width: 120 } }
+        { key: "id", type: "text", value: "ID", style: { width: 30 } },
+        { key: "email", type: "text", value: "Email", style: { width: 220 } },
+        {
+          key: "password",
+          type: "text",
+          value: "Пароль",
+          style: { width: 120 }
+        },
+        { key: "role", type: "text", value: "Роль", style: { width: 120 } }
       ]
     ];
 
     this.state.usersList.forEach(user => {
       users.push([
-        { key: "id", value: user.id, style: {} },
-        { key: "email", value: user.email, style: {} },
-        { key: "password", value: user.password, style: {} },
-        { key: "role", value: user.role, style: {} }
+        { key: "id", type: "text", value: user.id, style: {} },
+        { key: "email", type: "text", value: user.email, style: {} },
+        { key: "password", type: "text", value: user.password, style: {} },
+        { key: "role", type: "text", value: user.role, style: {} }
       ]);
     });
 

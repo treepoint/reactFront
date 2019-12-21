@@ -44,15 +44,15 @@ class TaskStatuses extends React.Component {
   render() {
     let taskStatusesList = [
       [
-        { key: "id", value: "ID", style: { width: 30 } },
-        { key: "name", value: "Название", style: { width: 220 } }
+        { key: "id", type: "text", value: "ID", style: { width: 30 } },
+        { key: "name", type: "text", value: "Название", style: { width: 220 } }
       ]
     ];
 
     this.state.taskStatusesList.forEach(taskStatus => {
       taskStatusesList.push([
-        { key: "id", value: taskStatus.id, style: {} },
-        { key: "name", value: taskStatus.name, style: {} }
+        { key: "id", type: "text", value: taskStatus.id, style: {} },
+        { key: "name", type: "text", value: taskStatus.name, style: {} }
       ]);
     });
 

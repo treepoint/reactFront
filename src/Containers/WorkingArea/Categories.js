@@ -27,16 +27,26 @@ class Categories extends React.Component {
     //Соберем таблицу для отображения
     let categories = [];
     categories[0] = [
-      { key: "id", value: "ID", style: { width: 30 } },
-      { key: "name", value: "Название", style: { width: 220 } },
-      { key: "description", value: "Описание", style: { width: 220 } }
+      { key: "id", type: "text", value: "ID", style: { width: 30 } },
+      { key: "name", type: "text", value: "Название", style: { width: 220 } },
+      {
+        key: "description",
+        type: "text",
+        value: "Описание",
+        style: { width: 220 }
+      }
     ];
 
     this.state.categoriesList.forEach(category => {
       categories.push([
-        { key: "id", value: category.id, style: {} },
-        { key: "name", value: category.name, style: {} },
-        { key: "description", value: category.description, style: {} }
+        { key: "id", type: "text", value: category.id, style: {} },
+        { key: "name", type: "text", value: category.name, style: {} },
+        {
+          key: "description",
+          type: "text",
+          value: category.description,
+          style: {}
+        }
       ]);
     });
 
