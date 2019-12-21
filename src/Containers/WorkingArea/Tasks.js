@@ -123,22 +123,13 @@ class Tasks extends React.Component {
           <tr>
             <td style={{ verticalAlign: "top", width: "70%" }}>
               {/*Таблица с задачами*/}
-              <Table
-                headerEditable={false}
-                bodyEditable={true}
-                isResizeble={true}
-                isStylable={true}
-              >
+              <Table isEditable={true} isResizeble={true} isStylable={true}>
                 {tasks}
               </Table>
             </td>
             <td style={{ verticalAlign: "top", width: "30%" }}>
               {/*Таблица со статистикой по задачам*/}
-              <Table
-                headerEditable={false}
-                bodyEditable={false}
-                isResizeble={true}
-              >
+              <Table isEditable={false} isResizeble={true}>
                 {tasksStatistic}
               </Table>
             </td>
@@ -146,11 +137,7 @@ class Tasks extends React.Component {
           <tr>
             <td style={{ verticalAlign: "top", width: "100%" }} colspan="2">
               {/*Таблица с логом по задачам*/}
-              <Table
-                headerEditable={false}
-                bodyEditable={false}
-                isResizeble={true}
-              >
+              <Table isEditable={false} isResizeble={true}>
                 {tasksLog}
               </Table>
             </td>

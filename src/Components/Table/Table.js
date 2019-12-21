@@ -1,7 +1,6 @@
 import React from "react";
-//Подключаем красивые скроллы
-import ReactCustomScroll from "react-scrollbars-custom";
 //Подключаем компоненты
+import TableWrapper from "./TableWrapper/TableWrapper";
 import Row from "./Row/Row";
 import "./Table.css";
 
@@ -10,10 +9,10 @@ class Table extends React.Component {
     super();
     this.state = {
       tableWidth: 0,
-      //Описание столбцов — ширина и прошлая ширина. Можно считать служебным
-      columnsDescription: [],
+      colsDescription: [],
       tableHeader: [],
       tableBody: [],
+      table: [],
       uuid: "",
       scrollLeft: 0
     };
@@ -24,30 +23,18 @@ class Table extends React.Component {
     this.setDescription(rowTable);
   }
 
-  setHeader(table) {
+  setTable(table) {
     //Первый элемент — всегда заголовок таблицы. Достанем его
-    let tableHeader = table[0];
-    if (
-      JSON.stringify(tableHeader) !== JSON.stringify(this.state.tableHeader)
-    ) {
+    if (JSON.stringify(table) !== JSON.stringify(this.state.table)) {
       this.setState({
-        tableHeader
-      });
-    }
-  }
-
-  setBody(table) {
-    let tableBody = table.slice(1);
-    if (JSON.stringify(tableBody) !== JSON.stringify(this.state.tableBody)) {
-      this.setState({
-        tableBody
+        table
       });
     }
   }
 
   setDescription(table) {
     //Соберем массив, описывающий столбцы
-    let columnsDescription = table[0].map(column => {
+    let colsDescription = table[0].map(column => {
       //Если есть описание — получим данные оттуда. Иначе — стандартные
       try {
         return {
@@ -58,9 +45,7 @@ class Table extends React.Component {
         };
       } catch {
         return {
-          //Текущая, ну или начальная ширина
           width: 200,
-          //И прошлая ширина. По умолчанию всегда 0
           prevWidth: 0
         };
       }
@@ -68,7 +53,7 @@ class Table extends React.Component {
 
     //Запишем в стейт описание столбцов
     this.setState({
-      columnsDescription
+      colsDescription
     });
   }
 
@@ -80,24 +65,25 @@ class Table extends React.Component {
     }
 
     //Скопируем текущий стейт
-    let columnsDescription = this.state.columnsDescription;
+    let colsDescription = this.state.colsDescription;
     //Обновим состояние нужного столбца
-    columnsDescription[column] = {
+    colsDescription[column] = {
       //Ширину перезапишем
       width:
-        columnsDescription[column].width +
+        colsDescription[column].width +
         width -
-        columnsDescription[column].prevWidth,
+        colsDescription[column].prevWidth,
       //Заменим прошлую ширину на текущую, которая после этого станет прошлой
       prevWidth: width
     };
 
     //Обновим состояние
     this.setState({
-      columnsDescription
+      colsDescription
     });
   }
 
+  //Изменим UUID ячейки, которая изменяла свою ширину
   changeUUID(uuid) {
     this.setState({
       uuid
@@ -107,15 +93,15 @@ class Table extends React.Component {
   //Сбрасываем предыдушие длины как только закончили изменение размеров
   stopChangeDimensions() {
     //Скопируем текущий стейт
-    let columnsDescription = this.state.columnsDescription;
+    let colsDescription = this.state.colsDescription;
 
     //Сбросим все изменения размеров
-    columnsDescription = columnsDescription.map(column => {
+    colsDescription = colsDescription.map(column => {
       return Object.assign(column, { prevWidth: 0 });
     });
 
     //Обновим стейт
-    this.setState({ columnsDescription, uuid: "" });
+    this.setState({ colsDescription, uuid: "" });
   }
 
   //Чекаем, что нам передали валидную таблицу
@@ -132,88 +118,57 @@ class Table extends React.Component {
   }
 
   //Обрабатываем горизонтальный скролл для правильного позиционирования элементов в таблице
-  handleHorizonalScroll() {
-    this.setState({ scrollLeft: this._scrollBarRef.scrollLeft });
+  handleHorizonalScroll(scrollLeft) {
+    this.setState({ scrollLeft });
   }
 
   render() {
     let rowTable = this.isValidTable(this.props.children);
 
-    this.setHeader(rowTable);
-    this.setBody(rowTable);
-
-    //Соберем шапку для отрисовки
-    let tableHeader = (
-      <Row
-        //Указываем, что это шапка
-        isHeader={true}
-        //Задаем возможность редактирования контента в ячейках
-        isEditable={this.props.headerEditable}
-        //Задаем возможность изменения размеров ячеек
-        isResizeble={this.props.isResizeble}
-        //Задаем возможность применения стилей
-        isStylable={this.props.isStylable}
-        //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
-        uuid={this.state.uuid}
-        //Ширина всей таблицы, ну или ширина каждой строки
-        width={this.state.tableWidth}
-        //Передадим содержимое столбцов из шапки
-        rowsContent={this.state.tableHeader}
-        //Так же передадим описание столбцов — ширину и подобное
-        columnsDescription={this.state.columnsDescription}
-        //И callback'и на обработку изменения ширины столбца
-        changeColumnWidth={(width, column) =>
-          this.changeColumnWidth(width, column)
-        }
-        //и остановку изменения
-        stopChangeDimensions={() => this.stopChangeDimensions()}
-        changeUUID={uuid => this.changeUUID(uuid)}
-        scrollLeft={this.state.scrollLeft}
-      />
-    );
+    this.setTable(rowTable);
 
     //Соберем тушку для отрисовки
-    let tableBody = this.state.tableBody.map(row => {
+    let table = this.state.table.map((row, index) => {
       return (
         <Row
-          isEditable={this.props.bodyEditable}
+          //Указываем, на наличие шапки. По умолчанию — есть
+          isHeader={!!!this.props.isHeaderless && index === 0 ? true : false}
+          //Задаем возможность редактирования контента в ячейках
+          isEditable={this.props.isEditable}
+          //Задаем возможность изменения размеров ячеек
           isResizeble={this.props.isResizeble}
+          //Задаем возможность применения стилей
           isStylable={this.props.isStylable}
+          //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
           uuid={this.state.uuid}
+          //Ширина всей таблицы, ну или ширина каждой строки
           width={this.state.tableWidth}
+          //Передадим содержимое столбцов из шапки
           rowsContent={row}
-          columnsDescription={this.state.columnsDescription}
+          //Так же передадим описание столбцов — ширину и подобное
+          colsDescription={this.state.colsDescription}
+          //И callback'и на обработку изменения ширины столбца
           changeColumnWidth={(width, column) =>
             this.changeColumnWidth(width, column)
           }
+          //и остановку изменения
           stopChangeDimensions={() => this.stopChangeDimensions()}
+          //Изменим UUID ячейки, которая изменяла свою ширину
           changeUUID={uuid => this.changeUUID(uuid)}
+          //Обработаем изменения скролла
           scrollLeft={this.state.scrollLeft}
         />
       );
     });
 
     return (
-      <ReactCustomScroll
-        //Убираем вертикальный скролл
-        noScrollY
-        //Добавление определение высоты блока со скроллами на основании контента внутри
-        translateContentSizeYToHolder
-        //Обрабатываем скролл
-        onScroll={event => this.handleHorizonalScroll(event)}
-        ref={ref => {
-          this._scrollBarRef = ref;
+      <TableWrapper
+        handleHorizonalScroll={scrollLeft => {
+          this.handleHorizonalScroll(scrollLeft);
         }}
-        //Задаем стиль
-        style={{ width: "100%", height: "calc(40vh - 126px)" }}
       >
-        <div className="tableWrapper">
-          <div className="table">
-            {tableHeader}
-            {tableBody}
-          </div>
-        </div>
-      </ReactCustomScroll>
+        <div className="table">{table}</div>
+      </TableWrapper>
     );
   }
 }

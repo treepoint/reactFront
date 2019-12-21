@@ -43,7 +43,7 @@ class Row extends React.Component {
 
   render() {
     //Из пришедшего описания столбцов соберем ячейки
-    let cells = this.props.columnsDescription.map((column, index) => {
+    let cells = this.props.colsDescription.map((column, index) => {
       return (
         <Cell
           isEditable={this.props.isEditable}

@@ -30,7 +30,11 @@ class RegularCellContent extends React.Component {
   //Срабатывает при вызове контекстного меню
   showContextMenu(event) {
     //Если не отключена возможно редактировать контент, и не отключена стилизация
-    if (!this.props.disabled && !!this.props.isStylable) {
+    if (
+      !this.props.disabled &&
+      !!this.props.isStylable &&
+      !this.props.isHeader
+    ) {
       event.stopPropagation();
       event.preventDefault();
       this.setState({ contextMenuIsHidden: !this.state.contextMenuIsHidden });
@@ -62,29 +66,11 @@ class RegularCellContent extends React.Component {
   getHeaderStyle() {
     let style;
 
-    //Если ячейка входит в состав заголовка и заголовок не редактируемый, тогда стиль всегда один
-    if (this.props.disabled) {
-      style = {
-        fontWeight: "900",
-        width: this.props.width - 4 + "px",
-        height: this.props.height - 12 + "px"
-      };
-    } else {
-      //Иначе у нас все вариативно
-      style = {
-        marginLeft: !!this.state.wideEditAreaIsHidden
-          ? 0 + "px"
-          : -this.props.scrollLeft + "px",
-        marginTop: !!this.state.wideEditAreaIsHidden
-          ? 0 + "px"
-          : -this.props.scrollTop + "px",
-        width: this.props.width - 5 + "px",
-        height: this.props.height - 12 + "px",
-        background: this.props.style.backgroundColor,
-        fontWeight: !!this.props.style.bold ? "900" : "200",
-        fontStyle: !!this.props.style.italic ? "italic" : "normal"
-      };
-    }
+    style = {
+      fontWeight: "900",
+      width: this.props.width - 4 + "px",
+      height: this.props.height - 12 + "px"
+    };
 
     return style;
   }
@@ -116,7 +102,7 @@ class RegularCellContent extends React.Component {
 
   //Срабатывает при двойном клике
   showWideEditArea() {
-    if (this.props.disabled) {
+    if (this.props.disabled || this.props.isHeader) {
       return;
     }
 
@@ -146,7 +132,7 @@ class RegularCellContent extends React.Component {
         //Задаем контент
         html={this.props.htmlContent}
         //Задаем редактируемость
-        disabled={this.props.disabled}
+        disabled={!!this.props.isHeader ? true : this.props.disabled}
         onChange={event => this.onChange(event)}
         //Обрабатываем двойной клик
         onDoubleClick={event => this.showWideEditArea(event)}
