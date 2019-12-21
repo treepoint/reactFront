@@ -53,6 +53,8 @@ class Row extends React.Component {
     //Обновим в нем нужное значение
     rowContent[index].value = HTMLContent;
     //Добавим его в state
+
+    console.log(rowContent);
     this.setState({ rowContent });
   }
 

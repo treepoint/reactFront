@@ -22,7 +22,7 @@ class RegularCellContent extends React.Component {
 
     //Если однострочный режим — вырезаем <br>
     if (this.props.isSingleLineMode) {
-      htmlContent = htmlContent.replace(new RegExp("<br>", "g"), " ");
+      htmlContent = htmlContent.replace(new RegExp("<br><br>", "g"), " ");
     }
 
     this.props.setHtmlContent(htmlContent);

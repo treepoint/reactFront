@@ -66,20 +66,20 @@ class Tasks extends React.Component {
     //Соберем таблицу для отображения задач
     let tasks = [];
     tasks[0] = [
-      { value: "ID", style: { width: 30 } },
-      { value: "Название", style: { width: 200 } },
-      { value: "Описание", style: { width: 220 } },
-      { value: "Категория", style: { width: 120 } },
-      { value: "Статус", style: { width: 120 } }
+      { key: "id", value: "ID", style: { width: 30 } },
+      { key: "name", value: "Название", style: { width: 200 } },
+      { key: "description", value: "Описание", style: { width: 220 } },
+      { key: "category_name", value: "Категория", style: { width: 120 } },
+      { key: "status_name", value: "Статус", style: { width: 120 } }
     ];
 
     this.state.tasksList.forEach(task => {
       tasks.push([
-        { value: task.id, style: {} },
-        { value: task.name, style: {} },
-        { value: task.description, style: {} },
-        { value: task.category_name, style: {} },
-        { value: task.status_name, style: {} }
+        { key: "id", value: task.id, style: {} },
+        { key: "name", value: task.name, style: {} },
+        { key: "description", value: task.description, style: {} },
+        { key: "category_name", value: task.category_name, style: {} },
+        { key: "status_name", value: task.status_name, style: {} }
       ]);
     });
 
@@ -100,20 +100,28 @@ class Tasks extends React.Component {
     //Соберем таблицу для отображения лога по задачам
     let tasksLog = [];
     tasksLog[0] = [
-      { value: "ID", style: { width: 30 } },
-      { value: "Название задачи", style: { width: 220 } },
-      { value: "Начал", style: { width: 120 } },
-      { value: "Закончил", style: { width: 120 } },
-      { value: "Затрачено времени", style: { width: 164 } }
+      { key: "id", value: "ID", style: { width: 30 } },
+      { key: "task_name", value: "Название задачи", style: { width: 220 } },
+      { key: "execution_start", value: "Начал", style: { width: 120 } },
+      { key: "execution_end", value: "Закончил", style: { width: 120 } },
+      { key: "execution_time", style: { width: 164 } }
     ];
 
     this.state.tasksLogList.forEach(tasksLogList => {
       tasksLog.push([
-        { value: tasksLogList.id, style: {} },
-        { value: tasksLogList.task_name, style: {} },
-        { value: tasksLogList.execution_start, style: {} },
-        { value: tasksLogList.execution_end, style: {} },
-        { value: this.getTimeFromMins(tasksLogList.execution_time), style: {} }
+        { key: "id", value: tasksLogList.id, style: {} },
+        { key: "task_name", value: tasksLogList.task_name, style: {} },
+        {
+          key: "execution_start",
+          value: tasksLogList.execution_start,
+          style: {}
+        },
+        { key: "execution_end", value: tasksLogList.execution_end, style: {} },
+        {
+          key: "execution_time",
+          value: this.getTimeFromMins(tasksLogList.execution_time),
+          style: {}
+        }
       ]);
     });
 
