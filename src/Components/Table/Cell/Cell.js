@@ -1,7 +1,8 @@
 import React from "react";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
-import CellContent from "./CellContent/CellContent";
+import TextContent from "./TextContent/TextContent";
+import SelectContent from "./SelectContent/SelectContent";
 import "./Cell.css";
 
 class Cell extends React.Component {
@@ -10,8 +11,7 @@ class Cell extends React.Component {
     this.state = {
       //HTML контент ячейки
       htmlContent: " ",
-      //HTML контент, с которым ячейка была инициализирована
-      initHtmlContent: " ",
+      typeContent: "",
       uuid: "",
       //Стиль по умолчанию
       style: { bold: false, italic: false, backgroundColor: "#ffffff" }
@@ -29,11 +29,19 @@ class Cell extends React.Component {
   updateContent() {
     //Однако, изменение могло быть и при инициализации, тогда так
     if (typeof this.props.htmlContent !== "undefined") {
-      //Чтобы нам не прилетело — мы здесь со строками работаем
-      let htmlContent = String(this.props.htmlContent.value);
+      let htmlContent;
+      //Если тип поля — текст, то на всякий случай конвертим в текст
+      if (this.state.typeContent === "text") {
+        htmlContent = String(this.props.htmlContent.value);
+      } else {
+        htmlContent = this.props.htmlContent.value;
+      }
 
       if (htmlContent !== this.state.htmlContent) {
+        //Задаем сам контент
         this.setState({ htmlContent });
+        //Задаем тип контента
+        this.setState({ typeContent: this.props.htmlContent.type });
       }
     }
   }
@@ -99,6 +107,48 @@ class Cell extends React.Component {
     }
   }
 
+  getCellContent() {
+    //Если тип контента просто текст — отображаем просто текст
+
+    switch (this.state.typeContent) {
+      case "text":
+        return (
+          <TextContent
+            htmlContent={this.state.htmlContent}
+            scrollLeft={this.props.scrollLeft}
+            isHeader={this.props.isHeader}
+            width={this.props.width}
+            height={this.props.height}
+            isStylable={this.props.isStylable}
+            isSingleLineMode={this.props.isSingleLineMode}
+            disabled={!this.props.isEditable}
+            style={this.state.style}
+            setStyle={style => {
+              this.setStyle(style);
+            }}
+            onChangeHTMLContent={htmlContent =>
+              this.onChangeHTMLContent(htmlContent)
+            }
+          />
+        );
+      //Если выпадающий список — используем выпадающие списки
+      case "select":
+        return (
+          <SelectContent
+            htmlContent={this.state.htmlContent}
+            width={this.props.width}
+            height={this.props.height}
+            onChangeHTMLContent={htmlContent =>
+              this.onChangeHTMLContent(htmlContent)
+            }
+          />
+        );
+
+      default:
+        return;
+    }
+  }
+
   render() {
     this.updateContent();
 
@@ -124,23 +174,7 @@ class Cell extends React.Component {
           this.props.stopChangeDimensions();
         }}
       >
-        <CellContent
-          htmlContent={this.state.htmlContent}
-          scrollLeft={this.props.scrollLeft}
-          isHeader={this.props.isHeader}
-          width={this.props.width}
-          height={this.props.height}
-          isStylable={this.props.isStylable}
-          isSingleLineMode={this.props.isSingleLineMode}
-          disabled={!this.props.isEditable}
-          style={this.state.style}
-          setStyle={style => {
-            this.setStyle(style);
-          }}
-          onChangeHTMLContent={htmlContent =>
-            this.onChangeHTMLContent(htmlContent)
-          }
-        />
+        {this.getCellContent()}
       </Resizable>
     );
   }

@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import ContentEditable from "react-contenteditable";
 import ContextMenu from "./ContextMenu/ContextMenu";
 import WideEditAreaBlur from "./WideEditAreaBlur/WideEditAreaBlur";
-import "./CellContent.css";
+import "./TextContent.css";
 
-class RegularCellContent extends React.Component {
+class TextContent extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -120,7 +120,7 @@ class RegularCellContent extends React.Component {
   }
 
   getClassName() {
-    let className = "CellContent";
+    let className = "textContent";
     if (!this.state.wideEditAreaIsHidden) {
       className = className + " chosen";
     }
@@ -209,4 +209,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(RegularCellContent);
+export default connect(mapStateToProps)(TextContent);

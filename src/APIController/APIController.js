@@ -113,6 +113,19 @@ export function getUsers() {
 }
 
 /*
+ * Роли
+ */
+
+//Получение списка пользователей как объектов в массиве
+export function getRoles() {
+  let url = APIURL + "/roles";
+
+  return Axios.get(url, getHeaders()).then(response => {
+    return response.data;
+  });
+}
+
+/*
  * Категории
  */
 

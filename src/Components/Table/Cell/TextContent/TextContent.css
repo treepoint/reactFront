@@ -1,4 +1,4 @@
-.CellContent {
+.textContent {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 4px;
@@ -9,11 +9,11 @@
   position: absolute !important;
 }
 
-.CellContent:focus {
+.textContent:focus {
   background: rgb(240, 240, 240);
 }
 
-.CellContent.chosen {
+.textContent.chosen {
   display: inline-table;
   background: white;
   z-index: 1000;

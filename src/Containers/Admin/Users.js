@@ -1,16 +1,21 @@
 import React from "react";
 import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
-import { getUsers } from "../../APIController/APIController";
+import {
+  getUsers,
+  getRoles,
+  updateUser
+} from "../../APIController/APIController";
 
 class Users extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { usersList: [] };
+    this.state = { usersList: [], rolesList: [] };
   }
 
   componentDidMount() {
     this.getUsers();
+    this.getRoles();
   }
 
   getUsers() {
@@ -21,6 +26,40 @@ class Users extends React.Component {
         this.setState({ usersList: result });
       }
     });
+  }
+
+  getRoles() {
+    let promise = getRoles();
+
+    promise.then(result => {
+      if (Array.isArray(result)) {
+        this.setState({ rolesList: result });
+      }
+    });
+  }
+
+  //Сохраним изменяемую строку в ДБ
+  saveRowToDataBase(row, callback) {
+    let user = {};
+
+    row.forEach(item => {
+      switch (item.type) {
+        case "text":
+          user[item.key] = item.value;
+          break;
+        case "select":
+          user[item.key] = item.value.current;
+          break;
+        default:
+          return;
+      }
+    });
+
+    updateUser(user.id, user);
+
+    //Пока, если просто дошли до сюда, значит сохранили.
+    //Понятно, что это не самое хорошее решение, но тестим пока так
+    callback();
   }
 
   render() {
@@ -39,17 +78,32 @@ class Users extends React.Component {
     ];
 
     this.state.usersList.forEach(user => {
+      //Соберем список ролей
+      let list = this.state.rolesList.map(role => {
+        return { value: role.id, children: role.name };
+      });
+
+      //добавим текущую
+      let roles = { list, current: user.role_id };
+
       users.push([
         { key: "id", type: "text", value: user.id, style: {} },
         { key: "email", type: "text", value: user.email, style: {} },
         { key: "password", type: "text", value: user.password, style: {} },
-        { key: "role", type: "text", value: user.role, style: {} }
+        { key: "role_id", type: "select", value: roles, style: {} }
       ]);
     });
 
     return (
       <div>
-        <Table isEditable={true} isResizeble={true} isSingleLineMode={true}>
+        <Table
+          isEditable={true}
+          isResizeble={true}
+          isSingleLineMode={true}
+          saveRowToDataBase={(row, callback) =>
+            this.saveRowToDataBase(row, callback)
+          }
+        >
           {users}
         </Table>
         <Button
