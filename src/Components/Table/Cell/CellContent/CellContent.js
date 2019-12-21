@@ -25,7 +25,7 @@ class RegularCellContent extends React.Component {
       htmlContent = htmlContent.replace(new RegExp("<br><br>", "g"), " ");
     }
 
-    this.props.setHtmlContent(htmlContent);
+    this.props.onChangeHTMLContent(htmlContent);
   }
 
   //Обрабатываем изменения стиля контента в ячейке в

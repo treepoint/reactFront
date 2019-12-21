@@ -28,13 +28,12 @@ class Cell extends React.Component {
   //Обновляем контент в ячейке
   updateContent() {
     //Однако, изменение могло быть и при инициализации, тогда так
-    if (typeof this.props.initHtmlContent !== "undefined") {
+    if (typeof this.props.htmlContent !== "undefined") {
       //Чтобы нам не прилетело — мы здесь со строками работаем
-      let initHtmlContent = String(this.props.initHtmlContent.value);
+      let htmlContent = String(this.props.htmlContent.value);
 
-      if (initHtmlContent !== this.state.initHtmlContent) {
-        this.setState({ initHtmlContent });
-        this.setState({ htmlContent: initHtmlContent });
+      if (htmlContent !== this.state.htmlContent) {
+        this.setState({ htmlContent });
       }
     }
   }
@@ -72,8 +71,7 @@ class Cell extends React.Component {
   }
 
   //Обрабатываем изменения контента в ячейке
-  setHtmlContent(htmlContent) {
-    this.setState({ htmlContent });
+  onChangeHTMLContent(htmlContent) {
     this.props.onChangeHTMLContent(htmlContent);
   }
 
@@ -139,7 +137,9 @@ class Cell extends React.Component {
           setStyle={style => {
             this.setStyle(style);
           }}
-          setHtmlContent={htmlContent => this.setHtmlContent(htmlContent)}
+          onChangeHTMLContent={htmlContent =>
+            this.onChangeHTMLContent(htmlContent)
+          }
         />
       </Resizable>
     );
