@@ -18,7 +18,14 @@ class RegularCellContent extends React.Component {
 
   //Изменяем контент по вводу
   onChange(event) {
-    this.props.setHtmlContent(event.target.value);
+    let htmlContent = event.target.value;
+
+    //Если однострочный режим — вырезаем <br>
+    if (this.props.isSingleLineMode) {
+      htmlContent = htmlContent.replace(new RegExp("<br>", "g"), " ");
+    }
+
+    this.props.setHtmlContent(htmlContent);
   }
 
   //Обрабатываем изменения стиля контента в ячейке в
@@ -122,7 +129,7 @@ class RegularCellContent extends React.Component {
 
   //Отрабатываем нажатия клавиш
   onKeyPress(event) {
-    //Если это singleLineMode — отрубаем enter
+    //Если это однострочный режим — отрубаем перенос строки enter
     if (event.key === "Enter" && this.props.isSingleLineMode) {
       event.preventDefault();
     }
