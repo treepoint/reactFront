@@ -8,7 +8,10 @@ class Cell extends React.Component {
   constructor() {
     super();
     this.state = {
+      //HTML контент ячейки
       htmlContent: " ",
+      //HTML контент, с которым ячейка была инициализирована
+      initHtmlContent: " ",
       uuid: "",
       //Стиль по умолчанию
       style: { bold: false, italic: false, backgroundColor: "#ffffff" }
@@ -31,12 +34,13 @@ class Cell extends React.Component {
     }
 
     //Однако, изменение могло быть и при инициализации, тогда так
-    if (typeof this.props.htmlContent !== "undefined") {
+    if (typeof this.props.initHtmlContent !== "undefined") {
       //Чтобы нам не прилетело — мы здесь со строками работаем
-      let htmlContent = String(this.props.htmlContent.value);
+      let initHtmlContent = String(this.props.initHtmlContent.value);
 
-      if (htmlContent !== this.state.htmlContent) {
-        this.setState({ htmlContent: String(this.props.htmlContent.value) });
+      if (initHtmlContent !== this.state.initHtmlContent) {
+        this.setState({ initHtmlContent });
+        this.setState({ htmlContent: initHtmlContent });
       }
     }
   }

@@ -54,7 +54,7 @@ class Row extends React.Component {
           uuid={this.props.uuid}
           width={column.width}
           height={this.state.height}
-          htmlContent={this.props.rowsContent[index]}
+          initHtmlContent={this.props.rowsContent[index]}
           changeUUID={uuid => this.changeUUID(uuid)}
           changeWidth={width => this.changeWidth(width, index)}
           changeHeight={height => this.changeHeight(height)}
