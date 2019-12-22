@@ -4,19 +4,23 @@ import Table from "../../Components/Table/Table";
 import {
   getUserTasks,
   getUserCategories,
-  getTasksLog
+  getTasksLog,
+  getAllTaskStatuses
 } from "../../APIController/APIController";
 
 class Tasks extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasksList: [], categoriesList: [], tasksLogList: [] };
+    this.state = {
+      tasksList: [],
+      categoriesList: [],
+      tasksLogList: [],
+      taskStatusesList: []
+    };
   }
 
   componentDidMount() {
-    this.getTasks();
-    this.getUserCategories();
-    this.getTasksLog();
+    this.updateData();
   }
 
   getTasks() {
@@ -39,6 +43,16 @@ class Tasks extends React.Component {
     });
   }
 
+  getAllTaskStatuses() {
+    let promise = getAllTaskStatuses();
+
+    promise.then(result => {
+      if (Array.isArray(result)) {
+        this.setState({ taskStatusesList: result });
+      }
+    });
+  }
+
   getTasksLog() {
     let promise = getTasksLog();
 
@@ -53,6 +67,7 @@ class Tasks extends React.Component {
     this.getTasks();
     this.getUserCategories();
     this.getTasksLog();
+    this.getAllTaskStatuses();
   }
 
   //Преобразуем минуты в читаемый вид
@@ -89,6 +104,22 @@ class Tasks extends React.Component {
     ];
 
     this.state.tasksList.forEach(task => {
+      //Соберем список категорий
+      let categoriesList = this.state.categoriesList.map(category => {
+        return { value: category.id, children: category.name };
+      });
+
+      //добавим текущую
+      let categories = { list: categoriesList, current: task.category_id };
+
+      //Соберем список статусов
+      let statusesList = this.state.taskStatusesList.map(status => {
+        return { value: status.id, children: status.name };
+      });
+
+      //добавим текущий
+      let statuses = { list: statusesList, current: task.status_id };
+
       tasks.push([
         { key: "id", type: "text", value: task.id, style: {} },
         { key: "name", type: "text", value: task.name, style: {} },
@@ -99,12 +130,12 @@ class Tasks extends React.Component {
           style: {}
         },
         {
-          key: "category_name",
-          type: "text",
-          value: task.category_name,
+          key: "category_id",
+          type: "select",
+          value: categories,
           style: {}
         },
-        { key: "status_name", type: "text", value: task.status_name, style: {} }
+        { key: "status_id", type: "select", value: statuses, style: {} }
       ]);
     });
 

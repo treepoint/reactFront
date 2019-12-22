@@ -73,6 +73,7 @@ class Categories extends React.Component {
         <Table
           isEditable={true}
           isResizeble={true}
+          isSingleLineMode={true}
           saveRowToDataBase={(row, callback) =>
             this.saveRowToDataBase(row, callback)
           }
