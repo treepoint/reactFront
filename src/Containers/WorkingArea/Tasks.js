@@ -5,7 +5,8 @@ import {
   getUserTasks,
   getUserCategories,
   getTasksLog,
-  getAllTaskStatuses
+  getAllTaskStatuses,
+  updateTask
 } from "../../APIController/APIController";
 
 class Tasks extends React.Component {
@@ -142,6 +143,30 @@ class Tasks extends React.Component {
     return tasks;
   }
 
+  //Сохраним изменяемую строку в ДБ
+  saveTaskToDataBase(row, callback) {
+    let body = {};
+
+    row.forEach(item => {
+      switch (item.type) {
+        case "text":
+          body[item.key] = item.value;
+          break;
+        case "select":
+          body[item.key] = item.value.current;
+          break;
+        default:
+          return;
+      }
+    });
+
+    updateTask(body.id, body);
+
+    //Пока, если просто дошли до сюда, значит сохранили.
+    //Понятно, что это не самое хорошее решение, но тестим пока так
+    callback();
+  }
+
   //Соберем таблицу для статистики по категориям задач
   getTasksStatisticTableContent() {
     let tasksStatistic = [];
@@ -232,7 +257,14 @@ class Tasks extends React.Component {
           <tr>
             <td style={{ verticalAlign: "top", width: "70%" }}>
               {/*Таблица с задачами*/}
-              <Table isEditable={true} isResizeble={true} isStylable={true}>
+              <Table
+                isEditable={true}
+                isResizeble={true}
+                isStylable={true}
+                saveRowToDataBase={(row, callback) =>
+                  this.saveTaskToDataBase(row, callback)
+                }
+              >
                 {this.getTasksTableContent()}
               </Table>
             </td>

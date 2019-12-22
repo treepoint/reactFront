@@ -40,22 +40,22 @@ class Users extends React.Component {
 
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(row, callback) {
-    let user = {};
+    let body = {};
 
     row.forEach(item => {
       switch (item.type) {
         case "text":
-          user[item.key] = item.value;
+          body[item.key] = item.value;
           break;
         case "select":
-          user[item.key] = item.value.current;
+          body[item.key] = item.value.current;
           break;
         default:
           return;
       }
     });
 
-    updateUser(user.id, user);
+    updateUser(body.id, body);
 
     //Пока, если просто дошли до сюда, значит сохранили.
     //Понятно, что это не самое хорошее решение, но тестим пока так

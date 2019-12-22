@@ -28,13 +28,22 @@ class TaskStatuses extends React.Component {
 
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(row, callback) {
-    let task_status = {};
+    let body = {};
 
     row.forEach(item => {
-      task_status[item.key] = item.value;
+      switch (item.type) {
+        case "text":
+          body[item.key] = item.value;
+          break;
+        case "select":
+          body[item.key] = item.value.current;
+          break;
+        default:
+          return;
+      }
     });
 
-    updateStatus(task_status.id, task_status);
+    updateStatus(body.id, body);
 
     //Пока, если просто дошли до сюда, значит сохранили.
     //Понятно, что это не самое хорошее решение, но тестим пока так
