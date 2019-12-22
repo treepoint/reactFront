@@ -77,8 +77,8 @@ class Tasks extends React.Component {
     return hours + ":" + minutes;
   }
 
-  render() {
-    //Соберем таблицу для отображения задач
+  //Соберем таблицу для отображения задач
+  getTasksTableContent() {
     let tasks = [];
     tasks[0] = [
       { key: "id", type: "text", value: "ID", style: { width: 30 } },
@@ -139,8 +139,13 @@ class Tasks extends React.Component {
       ]);
     });
 
-    //Соберем таблицу для статистики по категориям задач
+    return tasks;
+  }
+
+  //Соберем таблицу для статистики по категориям задач
+  getTasksStatisticTableContent() {
     let tasksStatistic = [];
+
     tasksStatistic[0] = [
       { value: "Категория", type: "text", style: { width: 120 } },
       { value: "Затрачено времени", type: "text", style: { width: 164 } }
@@ -153,7 +158,11 @@ class Tasks extends React.Component {
       ]);
     });
 
-    //Соберем таблицу для отображения лога по задачам
+    return tasksStatistic;
+  }
+
+  //Соберем таблицу для отображения лога по задачам
+  getTasksLogTableContent() {
     let tasksLog = [];
     tasksLog[0] = [
       { key: "id", type: "text", value: "ID", style: { width: 30 } },
@@ -213,6 +222,10 @@ class Tasks extends React.Component {
       ]);
     });
 
+    return tasksLog;
+  }
+
+  render() {
     return (
       <div>
         <table style={{ width: "100%" }}>
@@ -220,13 +233,13 @@ class Tasks extends React.Component {
             <td style={{ verticalAlign: "top", width: "70%" }}>
               {/*Таблица с задачами*/}
               <Table isEditable={true} isResizeble={true} isStylable={true}>
-                {tasks}
+                {this.getTasksTableContent()}
               </Table>
             </td>
             <td style={{ verticalAlign: "top", width: "30%" }}>
               {/*Таблица со статистикой по задачам*/}
               <Table isEditable={false} isResizeble={true}>
-                {tasksStatistic}
+                {this.getTasksStatisticTableContent()}
               </Table>
             </td>
           </tr>
@@ -234,7 +247,7 @@ class Tasks extends React.Component {
             <td style={{ verticalAlign: "top", width: "100%" }} colspan="2">
               {/*Таблица с логом по задачам*/}
               <Table isEditable={false} isResizeble={true}>
-                {tasksLog}
+                {this.getTasksLogTableContent()}
               </Table>
             </td>
           </tr>
