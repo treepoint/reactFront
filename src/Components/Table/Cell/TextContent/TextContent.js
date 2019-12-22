@@ -20,9 +20,11 @@ class TextContent extends React.Component {
   onChange(event) {
     let htmlContent = event.target.value;
 
-    //Если однострочный режим — вырезаем <br>
     if (this.props.isSingleLineMode) {
+      //Если однострочный режим — вырезаем двойной <br>
       htmlContent = htmlContent.replace(new RegExp("<br><br>", "g"), " ");
+      //А одинарный br заменяем на просто нормальный пробел
+      htmlContent = htmlContent.replace(new RegExp("<br>", "g"), "\n");
     }
 
     this.props.onChangeHTMLContent(htmlContent);
