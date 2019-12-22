@@ -59,7 +59,7 @@ class Tasks extends React.Component {
   getTimeFromMins(mins) {
     let hours = Math.trunc(mins / 60);
     let minutes = mins % 60;
-    return hours + "ч. " + minutes + "м.";
+    return hours + ":" + minutes;
   }
 
   render() {
@@ -146,6 +146,7 @@ class Tasks extends React.Component {
       },
       {
         key: "execution_time",
+        type: "text",
         value: "Время выполнения",
         style: { width: 164 }
       }
