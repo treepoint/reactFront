@@ -11,6 +11,7 @@ class Cell extends React.Component {
     this.state = {
       //HTML контент ячейки
       htmlContent: " ",
+      initHtmlContent: " ",
       typeContent: "",
       uuid: "",
       //Стиль по умолчанию
@@ -28,20 +29,22 @@ class Cell extends React.Component {
   //Обновляем контент в ячейке
   updateContent() {
     //Однако, изменение могло быть и при инициализации, тогда так
-    if (typeof this.props.htmlContent !== "undefined") {
-      let htmlContent;
+    if (typeof this.props.initHtmlContent !== "undefined") {
+      let initHtmlContent;
+
       //Если тип поля — текст, то на всякий случай конвертим в текст
       if (this.state.typeContent === "text") {
-        htmlContent = String(this.props.htmlContent.value);
+        initHtmlContent = String(this.props.initHtmlContent.value);
       } else {
-        htmlContent = this.props.htmlContent.value;
+        initHtmlContent = this.props.initHtmlContent.value;
       }
 
-      if (htmlContent !== this.state.htmlContent) {
+      if (initHtmlContent !== this.state.initHtmlContent) {
         //Задаем сам контент
-        this.setState({ htmlContent });
+        this.setState({ initHtmlContent });
+        this.setState({ htmlContent: initHtmlContent });
         //Задаем тип контента
-        this.setState({ typeContent: this.props.htmlContent.type });
+        this.setState({ typeContent: this.props.initHtmlContent.type });
       }
     }
   }
@@ -80,6 +83,7 @@ class Cell extends React.Component {
 
   //Обрабатываем изменения контента в ячейке
   onChangeHTMLContent(htmlContent) {
+    this.setState({ htmlContent });
     this.props.onChangeHTMLContent(htmlContent);
   }
 
