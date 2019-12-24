@@ -27,25 +27,10 @@ class TaskStatuses extends React.Component {
   }
 
   //Сохраним изменяемую строку в ДБ
-  saveRowToDataBase(row, callback) {
-    let body = {};
+  saveRowToDataBase(taskStatus, callback) {
+    updateStatus(taskStatus.id, taskStatus);
 
-    row.forEach(item => {
-      switch (item.type) {
-        case "text":
-          body[item.key] = item.value;
-          break;
-        case "select":
-          body[item.key] = item.value.current;
-          break;
-        default:
-          return;
-      }
-    });
-
-    updateStatus(body.id, body);
-
-    //Пока, если просто дошли до сюда, значит сохранили.
+    //Пока, если просто дошли до сюда, значит сохранили и нужно сказать об этом таблице
     //Понятно, что это не самое хорошее решение, но тестим пока так
     callback();
   }
@@ -53,15 +38,20 @@ class TaskStatuses extends React.Component {
   render() {
     let taskStatusesList = [
       [
-        { key: "id", type: "text", value: "ID", style: { width: 30 } },
-        { key: "name", type: "text", value: "Название", style: { width: 220 } }
+        { key: "id", type: "string", value: "ID", style: { width: 30 } },
+        {
+          key: "name",
+          type: "string",
+          value: "Название",
+          style: { width: 220 }
+        }
       ]
     ];
 
     this.state.taskStatusesList.forEach(taskStatus => {
       taskStatusesList.push([
-        { key: "id", type: "text", value: taskStatus.id, style: {} },
-        { key: "name", type: "text", value: taskStatus.name, style: {} }
+        { key: "id", type: "string", value: taskStatus.id, style: {} },
+        { key: "name", type: "string", value: taskStatus.name, style: {} }
       ]);
     });
 

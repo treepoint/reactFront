@@ -3,6 +3,7 @@ import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
 import TextContent from "./TextContent/TextContent";
 import SelectContent from "./SelectContent/SelectContent";
+import StringContent from "./StringContent/StringContent";
 import "./Cell.css";
 
 class Cell extends React.Component {
@@ -115,6 +116,20 @@ class Cell extends React.Component {
     //Если тип контента просто текст — отображаем просто текст
 
     switch (this.state.typeContent) {
+      case "string":
+        return (
+          <StringContent
+            stringContent={this.state.htmlContent}
+            scrollLeft={this.props.scrollLeft}
+            isHeader={this.props.isHeader}
+            width={this.props.width}
+            height={this.props.height}
+            disabled={!this.props.isEditable}
+            onChangeStringContent={htmlContent =>
+              this.onChangeHTMLContent(htmlContent)
+            }
+          />
+        );
       case "text":
         return (
           <TextContent
@@ -124,7 +139,6 @@ class Cell extends React.Component {
             width={this.props.width}
             height={this.props.height}
             isStylable={this.props.isStylable}
-            isSingleLineMode={this.props.isSingleLineMode}
             disabled={!this.props.isEditable}
             style={this.state.style}
             setStyle={style => {
@@ -166,6 +180,7 @@ class Cell extends React.Component {
         }}
         //Задаем минимальную высоту
         minHeight={34}
+        minWidth={20}
         //Указываем какие грани ячейки активны для изменения размеров
         enable={this.setEnabled()}
         //При резайзе отправляем размеры вверх, в строку

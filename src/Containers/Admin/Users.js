@@ -39,23 +39,8 @@ class Users extends React.Component {
   }
 
   //Сохраним изменяемую строку в ДБ
-  saveRowToDataBase(row, callback) {
-    let body = {};
-
-    row.forEach(item => {
-      switch (item.type) {
-        case "text":
-          body[item.key] = item.value;
-          break;
-        case "select":
-          body[item.key] = item.value.current;
-          break;
-        default:
-          return;
-      }
-    });
-
-    updateUser(body.id, body);
+  saveRowToDataBase(user, callback) {
+    updateUser(user.id, user);
 
     //Пока, если просто дошли до сюда, значит сохранили.
     //Понятно, что это не самое хорошее решение, но тестим пока так
@@ -65,15 +50,15 @@ class Users extends React.Component {
   render() {
     let users = [
       [
-        { key: "id", type: "text", value: "ID", style: { width: 30 } },
-        { key: "email", type: "text", value: "Email", style: { width: 220 } },
+        { key: "id", type: "string", value: "ID", style: { width: 30 } },
+        { key: "email", type: "string", value: "Email", style: { width: 220 } },
         {
           key: "password",
-          type: "text",
+          type: "string",
           value: "Пароль",
           style: { width: 120 }
         },
-        { key: "role", type: "text", value: "Роль", style: { width: 120 } }
+        { key: "role", type: "string", value: "Роль", style: { width: 120 } }
       ]
     ];
 
@@ -87,9 +72,9 @@ class Users extends React.Component {
       let roles = { list, current: user.role_id };
 
       users.push([
-        { key: "id", type: "text", value: user.id, style: {} },
-        { key: "email", type: "text", value: user.email, style: {} },
-        { key: "password", type: "text", value: user.password, style: {} },
+        { key: "id", type: "string", value: user.id, style: {} },
+        { key: "email", type: "string", value: user.email, style: {} },
+        { key: "password", type: "string", value: user.password, style: {} },
         { key: "role_id", type: "select", value: roles, style: {} }
       ]);
     });

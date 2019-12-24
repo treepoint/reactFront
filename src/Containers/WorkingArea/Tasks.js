@@ -122,7 +122,7 @@ class Tasks extends React.Component {
       let statuses = { list: statusesList, current: task.status_id };
 
       tasks.push([
-        { key: "id", type: "text", value: task.id, style: {} },
+        { key: "id", type: "string", value: task.id, style: {} },
         { key: "name", type: "text", value: task.name, style: {} },
         {
           key: "description",
@@ -144,23 +144,8 @@ class Tasks extends React.Component {
   }
 
   //Сохраним изменяемую строку в ДБ
-  saveTaskToDataBase(row, callback) {
-    let body = {};
-
-    row.forEach(item => {
-      switch (item.type) {
-        case "text":
-          body[item.key] = item.value;
-          break;
-        case "select":
-          body[item.key] = item.value.current;
-          break;
-        default:
-          return;
-      }
-    });
-
-    updateTask(body.id, body);
+  saveTaskToDataBase(task, callback) {
+    updateTask(task.id, task);
 
     //Пока, если просто дошли до сюда, значит сохранили.
     //Понятно, что это не самое хорошее решение, но тестим пока так
@@ -219,7 +204,7 @@ class Tasks extends React.Component {
 
     this.state.tasksLogList.forEach(tasksLogList => {
       tasksLog.push([
-        { key: "id", type: "text", value: tasksLogList.id, style: {} },
+        { key: "id", type: "string", value: tasksLogList.id, style: {} },
         {
           key: "task_name",
           type: "text",

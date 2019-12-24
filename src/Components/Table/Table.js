@@ -150,7 +150,26 @@ class Table extends React.Component {
     if (typeof this.props.saveRowToDataBase === "function") {
       this.setState({ displaySaveMark: true });
 
-      this.props.saveRowToDataBase(rowContent, () => {
+      //Разберем контент и вернем уже объект, с которым будем работать дальше
+      let object = {};
+
+      rowContent.forEach(item => {
+        switch (item.type) {
+          case "string":
+            object[item.key] = item.value;
+            break;
+          case "text":
+            object[item.key] = item.value;
+            break;
+          case "select":
+            object[item.key] = item.value.current;
+            break;
+          default:
+            return;
+        }
+      });
+
+      this.props.saveRowToDataBase(object, () => {
         this.setDisplaySaveMarkFalse();
       });
     }
@@ -173,8 +192,6 @@ class Table extends React.Component {
           isResizeble={this.props.isResizeble}
           //Задаем возможность применения стилей
           isStylable={this.props.isStylable}
-          //Задаем однострочный режим
-          isSingleLineMode={this.props.isSingleLineMode}
           //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
           uuid={this.state.uuid}
           //Передадим содержимое столбцов из шапки

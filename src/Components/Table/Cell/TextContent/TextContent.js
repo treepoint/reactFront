@@ -18,20 +18,7 @@ class TextContent extends React.Component {
 
   //Изменяем контент по вводу
   onChange(event) {
-    let htmlContent = event.target.value;
-
-    console.log(htmlContent);
-
-    if (this.props.isSingleLineMode) {
-      //Если однострочный режим — вырезаем двойной <br>
-      htmlContent = htmlContent.replace(new RegExp("<br><br>", "g"), " ");
-      //А одинарный br заменяем на просто нормальный пробел
-      htmlContent = htmlContent.replace(new RegExp("<br>", "g"), "\n");
-    }
-
-    console.log(htmlContent);
-
-    this.props.onChangeHTMLContent(htmlContent);
+    this.props.onChangeHTMLContent(event.target.value);
   }
 
   //Обрабатываем изменения стиля контента в ячейке в
@@ -133,18 +120,11 @@ class TextContent extends React.Component {
     return className;
   }
 
-  //Отрабатываем нажатия клавиш
-  onKeyPress(event) {
-    //Если это однострочный режим — отрубаем перенос строки enter
-    if (event.key === "Enter" && this.props.isSingleLineMode) {
-      event.preventDefault();
-    }
-  }
-
   //Получаем контент ячейки в зависимости от того шапка таблицы это или обычная ячейка
   getCellContent() {
     return (
       <ContentEditable
+        ref="textarea"
         spellCheck="false"
         className={this.getClassName()}
         style={
@@ -154,6 +134,7 @@ class TextContent extends React.Component {
         html={this.props.htmlContent}
         //Задаем редактируемость
         disabled={!!this.props.isHeader ? true : this.props.disabled}
+        //Обрабатываем изменения
         onChange={event => this.onChange(event)}
         //Обрабатываем двойной клик
         onDoubleClick={event => this.showWideEditArea(event)}
@@ -161,8 +142,6 @@ class TextContent extends React.Component {
         onContextMenu={event => this.showContextMenu(event)}
         //Обрабатываем прокрутку
         onWheel={event => this.hideAllEditing(event)}
-        //Отрабатываем нажатия клавиш. В основном отрубаем enter если нужно
-        onKeyPress={event => this.onKeyPress(event)}
       ></ContentEditable>
     );
   }

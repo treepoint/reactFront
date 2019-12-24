@@ -27,13 +27,7 @@ class Categories extends React.Component {
   }
 
   //Сохраним изменяемую строку в ДБ
-  saveRowToDataBase(row, callback) {
-    let category = {};
-
-    row.forEach(item => {
-      category[item.key] = item.value;
-    });
-
+  saveRowToDataBase(category, callback) {
     updateCategory(category.id, category);
 
     //Пока, если просто дошли до сюда, значит сохранили.
@@ -45,11 +39,11 @@ class Categories extends React.Component {
     //Соберем таблицу для отображения
     let categories = [];
     categories[0] = [
-      { key: "id", type: "text", value: "ID", style: { width: 30 } },
-      { key: "name", type: "text", value: "Название", style: { width: 220 } },
+      { key: "id", type: "string", value: "ID", style: { width: 30 } },
+      { key: "name", type: "string", value: "Название", style: { width: 220 } },
       {
         key: "description",
-        type: "text",
+        type: "string",
         value: "Описание",
         style: { width: 220 }
       }
@@ -57,11 +51,11 @@ class Categories extends React.Component {
 
     this.state.categoriesList.forEach(category => {
       categories.push([
-        { key: "id", type: "text", value: category.id, style: {} },
-        { key: "name", type: "text", value: category.name, style: {} },
+        { key: "id", type: "string", value: category.id, style: {} },
+        { key: "name", type: "string", value: category.name, style: {} },
         {
           key: "description",
-          type: "text",
+          type: "string",
           value: category.description,
           style: {}
         }
