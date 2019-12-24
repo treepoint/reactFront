@@ -14,6 +14,7 @@ class Cell extends React.Component {
       htmlContent: " ",
       initHtmlContent: " ",
       typeContent: "",
+      disabled: true,
       uuid: "",
       //Стиль по умолчанию
       style: { bold: false, italic: false, backgroundColor: "#ffffff" }
@@ -46,6 +47,10 @@ class Cell extends React.Component {
         this.setState({ htmlContent: initHtmlContent });
         //Задаем тип контента
         this.setState({ typeContent: this.props.initHtmlContent.type });
+        //Задаем редактируемость контента
+        if (typeof this.props.initHtmlContent.disabled !== "undefined") {
+          this.setState({ disabled: this.props.initHtmlContent.disabled });
+        }
       }
     }
   }
@@ -122,9 +127,9 @@ class Cell extends React.Component {
             stringContent={this.state.htmlContent}
             scrollLeft={this.props.scrollLeft}
             isHeader={this.props.isHeader}
+            disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
-            disabled={!this.props.isEditable}
             onChangeStringContent={htmlContent =>
               this.onChangeHTMLContent(htmlContent)
             }
@@ -136,10 +141,10 @@ class Cell extends React.Component {
             htmlContent={this.state.htmlContent}
             scrollLeft={this.props.scrollLeft}
             isHeader={this.props.isHeader}
+            disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
             isStylable={this.props.isStylable}
-            disabled={!this.props.isEditable}
             style={this.state.style}
             setStyle={style => {
               this.setStyle(style);
@@ -154,6 +159,7 @@ class Cell extends React.Component {
         return (
           <SelectContent
             htmlContent={this.state.htmlContent}
+            disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
             onChangeHTMLContent={htmlContent =>

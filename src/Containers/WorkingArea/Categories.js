@@ -39,23 +39,49 @@ class Categories extends React.Component {
     //Соберем таблицу для отображения
     let categories = [];
     categories[0] = [
-      { key: "id", type: "string", value: "ID", style: { width: 30 } },
-      { key: "name", type: "string", value: "Название", style: { width: 220 } },
+      {
+        key: "id",
+        type: "string",
+        disabled: true,
+        value: "ID",
+        style: { width: 30 }
+      },
+      {
+        key: "name",
+        type: "string",
+        disabled: true,
+        value: "Название",
+        style: { width: 220 }
+      },
       {
         key: "description",
         type: "string",
         value: "Описание",
+        disabled: true,
         style: { width: 220 }
       }
     ];
 
     this.state.categoriesList.forEach(category => {
       categories.push([
-        { key: "id", type: "string", value: category.id, style: {} },
-        { key: "name", type: "string", value: category.name, style: {} },
+        {
+          key: "id",
+          type: "string",
+          disabled: true,
+          value: category.id,
+          style: {}
+        },
+        {
+          key: "name",
+          type: "string",
+          disabled: false,
+          value: category.name,
+          style: {}
+        },
         {
           key: "description",
           type: "string",
+          disabled: false,
           value: category.description,
           style: {}
         }

@@ -50,6 +50,7 @@ class SelectContent extends React.Component {
     return (
       <select
         className="selectContent"
+        disabled={!!this.props.disabled ? true : false}
         style={{
           width: this.props.width,
           height: this.props.height

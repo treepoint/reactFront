@@ -38,10 +38,17 @@ class TaskStatuses extends React.Component {
   render() {
     let taskStatusesList = [
       [
-        { key: "id", type: "string", value: "ID", style: { width: 30 } },
+        {
+          key: "id",
+          type: "string",
+          disabled: true,
+          value: "ID",
+          style: { width: 30 }
+        },
         {
           key: "name",
           type: "string",
+          disabled: true,
           value: "Название",
           style: { width: 220 }
         }
@@ -50,15 +57,26 @@ class TaskStatuses extends React.Component {
 
     this.state.taskStatusesList.forEach(taskStatus => {
       taskStatusesList.push([
-        { key: "id", type: "string", value: taskStatus.id, style: {} },
-        { key: "name", type: "string", value: taskStatus.name, style: {} }
+        {
+          key: "id",
+          type: "string",
+          disabled: true,
+          value: taskStatus.id,
+          style: {}
+        },
+        {
+          key: "name",
+          type: "string",
+          disabled: false,
+          value: taskStatus.name,
+          style: {}
+        }
       ]);
     });
 
     return (
       <div>
         <Table
-          isEditable={true}
           isResizeble={true}
           isSingleLineMode={true}
           saveRowToDataBase={(row, callback) =>

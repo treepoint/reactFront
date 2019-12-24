@@ -82,25 +82,40 @@ class Tasks extends React.Component {
   getTasksTableContent() {
     let tasks = [];
     tasks[0] = [
-      { key: "id", type: "text", value: "ID", style: { width: 30 } },
-      { key: "name", type: "text", value: "Название", style: { width: 200 } },
+      {
+        key: "id",
+        type: "string",
+        disabled: true,
+        value: "ID",
+        style: { width: 30 }
+      },
+      {
+        key: "name",
+        type: "string",
+        disabled: true,
+        value: "Название",
+        style: { width: 200 }
+      },
       {
         key: "description",
-        type: "text",
+        type: "string",
+        disabled: true,
         value: "Описание",
         style: { width: 220 }
       },
       {
         key: "category_name",
-        type: "text",
+        type: "string",
+        disabled: true,
         value: "Категория",
         style: { width: 120 }
       },
       {
         key: "status_name",
-        type: "text",
+        type: "string",
+        disabled: true,
         value: "Статус",
-        style: { width: 120 }
+        style: { width: 200 }
       }
     ];
 
@@ -122,21 +137,41 @@ class Tasks extends React.Component {
       let statuses = { list: statusesList, current: task.status_id };
 
       tasks.push([
-        { key: "id", type: "string", value: task.id, style: {} },
-        { key: "name", type: "text", value: task.name, style: {} },
+        {
+          key: "id",
+          type: "string",
+          disabled: true,
+          value: task.id,
+          style: {}
+        },
+        {
+          key: "name",
+          type: "text",
+          disabled: false,
+          value: task.name,
+          style: {}
+        },
         {
           key: "description",
           type: "text",
+          disabled: false,
           value: task.description,
           style: {}
         },
         {
           key: "category_id",
           type: "select",
+          disabled: false,
           value: categories,
           style: {}
         },
-        { key: "status_id", type: "select", value: statuses, style: {} }
+        {
+          key: "status_id",
+          type: "select",
+          disabled: false,
+          value: statuses,
+          style: {}
+        }
       ]);
     });
 
@@ -157,14 +192,24 @@ class Tasks extends React.Component {
     let tasksStatistic = [];
 
     tasksStatistic[0] = [
-      { value: "Категория", type: "text", style: { width: 120 } },
-      { value: "Затрачено времени", type: "text", style: { width: 164 } }
+      {
+        value: "Категория",
+        type: "string",
+        disabled: true,
+        style: { width: 120 }
+      },
+      {
+        value: "Затрачено времени",
+        type: "string",
+        disabled: true,
+        style: { width: 164 }
+      }
     ];
 
     this.state.categoriesList.forEach(categoriesList => {
       tasksStatistic.push([
-        { value: categoriesList.name, type: "text", style: {} },
-        { value: "0", type: "text", style: {} }
+        { value: categoriesList.name, type: "text", disabled: true, style: {} },
+        { value: "0", type: "text", disabled: true, style: {} }
       ]);
     });
 
@@ -175,28 +220,38 @@ class Tasks extends React.Component {
   getTasksLogTableContent() {
     let tasksLog = [];
     tasksLog[0] = [
-      { key: "id", type: "text", value: "ID", style: { width: 30 } },
+      {
+        key: "id",
+        type: "string",
+        disabled: true,
+        value: "ID",
+        style: { width: 30 }
+      },
       {
         key: "task_name",
-        type: "text",
+        type: "string",
+        disabled: true,
         value: "Название задачи",
         style: { width: 220 }
       },
       {
         key: "execution_start",
-        type: "text",
+        type: "string",
+        disabled: true,
         value: "Начал",
         style: { width: 120 }
       },
       {
         key: "execution_end",
-        type: "text",
+        type: "string",
+        disabled: true,
         value: "Закончил",
         style: { width: 120 }
       },
       {
         key: "execution_time",
-        type: "text",
+        type: "string",
+        disabled: true,
         value: "Время выполнения",
         style: { width: 164 }
       }
@@ -208,24 +263,28 @@ class Tasks extends React.Component {
         {
           key: "task_name",
           type: "text",
+          disabled: true,
           value: tasksLogList.task_name,
           style: {}
         },
         {
           key: "execution_start",
           type: "text",
+          disabled: false,
           value: tasksLogList.execution_start,
           style: {}
         },
         {
           key: "execution_end",
           type: "text",
+          disabled: false,
           value: tasksLogList.execution_end,
           style: {}
         },
         {
           key: "execution_time",
           type: "text",
+          disabled: true,
           value: this.getTimeFromMins(tasksLogList.execution_time),
           style: {}
         }

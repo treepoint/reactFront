@@ -186,8 +186,6 @@ class Table extends React.Component {
         <Row
           //Указываем, на наличие шапки. По умолчанию — есть
           isHeader={!!!this.props.isHeaderless && index === 0 ? true : false}
-          //Задаем возможность редактирования контента в ячейках
-          isEditable={this.props.isEditable}
           //Задаем возможность изменения размеров ячеек
           isResizeble={this.props.isResizeble}
           //Задаем возможность применения стилей

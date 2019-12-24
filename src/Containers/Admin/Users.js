@@ -50,15 +50,34 @@ class Users extends React.Component {
   render() {
     let users = [
       [
-        { key: "id", type: "string", value: "ID", style: { width: 30 } },
-        { key: "email", type: "string", value: "Email", style: { width: 220 } },
+        {
+          key: "id",
+          type: "string",
+          disabled: true,
+          value: "ID",
+          style: { width: 30 }
+        },
+        {
+          key: "email",
+          type: "string",
+          disabled: true,
+          value: "Email",
+          style: { width: 220 }
+        },
         {
           key: "password",
           type: "string",
+          disabled: true,
           value: "Пароль",
           style: { width: 120 }
         },
-        { key: "role", type: "string", value: "Роль", style: { width: 120 } }
+        {
+          key: "role",
+          type: "string",
+          disabled: true,
+          value: "Роль",
+          style: { width: 120 }
+        }
       ]
     ];
 
@@ -72,10 +91,34 @@ class Users extends React.Component {
       let roles = { list, current: user.role_id };
 
       users.push([
-        { key: "id", type: "string", value: user.id, style: {} },
-        { key: "email", type: "string", value: user.email, style: {} },
-        { key: "password", type: "string", value: user.password, style: {} },
-        { key: "role_id", type: "select", value: roles, style: {} }
+        {
+          key: "id",
+          type: "string",
+          disabled: true,
+          value: user.id,
+          style: {}
+        },
+        {
+          key: "email",
+          type: "string",
+          disabled: false,
+          value: user.email,
+          style: {}
+        },
+        {
+          key: "password",
+          type: "string",
+          disabled: false,
+          value: user.password,
+          style: {}
+        },
+        {
+          key: "role_id",
+          type: "select",
+          disabled: false,
+          value: roles,
+          style: {}
+        }
       ]);
     });
 

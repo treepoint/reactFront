@@ -3,3 +3,8 @@
   font-family: "Open Sans", "Source Sans Pro";
   font-size: 15px;
 }
+
+.stringContent:disabled {
+  background: rgb(251, 251, 251);
+  color: #444;
+}
