@@ -7,6 +7,9 @@
   overflow-y: auto;
   text-overflow: ellipsis;
   position: absolute !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .textContent:focus {

@@ -28,7 +28,7 @@ class TaskStatuses extends React.Component {
   }
 
   addRowToDataBase() {
-    let promise = createStatus({ name: " " });
+    let promise = createStatus({ name: "" });
 
     promise.then(result => {
       if (typeof result.insertId === "number") {
