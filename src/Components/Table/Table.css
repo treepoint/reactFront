@@ -3,3 +3,8 @@
   width: max-content;
   height: max-content;
 }
+
+.tableWrapper {
+  overflow: hidden;
+  width: max-content;
+}

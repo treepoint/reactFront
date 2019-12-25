@@ -1,6 +1,5 @@
 import React from "react";
 //Подключаем компоненты
-import TableWrapper from "./TableWrapper/TableWrapper";
 import SaveMark from "./SaveMark/SaveMark";
 import TableMenu from "./TableMenu/TableMenu";
 import Row from "./Row/Row";
