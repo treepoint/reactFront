@@ -125,7 +125,6 @@ class Cell extends React.Component {
         return (
           <StringContent
             stringContent={this.state.htmlContent}
-            scrollLeft={this.props.scrollLeft}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
@@ -139,7 +138,6 @@ class Cell extends React.Component {
         return (
           <TextContent
             htmlContent={this.state.htmlContent}
-            scrollLeft={this.props.scrollLeft}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}

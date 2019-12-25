@@ -4,7 +4,8 @@ import {
   SET_MODAL_WINDOW_STATE,
   SET_MODAL_WINDOW_NAME,
   LOADING,
-  SCROLL_TOP
+  SCROLL_TOP,
+  SCROLL_LEFT
 } from "./actions";
 
 import { combineReducers } from "redux";
@@ -63,13 +64,23 @@ function scrollTop(state = 0, action) {
   }
 }
 
+function scrollLeft(state = 0, action) {
+  switch (action.type) {
+    case SCROLL_LEFT:
+      return action.number;
+    default:
+      return state;
+  }
+}
+
 const appReducer = combineReducers({
   token,
   user,
   modalWindowState,
   modalWindowName,
   loading,
-  scrollTop
+  scrollTop,
+  scrollLeft
 });
 
 export default appReducer;

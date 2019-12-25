@@ -5,7 +5,7 @@ import { setUser, setToken, setModalWindowState } from "../../Store/actions";
 //Подключаем API
 import { getToken } from "../../APIController/APIController";
 //Подключаем cookies
-import { bake_cookie } from "../../Lib/Sfcookies";
+import { bake_cookie } from "../../Libs/Sfcookies";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";

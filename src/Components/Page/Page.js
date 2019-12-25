@@ -3,17 +3,18 @@ import React from "react";
 import ReactCustomScroll from "react-scrollbars-custom";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setScrollTop } from "../../Store/actions";
+import { setScrollTop, setScrollLeft } from "../../Store/actions";
 //Импортируем компоненты
 import PageTitle from "./PageTitle/PageTitle";
 import PageContent from "./PageContent/PageContent";
 import "./Page.css";
 
 class Page extends React.Component {
-  //Обрабатываем вертикальный скролл контента
+  //Обрабатываем скролл контента
   //Нужно для правильного позиционирования элементов в таблицах
   handleVerticalScroll() {
     this.props.setScrollTop(this._scrollBarRef.scrollTop);
+    this.props.setScrollLeft(this._scrollBarRef.scrollLeft);
   }
 
   render() {
@@ -47,7 +48,8 @@ class Page extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    scrollTop: state.scrollTop
+    scrollTop: state.scrollTop,
+    scrollLeft: state.scrollLeft
   };
 };
 
@@ -55,6 +57,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setScrollTop: number => {
       dispatch(setScrollTop(number));
+    },
+    setScrollLeft: number => {
+      dispatch(setScrollLeft(number));
     }
   };
 };

@@ -1,7 +1,7 @@
 /*
  * Методы для работы с API
  */
-import { read_cookie } from "../Lib/Sfcookies";
+import { read_cookie } from "../Libs/Sfcookies";
 import Axios from "axios";
 import { APIURL } from "./Settings";
 

@@ -15,7 +15,6 @@ class Table extends React.Component {
       tableBody: [],
       table: [],
       uuid: "",
-      scrollLeft: 0,
       displaySaveMark: "notInit"
     };
   }
@@ -131,11 +130,6 @@ class Table extends React.Component {
     return table;
   }
 
-  //Обрабатываем горизонтальный скролл для правильного позиционирования элементов в таблице
-  handleHorizonalScroll(scrollLeft) {
-    this.setState({ scrollLeft });
-  }
-
   setDisplaySaveMarkFalse() {
     setTimeout(
       function() {
@@ -217,8 +211,6 @@ class Table extends React.Component {
           stopChangeDimensions={() => this.stopChangeDimensions()}
           //Изменим UUID ячейки, которая изменяла свою ширину
           changeUUID={uuid => this.changeUUID(uuid)}
-          //Обработаем изменения скролла
-          scrollLeft={this.state.scrollLeft}
           saveRowToDataBase={rowContent => this.saveRowToDataBase(rowContent)}
           addRowToDataBase={
             !!this.props.addRowToDataBase

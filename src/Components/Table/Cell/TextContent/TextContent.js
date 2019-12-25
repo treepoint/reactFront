@@ -193,7 +193,8 @@ class TextContent extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    scrollTop: state.scrollTop
+    scrollTop: state.scrollTop,
+    scrollLeft: state.scrollLeft
   };
 };
 
