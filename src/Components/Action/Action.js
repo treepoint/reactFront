@@ -10,10 +10,22 @@ class Action extends React.Component {
     this.props.onClick(event);
   }
 
+  getClassName() {
+    if (this.props.disabled) {
+      return "action disabled";
+    }
+
+    if (!!this.props.isPressed) {
+      return "action pressed";
+    } else {
+      return "action";
+    }
+  }
+
   render() {
     return (
       <div
-        className={!!this.props.isPressed ? "action pressed" : "action"}
+        className={this.getClassName()}
         style={{
           background:
             "url(" + this.props.icon + ") no-repeat scroll 4px 2px transparent",

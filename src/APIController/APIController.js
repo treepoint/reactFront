@@ -264,8 +264,20 @@ export function createStatus(status) {
 
   let url = APIURL + "/task_statuses";
 
-  //Роль по умолчанию — пользователь. Вторая
   return Axios.post(url, status, getHeaders())
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
+}
+
+//Удалить статус
+export function deleteStatus(ID) {
+  let url = APIURL + "/task_statuses/" + ID;
+
+  return Axios.delete(url, getHeaders())
     .then(response => {
       return response.data;
     })

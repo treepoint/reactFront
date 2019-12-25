@@ -146,34 +146,46 @@ class Table extends React.Component {
     );
   }
 
+  getObjectFromRowContent(rowContent) {
+    //Разберем контент и вернем уже объект, с которым будем работать дальше
+    let object = {};
+
+    rowContent.forEach(item => {
+      switch (item.type) {
+        case "string":
+          object[item.key] = item.value;
+          break;
+        case "text":
+          object[item.key] = item.value;
+          break;
+        case "select":
+          object[item.key] = item.value.current;
+          break;
+        default:
+          return;
+      }
+    });
+
+    return object;
+  }
+
   saveRowToDataBase(rowContent) {
     //Если не функция — ничего делать не будем. Значит её не передали
     if (typeof this.props.saveRowToDataBase === "function") {
       this.setState({ displaySaveMark: true });
 
-      //Разберем контент и вернем уже объект, с которым будем работать дальше
-      let object = {};
-
-      rowContent.forEach(item => {
-        switch (item.type) {
-          case "string":
-            object[item.key] = item.value;
-            break;
-          case "text":
-            object[item.key] = item.value;
-            break;
-          case "select":
-            object[item.key] = item.value.current;
-            break;
-          default:
-            return;
-        }
-      });
+      let object = this.getObjectFromRowContent(rowContent);
 
       this.props.saveRowToDataBase(object, () => {
         this.setDisplaySaveMarkFalse();
       });
     }
+  }
+
+  deleteRowFromDataBase(rowContent) {
+    let object = this.getObjectFromRowContent(rowContent);
+
+    this.props.deleteRowFromDataBase(object);
   }
 
   render() {
@@ -208,29 +220,23 @@ class Table extends React.Component {
           //Обработаем изменения скролла
           scrollLeft={this.state.scrollLeft}
           saveRowToDataBase={rowContent => this.saveRowToDataBase(rowContent)}
-        />
-      );
-    });
-
-    return (
-      <div>
-        <TableMenu
           addRowToDataBase={
             !!this.props.addRowToDataBase
               ? () => this.props.addRowToDataBase()
               : null
           }
-          updateTableContent={
-            !!this.props.updateTableContent
-              ? () => this.props.updateTableContent()
+          deleteRowFromDataBase={
+            !!this.props.deleteRowFromDataBase
+              ? rowContent => this.deleteRowFromDataBase(rowContent)
               : null
           }
         />
-        <TableWrapper
-          handleHorizonalScroll={scrollLeft => {
-            this.handleHorizonalScroll(scrollLeft);
-          }}
-        >
+      );
+    });
+
+    return (
+      <div style={{ width: "max-content" }}>
+        <div className="tableWrapper">
           <div className="table">
             {table}
             <SaveMark
@@ -238,7 +244,14 @@ class Table extends React.Component {
               isDisplayed={this.state.displaySaveMark}
             />
           </div>
-        </TableWrapper>
+        </div>
+        <TableMenu
+          updateTableContent={
+            !!this.props.updateTableContent
+              ? () => this.props.updateTableContent()
+              : null
+          }
+        />
       </div>
     );
   }

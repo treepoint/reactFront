@@ -1,5 +1,7 @@
 import React from "react";
 import Cell from "../Cell/Cell";
+import DeleteButton from "./DeleteButton/DeleteButton";
+import AddButton from "./AddButton/AddButton";
 import "./Row.css";
 
 class Row extends React.Component {
@@ -68,8 +70,39 @@ class Row extends React.Component {
     }
   }
 
+  deleteRowFromDataBase() {
+    this.props.deleteRowFromDataBase(this.state.rowContent);
+  }
+
+  getActionButton() {
+    if (this.props.isHeader) {
+      if (this.props.addRowToDataBase === null) {
+        return <AddButton disabled={true} />;
+      } else {
+        return (
+          <AddButton
+            disabled={false}
+            addRowToDataBase={() => this.props.addRowToDataBase()}
+          />
+        );
+      }
+    } else {
+      if (this.props.deleteRowFromDataBase === null) {
+        return <DeleteButton disabled={true} />;
+      } else {
+        return (
+          <DeleteButton
+            disabled={false}
+            deleteRowFromDataBase={() => this.deleteRowFromDataBase()}
+          />
+        );
+      }
+    }
+  }
+
   render() {
     this.updateRowContent();
+
     //Из пришедшего описания столбцов соберем ячейки
     let cells = this.props.colsDescription.map((column, index) => {
       return (
@@ -93,7 +126,12 @@ class Row extends React.Component {
       );
     });
 
-    return <div className="row">{cells}</div>;
+    return (
+      <div className="row">
+        {cells}
+        {this.getActionButton()}
+      </div>
+    );
   }
 }
 

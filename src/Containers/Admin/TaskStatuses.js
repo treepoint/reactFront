@@ -3,7 +3,8 @@ import Table from "../../Components/Table/Table";
 import {
   getAllTaskStatuses,
   updateStatus,
-  createStatus
+  createStatus,
+  deleteStatus
 } from "../../APIController/APIController";
 
 class TaskStatuses extends React.Component {
@@ -31,6 +32,16 @@ class TaskStatuses extends React.Component {
 
     promise.then(result => {
       if (typeof result.insertId === "number") {
+        this.getAllTaskStatuses();
+      }
+    });
+  }
+
+  deleteRowFromDataBase(taskStatus) {
+    let promise = deleteStatus(taskStatus.id);
+
+    promise.then(result => {
+      if (result === "{success}") {
         this.getAllTaskStatuses();
       }
     });
@@ -95,6 +106,7 @@ class TaskStatuses extends React.Component {
           saveRowToDataBase={(row, callback) =>
             this.saveRowToDataBase(row, callback)
           }
+          deleteRowFromDataBase={row => this.deleteRowFromDataBase(row)}
           updateTableContent={() => this.getAllTaskStatuses()}
         >
           {taskStatusesList}

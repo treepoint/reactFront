@@ -1,0 +1,9 @@
+.addButton {
+  background: rgb(224, 224, 224);
+  border-left: 1px solid #979797;
+}
+
+.addButton.disabled {
+  background: rgb(224, 224, 224);
+  border-left: 1px solid #979797;
+}

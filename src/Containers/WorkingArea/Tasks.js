@@ -299,7 +299,7 @@ class Tasks extends React.Component {
     return (
       <div>
         <div className="taskContainer">
-          <div className="tasksTable">
+          <div>
             {/*Таблица с задачами*/}
             <Table
               isEditable={true}
