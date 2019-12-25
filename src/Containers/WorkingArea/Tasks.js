@@ -6,7 +6,9 @@ import {
   getUserCategories,
   getTasksLog,
   getAllTaskStatuses,
-  updateTask
+  updateTask,
+  createTask,
+  deleteTask
 } from "../../APIController/APIController";
 import "./Tasks.css";
 
@@ -188,6 +190,35 @@ class Tasks extends React.Component {
     callback();
   }
 
+  //Сохраним изменяемую строку в ДБ
+  addTaskToDataBase() {
+    let task = {
+      category_id: this.state.categoriesList[0].id,
+      status_id: this.state.taskStatusesList[0].id,
+      name: "<br>",
+      description: "<br>"
+    };
+
+    let promise = createTask(task);
+
+    promise.then(result => {
+      if (typeof result.affectedRows === "number") {
+        this.getTasks();
+      }
+    });
+  }
+
+  //Сохраним изменяемую строку в ДБ
+  deleteTaskFromDataBase(task) {
+    let promise = deleteTask(task.id);
+
+    promise.then(result => {
+      if (result === "{success}") {
+        this.getTasks();
+      }
+    });
+  }
+
   //Соберем таблицу для статистики по категориям задач
   getTasksStatisticTableContent() {
     let tasksStatistic = [];
@@ -309,6 +340,8 @@ class Tasks extends React.Component {
                 this.saveTaskToDataBase(row, callback)
               }
               updateTableContent={() => this.getTasks()}
+              addRowToDataBase={() => this.addTaskToDataBase()}
+              deleteRowFromDataBase={row => this.deleteTaskFromDataBase(row)}
             >
               {this.getTasksTableContent()}
             </Table>

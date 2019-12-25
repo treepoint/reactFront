@@ -221,6 +221,19 @@ export function getUserTasks() {
   });
 }
 
+//Удалить задачу
+export function deleteTask(ID) {
+  let url = APIURL + "/tasks/" + ID;
+
+  return Axios.delete(url, getHeaders())
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
+}
+
 /*
  * Статусы задач
  */

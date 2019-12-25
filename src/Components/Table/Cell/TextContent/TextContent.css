@@ -7,13 +7,9 @@
   overflow-y: auto;
   text-overflow: ellipsis;
   position: absolute !important;
-  display: flex;
+  /*   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-.textContent:focus {
-  background: rgb(240, 240, 240);
+  justify-content: center; */
 }
 
 .textContent.chosen {
