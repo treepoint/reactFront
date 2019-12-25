@@ -2,6 +2,14 @@ import React from "react";
 import "./Action.css";
 
 class Action extends React.Component {
+  onClick(event) {
+    if (typeof this.props.onClick !== "function") {
+      return;
+    }
+
+    this.props.onClick(event);
+  }
+
   render() {
     return (
       <div
@@ -11,7 +19,7 @@ class Action extends React.Component {
             "url(" + this.props.icon + ") no-repeat scroll 4px 2px transparent",
           backgroundSize: "24px 24px"
         }}
-        onClick={event => this.props.onClick(event)}
+        onClick={event => this.onClick(event)}
       ></div>
     );
   }

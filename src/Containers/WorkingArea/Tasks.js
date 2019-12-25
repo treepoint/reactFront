@@ -8,6 +8,7 @@ import {
   getAllTaskStatuses,
   updateTask
 } from "../../APIController/APIController";
+import "./Tasks.css";
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -269,21 +270,21 @@ class Tasks extends React.Component {
         },
         {
           key: "execution_start",
-          type: "text",
+          type: "string",
           disabled: false,
           value: tasksLogList.execution_start,
           style: {}
         },
         {
           key: "execution_end",
-          type: "text",
+          type: "string",
           disabled: false,
           value: tasksLogList.execution_end,
           style: {}
         },
         {
           key: "execution_time",
-          type: "text",
+          type: "string",
           disabled: true,
           value: this.getTimeFromMins(tasksLogList.execution_time),
           style: {}
@@ -297,37 +298,37 @@ class Tasks extends React.Component {
   render() {
     return (
       <div>
-        <table style={{ width: "100%" }}>
-          <tr>
-            <td style={{ verticalAlign: "top", width: "70%" }}>
-              {/*Таблица с задачами*/}
-              <Table
-                isEditable={true}
-                isResizeble={true}
-                isStylable={true}
-                saveRowToDataBase={(row, callback) =>
-                  this.saveTaskToDataBase(row, callback)
-                }
-              >
-                {this.getTasksTableContent()}
-              </Table>
-            </td>
-            <td style={{ verticalAlign: "top", width: "30%" }}>
-              {/*Таблица со статистикой по задачам*/}
-              <Table isEditable={false} isResizeble={true}>
-                {this.getTasksStatisticTableContent()}
-              </Table>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ verticalAlign: "top", width: "100%" }} colspan="2">
-              {/*Таблица с логом по задачам*/}
-              <Table isEditable={false} isResizeble={true}>
-                {this.getTasksLogTableContent()}
-              </Table>
-            </td>
-          </tr>
-        </table>
+        <div className="taskContainer">
+          <div className="tasksTable">
+            {/*Таблица с задачами*/}
+            <Table
+              isEditable={true}
+              isResizeble={true}
+              isStylable={true}
+              saveRowToDataBase={(row, callback) =>
+                this.saveTaskToDataBase(row, callback)
+              }
+              updateTableContent={() => this.getTasks()}
+            >
+              {this.getTasksTableContent()}
+            </Table>
+          </div>
+          <div className="tasksStatisctic">
+            {/*Таблица со статистикой по задачам*/}
+            <Table isEditable={false} isResizeble={true}>
+              {this.getTasksStatisticTableContent()}
+            </Table>
+          </div>
+        </div>
+        {/*Таблица с логом по задачам*/}
+        <Table
+          isEditable={false}
+          isResizeble={true}
+          updateTableContent={() => this.getTasksLog()}
+        >
+          {this.getTasksLogTableContent()}
+        </Table>
+
         <Button
           value="Обновить данные по задачам"
           isPrimary={true}

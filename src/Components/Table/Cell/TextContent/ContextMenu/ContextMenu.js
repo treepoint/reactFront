@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 //Подключаем компоненты
 import { TwitterPicker } from "react-color";
-import Action from "./Action/Action";
+import Action from "../../../../Action/Action";
 import ContextMenuBlur from "./ContextMenuBlur/ContextMenuBlur";
 //Подключаем изображения иконок и CSS
 import iconBold from "../../../../../Images/icon_bold.png";

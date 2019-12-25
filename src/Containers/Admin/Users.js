@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
 import {
   getUsers,
@@ -131,14 +130,10 @@ class Users extends React.Component {
           saveRowToDataBase={(row, callback) =>
             this.saveRowToDataBase(row, callback)
           }
+          updateTableContent={() => this.getUsers()}
         >
           {users}
         </Table>
-        <Button
-          value="Обновить список пользователей"
-          isPrimary={true}
-          onClick={() => this.getUsers()}
-        />
       </div>
     );
   }

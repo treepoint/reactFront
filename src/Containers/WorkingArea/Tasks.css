@@ -1,0 +1,15 @@
+.taskContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.tasksTable {
+  width: 70%;
+}
+
+.tasksStatisctic {
+  width: 30%;
+  margin-left: 12px;
+}

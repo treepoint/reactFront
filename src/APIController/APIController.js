@@ -256,6 +256,24 @@ export function updateStatus(ID, status) {
   });
 }
 
+//Создать статус
+export function createStatus(status) {
+  if (typeof status !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/task_statuses";
+
+  //Роль по умолчанию — пользователь. Вторая
+  return Axios.post(url, status, getHeaders())
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
+}
+
 /*
  * Лог выполнения задач
  */

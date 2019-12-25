@@ -2,6 +2,7 @@ import React from "react";
 //Подключаем компоненты
 import TableWrapper from "./TableWrapper/TableWrapper";
 import SaveMark from "./SaveMark/SaveMark";
+import TableMenu from "./TableMenu/TableMenu";
 import Row from "./Row/Row";
 import "./Table.css";
 
@@ -212,19 +213,33 @@ class Table extends React.Component {
     });
 
     return (
-      <TableWrapper
-        handleHorizonalScroll={scrollLeft => {
-          this.handleHorizonalScroll(scrollLeft);
-        }}
-      >
-        <div className="table">
-          {table}
-          <SaveMark
-            marginLeft={this.getTableWidth()}
-            isDisplayed={this.state.displaySaveMark}
-          />
-        </div>
-      </TableWrapper>
+      <div>
+        <TableMenu
+          addRowToDataBase={
+            !!this.props.addRowToDataBase
+              ? () => this.props.addRowToDataBase()
+              : null
+          }
+          updateTableContent={
+            !!this.props.updateTableContent
+              ? () => this.props.updateTableContent()
+              : null
+          }
+        />
+        <TableWrapper
+          handleHorizonalScroll={scrollLeft => {
+            this.handleHorizonalScroll(scrollLeft);
+          }}
+        >
+          <div className="table">
+            {table}
+            <SaveMark
+              marginLeft={this.getTableWidth()}
+              isDisplayed={this.state.displaySaveMark}
+            />
+          </div>
+        </TableWrapper>
+      </div>
     );
   }
 }

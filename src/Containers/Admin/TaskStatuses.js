@@ -1,9 +1,9 @@
 import React from "react";
-import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
 import {
   getAllTaskStatuses,
-  updateStatus
+  updateStatus,
+  createStatus
 } from "../../APIController/APIController";
 
 class TaskStatuses extends React.Component {
@@ -22,6 +22,16 @@ class TaskStatuses extends React.Component {
     promise.then(result => {
       if (Array.isArray(result)) {
         this.setState({ taskStatusesList: result });
+      }
+    });
+  }
+
+  addRowToDataBase() {
+    let promise = createStatus({ name: " " });
+
+    promise.then(result => {
+      if (typeof result.insertId === "number") {
+        this.getAllTaskStatuses();
       }
     });
   }
@@ -79,17 +89,16 @@ class TaskStatuses extends React.Component {
         <Table
           isResizeble={true}
           isSingleLineMode={true}
+          addRowToDataBase={(row, callback) =>
+            this.addRowToDataBase(row, callback)
+          }
           saveRowToDataBase={(row, callback) =>
             this.saveRowToDataBase(row, callback)
           }
+          updateTableContent={() => this.getAllTaskStatuses()}
         >
           {taskStatusesList}
         </Table>
-        <Button
-          value="Обновить список статусов"
-          isPrimary={true}
-          onClick={() => this.getAllTaskStatuses()}
-        />
       </div>
     );
   }

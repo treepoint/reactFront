@@ -72,7 +72,6 @@ class Row extends React.Component {
     this.updateRowContent();
     //Из пришедшего описания столбцов соберем ячейки
     let cells = this.props.colsDescription.map((column, index) => {
-      console.log(this.state.rowContent);
       return (
         <Cell
           isResizeble={this.props.isResizeble}
