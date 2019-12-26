@@ -7,6 +7,7 @@ import {
   createTask,
   deleteTask,
   getTasksLog,
+  updateTaskLog,
   createTaskLog,
   deleteTaskLog,
   getAllTaskStatuses,
@@ -78,9 +79,22 @@ class Tasks extends React.Component {
 
   //Преобразуем минуты в читаемый вид
   getTimeFromMins(mins) {
-    let hours = Math.trunc(mins / 60);
-    let minutes = mins % 60;
-    return hours + ":" + minutes;
+    if (mins === null) {
+      return "00:00";
+    } else {
+      let hours = Math.trunc(mins / 60);
+      let minutes = mins % 60;
+
+      if (minutes <= 9) {
+        minutes = "0" + minutes;
+      }
+
+      if (hours <= 9) {
+        hours = "0" + hours;
+      }
+
+      return hours + ":" + minutes;
+    }
   }
 
   //Соберем таблицу для отображения задач
@@ -194,11 +208,35 @@ class Tasks extends React.Component {
 
   //Сохраним лог по задаче в ДБ
   addTaskLogToDataBase() {
-    let promise = createTaskLog({ task_id: this.state.tasksList[0].id });
+    //Получим сегодняшную дату
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0");
+    var yyyy = today.getFullYear();
+
+    today = yyyy + "-" + mm + "-" + dd;
+
+    let promise = createTaskLog({
+      task_id: this.state.tasksList[0].id,
+      execution_start: today,
+      execution_end: today
+    });
 
     promise.then(result => {
       if (typeof result.affectedRows === "number") {
         this.getTasksLog();
+      }
+    });
+  }
+
+  //Сохраним изменяемую строку в ДБ
+  saveTaskLogToDataBase(taskLog, callback) {
+    let promise = updateTaskLog(taskLog.id, taskLog);
+
+    promise.then(result => {
+      if (typeof result.affectedRows === "number") {
+        this.getTasksLog();
+        callback();
       }
     });
   }
@@ -284,7 +322,7 @@ class Tasks extends React.Component {
         style: { width: 30 }
       },
       {
-        key: "task_name",
+        key: "task_id",
         type: "string",
         disabled: true,
         value: "Название задачи",
@@ -325,7 +363,7 @@ class Tasks extends React.Component {
       tasksLog.push([
         { key: "id", type: "string", value: tasksLogList.id, style: {} },
         {
-          key: "task_name",
+          key: "task_id",
           type: "select",
           disabled: false,
           value: tasks,
@@ -333,21 +371,21 @@ class Tasks extends React.Component {
         },
         {
           key: "execution_start",
-          type: "string",
+          type: "time",
           disabled: false,
           value: tasksLogList.execution_start,
           style: {}
         },
         {
           key: "execution_end",
-          type: "string",
+          type: "time",
           disabled: false,
           value: tasksLogList.execution_end,
           style: {}
         },
         {
           key: "execution_time",
-          type: "string",
+          type: "time",
           disabled: true,
           value: this.getTimeFromMins(tasksLogList.execution_time),
           style: {}
@@ -389,6 +427,9 @@ class Tasks extends React.Component {
         <Table
           isEditable={false}
           isResizeble={true}
+          saveRowToDataBase={(row, callback) =>
+            this.saveTaskLogToDataBase(row, callback)
+          }
           updateTableContent={() => this.getTasksLog()}
           addRowToDataBase={() => this.addTaskLogToDataBase()}
           deleteRowFromDataBase={row => this.deleteTaskLogFromDataBase(row)}

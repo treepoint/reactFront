@@ -1,8 +1,11 @@
 import React from "react";
-import "./StringContent.css";
+import InputMask from "react-input-mask";
+import "./TimeContent.css";
 
-class StringContent extends React.Component {
+class TimeContent extends React.Component {
   onChange(event) {
+    // event.target.value;
+
     this.props.onChangeStringContent(event.target.value);
   }
 
@@ -30,16 +33,26 @@ class StringContent extends React.Component {
   }
 
   render() {
+    let value;
+
+    if (this.props.stringContent === null) {
+      value = "00:00";
+    } else {
+      value = this.props.stringContent;
+    }
+
     return (
-      <input
+      <InputMask
+        mask="99:99"
+        maskChar="0"
         disabled={!!this.props.disabled ? true : false}
-        className="stringContent"
+        className="timeContent"
         style={this.getStyle()}
-        defaultValue={this.props.stringContent}
+        defaultValue={value}
         onChange={event => this.onChange(event)}
       />
     );
   }
 }
 
-export default StringContent;
+export default TimeContent;

@@ -4,6 +4,7 @@ import { Resizable } from "re-resizable";
 import TextContent from "./TextContent/TextContent";
 import SelectContent from "./SelectContent/SelectContent";
 import StringContent from "./StringContent/StringContent";
+import TimeContent from "./TimeContent/TimeContent";
 import "./Cell.css";
 
 class Cell extends React.Component {
@@ -121,6 +122,19 @@ class Cell extends React.Component {
     //Если тип контента просто текст — отображаем просто текст
 
     switch (this.state.typeContent) {
+      case "time":
+        return (
+          <TimeContent
+            stringContent={this.state.htmlContent}
+            isHeader={this.props.isHeader}
+            disabled={this.state.disabled}
+            width={this.props.width}
+            height={this.props.height}
+            onChangeStringContent={htmlContent =>
+              this.onChangeHTMLContent(htmlContent)
+            }
+          />
+        );
       case "string":
         return (
           <StringContent

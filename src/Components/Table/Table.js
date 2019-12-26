@@ -145,6 +145,9 @@ class Table extends React.Component {
 
     rowContent.forEach(item => {
       switch (item.type) {
+        case "time":
+          object[item.key] = item.value;
+          break;
         case "string":
           object[item.key] = item.value;
           break;

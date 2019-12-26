@@ -1,0 +1,11 @@
+.timeContent {
+  border: none;
+  font-family: "Open Sans", "Source Sans Pro";
+  font-size: 15px;
+  padding-left: 4px;
+}
+
+.timeContent:disabled {
+  background: rgb(251, 251, 251);
+  color: #444;
+}

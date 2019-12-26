@@ -312,6 +312,19 @@ export function getTasksLog() {
   });
 }
 
+//Обновить лог по ID
+export function updateTaskLog(ID, taskLog) {
+  if (typeof taskLog !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/tasks_log/" + ID;
+
+  return Axios.put(url, taskLog, getHeaders()).then(response => {
+    return response.data;
+  });
+}
+
 //Добавить запись в лог выполнения задач
 export function createTaskLog(taskLog) {
   if (typeof taskLog !== "object") {
