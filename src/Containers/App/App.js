@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { setToken, setUser, setLoading } from "../../Store/actions";
 //Подключаем cookies
-import { bake_cookie, read_cookie } from "../../Lib/Sfcookies";
+import { bake_cookie, read_cookie } from "../../Libs/Sfcookies";
 //Подключаем API
 import { getUserByID, reauth } from "../../APIController/APIController";
 //Подключаем модальные окна
