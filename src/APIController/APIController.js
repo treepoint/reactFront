@@ -311,3 +311,33 @@ export function getTasksLog() {
     return response.data;
   });
 }
+
+//Добавить запись в лог выполнения задач
+export function createTaskLog(taskLog) {
+  if (typeof taskLog !== "object") {
+    return false;
+  }
+
+  let url = APIURL + "/tasks_log";
+
+  return Axios.post(url, taskLog, getHeaders())
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
+}
+
+//Добавить запись из лога выполнения задач
+export function deleteTaskLog(ID) {
+  let url = APIURL + "/tasks_log/" + ID;
+
+  return Axios.delete(url, getHeaders())
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
+}

@@ -3,12 +3,14 @@ import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
 import {
   getUserTasks,
-  getUserCategories,
-  getTasksLog,
-  getAllTaskStatuses,
   updateTask,
   createTask,
-  deleteTask
+  deleteTask,
+  getTasksLog,
+  createTaskLog,
+  deleteTaskLog,
+  getAllTaskStatuses,
+  getUserCategories
 } from "../../APIController/APIController";
 import "./Tasks.css";
 
@@ -190,7 +192,29 @@ class Tasks extends React.Component {
     callback();
   }
 
-  //Сохраним изменяемую строку в ДБ
+  //Сохраним лог по задаче в ДБ
+  addTaskLogToDataBase() {
+    let promise = createTaskLog({ task_id: this.state.tasksList[0].id });
+
+    promise.then(result => {
+      if (typeof result.affectedRows === "number") {
+        this.getTasksLog();
+      }
+    });
+  }
+
+  //Удалим лог по задаче из ДБ
+  deleteTaskLogFromDataBase(taskLog) {
+    let promise = deleteTaskLog(taskLog.id);
+
+    promise.then(result => {
+      if (result === "{success}") {
+        this.getTasksLog();
+      }
+    });
+  }
+
+  //Сохраним задачу в ДБ
   addTaskToDataBase() {
     let task = {
       category_id: this.state.categoriesList[0].id,
@@ -208,7 +232,7 @@ class Tasks extends React.Component {
     });
   }
 
-  //Сохраним изменяемую строку в ДБ
+  //Удалим задачу из ДБ
   deleteTaskFromDataBase(task) {
     let promise = deleteTask(task.id);
 
@@ -264,7 +288,7 @@ class Tasks extends React.Component {
         type: "string",
         disabled: true,
         value: "Название задачи",
-        style: { width: 220 }
+        style: { width: 336 }
       },
       {
         key: "execution_start",
@@ -290,13 +314,21 @@ class Tasks extends React.Component {
     ];
 
     this.state.tasksLogList.forEach(tasksLogList => {
+      //Соберем список задач
+      let tasksList = this.state.tasksList.map(task => {
+        return { value: task.id, children: task.name };
+      });
+
+      //добавим текущую
+      let tasks = { list: tasksList, current: tasksLogList.task_id };
+
       tasksLog.push([
         { key: "id", type: "string", value: tasksLogList.id, style: {} },
         {
           key: "task_name",
-          type: "text",
-          disabled: true,
-          value: tasksLogList.task_name,
+          type: "select",
+          disabled: false,
+          value: tasks,
           style: {}
         },
         {
@@ -358,6 +390,8 @@ class Tasks extends React.Component {
           isEditable={false}
           isResizeble={true}
           updateTableContent={() => this.getTasksLog()}
+          addRowToDataBase={() => this.addTaskLogToDataBase()}
+          deleteRowFromDataBase={row => this.deleteTaskLogFromDataBase(row)}
         >
           {this.getTasksLogTableContent()}
         </Table>

@@ -1,4 +1,5 @@
 import React from "react";
+import HtmlToText from "html-to-text";
 import "./SelectContent.css";
 
 class SelectContent extends React.Component {
@@ -30,14 +31,17 @@ class SelectContent extends React.Component {
 
   getOptions() {
     let options = this.state.htmlContent.list.map(option => {
+      //нам сюда может прийти как html, так и строка. В любом случае конвертим в строку
+      let children = HtmlToText.fromString(option.children);
+
       if (option.value === this.state.htmlContent.current) {
         return (
           <option selected value={option.value}>
-            {option.children}
+            {children}
           </option>
         );
       } else {
-        return <option value={option.value}>{option.children}</option>;
+        return <option value={option.value}>{children}</option>;
       }
     });
 
