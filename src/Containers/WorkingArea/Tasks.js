@@ -79,6 +79,10 @@ class Tasks extends React.Component {
 
   //Преобразуем минуты в читаемый вид
   getTimeFromMins(mins) {
+    if (mins < 0) {
+      return "--:--";
+    }
+
     if (mins === null) {
       return "00:00";
     } else {

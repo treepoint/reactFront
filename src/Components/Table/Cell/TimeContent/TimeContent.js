@@ -1,5 +1,5 @@
 import React from "react";
-import InputMask from "react-input-mask";
+import TimeField from "react-simple-timefield";
 import "./TimeContent.css";
 
 class TimeContent extends React.Component {
@@ -32,14 +32,11 @@ class TimeContent extends React.Component {
 
   render() {
     return (
-      <InputMask
-        mask="99:99"
-        maskChar="0"
+      <TimeField
+        value={this.props.timeContent}
         disabled={!!this.props.disabled ? true : false}
         className="timeContent"
         style={this.getStyle()}
-        value={this.props.timeContent}
-        //defaultValue={this.props.timeContent}
         onChange={event => this.onChange(event)}
       />
     );
