@@ -1,11 +1,12 @@
 import React from "react";
+import { debounce } from "lodash";
 import TimeField from "react-simple-timefield";
 import "./TimeContent.css";
 
 class TimeContent extends React.Component {
-  onChange(event) {
+  onChange = debounce(event => {
     this.props.onChangeTimeContent(event.target.value);
-  }
+  }, 700);
 
   //Получаем стиль ячейки заголовка на основании стиля контента
   getStyle() {
