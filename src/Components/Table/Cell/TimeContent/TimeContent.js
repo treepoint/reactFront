@@ -4,9 +4,7 @@ import "./TimeContent.css";
 
 class TimeContent extends React.Component {
   onChange(event) {
-    // event.target.value;
-
-    this.props.onChangeStringContent(event.target.value);
+    this.props.onChangeTimeContent(event.target.value);
   }
 
   //Получаем стиль ячейки заголовка на основании стиля контента
@@ -33,14 +31,6 @@ class TimeContent extends React.Component {
   }
 
   render() {
-    let value;
-
-    if (this.props.stringContent === null) {
-      value = "00:00";
-    } else {
-      value = this.props.stringContent;
-    }
-
     return (
       <InputMask
         mask="99:99"
@@ -48,7 +38,8 @@ class TimeContent extends React.Component {
         disabled={!!this.props.disabled ? true : false}
         className="timeContent"
         style={this.getStyle()}
-        defaultValue={value}
+        value={this.props.timeContent}
+        //defaultValue={this.props.timeContent}
         onChange={event => this.onChange(event)}
       />
     );
