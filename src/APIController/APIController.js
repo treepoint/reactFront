@@ -174,6 +174,19 @@ export function getUserCategories() {
 }
 
 /*
+ * Статистика по категориям
+ */
+
+//Получаем время исполнения по всем категориям
+export function getTimeExecutionForAllCategories() {
+  let url = APIURL + "/categories/time_execution/all";
+
+  return Axios.get(url, getHeaders()).then(response => {
+    return response.data;
+  });
+}
+
+/*
  * Задачи
  */
 

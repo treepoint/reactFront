@@ -11,7 +11,8 @@ import {
   createTaskLog,
   deleteTaskLog,
   getAllTaskStatuses,
-  getUserCategories
+  getUserCategories,
+  getTimeExecutionForAllCategories
 } from "../../APIController/APIController";
 import "./Tasks.css";
 
@@ -22,7 +23,8 @@ class Tasks extends React.Component {
       tasksList: [],
       categoriesList: [],
       tasksLogList: [],
-      taskStatusesList: []
+      taskStatusesList: [],
+      categoriesExecutionTimeList: []
     };
   }
 
@@ -70,11 +72,22 @@ class Tasks extends React.Component {
     });
   }
 
+  getTimeExecutionForAllCategories() {
+    let promise = getTimeExecutionForAllCategories();
+
+    promise.then(result => {
+      if (Array.isArray(result)) {
+        this.setState({ categoriesExecutionTimeList: result });
+      }
+    });
+  }
+
   updateData() {
     this.getTasks();
     this.getUserCategories();
     this.getTasksLog();
     this.getAllTaskStatuses();
+    this.getTimeExecutionForAllCategories();
   }
 
   //Преобразуем минуты в читаемый вид
@@ -240,6 +253,7 @@ class Tasks extends React.Component {
     promise.then(result => {
       if (typeof result.affectedRows === "number") {
         this.getTasksLog();
+        this.getTimeExecutionForAllCategories();
         callback();
       }
     });
@@ -304,10 +318,15 @@ class Tasks extends React.Component {
       }
     ];
 
-    this.state.categoriesList.forEach(categoriesList => {
+    this.state.categoriesExecutionTimeList.forEach(category => {
       tasksStatistic.push([
-        { value: categoriesList.name, type: "text", disabled: true, style: {} },
-        { value: "0", type: "text", disabled: true, style: {} }
+        { value: category.name, type: "text", disabled: true, style: {} },
+        {
+          value: this.getTimeFromMins(category.execution_time),
+          type: "time",
+          disabled: true,
+          style: {}
+        }
       ]);
     });
 
