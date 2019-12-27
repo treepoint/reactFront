@@ -163,8 +163,6 @@ class Tasks extends React.Component {
       //добавим текущую
       let categories = { list: categoriesList, current: task.category_id };
 
-      console.log(categories);
-
       //Соберем список статусов
       let statusesList = this.state.taskStatusesList.map(status => {
         return { value: status.id, children: status.name };
@@ -228,19 +226,22 @@ class Tasks extends React.Component {
     });
   }
 
-  //Сохраним лог по задаче в ДБ
+  //Добавим лог по задаче в ДБ
   addTaskLogToDataBase() {
     //Получим сегодняшную дату
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, "0");
     var mm = String(today.getMonth() + 1).padStart(2, "0");
     var yyyy = today.getFullYear();
+    var time = today.getHours() + "-" + today.getMinutes();
 
     today = yyyy + "-" + mm + "-" + dd;
 
+    let now = today + " " + time;
+
     let promise = createTaskLog({
       task_id: this.state.tasksList[0].id,
-      execution_start: today,
+      execution_start: now,
       execution_end: today
     });
 
@@ -271,6 +272,7 @@ class Tasks extends React.Component {
     promise.then(result => {
       if (result === "{success}") {
         this.getTasksLog();
+        this.getTimeExecutionForAllCategories();
       }
     });
   }
@@ -289,6 +291,7 @@ class Tasks extends React.Component {
     promise.then(result => {
       if (typeof result.affectedRows === "number") {
         this.getTasks();
+        this.getTasksLog();
       }
     });
   }
@@ -300,6 +303,8 @@ class Tasks extends React.Component {
     promise.then(result => {
       if (result === "{success}") {
         this.getTasks();
+        this.getTasksLog();
+        this.getTimeExecutionForAllCategories();
       }
     });
   }
