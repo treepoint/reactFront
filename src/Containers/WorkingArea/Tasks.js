@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
 import {
   getUserTasks,
@@ -164,6 +163,8 @@ class Tasks extends React.Component {
       //добавим текущую
       let categories = { list: categoriesList, current: task.category_id };
 
+      console.log(categories);
+
       //Соберем список статусов
       let statusesList = this.state.taskStatusesList.map(status => {
         return { value: status.id, children: status.name };
@@ -216,11 +217,15 @@ class Tasks extends React.Component {
 
   //Сохраним изменяемую строку в ДБ
   saveTaskToDataBase(task, callback) {
-    updateTask(task.id, task);
+    let promise = updateTask(task.id, task);
 
-    //Пока, если просто дошли до сюда, значит сохранили.
-    //Понятно, что это не самое хорошее решение, но тестим пока так
-    callback();
+    promise.then(result => {
+      if (typeof result.affectedRows === "number") {
+        this.getTasks();
+        this.getTimeExecutionForAllCategories();
+        callback();
+      }
+    });
   }
 
   //Сохраним лог по задаче в ДБ
@@ -459,12 +464,6 @@ class Tasks extends React.Component {
         >
           {this.getTasksLogTableContent()}
         </Table>
-
-        <Button
-          value="Обновить данные по задачам"
-          isPrimary={true}
-          onClick={() => this.updateData()}
-        />
       </div>
     );
   }
