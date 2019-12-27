@@ -1,4 +1,5 @@
 import React from "react";
+import { debounce } from "lodash";
 //Подключаем redux
 import { connect } from "react-redux";
 //Подключаем компоненты
@@ -17,9 +18,9 @@ class TextContent extends React.Component {
   }
 
   //Изменяем контент по вводу
-  onChange(event) {
+  onChange = debounce(event => {
     this.props.onChangeHTMLContent(event.target.value);
-  }
+  }, 700);
 
   //Обрабатываем изменения стиля контента в ячейке в
   //зависимости от того, что было задано в контекстном меню

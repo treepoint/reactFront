@@ -1,10 +1,12 @@
 import React from "react";
+import { debounce } from "lodash";
 import "./StringContent.css";
 
 class StringContent extends React.Component {
-  onChange(event) {
+  //Изменяем контент по вводу
+  onChange = debounce(event => {
     this.props.onChangeStringContent(event.target.value);
-  }
+  }, 700);
 
   //Получаем стиль ячейки заголовка на основании стиля контента
   getStyle() {
