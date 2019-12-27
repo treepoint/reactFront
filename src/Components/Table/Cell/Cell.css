@@ -9,10 +9,6 @@
   background: white;
 }
 
-.td:focus {
-  background: rgb(240, 240, 240);
-}
-
 .th {
   font-weight: 700;
   vertical-align: middle;
