@@ -17,7 +17,7 @@ class TimeContent extends React.Component {
         width: this.props.width - 7 + "px",
         height: this.props.height - 2 + "px",
         fontWeight: "900",
-        background: "rgb(224, 224, 224)",
+        background: "rgb(243, 243, 243)",
         color: "#000"
       };
     } else {
