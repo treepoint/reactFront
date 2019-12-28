@@ -58,7 +58,7 @@ class Categories extends React.Component {
         type: "string",
         value: "Описание",
         disabled: true,
-        style: { width: 220 }
+        style: { width: 400 }
       }
     ];
 

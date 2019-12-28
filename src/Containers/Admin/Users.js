@@ -61,14 +61,7 @@ class Users extends React.Component {
           type: "string",
           disabled: true,
           value: "Email",
-          style: { width: 220 }
-        },
-        {
-          key: "password",
-          type: "string",
-          disabled: true,
-          value: "Пароль",
-          style: { width: 120 }
+          style: { width: 300 }
         },
         {
           key: "role",
@@ -102,13 +95,6 @@ class Users extends React.Component {
           type: "string",
           disabled: false,
           value: user.email,
-          style: {}
-        },
-        {
-          key: "password",
-          type: "string",
-          disabled: false,
-          value: user.password,
           style: {}
         },
         {

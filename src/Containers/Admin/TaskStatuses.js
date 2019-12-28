@@ -71,7 +71,7 @@ class TaskStatuses extends React.Component {
           type: "string",
           disabled: true,
           value: "Название",
-          style: { width: 220 }
+          style: { width: 300 }
         }
       ]
     ];
