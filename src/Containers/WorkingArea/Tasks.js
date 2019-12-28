@@ -129,14 +129,7 @@ class Tasks extends React.Component {
         type: "string",
         disabled: true,
         value: "Название",
-        style: { width: 200 }
-      },
-      {
-        key: "description",
-        type: "string",
-        disabled: true,
-        value: "Описание",
-        style: { width: 220 }
+        style: { width: 336 }
       },
       {
         key: "category_name",
@@ -151,6 +144,13 @@ class Tasks extends React.Component {
         disabled: true,
         value: "Статус",
         style: { width: 200 }
+      },
+      {
+        key: "description",
+        type: "string",
+        disabled: true,
+        value: "Описание",
+        style: { width: 220 }
       }
     ];
 
@@ -187,13 +187,6 @@ class Tasks extends React.Component {
           style: {}
         },
         {
-          key: "description",
-          type: "text",
-          disabled: false,
-          value: task.description,
-          style: {}
-        },
-        {
           key: "category_id",
           type: "select",
           disabled: false,
@@ -205,6 +198,13 @@ class Tasks extends React.Component {
           type: "select",
           disabled: false,
           value: statuses,
+          style: {}
+        },
+        {
+          key: "description",
+          type: "text",
+          disabled: false,
+          value: task.description,
           style: {}
         }
       ]);
