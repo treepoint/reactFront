@@ -3,6 +3,10 @@
   font-family: "Open Sans", "Source Sans Pro";
   font-size: 15px;
   text-overflow: ellipsis;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 14px;
 }
 
 .stringContent:disabled {

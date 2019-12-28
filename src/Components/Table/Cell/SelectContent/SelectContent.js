@@ -1,5 +1,6 @@
 import React from "react";
 import HtmlToText from "html-to-text";
+import IconExpand from "../../../../Images/icon_expand.png";
 import "./SelectContent.css";
 
 class SelectContent extends React.Component {
@@ -56,8 +57,11 @@ class SelectContent extends React.Component {
         className="selectContent"
         disabled={!!this.props.disabled ? true : false}
         style={{
-          width: this.props.width,
-          height: this.props.height
+          width: this.props.width - 1 + "px",
+          height: this.props.height + "px",
+          background:
+            "url(" + IconExpand + ") no-repeat scroll 98% 50% transparent",
+          backgroundSize: "20px 20px"
         }}
         onChange={event => this.onChange(event)}
       >
