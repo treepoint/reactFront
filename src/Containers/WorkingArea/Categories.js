@@ -3,7 +3,9 @@ import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
 import {
   getUserCategories,
-  updateCategory
+  updateCategory,
+  createCategory,
+  deleteCategory
 } from "../../APIController/APIController";
 
 class Categories extends React.Component {
@@ -26,13 +28,41 @@ class Categories extends React.Component {
     });
   }
 
+  //Добавим лог по задаче в ДБ
+  addCategoryToDataBase() {
+    let promise = createCategory({
+      name: "",
+      description: ""
+    });
+
+    promise.then(result => {
+      if (typeof result.affectedRows === "number") {
+        this.getUserCategories();
+      }
+    });
+  }
+
+  //Удалим лог по задаче из ДБ
+  deleteCategoryFromDataBase(category) {
+    let promise = deleteCategory(category.id);
+
+    promise.then(result => {
+      if (result === "{success}") {
+        this.getUserCategories();
+      }
+    });
+  }
+
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(category, callback) {
-    updateCategory(category.id, category);
+    let promise = updateCategory(category.id, category);
 
-    //Пока, если просто дошли до сюда, значит сохранили.
-    //Понятно, что это не самое хорошее решение, но тестим пока так
-    callback();
+    promise.then(result => {
+      if (typeof result.affectedRows === "number") {
+        this.getUserCategories();
+        callback();
+      }
+    });
   }
 
   render() {
@@ -97,6 +127,8 @@ class Categories extends React.Component {
           saveRowToDataBase={(row, callback) =>
             this.saveRowToDataBase(row, callback)
           }
+          addRowToDataBase={() => this.addCategoryToDataBase()}
+          deleteRowFromDataBase={row => this.deleteCategoryFromDataBase(row)}
         >
           {categories}
         </Table>

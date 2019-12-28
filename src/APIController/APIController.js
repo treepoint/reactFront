@@ -155,6 +155,19 @@ export function updateCategory(ID, category) {
   });
 }
 
+//Удалить задачу
+export function deleteCategory(ID) {
+  let url = APIURL + "/categories/" + ID;
+
+  return Axios.delete(url, getHeaders())
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
+}
+
 //Получить категорию как объект по ID
 export function getCategoryByID(ID) {
   let url = APIURL + "/categories/" + ID;
