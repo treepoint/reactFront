@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../../Components/Button/Button";
 import Table from "../../Components/Table/Table";
 import {
   getUserCategories,
@@ -130,14 +129,10 @@ class Categories extends React.Component {
           saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
           addRow={() => this.addCategoryToDataBase()}
           deleteRow={row => this.deleteCategoryFromDataBase(row)}
+          update={() => this.getUserCategories()}
         >
           {categories}
         </Table>
-        <Button
-          value="Обновить список категорий"
-          isPrimary={true}
-          onClick={() => this.getUserCategories()}
-        />
       </div>
     );
   }
