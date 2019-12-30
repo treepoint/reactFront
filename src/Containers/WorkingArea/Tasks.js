@@ -181,7 +181,7 @@ class Tasks extends React.Component {
         },
         {
           key: "name",
-          type: "text",
+          type: "string",
           disabled: false,
           value: task.name,
           style: {}

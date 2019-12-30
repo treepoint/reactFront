@@ -1,4 +1,5 @@
 import React from "react";
+import { DebounceInput } from "react-debounce-input";
 import "./StringContent.css";
 
 class StringContent extends React.Component {
@@ -32,11 +33,12 @@ class StringContent extends React.Component {
 
   render() {
     return (
-      <input
+      <DebounceInput
         disabled={!!this.props.disabled ? true : false}
         className="stringContent"
         style={this.getStyle()}
-        defaultValue={this.props.stringContent}
+        debounceTimeout={700}
+        value={this.props.stringContent}
         onChange={event => this.onChange(event)}
       />
     );

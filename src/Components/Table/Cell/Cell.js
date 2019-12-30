@@ -31,12 +31,14 @@ class Cell extends React.Component {
 
   //Обновляем контент в ячейке
   updateContent() {
-    //Однако, изменение могло быть и при инициализации, тогда так
     if (typeof this.props.initHtmlContent !== "undefined") {
       let initHtmlContent;
 
       //Если тип поля — текст, то на всякий случай конвертим в текст
-      if (this.state.typeContent === "text") {
+      if (
+        this.state.typeContent === "text" ||
+        this.state.typeContent === "string"
+      ) {
         initHtmlContent = String(this.props.initHtmlContent.value);
       } else {
         initHtmlContent = this.props.initHtmlContent.value;
@@ -90,7 +92,7 @@ class Cell extends React.Component {
 
   //Обрабатываем изменения контента в ячейке
   onChangeHTMLContent(htmlContent) {
-    this.setState({ htmlContent });
+    // this.setState({ htmlContent });
     this.props.onChangeHTMLContent(htmlContent);
   }
 
