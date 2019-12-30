@@ -118,17 +118,15 @@ class Users extends React.Component {
     });
 
     return (
-      <div>
-        <Table
-          isEditable={true}
-          isResizeble={true}
-          isSingleLineMode={true}
-          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
-          update={() => this.getUsers()}
-        >
-          {users}
-        </Table>
-      </div>
+      <Table
+        isEditable={true}
+        isResizeble={true}
+        isSingleLineMode={true}
+        saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+        update={() => this.getUsers()}
+      >
+        {users}
+      </Table>
     );
   }
 }

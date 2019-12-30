@@ -61,7 +61,7 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <form onClick={event => event.stopPropagation()}>
           <h1 className="h1">Профиль</h1>
           {INPUTS.map(inputs => (
@@ -84,7 +84,7 @@ class Profile extends React.Component {
           />
           <Button value="Выйти" onClick={event => this.logoff(event)} />
         </form>
-      </div>
+      </React.Fragment>
     );
   }
 }

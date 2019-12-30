@@ -82,7 +82,7 @@ class TasksManager extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div className="taskContainer">
           <div>
             {
@@ -117,7 +117,7 @@ class TasksManager extends React.Component {
           tasksList={this.state.tasksList}
           tasksLogList={this.state.tasksLogList}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }

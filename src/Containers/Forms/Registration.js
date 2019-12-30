@@ -99,7 +99,7 @@ class Registration extends React.Component {
         <ErrorMessage message={this.state.errorMessage} />
         <Button
           isPrimary={true}
-          value="ОТПРАВИТЬ"
+          value="Отправить"
           onClick={event => this.createUser(event)}
         />
       </form>

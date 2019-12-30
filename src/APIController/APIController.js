@@ -11,6 +11,12 @@ import { APIURL } from "./Settings";
 
 //Получим заголовки
 function getHeaders() {
+  let token = read_cookie("token");
+
+  if (token.length === 0) {
+    return null;
+  }
+
   return {
     headers: {
       Authorization: "Bearer " + read_cookie("token")
@@ -22,7 +28,7 @@ function getHeaders() {
 export function getToken(user) {
   let url = APIURL + "/auth";
 
-  return Axios.post(url, user, getHeaders())
+  return Axios.post(url, user)
     .then(response => {
       return response.data;
     })
@@ -32,15 +38,13 @@ export function getToken(user) {
 }
 
 //Обновить токен
-export function reauth() {
+export function reauth(refreshToken) {
   let url = APIURL + "/reauth";
 
-  let refreshToken = read_cookie("refresh_token");
-
   //Если есть refresh токен
-  if (refreshToken !== null) {
+  if (refreshToken.length !== 0) {
     //Пытаемся обновить данные по нему
-    return Axios.post(url, { refreshToken }, getHeaders())
+    return Axios.post(url, { refreshToken })
       .then(response => {
         return response.data;
       })
@@ -60,10 +64,16 @@ export function createUser(user) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/users/registration";
 
   //Роль по умолчанию — пользователь. Вторая
-  return Axios.post(url, Object.assign({}, user, { role_id: 2 }), getHeaders())
+  return Axios.post(url, Object.assign({}, user, { role_id: 2 }), headers)
     .then(response => {
       return response.data;
     })
@@ -78,36 +88,60 @@ export function updateUser(ID, user) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/users/" + ID;
 
-  return Axios.put(url, user, getHeaders()).then(response => {
+  return Axios.put(url, user, headers).then(response => {
     return response.data;
   });
 }
 
 //Получить пользователя как объекта по ID
 export function getUserByID(ID) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/users/" + ID;
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data[0];
   });
 }
 
 //Получить пользователя как объекта по имени и паролю
 export function getUserByEmailPassword(user) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/users/token";
 
-  return Axios.post(url, user, getHeaders()).then(response => {
+  return Axios.post(url, user, headers).then(response => {
     return response.data;
   });
 }
 
 //Получение списка пользователей как объектов в массиве
 export function getUsers() {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/users";
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data;
   });
 }
@@ -118,9 +152,15 @@ export function getUsers() {
 
 //Получение списка пользователей как объектов в массиве
 export function getRoles() {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/roles";
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data;
   });
 }
@@ -135,9 +175,15 @@ export function createCategory(category) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/categories";
 
-  return Axios.post(url, category, getHeaders()).then(response => {
+  return Axios.post(url, category, headers).then(response => {
     return response.data;
   });
 }
@@ -148,18 +194,30 @@ export function updateCategory(ID, category) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/categories/" + ID;
 
-  return Axios.put(url, category, getHeaders()).then(response => {
+  return Axios.put(url, category, headers).then(response => {
     return response.data;
   });
 }
 
 //Удалить задачу
 export function deleteCategory(ID) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/categories/" + ID;
 
-  return Axios.delete(url, getHeaders())
+  return Axios.delete(url, headers)
     .then(response => {
       return response.data;
     })
@@ -170,18 +228,30 @@ export function deleteCategory(ID) {
 
 //Получить категорию как объект по ID
 export function getCategoryByID(ID) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/categories/" + ID;
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data[0];
   });
 }
 
 //Получить все категории пользователя как объекты в массиве
 export function getUserCategories() {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/categories";
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data;
   });
 }
@@ -192,9 +262,15 @@ export function getUserCategories() {
 
 //Получаем время исполнения по всем категориям
 export function getTimeExecutionForAllCategories() {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/categories/time_execution/all";
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data;
   });
 }
@@ -209,9 +285,15 @@ export function createTask(task) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/tasks";
 
-  return Axios.post(url, task, getHeaders()).then(response => {
+  return Axios.post(url, task, headers).then(response => {
     return response.data;
   });
 }
@@ -222,36 +304,60 @@ export function updateTask(ID, task) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/tasks/" + ID;
 
-  return Axios.put(url, task, getHeaders()).then(response => {
+  return Axios.put(url, task, headers).then(response => {
     return response.data;
   });
 }
 
 //Получить задачу как объект по ID
 export function getTaskByID(ID) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/tasks/" + ID;
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data[0];
   });
 }
 
 //Получить все задачи пользователя как объекты в массиве
 export function getUserTasks() {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/tasks";
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data;
   });
 }
 
 //Удалить задачу
 export function deleteTask(ID) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/tasks/" + ID;
 
-  return Axios.delete(url, getHeaders())
+  return Axios.delete(url, headers)
     .then(response => {
       return response.data;
     })
@@ -266,18 +372,30 @@ export function deleteTask(ID) {
 
 //Получить статус как объект по ID
 export function getTaskStatusByID(ID) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/task_statuses/" + ID;
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data[0];
   });
 }
 
 //Получить все статусы
 export function getAllTaskStatuses() {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/task_statuses";
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data;
   });
 }
@@ -288,9 +406,15 @@ export function updateStatus(ID, status) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/task_statuses/" + ID;
 
-  return Axios.put(url, status, getHeaders()).then(response => {
+  return Axios.put(url, status, headers).then(response => {
     return response.data;
   });
 }
@@ -301,9 +425,15 @@ export function createStatus(status) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/task_statuses";
 
-  return Axios.post(url, status, getHeaders())
+  return Axios.post(url, status, headers)
     .then(response => {
       return response.data;
     })
@@ -314,9 +444,15 @@ export function createStatus(status) {
 
 //Удалить статус
 export function deleteStatus(ID) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/task_statuses/" + ID;
 
-  return Axios.delete(url, getHeaders())
+  return Axios.delete(url, headers)
     .then(response => {
       return response.data;
     })
@@ -331,9 +467,15 @@ export function deleteStatus(ID) {
 
 //Получить весь лог выполнения задач
 export function getTasksLog() {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/tasks_log";
 
-  return Axios.get(url, getHeaders()).then(response => {
+  return Axios.get(url, headers).then(response => {
     return response.data;
   });
 }
@@ -344,9 +486,15 @@ export function updateTaskLog(ID, taskLog) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/tasks_log/" + ID;
 
-  return Axios.put(url, taskLog, getHeaders()).then(response => {
+  return Axios.put(url, taskLog, headers).then(response => {
     return response.data;
   });
 }
@@ -357,9 +505,15 @@ export function createTaskLog(taskLog) {
     return false;
   }
 
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/tasks_log";
 
-  return Axios.post(url, taskLog, getHeaders())
+  return Axios.post(url, taskLog, headers)
     .then(response => {
       return response.data;
     })
@@ -370,9 +524,15 @@ export function createTaskLog(taskLog) {
 
 //Добавить запись из лога выполнения задач
 export function deleteTaskLog(ID) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
   let url = APIURL + "/tasks_log/" + ID;
 
-  return Axios.delete(url, getHeaders())
+  return Axios.delete(url, headers)
     .then(response => {
       return response.data;
     })

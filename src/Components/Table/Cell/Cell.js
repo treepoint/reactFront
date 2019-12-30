@@ -29,6 +29,10 @@ class Cell extends React.Component {
     this.setState({ uuid: uuid() });
   }
 
+  componentDidUpdate() {
+    this.updateContent();
+  }
+
   //Обновляем контент в ячейке
   updateContent() {
     if (typeof this.props.initHtmlContent !== "undefined") {
@@ -180,8 +184,6 @@ class Cell extends React.Component {
   }
 
   render() {
-    this.updateContent();
-
     return (
       <Resizable
         className={!!this.props.isHeader ? "th" : "td"}

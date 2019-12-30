@@ -39,12 +39,9 @@ class TasksStatistic extends React.Component {
 
   render() {
     return (
-      <div>
-        {/*Таблица со статистикой по задачам*/}
-        <Table isEditable={false} isResizeble={true}>
-          {this.getContent()}
-        </Table>
-      </div>
+      <Table isEditable={false} isResizeble={true}>
+        {this.getContent()}
+      </Table>
     );
   }
 }

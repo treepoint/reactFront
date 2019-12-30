@@ -23,14 +23,12 @@ class WorkingAreaRouter extends React.Component {
     ];
 
     return (
-      <div>
-        <Page title="Задачи:" menuLinksArray={menuLinksArray} isPrivate={true}>
-          <Switch>
-            <Route exact to path="/working" component={TasksManager} />
-            <Route path="/working/categories" component={Categories} />
-          </Switch>
-        </Page>
-      </div>
+      <Page title="Задачи:" menuLinksArray={menuLinksArray} isPrivate={true}>
+        <Switch>
+          <Route exact to path="/working" component={TasksManager} />
+          <Route path="/working/categories" component={Categories} />
+        </Switch>
+      </Page>
     );
   }
 }

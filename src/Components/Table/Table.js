@@ -18,6 +18,14 @@ class Table extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.setTable();
+  }
+
+  componentDidUpdate() {
+    this.setTable();
+  }
+
   setTable() {
     let table = this.isValidTable(this.props.children);
 
@@ -190,12 +198,11 @@ class Table extends React.Component {
   }
 
   render() {
-    this.setTable();
-
     //Соберем тушку для отрисовки
     let table = this.state.table.map((row, index) => {
       return (
         <Row
+          key={index}
           //Указываем, на наличие шапки. По умолчанию — есть
           isHeader={!!!this.props.isHeaderless && index === 0 ? true : false}
           //Задаем возможность изменения размеров ячеек

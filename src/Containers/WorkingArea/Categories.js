@@ -121,19 +121,17 @@ class Categories extends React.Component {
     });
 
     return (
-      <div>
-        <Table
-          isEditable={true}
-          isResizeble={true}
-          isSingleLineMode={true}
-          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
-          addRow={() => this.addCategoryToDataBase()}
-          deleteRow={row => this.deleteCategoryFromDataBase(row)}
-          update={() => this.getUserCategories()}
-        >
-          {categories}
-        </Table>
-      </div>
+      <Table
+        isEditable={true}
+        isResizeble={true}
+        isSingleLineMode={true}
+        saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+        addRow={() => this.addCategoryToDataBase()}
+        deleteRow={row => this.deleteCategoryFromDataBase(row)}
+        update={() => this.getUserCategories()}
+      >
+        {categories}
+      </Table>
     );
   }
 }

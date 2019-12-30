@@ -10,7 +10,7 @@ class TableMenu extends React.Component {
 
     if (typeof this.props.update === "function") {
       actions.push(
-        <Action icon={iconUpdate} onClick={() => this.props.update()} />
+        <Action key="0" icon={iconUpdate} onClick={() => this.props.update()} />
       );
     }
 
@@ -20,7 +20,7 @@ class TableMenu extends React.Component {
       tableMenu = <div className="tableMenu">{actions}</div>;
     }
 
-    return <div>{tableMenu}</div>;
+    return <React.Fragment>{tableMenu}</React.Fragment>;
   }
 }
 

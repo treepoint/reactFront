@@ -116,7 +116,7 @@ class ContextMenu extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {this.getBlur()}
         <div
           className="contextMenu"
@@ -147,7 +147,7 @@ class ContextMenu extends React.Component {
           />
           {this.getBackgroundColorPicker()}
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

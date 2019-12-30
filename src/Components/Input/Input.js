@@ -5,7 +5,7 @@ import "./Input.css";
 class Input extends React.Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <label style={{ display: "flex" }}>
           <input
             className={"input" + (this.props.invalidMessage ? " error" : "")}
@@ -19,7 +19,7 @@ class Input extends React.Component {
           />
         </label>
         <LabelValidation value={this.props.invalidMessage} />
-      </div>
+      </React.Fragment>
     );
   }
 }

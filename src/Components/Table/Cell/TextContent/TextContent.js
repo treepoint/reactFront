@@ -183,11 +183,11 @@ class TextContent extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {this.getContextMenu()}
         {this.getCellContent()}
         {this.getWideEditAreaBlur()}
-      </div>
+      </React.Fragment>
     );
   }
 }

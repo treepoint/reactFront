@@ -153,20 +153,17 @@ class Tasks extends React.Component {
 
   render() {
     return (
-      <div>
-        {/*Таблица с задачами*/}
-        <Table
-          isEditable={true}
-          isResizeble={true}
-          isStylable={true}
-          saveRow={(row, callback) => this.saveTaskToDataBase(row, callback)}
-          update={() => this.props.getTasks()}
-          addRow={() => this.addTaskToDataBase()}
-          deleteRow={row => this.deleteTaskFromDataBase(row)}
-        >
-          {this.getContent()}
-        </Table>
-      </div>
+      <Table
+        isEditable={true}
+        isResizeble={true}
+        isStylable={true}
+        saveRow={(row, callback) => this.saveTaskToDataBase(row, callback)}
+        update={() => this.props.getTasks()}
+        addRow={() => this.addTaskToDataBase()}
+        deleteRow={row => this.deleteTaskFromDataBase(row)}
+      >
+        {this.getContent()}
+      </Table>
     );
   }
 }

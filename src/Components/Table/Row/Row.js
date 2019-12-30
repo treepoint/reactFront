@@ -87,6 +87,7 @@ class Row extends React.Component {
     let cells = this.props.colsDescription.map((column, index) => {
       return (
         <Cell
+          key={index}
           isResizeble={this.props.isResizeble}
           isStylable={this.props.isStylable}
           isHeader={this.props.isHeader}

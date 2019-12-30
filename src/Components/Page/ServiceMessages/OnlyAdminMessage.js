@@ -9,14 +9,14 @@ class OnlyAdminMessage extends React.Component {
   render() {
     return (
       <div>
-        <p>Страница доступна только администраторам.</p>
-        <p>
+        <div className="p">Страница доступна только администраторам.</div>
+        <div className="p">
           Пожалуйста,{" "}
           <Anchor>
             <AnchorModalWindow value="войдите" modalWindowName={login} />
           </Anchor>{" "}
           под учетной записью администратора.
-        </p>
+        </div>
       </div>
     );
   }

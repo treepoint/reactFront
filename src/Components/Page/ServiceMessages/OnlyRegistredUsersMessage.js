@@ -8,9 +8,11 @@ import Anchor from "../../Anchor/Anchor";
 class OnlyRegistredUsersMessage extends React.Component {
   render() {
     return (
-      <div>
-        <p>Страница доступна только зарегистрированным пользователям.</p>
-        <p>
+      <article>
+        <div className="p">
+          Страница доступна только зарегистрированным пользователям.
+        </div>
+        <div className="p">
           Пожалуйста,{" "}
           <Anchor>
             <AnchorModalWindow value="войдите" modalWindowName={login} />
@@ -23,8 +25,8 @@ class OnlyRegistredUsersMessage extends React.Component {
             />
           </Anchor>
           .
-        </p>
-      </div>
+        </div>
+      </article>
     );
   }
 }

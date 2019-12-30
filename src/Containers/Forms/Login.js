@@ -105,7 +105,7 @@ class Login extends React.Component {
         <ErrorMessage message={this.state.errorMessage} />
         <Button
           isPrimary={true}
-          value="ВОЙТИ"
+          value="Войти"
           onClick={event => this.login(event)}
         />
       </form>

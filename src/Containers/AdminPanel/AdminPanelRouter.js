@@ -20,7 +20,7 @@ class AdminPanelRouter extends React.Component {
     ];
 
     return (
-      <div>
+      <React.Fragment>
         <Page
           title="Административная панель:"
           menuLinksArray={menuLinksArray}
@@ -36,7 +36,7 @@ class AdminPanelRouter extends React.Component {
             />
           </Switch>
         </Page>
-      </div>
+      </React.Fragment>
     );
   }
 }

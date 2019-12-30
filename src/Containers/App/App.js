@@ -43,7 +43,7 @@ class App extends React.Component {
     let token = read_cookie("token");
     let userId = read_cookie("user_id");
 
-    if (token.lenght !== 0 && userId.lenght !== 0) {
+    if (token.length !== 0 && userId.length !== 0) {
       //Токен просто запишем
       this.props.setToken(token);
 
@@ -61,7 +61,14 @@ class App extends React.Component {
 
   //Обновим стор и куки из API
   setStoreAndCookiesFromAPI() {
-    let promise = reauth();
+    let refreshToken = read_cookie("refresh_token");
+
+    //Нет токена — нет действий
+    if (refreshToken.length === 0) {
+      return;
+    }
+
+    let promise = reauth(refreshToken);
 
     promise.then(result => {
       //Если есть ошибки
@@ -86,9 +93,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Header />
-        <div />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/working" component={WorkingAreaRouter} />
@@ -100,7 +106,7 @@ class App extends React.Component {
           this.props.modalWindowName
         )}
         <Bottom />
-      </div>
+      </React.Fragment>
     );
   }
 }

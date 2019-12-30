@@ -146,19 +146,16 @@ class TasksLog extends React.Component {
 
   render() {
     return (
-      <div>
-        {/*Таблица с логом по задачам*/}
-        <Table
-          isEditable={false}
-          isResizeble={true}
-          saveRow={(row, callback) => this.saveTaskLogToDataBase(row, callback)}
-          update={() => this.props.getTasksLog()}
-          addRow={() => this.addTaskLogToDataBase()}
-          deleteRow={row => this.deleteTaskLogFromDataBase(row)}
-        >
-          {this.getContent()}
-        </Table>
-      </div>
+      <Table
+        isEditable={false}
+        isResizeble={true}
+        saveRow={(row, callback) => this.saveTaskLogToDataBase(row, callback)}
+        update={() => this.props.getTasksLog()}
+        addRow={() => this.addTaskLogToDataBase()}
+        deleteRow={row => this.deleteTaskLogFromDataBase(row)}
+      >
+        {this.getContent()}
+      </Table>
     );
   }
 }

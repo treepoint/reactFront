@@ -11,6 +11,14 @@ class SelectContent extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.updateContent();
+  }
+
+  componentDidUpdate() {
+    this.updateContent();
+  }
+
   updateContent() {
     if (
       JSON.stringify(this.state.content) !== JSON.stringify(this.props.content)
@@ -26,29 +34,23 @@ class SelectContent extends React.Component {
   }
 
   getOptions() {
-    let options = this.state.content.list.map(option => {
+    let options = this.state.content.list.map((option, index) => {
       //нам сюда может прийти как html, так и строка. В любом случае конвертим в строку
-      let children = HtmlToText.fromString(option.children);
-
-      if (option.value === this.state.content.current) {
-        return (
-          <option selected value={option.value}>
-            {children}
-          </option>
-        );
-      } else {
-        return <option value={option.value}>{children}</option>;
-      }
+      return (
+        <option value={option.value} key={index}>
+          {HtmlToText.fromString(option.children)}
+        </option>
+      );
     });
 
     return options;
   }
 
   render() {
-    this.updateContent();
-
     return (
       <select
+        //Задаем значение по умолчанию
+        value={this.state.content.current}
         className="selectContent"
         disabled={!!this.props.disabled ? true : false}
         style={{
