@@ -1,5 +1,5 @@
 import React from "react";
-import Table from "../../Components/Table/Table";
+import Table from "../../../Components/Table/Table";
 import {
   getUserTasks,
   updateTask,
@@ -12,10 +12,10 @@ import {
   getAllTaskStatuses,
   getUserCategories,
   getTimeExecutionForAllCategories
-} from "../../APIController/APIController";
-import "./Tasks.css";
+} from "../../../APIController/APIController";
+import "./TasksManager.css";
 
-class Tasks extends React.Component {
+class TasksManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -492,4 +492,4 @@ class Tasks extends React.Component {
   }
 }
 
-export default Tasks;
+export default TasksManager;

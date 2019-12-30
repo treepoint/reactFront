@@ -6,7 +6,7 @@ import Page from "../../Components/Page/Page";
 import Users from "./Users";
 import TaskStatuses from "./TaskStatuses";
 
-class Admin extends React.Component {
+class AdminPanelRouter extends React.Component {
   constructor(props) {
     super(props);
     this.state = { usersList: [] };
@@ -41,4 +41,4 @@ class Admin extends React.Component {
   }
 }
 
-export default Admin;
+export default AdminPanelRouter;

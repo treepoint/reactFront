@@ -13,9 +13,9 @@ import { getModalWindow } from "../../Components/ModalWindow/MODAL_WINDOWS";
 //Подключаем компоненты и контейнеры
 import Header from "../Header/Header";
 import Home from "../Contents/Home";
-import WorkingArea from "../WorkingArea/WorkingArea";
+import WorkingAreaRouter from "../WorkingArea/WorkingAreaRouter";
 import About from "../Contents/About";
-import Admin from "../Admin/Admin";
+import AdminPanelRouter from "../AdminPanel/AdminPanelRouter";
 import Bottom from "../Bottom/Bottom";
 //CSS
 import "./App.css";
@@ -91,8 +91,8 @@ class App extends React.Component {
         <div />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/working" component={WorkingArea} />
-          <Route path="/admin" component={Admin} />
+          <Route path="/working" component={WorkingAreaRouter} />
+          <Route path="/admin" component={AdminPanelRouter} />
           <Route path="/about" component={About} />
         </Switch>
         {getModalWindow(

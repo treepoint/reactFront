@@ -4,9 +4,9 @@ import { Switch, Route } from "react-router-dom";
 //Подключаем компоненты
 import Page from "../../Components/Page/Page";
 import Categories from "./Categories";
-import Tasks from "./Tasks";
+import TasksManager from "./TasksManager/TasksManager";
 
-class WorkingArea extends React.Component {
+class WorkingAreaRouter extends React.Component {
   constructor(props) {
     super(props);
     //Список пользователей
@@ -26,7 +26,7 @@ class WorkingArea extends React.Component {
       <div>
         <Page title="Задачи:" menuLinksArray={menuLinksArray} isPrivate={true}>
           <Switch>
-            <Route exact to path="/working" component={Tasks} />
+            <Route exact to path="/working" component={TasksManager} />
             <Route path="/working/categories" component={Categories} />
           </Switch>
         </Page>
@@ -35,4 +35,4 @@ class WorkingArea extends React.Component {
   }
 }
 
-export default WorkingArea;
+export default WorkingAreaRouter;
