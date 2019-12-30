@@ -31,52 +31,74 @@ class Tasks extends React.Component {
     this.updateData();
   }
 
-  getTasks() {
+  getTasks(callback) {
     let promise = getUserTasks();
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ tasksList: result });
+        if (typeof callback === "function") {
+          this.setState({ tasksList: result }, () => callback());
+        } else {
+          this.setState({ tasksList: result });
+        }
       }
     });
   }
 
-  getUserCategories() {
+  getUserCategories(callback) {
     let promise = getUserCategories();
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ categoriesList: result });
+        if (typeof callback === "function") {
+          this.setState({ categoriesList: result }, () => callback());
+        } else {
+          this.setState({ categoriesList: result });
+        }
       }
     });
   }
 
-  getAllTaskStatuses() {
+  getAllTaskStatuses(callback) {
     let promise = getAllTaskStatuses();
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ taskStatusesList: result });
+        if (typeof callback === "function") {
+          this.setState({ taskStatusesList: result }, () => callback());
+        } else {
+          this.setState({ taskStatusesList: result });
+        }
       }
     });
   }
 
-  getTasksLog() {
+  getTasksLog(callback) {
     let promise = getTasksLog();
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ tasksLogList: result });
+        if (typeof callback === "function") {
+          this.setState({ tasksLogList: result }, () => callback());
+        } else {
+          this.setState({ tasksLogList: result });
+        }
       }
     });
   }
 
-  getTimeExecutionForAllCategories() {
+  getTimeExecutionForAllCategories(callback) {
     let promise = getTimeExecutionForAllCategories();
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ categoriesExecutionTimeList: result });
+        if (typeof callback === "function") {
+          this.setState({ categoriesExecutionTimeList: result }, () =>
+            callback()
+          );
+        } else {
+          this.setState({ categoriesExecutionTimeList: result });
+        }
       }
     });
   }
@@ -219,9 +241,8 @@ class Tasks extends React.Component {
 
     promise.then(result => {
       if (typeof result.affectedRows === "number") {
-        this.getTasks();
+        this.getTasks(callback);
         this.getTimeExecutionForAllCategories();
-        callback();
       }
     });
   }
@@ -258,9 +279,8 @@ class Tasks extends React.Component {
 
     promise.then(result => {
       if (typeof result.affectedRows === "number") {
-        this.getTasksLog();
+        this.getTasksLog(callback);
         this.getTimeExecutionForAllCategories();
-        callback();
       }
     });
   }
@@ -282,7 +302,7 @@ class Tasks extends React.Component {
     let task = {
       category_id: this.state.categoriesList[0].id,
       status_id: this.state.taskStatusesList[0].id,
-      name: "<br>",
+      name: "",
       description: "<br>"
     };
 
@@ -439,12 +459,12 @@ class Tasks extends React.Component {
               isEditable={true}
               isResizeble={true}
               isStylable={true}
-              saveRowToDataBase={(row, callback) =>
+              saveRow={(row, callback) =>
                 this.saveTaskToDataBase(row, callback)
               }
-              updateTableContent={() => this.getTasks()}
-              addRowToDataBase={() => this.addTaskToDataBase()}
-              deleteRowFromDataBase={row => this.deleteTaskFromDataBase(row)}
+              update={() => this.getTasks()}
+              addRow={() => this.addTaskToDataBase()}
+              deleteRow={row => this.deleteTaskFromDataBase(row)}
             >
               {this.getTasksTableContent()}
             </Table>
@@ -460,12 +480,10 @@ class Tasks extends React.Component {
         <Table
           isEditable={false}
           isResizeble={true}
-          saveRowToDataBase={(row, callback) =>
-            this.saveTaskLogToDataBase(row, callback)
-          }
-          updateTableContent={() => this.getTasksLog()}
-          addRowToDataBase={() => this.addTaskLogToDataBase()}
-          deleteRowFromDataBase={row => this.deleteTaskLogFromDataBase(row)}
+          saveRow={(row, callback) => this.saveTaskLogToDataBase(row, callback)}
+          update={() => this.getTasksLog()}
+          addRow={() => this.addTaskLogToDataBase()}
+          deleteRow={row => this.deleteTaskLogFromDataBase(row)}
         >
           {this.getTasksLogTableContent()}
         </Table>

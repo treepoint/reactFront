@@ -7,35 +7,30 @@ class SelectContent extends React.Component {
   constructor() {
     super();
     this.state = {
-      htmlContent: { list: [] }
+      content: { list: [] }
     };
   }
 
-  componentDidMount() {
-    this.updateHtmlContent();
-  }
-
-  updateHtmlContent() {
+  updateContent() {
     if (
-      JSON.stringify(this.state.htmlContent) !==
-      JSON.stringify(this.props.htmlContent)
+      JSON.stringify(this.state.content) !== JSON.stringify(this.props.content)
     ) {
-      this.setState({ htmlContent: this.props.htmlContent });
+      this.setState({ content: this.props.content });
     }
   }
 
   onChange(event) {
-    let htmlContent = this.state.htmlContent;
-    htmlContent.current = Number(event.target.value);
-    this.props.onChangeHTMLContent(htmlContent);
+    let content = this.state.content;
+    content.current = Number(event.target.value);
+    this.props.onChange(content);
   }
 
   getOptions() {
-    let options = this.state.htmlContent.list.map(option => {
+    let options = this.state.content.list.map(option => {
       //нам сюда может прийти как html, так и строка. В любом случае конвертим в строку
       let children = HtmlToText.fromString(option.children);
 
-      if (option.value === this.state.htmlContent.current) {
+      if (option.value === this.state.content.current) {
         return (
           <option selected value={option.value}>
             {children}
@@ -50,7 +45,7 @@ class SelectContent extends React.Component {
   }
 
   render() {
-    this.updateHtmlContent();
+    this.updateContent();
 
     return (
       <select

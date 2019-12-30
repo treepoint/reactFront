@@ -5,7 +5,7 @@ import "./StringContent.css";
 class StringContent extends React.Component {
   //Изменяем контент по вводу
   onChange(event) {
-    this.props.onChangeStringContent(event.target.value);
+    this.props.onChange(event.target.value);
   }
 
   //Получаем стиль ячейки заголовка на основании стиля контента
@@ -38,7 +38,7 @@ class StringContent extends React.Component {
         className="stringContent"
         style={this.getStyle()}
         debounceTimeout={700}
-        value={this.props.stringContent}
+        value={this.props.content}
         onChange={event => this.onChange(event)}
       />
     );

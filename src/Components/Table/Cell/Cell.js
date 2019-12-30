@@ -91,9 +91,9 @@ class Cell extends React.Component {
   }
 
   //Обрабатываем изменения контента в ячейке
-  onChangeHTMLContent(htmlContent) {
+  onChange(content) {
     // this.setState({ htmlContent });
-    this.props.onChangeHTMLContent(htmlContent);
+    this.props.onChange(content);
   }
 
   //Обрабатываем изменение размеров
@@ -127,33 +127,29 @@ class Cell extends React.Component {
       case "time":
         return (
           <TimeContent
-            timeContent={this.state.htmlContent}
+            content={this.state.htmlContent}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
-            onChangeTimeContent={htmlContent =>
-              this.onChangeHTMLContent(htmlContent)
-            }
+            onChange={content => this.onChange(content)}
           />
         );
       case "string":
         return (
           <StringContent
-            stringContent={this.state.htmlContent}
+            content={this.state.htmlContent}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
-            onChangeStringContent={htmlContent =>
-              this.onChangeHTMLContent(htmlContent)
-            }
+            onChange={content => this.onChange(content)}
           />
         );
       case "text":
         return (
           <TextContent
-            htmlContent={this.state.htmlContent}
+            content={this.state.htmlContent}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
@@ -163,22 +159,18 @@ class Cell extends React.Component {
             setStyle={style => {
               this.setStyle(style);
             }}
-            onChangeHTMLContent={htmlContent =>
-              this.onChangeHTMLContent(htmlContent)
-            }
+            onChange={content => this.onChange(content)}
           />
         );
       //Если выпадающий список — используем выпадающие списки
       case "select":
         return (
           <SelectContent
-            htmlContent={this.state.htmlContent}
+            content={this.state.htmlContent}
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
-            onChangeHTMLContent={htmlContent =>
-              this.onChangeHTMLContent(htmlContent)
-            }
+            onChange={content => this.onChange(content)}
           />
         );
 

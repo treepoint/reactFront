@@ -17,12 +17,16 @@ class TaskStatuses extends React.Component {
     this.getAllTaskStatuses();
   }
 
-  getAllTaskStatuses() {
+  getAllTaskStatuses(callback) {
     let promise = getAllTaskStatuses();
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ taskStatusesList: result });
+        if (typeof callback === "function") {
+          this.setState({ taskStatusesList: result }, () => callback());
+        } else {
+          this.setState({ taskStatusesList: result });
+        }
       }
     });
   }
@@ -49,11 +53,13 @@ class TaskStatuses extends React.Component {
 
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(taskStatus, callback) {
-    updateStatus(taskStatus.id, taskStatus);
+    let promise = updateStatus(taskStatus.id, taskStatus);
 
-    //Пока, если просто дошли до сюда, значит сохранили и нужно сказать об этом таблице
-    //Понятно, что это не самое хорошее решение, но тестим пока так
-    callback();
+    promise.then(result => {
+      if (typeof result.affectedRows === "number") {
+        this.getAllTaskStatuses(callback);
+      }
+    });
   }
 
   render() {
@@ -100,14 +106,10 @@ class TaskStatuses extends React.Component {
         <Table
           isResizeble={true}
           isSingleLineMode={true}
-          addRowToDataBase={(row, callback) =>
-            this.addRowToDataBase(row, callback)
-          }
-          saveRowToDataBase={(row, callback) =>
-            this.saveRowToDataBase(row, callback)
-          }
-          deleteRowFromDataBase={row => this.deleteRowFromDataBase(row)}
-          updateTableContent={() => this.getAllTaskStatuses()}
+          addRow={(row, callback) => this.addRowToDataBase(row, callback)}
+          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+          deleteRow={row => this.deleteRowFromDataBase(row)}
+          update={() => this.getAllTaskStatuses()}
         >
           {taskStatusesList}
         </Table>

@@ -11,13 +11,8 @@ class Row extends React.Component {
       //Текущая высота строки. Если задано — считается значением по-умолчанию
       height: 34,
       //Прошлая ширина и высота. Нужны для вычисления смещения между текущей шириной\высотой и прошлой
-      prevHeight: 0,
-      rowContent: []
+      prevHeight: 0
     };
-  }
-
-  componentDidMount() {
-    this.updateRowContent();
   }
 
   changeHeight(height) {
@@ -49,60 +44,45 @@ class Row extends React.Component {
   }
 
   //Обрабатываем изменение контента
-  onChangeHTMLContent(HTMLContent, index) {
+  onChange(content, index) {
     //Получим текущий массив, содержащий значения всех ячеек
-    let rowContent = this.state.rowContent;
+    let rowContent = this.props.rowsContent;
 
     //Обновим в нем нужное значение
-    rowContent[index].value = HTMLContent;
+    rowContent[index].value = content;
 
     //Добавим его в state
     this.setState({ rowContent });
 
-    //Передадим выше, для сохранения в ДБ
-    this.props.saveRowToDataBase(rowContent);
+    //Передадим выше, для сохранения
+    this.props.saveRow(rowContent);
   }
 
-  //Обновим контент в ячейках, если он не совпадает с тем, что есть сейчас
-  updateRowContent() {
-    if (this.state.rowContent !== this.props.rowsContent) {
-      this.setState({ rowContent: this.props.rowsContent });
-    }
-  }
-
-  deleteRowFromDataBase() {
-    this.props.deleteRowFromDataBase(this.state.rowContent);
+  deleteRow() {
+    this.props.deleteRow(this.props.rowsContent);
   }
 
   getActionButton() {
     if (this.props.isHeader) {
-      if (this.props.addRowToDataBase === null) {
+      if (this.props.addRow === null) {
         return <AddButton disabled={true} />;
       } else {
         return (
-          <AddButton
-            disabled={false}
-            addRowToDataBase={() => this.props.addRowToDataBase()}
-          />
+          <AddButton disabled={false} addRow={() => this.props.addRow()} />
         );
       }
     } else {
-      if (this.props.deleteRowFromDataBase === null) {
+      if (this.props.deleteRow === null) {
         return <DeleteButton disabled={true} />;
       } else {
         return (
-          <DeleteButton
-            disabled={false}
-            deleteRowFromDataBase={() => this.deleteRowFromDataBase()}
-          />
+          <DeleteButton disabled={false} deleteRow={() => this.deleteRow()} />
         );
       }
     }
   }
 
   render() {
-    this.updateRowContent();
-
     //Из пришедшего описания столбцов соберем ячейки
     let cells = this.props.colsDescription.map((column, index) => {
       return (
@@ -113,14 +93,12 @@ class Row extends React.Component {
           uuid={this.props.uuid}
           width={column.width}
           height={this.state.height}
-          initHtmlContent={this.state.rowContent[index]}
+          initHtmlContent={this.props.rowsContent[index]}
           changeUUID={uuid => this.changeUUID(uuid)}
           changeWidth={width => this.changeWidth(width, index)}
           changeHeight={height => this.changeHeight(height)}
           stopChangeDimensions={() => this.stopChangeDimensions()}
-          onChangeHTMLContent={HTMLContent =>
-            this.onChangeHTMLContent(HTMLContent, index)
-          }
+          onChange={content => this.onChange(content, index)}
         />
       );
     });

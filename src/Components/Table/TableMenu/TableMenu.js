@@ -8,12 +8,9 @@ class TableMenu extends React.Component {
   render() {
     let actions = [];
 
-    if (typeof this.props.updateTableContent === "function") {
+    if (typeof this.props.update === "function") {
       actions.push(
-        <Action
-          icon={iconUpdate}
-          onClick={() => this.props.updateTableContent()}
-        />
+        <Action icon={iconUpdate} onClick={() => this.props.update()} />
       );
     }
 

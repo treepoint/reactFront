@@ -17,33 +17,43 @@ class Users extends React.Component {
     this.getRoles();
   }
 
-  getUsers() {
+  getUsers(callback) {
     let promise = getUsers();
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ usersList: result });
+        if (typeof callback === "function") {
+          this.setState({ usersList: result }, () => callback());
+        } else {
+          this.setState({ usersList: result });
+        }
       }
     });
   }
 
-  getRoles() {
+  getRoles(callback) {
     let promise = getRoles();
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ rolesList: result });
+        if (typeof callback === "function") {
+          this.setState({ rolesList: result }, () => callback());
+        } else {
+          this.setState({ rolesList: result });
+        }
       }
     });
   }
 
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(user, callback) {
-    updateUser(user.id, user);
+    let promise = updateUser(user.id, user);
 
-    //Пока, если просто дошли до сюда, значит сохранили.
-    //Понятно, что это не самое хорошее решение, но тестим пока так
-    callback();
+    promise.then(result => {
+      if (typeof result.affectedRows === "number") {
+        this.getUsers(callback);
+      }
+    });
   }
 
   render() {
@@ -113,10 +123,8 @@ class Users extends React.Component {
           isEditable={true}
           isResizeble={true}
           isSingleLineMode={true}
-          saveRowToDataBase={(row, callback) =>
-            this.saveRowToDataBase(row, callback)
-          }
-          updateTableContent={() => this.getUsers()}
+          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+          update={() => this.getUsers()}
         >
           {users}
         </Table>

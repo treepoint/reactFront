@@ -8,7 +8,7 @@ class DeleteButton extends React.Component {
     let onClick;
 
     if (!this.props.disabled) {
-      onClick = () => this.props.deleteRowFromDataBase();
+      onClick = () => this.props.deleteRow();
     }
 
     return (

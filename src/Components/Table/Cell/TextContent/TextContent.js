@@ -19,7 +19,7 @@ class TextContent extends React.Component {
 
   //Изменяем контент по вводу
   onChange = debounce(event => {
-    this.props.onChangeHTMLContent(event.target.value);
+    this.props.onChange(event.target.value);
   }, 700);
 
   //Обрабатываем изменения стиля контента в ячейке в
@@ -136,7 +136,7 @@ class TextContent extends React.Component {
           !!this.props.isHeader ? this.getHeaderStyle() : this.getRegularStyle()
         }
         //Задаем контент
-        html={this.props.htmlContent}
+        html={this.props.content}
         //Задаем редактируемость
         disabled={!!this.props.disabled ? true : false}
         onChange={event => this.onChange(event)}

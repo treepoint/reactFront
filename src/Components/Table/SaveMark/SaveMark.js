@@ -4,7 +4,7 @@ import "./SaveMark.css";
 
 class SaveMark extends React.Component {
   render() {
-    if (this.props.isDisplayed === "notInit") {
+    if (this.props.isDisplayed === null) {
       return <div />;
     }
 

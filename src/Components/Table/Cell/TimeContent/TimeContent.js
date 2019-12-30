@@ -5,7 +5,7 @@ import "./TimeContent.css";
 
 class TimeContent extends React.Component {
   onChange = debounce(event => {
-    this.props.onChangeTimeContent(event.target.value);
+    this.props.onChange(event.target.value);
   }, 700);
 
   //Получаем стиль ячейки заголовка на основании стиля контента
@@ -34,7 +34,7 @@ class TimeContent extends React.Component {
   render() {
     return (
       <TimeField
-        value={this.props.timeContent}
+        value={this.props.content}
         disabled={!!this.props.disabled ? true : false}
         className="timeContent"
         style={this.getStyle()}

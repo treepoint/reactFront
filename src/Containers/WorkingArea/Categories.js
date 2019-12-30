@@ -18,12 +18,16 @@ class Categories extends React.Component {
     this.getUserCategories();
   }
 
-  getUserCategories() {
+  getUserCategories(callback) {
     let promise = getUserCategories();
 
     promise.then(result => {
       if (Array.isArray(result)) {
-        this.setState({ categoriesList: result });
+        if (typeof callback === "function") {
+          this.setState({ categoriesList: result }, () => callback());
+        } else {
+          this.setState({ categoriesList: result });
+        }
       }
     });
   }
@@ -59,8 +63,7 @@ class Categories extends React.Component {
 
     promise.then(result => {
       if (typeof result.affectedRows === "number") {
-        this.getUserCategories();
-        callback();
+        this.getUserCategories(callback);
       }
     });
   }
@@ -124,11 +127,9 @@ class Categories extends React.Component {
           isEditable={true}
           isResizeble={true}
           isSingleLineMode={true}
-          saveRowToDataBase={(row, callback) =>
-            this.saveRowToDataBase(row, callback)
-          }
-          addRowToDataBase={() => this.addCategoryToDataBase()}
-          deleteRowFromDataBase={row => this.deleteCategoryFromDataBase(row)}
+          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+          addRow={() => this.addCategoryToDataBase()}
+          deleteRow={row => this.deleteCategoryFromDataBase(row)}
         >
           {categories}
         </Table>

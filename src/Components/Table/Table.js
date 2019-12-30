@@ -14,25 +14,24 @@ class Table extends React.Component {
       tableBody: [],
       table: [],
       uuid: "",
-      displaySaveMark: "notInit"
+      displaySaveMark: null
     };
   }
 
-  componentDidMount() {
-    let rowTable = this.isValidTable(this.props.children);
-    this.setDescription(rowTable);
-  }
+  setTable() {
+    let table = this.isValidTable(this.props.children);
 
-  setTable(table) {
-    //Первый элемент — всегда заголовок таблицы. Достанем его
+    //Если новая таблица отличается от того, что хранится в стейте — обновим её
     if (JSON.stringify(table) !== JSON.stringify(this.state.table)) {
+      this.setColsWidth(table);
+
       this.setState({
         table
       });
     }
   }
 
-  setDescription(table) {
+  setColsWidth(table) {
     //Соберем массив, описывающий столбцы
     let colsDescription = table[0].map(column => {
       //Если есть описание — получим данные оттуда. Иначе — стандартные
@@ -129,16 +128,6 @@ class Table extends React.Component {
     return table;
   }
 
-  setDisplaySaveMarkFalse() {
-    setTimeout(
-      function() {
-        //Start the timer
-        this.setState({ displaySaveMark: false }); //After 1 second, set render to true
-      }.bind(this),
-      30
-    );
-  }
-
   getObjectFromRowContent(rowContent) {
     //Разберем контент и вернем уже объект, с которым будем работать дальше
     let object = {};
@@ -165,29 +154,43 @@ class Table extends React.Component {
     return object;
   }
 
-  saveRowToDataBase(rowContent) {
+  saveRow(rowContent, index) {
     //Если не функция — ничего делать не будем. Значит её не передали
-    if (typeof this.props.saveRowToDataBase === "function") {
-      this.setState({ displaySaveMark: true });
-
-      let object = this.getObjectFromRowContent(rowContent);
-
-      this.props.saveRowToDataBase(object, () => {
-        this.setDisplaySaveMarkFalse();
-      });
+    if (typeof this.props.saveRow !== "function") {
+      return;
     }
-  }
 
-  deleteRowFromDataBase(rowContent) {
+    //Соберем объект из строки
     let object = this.getObjectFromRowContent(rowContent);
 
-    this.props.deleteRowFromDataBase(object);
+    //Отправим на сохранение в ДБ
+    this.props.saveRow(object, () => {
+      let table = this.state.table;
+
+      table[index] = rowContent;
+
+      this.setState({ table }, () => {
+        //Покажем марку сохранения
+        this.setState({ displaySaveMark: true });
+        //Повесим небольшую задержку на скрытие дискеты сохранения
+        setTimeout(
+          function() {
+            this.setState({ displaySaveMark: false });
+          }.bind(this),
+          30
+        );
+      });
+    });
+  }
+
+  deleteRow(rowContent) {
+    let object = this.getObjectFromRowContent(rowContent);
+
+    this.props.deleteRow(object);
   }
 
   render() {
-    let rowTable = this.isValidTable(this.props.children);
-
-    this.setTable(rowTable);
+    this.setTable();
 
     //Соберем тушку для отрисовки
     let table = this.state.table.map((row, index) => {
@@ -213,15 +216,11 @@ class Table extends React.Component {
           stopChangeDimensions={() => this.stopChangeDimensions()}
           //Изменим UUID ячейки, которая изменяла свою ширину
           changeUUID={uuid => this.changeUUID(uuid)}
-          saveRowToDataBase={rowContent => this.saveRowToDataBase(rowContent)}
-          addRowToDataBase={
-            !!this.props.addRowToDataBase
-              ? () => this.props.addRowToDataBase()
-              : null
-          }
-          deleteRowFromDataBase={
-            !!this.props.deleteRowFromDataBase
-              ? rowContent => this.deleteRowFromDataBase(rowContent)
+          saveRow={rowContent => this.saveRow(rowContent, index)}
+          addRow={!!this.props.addRow ? () => this.props.addRow() : null}
+          deleteRow={
+            !!this.props.deleteRow
+              ? rowContent => this.deleteRow(rowContent)
               : null
           }
         />
@@ -240,11 +239,7 @@ class Table extends React.Component {
           </div>
         </div>
         <TableMenu
-          updateTableContent={
-            !!this.props.updateTableContent
-              ? () => this.props.updateTableContent()
-              : null
-          }
+          update={!!this.props.update ? () => this.props.update() : null}
         />
       </div>
     );

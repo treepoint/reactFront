@@ -8,7 +8,7 @@ class AddButton extends React.Component {
     let onClick;
 
     if (!this.props.disabled) {
-      onClick = () => this.props.addRowToDataBase();
+      onClick = () => this.props.addRow();
     }
 
     return (
