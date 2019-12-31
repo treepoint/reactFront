@@ -74,7 +74,7 @@ class Tasks extends React.Component {
         type: "string",
         disabled: true,
         value: "Категория",
-        style: { width: 120 }
+        style: { width: 180 }
       },
       {
         key: "status_name",

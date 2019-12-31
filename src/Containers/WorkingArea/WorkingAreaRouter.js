@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 //Подключаем компоненты
 import Page from "../../Components/Page/Page";
 import Categories from "./Categories";
+import TaskStatuses from "./TaskStatuses";
 import TasksManager from "./TasksManager/TasksManager";
 
 class WorkingAreaRouter extends React.Component {
@@ -19,7 +20,8 @@ class WorkingAreaRouter extends React.Component {
     //Соберем меню страницы
     let menuLinksArray = [
       { to: "/working", value: "Список" },
-      { to: "/working/categories", value: "Категории" }
+      { to: "/working/categories", value: "Категории" },
+      { to: "/working/task_statuses", value: "Статусы" }
     ];
 
     return (
@@ -27,6 +29,7 @@ class WorkingAreaRouter extends React.Component {
         <Switch>
           <Route exact to path="/working" component={TasksManager} />
           <Route path="/working/categories" component={Categories} />
+          <Route path="/working/task_statuses" component={TaskStatuses} />
         </Switch>
       </Page>
     );
