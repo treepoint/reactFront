@@ -17,7 +17,7 @@ class Tasks extends React.Component {
     promise.then(result => {
       if (typeof result.affectedRows === "number") {
         this.props.getTasks(callback);
-        this.props.getTimeExecutionForAllCategories();
+        this.props.getTasksLog();
       }
     });
   }

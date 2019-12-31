@@ -64,16 +64,10 @@ export function createUser(user) {
     return false;
   }
 
-  let headers = getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
   let url = APIURL + "/users/registration";
 
   //Роль по умолчанию — пользователь. Вторая
-  return Axios.post(url, Object.assign({}, user, { role_id: 2 }), headers)
+  return Axios.post(url, Object.assign({}, user, { role_id: 2 }), getHeaders())
     .then(response => {
       return response.data;
     })
