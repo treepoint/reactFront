@@ -275,6 +275,21 @@ export function getTimeExecutionForAllCategories() {
   });
 }
 
+//Получаем время исполнения по всем категориям за определенный день
+export function getTimeExecutionForAllCategoriesByDate(date) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let url = APIURL + "/categories/time_execution/date/" + date;
+
+  return Axios.get(url, headers).then(response => {
+    return response.data;
+  });
+}
+
 /*
  * Задачи
  */
@@ -332,7 +347,7 @@ export function getTaskByID(ID) {
   });
 }
 
-//Получить все задачи пользователя как объекты в массиве
+//Получить все задачи пользователя
 export function getUserTasks() {
   let headers = getHeaders();
 
@@ -341,6 +356,21 @@ export function getUserTasks() {
   }
 
   let url = APIURL + "/tasks";
+
+  return Axios.get(url, headers).then(response => {
+    return response.data;
+  });
+}
+
+//Получить все задачи пользователя за дату
+export function getUserTasksByDate(date) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let url = APIURL + "/tasks/date/" + date;
 
   return Axios.get(url, headers).then(response => {
     return response.data;
@@ -356,6 +386,101 @@ export function deleteTask(ID) {
   }
 
   let url = APIURL + "/tasks/" + ID;
+
+  return Axios.delete(url, headers)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
+}
+
+/*
+ * Лог выполнения задач
+ */
+
+//Получить весь лог выполнения всех задач
+export function getTasksLog() {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let url = APIURL + "/tasks_log";
+
+  return Axios.get(url, headers).then(response => {
+    return response.data;
+  });
+}
+
+//Получить весь лог выполнения всех задач за день
+export function getTasksLogByDate(date) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let url = APIURL + "/tasks_log/date/" + date;
+
+  return Axios.get(url, headers).then(response => {
+    return response.data;
+  });
+}
+
+//Обновить лог по ID
+export function updateTaskLog(ID, taskLog) {
+  if (typeof taskLog !== "object") {
+    return false;
+  }
+
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let url = APIURL + "/tasks_log/" + ID;
+
+  return Axios.put(url, taskLog, headers).then(response => {
+    return response.data;
+  });
+}
+
+//Добавить запись в лог выполнения задач
+export function createTaskLog(taskLog) {
+  if (typeof taskLog !== "object") {
+    return false;
+  }
+
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let url = APIURL + "/tasks_log";
+
+  return Axios.post(url, taskLog, headers)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error;
+    });
+}
+
+//Удалить запись из лога выполнения задач
+export function deleteTaskLog(ID) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let url = APIURL + "/tasks_log/" + ID;
 
   return Axios.delete(url, headers)
     .then(response => {
@@ -462,81 +587,19 @@ export function deleteStatus(ID) {
 }
 
 /*
- * Лог выполнения задач
+ * Типы статусов задач
  */
 
-//Получить весь лог выполнения задач
-export function getTasksLog() {
+export function getAllTaskStatusesTypes() {
   let headers = getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  let url = APIURL + "/tasks_log";
+  let url = APIURL + "/task_statuses_types";
 
   return Axios.get(url, headers).then(response => {
     return response.data;
   });
-}
-
-//Обновить лог по ID
-export function updateTaskLog(ID, taskLog) {
-  if (typeof taskLog !== "object") {
-    return false;
-  }
-
-  let headers = getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  let url = APIURL + "/tasks_log/" + ID;
-
-  return Axios.put(url, taskLog, headers).then(response => {
-    return response.data;
-  });
-}
-
-//Добавить запись в лог выполнения задач
-export function createTaskLog(taskLog) {
-  if (typeof taskLog !== "object") {
-    return false;
-  }
-
-  let headers = getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  let url = APIURL + "/tasks_log";
-
-  return Axios.post(url, taskLog, headers)
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      return error;
-    });
-}
-
-//Добавить запись из лога выполнения задач
-export function deleteTaskLog(ID) {
-  let headers = getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  let url = APIURL + "/tasks_log/" + ID;
-
-  return Axios.delete(url, headers)
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      return error;
-    });
 }

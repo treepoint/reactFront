@@ -4,17 +4,33 @@ import {
   getAllTaskStatuses,
   updateStatus,
   createStatus,
-  deleteStatus
+  deleteStatus,
+  getAllTaskStatusesTypes
 } from "../../APIController/APIController";
 
 class TaskStatuses extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { taskStatusesList: [] };
+    this.state = { taskStatusesList: [], taskStatusesTypesList: [] };
   }
 
   componentDidMount() {
     this.getAllTaskStatuses();
+    this.getAllTaskStatusesTypes();
+  }
+
+  getAllTaskStatusesTypes(callback) {
+    let promise = getAllTaskStatusesTypes();
+
+    promise.then(result => {
+      if (Array.isArray(result)) {
+        if (typeof callback === "function") {
+          this.setState({ taskStatusesTypesList: result }, () => callback());
+        } else {
+          this.setState({ taskStatusesTypesList: result });
+        }
+      }
+    });
   }
 
   getAllTaskStatuses(callback) {
@@ -32,7 +48,7 @@ class TaskStatuses extends React.Component {
   }
 
   addRowToDataBase() {
-    let promise = createStatus({ name: "" });
+    let promise = createStatus({ name: "", type_id: 1 });
 
     promise.then(result => {
       if (typeof result.insertId === "number") {
@@ -62,7 +78,7 @@ class TaskStatuses extends React.Component {
     });
   }
 
-  render() {
+  getContent() {
     let taskStatusesList = [
       [
         {
@@ -78,11 +94,31 @@ class TaskStatuses extends React.Component {
           disabled: true,
           value: "Название",
           style: { width: 300 }
+        },
+        {
+          key: "type",
+          type: "string",
+          disabled: true,
+          value: "Тип статуса",
+          style: { width: 300 }
         }
       ]
     ];
 
     this.state.taskStatusesList.forEach(taskStatus => {
+      //Соберем список типов статусов
+      let taskStatusesTypesList = this.state.taskStatusesTypesList.map(
+        taskStatusType => {
+          return { value: taskStatusType.id, children: taskStatusType.name };
+        }
+      );
+
+      //добавим текущую
+      let taskStatusesTypes = {
+        list: taskStatusesTypesList,
+        current: taskStatus.type_id
+      };
+
       taskStatusesList.push([
         {
           key: "id",
@@ -97,10 +133,22 @@ class TaskStatuses extends React.Component {
           disabled: false,
           value: taskStatus.name,
           style: {}
+        },
+        {
+          key: "type_id",
+          type: "select",
+          disabled: false,
+          value: taskStatusesTypes,
+          style: {}
         }
       ]);
     });
 
+    return taskStatusesList;
+  }
+
+  render() {
+    console.log(this.getContent());
     return (
       <Table
         isResizeble={true}
@@ -110,7 +158,7 @@ class TaskStatuses extends React.Component {
         deleteRow={row => this.deleteRowFromDataBase(row)}
         update={() => this.getAllTaskStatuses()}
       >
-        {taskStatusesList}
+        {this.getContent()}
       </Table>
     );
   }

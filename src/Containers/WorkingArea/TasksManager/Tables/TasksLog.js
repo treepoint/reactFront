@@ -2,8 +2,7 @@ import React from "react";
 import Table from "../../../../Components/Table/Table";
 import {
   getTimeFromMins,
-  getCurrentDate,
-  getCurrentDateWithTime
+  getCurrentTimeFormat
 } from "../../../../Libs/TimeUtils";
 import {
   updateTaskLog,
@@ -16,8 +15,8 @@ class TasksLog extends React.Component {
   addTaskLogToDataBase() {
     let promise = createTaskLog({
       task_id: this.props.tasksList[0].id,
-      execution_start: getCurrentDateWithTime(),
-      execution_end: getCurrentDate()
+      execution_start: this.props.date + " " + getCurrentTimeFormat(),
+      execution_end: this.props.date
     });
 
     promise.then(result => {
@@ -34,7 +33,7 @@ class TasksLog extends React.Component {
     promise.then(result => {
       if (typeof result.affectedRows === "number") {
         this.props.getTasksLog(callback);
-        this.props.getTimeExecutionForAllCategories();
+        this.props.getTasks();
       }
     });
   }
@@ -46,7 +45,7 @@ class TasksLog extends React.Component {
     promise.then(result => {
       if (result === "{success}") {
         this.props.getTasksLog();
-        this.props.getTimeExecutionForAllCategories();
+        this.props.getTasks();
       }
     });
   }

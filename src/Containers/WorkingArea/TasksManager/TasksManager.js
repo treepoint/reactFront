@@ -1,15 +1,16 @@
 import React from "react";
 import Tasks from "./Tables/Tasks";
 import TasksLog from "./Tables/TasksLog";
-import TasksStatistic from "./Tables/TasksStatistic";
 import DayPicker from "./DayPicker/DayPicker";
 import {
-  getUserTasks,
-  getTasksLog,
+  getUserTasksByDate,
+  getTasksLogByDate,
   getAllTaskStatuses,
   getUserCategories,
-  getTimeExecutionForAllCategories
+  getTimeExecutionForAllCategoriesByDate
 } from "../../../APIController/APIController";
+
+import { getCurrentDate } from "../../../Libs/TimeUtils";
 import "./TasksManager.css";
 
 /* В общем, у нас здесь какая идея. Есть N таблиц, связанных между собой.
@@ -31,20 +32,23 @@ class TasksManager extends React.Component {
       tasksLogList: [],
       categoriesList: [],
       taskStatusesList: [],
-      categoriesExecutionTimeList: []
+      date: getCurrentDate()
     };
   }
 
   componentDidMount() {
-    this.getTasks();
-    this.getUserCategories();
-    this.getTasksLog();
-    this.getAllTaskStatuses();
-    this.getTimeExecutionForAllCategories();
+    this.updateData(this.state.date);
   }
 
-  getTasks(callback) {
-    this.getRowData(getUserTasks, "tasksList", callback);
+  updateData(date) {
+    this.getTasks(date);
+    this.getUserCategories();
+    this.getTasksLog(date);
+    this.getAllTaskStatuses();
+  }
+
+  getTasks(date, callback) {
+    this.getRowData(getUserTasksByDate, "tasksList", callback, date);
   }
 
   getUserCategories(callback) {
@@ -55,20 +59,27 @@ class TasksManager extends React.Component {
     this.getRowData(getAllTaskStatuses, "taskStatusesList", callback);
   }
 
-  getTasksLog(callback) {
-    this.getRowData(getTasksLog, "tasksLogList", callback);
+  getTasksLog(date, callback) {
+    this.getRowData(getTasksLogByDate, "tasksLogList", callback, date);
   }
 
-  getTimeExecutionForAllCategories(callback) {
+  getTimeExecutionForAllCategories(date, callback) {
     this.getRowData(
-      getTimeExecutionForAllCategories,
+      getTimeExecutionForAllCategoriesByDate,
       "categoriesExecutionTimeList",
-      callback
+      callback,
+      date
     );
   }
 
-  getRowData(updateFunction, list, callback) {
-    let promise = updateFunction();
+  getRowData(updateFunction, list, callback, date) {
+    let promise;
+
+    if (date !== null) {
+      promise = updateFunction(date);
+    } else {
+      promise = updateFunction();
+    }
 
     promise.then(result => {
       if (Array.isArray(result)) {
@@ -81,38 +92,38 @@ class TasksManager extends React.Component {
     });
   }
 
+  onPickDate(date) {
+    this.setState({ date });
+
+    this.updateData(date);
+  }
+
   render() {
     return (
       <React.Fragment>
-        <DayPicker />
+        <DayPicker onChange={date => this.onPickDate(date)} />
         <div className="taskContainer">
           {
             /*Таблица с задачами*/
             <Tasks
-              getTasks={callback => this.getTasks(callback)}
-              getTasksLog={callback => this.getTasksLog(callback)}
-              getTimeExecutionForAllCategories={callback =>
-                this.getTimeExecutionForAllCategories(callback)
+              getTasks={callback => this.getTasks(this.state.date, callback)}
+              getTasksLog={callback =>
+                this.getTasksLog(this.state.date, callback)
               }
               tasksList={this.state.tasksList}
               categoriesList={this.state.categoriesList}
               taskStatusesList={this.state.taskStatusesList}
             />
           }
-
-          {/*Таблица со статистикой по задачам*/}
-          <TasksStatistic
-            categoriesExecutionTimeList={this.state.categoriesExecutionTimeList}
-          />
-
           {/*Таблица с логом по задачам*/}
           <TasksLog
-            getTasksLog={callback => this.getTasksLog(callback)}
-            getTimeExecutionForAllCategories={callback =>
-              this.getTimeExecutionForAllCategories(callback)
+            getTasksLog={callback =>
+              this.getTasksLog(this.state.date, callback)
             }
+            getTasks={callback => this.getTasks(this.state.date, callback)}
             tasksList={this.state.tasksList}
             tasksLogList={this.state.tasksLogList}
+            date={this.state.date}
           />
         </div>
       </React.Fragment>

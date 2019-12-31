@@ -37,12 +37,15 @@ export function getFormatDate(date) {
   return yyyy + "-" + mm + "-" + dd;
 }
 
-export function getCurrentDateWithTime() {
+export function getCurrentTimeFormat() {
   //Получим сегодняшную дату
   var date = new Date();
-  var time = date.getHours() + "-" + date.getMinutes();
 
-  return getCurrentDate() + " " + time;
+  return date.getHours() + "-" + date.getMinutes();
+}
+
+export function getCurrentDateWithTime() {
+  return getCurrentDate() + " " + getCurrentTimeFormat();
 }
 
 export function getCurrentDayName() {

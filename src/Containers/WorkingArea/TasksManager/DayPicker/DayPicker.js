@@ -26,10 +26,12 @@ class DayPicker extends React.Component {
 
   onClick(event) {
     this.setState({ chosenDay: getFormatDate(event.target.name) });
+    this.props.onChange(getFormatDate(event.target.name));
   }
 
-  PickDate(date) {
+  onPickDate(date) {
     this.setState({ chosenDay: getFormatDate(date) });
+    this.props.onChange(getFormatDate(date));
   }
 
   getDaysMenu() {
@@ -79,7 +81,7 @@ class DayPicker extends React.Component {
     //Добавим выбор любой даты
     daysMenu.unshift(
       <DatePicker
-        onChange={date => this.PickDate(date)}
+        onChange={date => this.onPickDate(date)}
         chosenDay={this.state.chosenDay}
       />
     );

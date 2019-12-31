@@ -5,6 +5,9 @@ import {
   createTask,
   deleteTask
 } from "../../../../APIController/APIController";
+import { getTimeFromMins } from "../../../../Libs/TimeUtils";
+
+import { getCurrentDate } from "../../../../Libs/TimeUtils";
 
 class Tasks extends React.Component {
   //Сохраним изменяемую строку в ДБ
@@ -25,7 +28,8 @@ class Tasks extends React.Component {
       category_id: this.props.categoriesList[0].id,
       status_id: this.props.taskStatusesList[0].id,
       name: "",
-      description: "<br>"
+      description: "<br>",
+      create_date: getCurrentDate()
     };
 
     let promise = createTask(task);
@@ -46,7 +50,6 @@ class Tasks extends React.Component {
       if (result === "{success}") {
         this.props.getTasks();
         this.props.getTasksLog();
-        this.props.getTimeExecutionForAllCategories();
       }
     });
   }
@@ -89,6 +92,13 @@ class Tasks extends React.Component {
         disabled: true,
         value: "Описание",
         style: { width: 220 }
+      },
+      {
+        key: "execution_time",
+        type: "string",
+        disabled: true,
+        value: "Время выполнения",
+        style: { width: 160 }
       }
     ];
 
@@ -144,6 +154,13 @@ class Tasks extends React.Component {
           disabled: false,
           value: task.description,
           style: {}
+        },
+        {
+          key: "execution_time",
+          type: "time",
+          disabled: true,
+          value: getTimeFromMins(task.execution_time),
+          style: { width: 160 }
         }
       ]);
     });
