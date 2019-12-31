@@ -244,10 +244,10 @@ class Table extends React.Component {
               isDisplayed={this.state.displaySaveMark}
             />
           </div>
+          <TableMenu
+            update={!!this.props.update ? () => this.props.update() : null}
+          />
         </div>
-        <TableMenu
-          update={!!this.props.update ? () => this.props.update() : null}
-        />
       </div>
     );
   }

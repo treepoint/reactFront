@@ -86,39 +86,35 @@ class TasksManager extends React.Component {
       <React.Fragment>
         <DayPicker />
         <div className="taskContainer">
-          <div className="tasks">
-            {
-              /*Таблица с задачами*/
-              <Tasks
-                getTasks={callback => this.getTasks(callback)}
-                getTasksLog={callback => this.getTasksLog(callback)}
-                getTimeExecutionForAllCategories={callback =>
-                  this.getTimeExecutionForAllCategories(callback)
-                }
-                tasksList={this.state.tasksList}
-                categoriesList={this.state.categoriesList}
-                taskStatusesList={this.state.taskStatusesList}
-              />
-            }
-          </div>
-          <div>
-            {/*Таблица со статистикой по задачам*/}
-            <TasksStatistic
-              categoriesExecutionTimeList={
-                this.state.categoriesExecutionTimeList
+          {
+            /*Таблица с задачами*/
+            <Tasks
+              getTasks={callback => this.getTasks(callback)}
+              getTasksLog={callback => this.getTasksLog(callback)}
+              getTimeExecutionForAllCategories={callback =>
+                this.getTimeExecutionForAllCategories(callback)
               }
+              tasksList={this.state.tasksList}
+              categoriesList={this.state.categoriesList}
+              taskStatusesList={this.state.taskStatusesList}
             />
-          </div>
-        </div>
-        {/*Таблица с логом по задачам*/}
-        <TasksLog
-          getTasksLog={callback => this.getTasksLog(callback)}
-          getTimeExecutionForAllCategories={callback =>
-            this.getTimeExecutionForAllCategories(callback)
           }
-          tasksList={this.state.tasksList}
-          tasksLogList={this.state.tasksLogList}
-        />
+
+          {/*Таблица со статистикой по задачам*/}
+          <TasksStatistic
+            categoriesExecutionTimeList={this.state.categoriesExecutionTimeList}
+          />
+
+          {/*Таблица с логом по задачам*/}
+          <TasksLog
+            getTasksLog={callback => this.getTasksLog(callback)}
+            getTimeExecutionForAllCategories={callback =>
+              this.getTimeExecutionForAllCategories(callback)
+            }
+            tasksList={this.state.tasksList}
+            tasksLogList={this.state.tasksLogList}
+          />
+        </div>
       </React.Fragment>
     );
   }

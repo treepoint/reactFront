@@ -37,9 +37,9 @@ class DayPicker extends React.Component {
     let daysMenu = [];
     let isPrimary = false;
 
-    let i = -5;
+    let i = -6;
 
-    while (i < 5) {
+    while (i < 7) {
       date = new Date();
       date = new Date(date.setDate(date.getDate() - i));
 
