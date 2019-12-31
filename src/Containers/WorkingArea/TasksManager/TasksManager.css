@@ -3,9 +3,10 @@
   flex-direction: row;
   justify-content: flex-start;
   margin-bottom: 12px;
-  width: max-content;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
-.tasksStatistic {
-  margin-left: 12px;
+.tasks {
+  margin-right: 18px;
 }

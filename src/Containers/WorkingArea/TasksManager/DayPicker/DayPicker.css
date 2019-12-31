@@ -1,0 +1,7 @@
+.dayPicker {
+  display: flex;
+  flex-flow: row;
+  margin-bottom: 12px;
+  margin-top: -6px;
+  flex-wrap: wrap;
+}

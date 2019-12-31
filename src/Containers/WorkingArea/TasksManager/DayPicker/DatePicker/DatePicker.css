@@ -1,0 +1,29 @@
+.datePicker {
+  font-family: "Open Sans", "Source Sans Pro";
+  font-size: 15px;
+  margin-top: 12px;
+  margin-right: 12px;
+  width: 105px;
+  height: 34px;
+  border-radius: 4px;
+  border: 1px solid rgba(138, 138, 138, 0.73);
+  padding-left: 12px;
+}
+
+.datePicker:hover {
+  border: 1px solid rgba(68, 68, 68, 0.73);
+}
+
+.datePicker:active {
+  border: 1px solid rgba(68, 68, 68, 0.73);
+  background-color: rgb(240, 240, 240);
+}
+
+.datePicker:focus {
+  color: #222;
+  border-color: #000;
+}
+
+.datePicker.chosen {
+  border: 1px solid #000;
+}

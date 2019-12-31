@@ -2,6 +2,7 @@ import React from "react";
 import Tasks from "./Tables/Tasks";
 import TasksLog from "./Tables/TasksLog";
 import TasksStatistic from "./Tables/TasksStatistic";
+import DayPicker from "./DayPicker/DayPicker";
 import {
   getUserTasks,
   getTasksLog,
@@ -83,8 +84,9 @@ class TasksManager extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <DayPicker />
         <div className="taskContainer">
-          <div>
+          <div className="tasks">
             {
               /*Таблица с задачами*/
               <Tasks
@@ -99,7 +101,7 @@ class TasksManager extends React.Component {
               />
             }
           </div>
-          <div className="tasksStatistic">
+          <div>
             {/*Таблица со статистикой по задачам*/}
             <TasksStatistic
               categoriesExecutionTimeList={

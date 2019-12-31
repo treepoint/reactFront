@@ -1,6 +1,10 @@
 import React from "react";
 import Table from "../../../../Components/Table/Table";
-import { getTimeFromMins } from "./UTILS";
+import {
+  getTimeFromMins,
+  getCurrentDate,
+  getCurrentDateWithTime
+} from "../../../../Libs/TimeUtils";
 import {
   updateTaskLog,
   createTaskLog,
@@ -10,21 +14,10 @@ import {
 class TasksLog extends React.Component {
   //Добавим лог по задаче в ДБ
   addTaskLogToDataBase() {
-    //Получим сегодняшную дату
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0");
-    var yyyy = today.getFullYear();
-    var time = today.getHours() + "-" + today.getMinutes();
-
-    today = yyyy + "-" + mm + "-" + dd;
-
-    let now = today + " " + time;
-
     let promise = createTaskLog({
-      task_id: this.state.tasksList[0].id,
-      execution_start: now,
-      execution_end: today
+      task_id: this.props.tasksList[0].id,
+      execution_start: getCurrentDateWithTime(),
+      execution_end: getCurrentDate()
     });
 
     promise.then(result => {

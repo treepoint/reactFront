@@ -1,5 +1,5 @@
 import React from "react";
-import { getTimeFromMins } from "./UTILS";
+import { getTimeFromMins } from "../../../../Libs/TimeUtils";
 import Table from "../../../../Components/Table/Table";
 
 class TasksStatistic extends React.Component {
