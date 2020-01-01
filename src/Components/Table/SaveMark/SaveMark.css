@@ -4,7 +4,7 @@
   background: #ececec;
   position: absolute;
   margin-bottom: 2px;
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
 .saveMark.hidden {
@@ -18,7 +18,7 @@
 
 @-webkit-keyframes seconds {
   0% {
-    opacity: 0.2;
+    opacity: 0.1;
   }
   100% {
     opacity: 0;
@@ -28,7 +28,7 @@
 }
 @keyframes seconds {
   0% {
-    opacity: 0.2;
+    opacity: 0.1;
   }
   100% {
     opacity: 0;
