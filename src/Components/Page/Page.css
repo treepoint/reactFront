@@ -1,6 +1,6 @@
 .page {
   width: calc(100% - 100px);
-  margin: 12px auto;
+  margin: 12px auto 0px auto;
 }
 
 .page.hr {

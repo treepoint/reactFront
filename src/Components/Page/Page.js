@@ -27,7 +27,7 @@ class Page extends React.Component {
         <div className="page hr" />
         <ReactCustomScroll
           //Задаем стиль
-          style={{ width: "100%", height: "calc(100vh - 126px)" }}
+          style={{ width: "100%", height: "calc(-112px + 100vh)" }}
           //Обрабатываем вертикальный скролл
           ref={ref => {
             this._scrollBarRef = ref;

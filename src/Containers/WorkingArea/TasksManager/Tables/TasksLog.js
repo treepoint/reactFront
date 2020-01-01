@@ -56,10 +56,10 @@ class TasksLog extends React.Component {
     tasksLog[0] = [
       {
         key: "id",
-        type: "string",
+        type: "hidden",
         disabled: true,
         value: "ID",
-        style: { width: 30 }
+        style: {}
       },
       {
         key: "task_id",
@@ -101,7 +101,7 @@ class TasksLog extends React.Component {
       let tasks = { list: tasksList, current: tasksLogList.task_id };
 
       tasksLog.push([
-        { key: "id", type: "string", value: tasksLogList.id, style: {} },
+        { key: "id", type: "hidden", value: tasksLogList.id, style: {} },
         {
           key: "task_id",
           type: "select",

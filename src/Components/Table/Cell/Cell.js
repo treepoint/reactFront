@@ -96,7 +96,6 @@ class Cell extends React.Component {
 
   //Обрабатываем изменения контента в ячейке
   onChange(content) {
-    // this.setState({ htmlContent });
     this.props.onChange(content);
   }
 
@@ -184,6 +183,11 @@ class Cell extends React.Component {
   }
 
   render() {
+    //Если тип контента — скрытый, вообще ничего не рисуем
+    if (this.state.typeContent === "hidden") {
+      return null;
+    }
+
     return (
       <Resizable
         className={!!this.props.isHeader ? "th" : "td"}

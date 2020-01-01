@@ -48,12 +48,14 @@ class Table extends React.Component {
           //Текущая, ну или начальная ширина
           width: column.style.width,
           //И прошлая ширина. По умолчанию всегда 0
-          prevWidth: 0
+          prevWidth: 0,
+          type: column.type
         };
       } catch {
         return {
           width: 200,
-          prevWidth: 0
+          prevWidth: 0,
+          type: column.type
         };
       }
     });
@@ -67,9 +69,9 @@ class Table extends React.Component {
   getTableWidth() {
     let tableWidth = 0;
 
-    this.state.colsDescription.forEach(col => {
-      if (typeof col.width === "number") {
-        tableWidth += col.width;
+    this.state.colsDescription.forEach(column => {
+      if (typeof column.width === "number" && column.type !== "hidden") {
+        tableWidth += column.width;
       }
     });
 
@@ -142,6 +144,9 @@ class Table extends React.Component {
 
     rowContent.forEach(item => {
       switch (item.type) {
+        case "hidden":
+          object[item.key] = item.value;
+          break;
         case "time":
           object[item.key] = item.value;
           break;

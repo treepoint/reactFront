@@ -73,10 +73,10 @@ class Categories extends React.Component {
     categories[0] = [
       {
         key: "id",
-        type: "string",
+        type: "hidden",
         disabled: true,
         value: "ID",
-        style: { width: 30 }
+        style: {}
       },
       {
         key: "name",
@@ -98,7 +98,7 @@ class Categories extends React.Component {
       categories.push([
         {
           key: "id",
-          type: "string",
+          type: "hidden",
           disabled: true,
           value: category.id,
           style: {}

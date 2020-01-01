@@ -83,10 +83,10 @@ class TaskStatuses extends React.Component {
       [
         {
           key: "id",
-          type: "string",
+          type: "hidden",
           disabled: true,
           value: "ID",
-          style: { width: 30 }
+          style: {}
         },
         {
           key: "name",
@@ -122,7 +122,7 @@ class TaskStatuses extends React.Component {
       taskStatusesList.push([
         {
           key: "id",
-          type: "string",
+          type: "hidden",
           disabled: true,
           value: taskStatus.id,
           style: {}

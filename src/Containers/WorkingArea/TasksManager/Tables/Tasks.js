@@ -60,10 +60,10 @@ class Tasks extends React.Component {
     tasks[0] = [
       {
         key: "id",
-        type: "string",
+        type: "hidden",
         disabled: true,
         value: "ID",
-        style: { width: 30 }
+        style: {}
       },
       {
         key: "name",
@@ -122,7 +122,7 @@ class Tasks extends React.Component {
       tasks.push([
         {
           key: "id",
-          type: "string",
+          type: "hidden",
           disabled: true,
           value: task.id,
           style: {}
