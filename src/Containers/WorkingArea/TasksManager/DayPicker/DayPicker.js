@@ -24,11 +24,13 @@ class DayPicker extends React.Component {
     this.getDaysMenu();
   }
 
+  //Обрабатываем нажатие с кнопок
   onClick(event) {
     this.setState({ chosenDay: getFormatDate(event.target.name) });
     this.props.onChange(getFormatDate(event.target.name));
   }
 
+  //Обрабатываем выбор в Date Picker
   onPickDate(date) {
     this.setState({ chosenDay: getFormatDate(date) });
     this.props.onChange(getFormatDate(date));
@@ -39,9 +41,14 @@ class DayPicker extends React.Component {
     let daysMenu = [];
     let isPrimary = false;
 
+    /* Если день до среды — показываем текущую неделю и прошлую.
+     * Поскольку, вероятно, нас больше интересуют старые данные, а не новая неделя.
+     * Если же наступила среда — показываем текущую неделю + следующую.
+     */
+
+    let currentDate = new Date().getDay();
     let from;
     let to;
-    let currentDate = new Date().getDay();
 
     if (currentDate <= 2) {
       from = -5 + currentDate;
@@ -57,12 +64,14 @@ class DayPicker extends React.Component {
       date = new Date();
       date = new Date(date.setDate(date.getDate() - from));
 
+      //Субботу и воскресенье сделаем серыми, чтобы разграничивать недели
       if (date.getDay() === 6 || date.getDay() === 0) {
         background = "rgb(234, 234, 234)";
       } else {
         background = "#fff";
       }
 
+      //Выделим выбранный день
       if (this.state.chosenDay === getFormatDate(date)) {
         isPrimary = true;
       } else {
