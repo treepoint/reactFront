@@ -10,7 +10,7 @@ import {
   getTimeExecutionForAllCategoriesByDate
 } from "../../../APIController/APIController";
 
-import { getCurrentDate } from "../../../Libs/TimeUtils";
+import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
 import "./TasksManager.css";
 
 /* В общем, у нас здесь какая идея. Есть N таблиц, связанных между собой.
@@ -32,7 +32,7 @@ class TasksManager extends React.Component {
       tasksLogList: [],
       categoriesList: [],
       taskStatusesList: [],
-      date: getCurrentDate()
+      date: getCurrentFormatDate()
     };
   }
 

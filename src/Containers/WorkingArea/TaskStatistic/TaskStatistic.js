@@ -2,7 +2,12 @@ import React from "react";
 import Table from "../../../Components/Table/Table";
 import { getTaskStatisticByPeriod } from "../../../APIController/APIController";
 import DatePicker from "../../../Components/DatePicker/DatePicker";
-import { revokeDays, addDays, getFormatDate } from "../../../Libs/TimeUtils";
+import {
+  revokeDays,
+  addDays,
+  getRussianFormatDate,
+  getTimeFromMins
+} from "../../../Libs/TimeUtils";
 import "./TaskStatistic.css";
 
 class TaskStatistic extends React.Component {
@@ -12,16 +17,18 @@ class TaskStatistic extends React.Component {
   }
 
   componentDidMount() {
+    //Получим текущую дату
     let currentDate = new Date();
-    let dateFrom = getFormatDate(
-      revokeDays(currentDate, currentDate.getDay() - 1)
-    );
+    //Получим начало недели — понедельник
+    let dateFrom = revokeDays(currentDate, currentDate.getDay() - 1);
+    //Получим конец недели — воскресенье
+    let dateTo = addDays(currentDate, 7 - currentDate.getDay());
 
-    let dateTo = getFormatDate(addDays(currentDate, 7 - currentDate.getDay()));
-
+    //Запишем в стейт
     this.setState({ dateFrom, dateTo });
 
-    getTaskStatisticByPeriod(dateFrom, dateTo);
+    //Подтянем статистику за нужный период
+    this.getTaskStatisticByPeriod(dateFrom, dateTo);
   }
 
   getTaskStatisticByPeriod(dateFrom, dateTo, callback) {
@@ -36,6 +43,18 @@ class TaskStatistic extends React.Component {
         }
       }
     });
+  }
+
+  onPickFromDate(dateFrom) {
+    this.setState({ dateFrom });
+    //Подтянем статистику за нужный период
+    this.getTaskStatisticByPeriod(dateFrom, this.state.dateTo);
+  }
+
+  onPickToDate(dateTo) {
+    this.setState({ dateTo });
+    //Подтянем статистику за нужный период
+    this.getTaskStatisticByPeriod(this.state.dateFrom, dateTo);
   }
 
   getContent() {
@@ -58,44 +77,24 @@ class TaskStatistic extends React.Component {
       ]
     ];
 
-    /* this.state.taskStatusesList.forEach(taskStatus => {
-      //Соберем список типов статусов
-      let taskStatusesTypesList = this.state.taskStatusesTypesList.map(
-        taskStatusType => {
-          return { value: taskStatusType.id, children: taskStatusType.name };
-        }
-      );
-
-      //добавим текущую
-      let taskStatusesTypes = {
-        list: taskStatusesTypesList,
-        current: taskStatus.type_id
-      };
-
-      taskStatusesList.push([
-        {
-          key: "id",
-          type: "hidden",
-          disabled: true,
-          value: taskStatus.id,
-          style: {}
-        },
+    this.state.taskStatisticList.forEach(taskStatistic => {
+      taskStatisticList.push([
         {
           key: "name",
           type: "string",
           disabled: false,
-          value: taskStatus.name,
+          value: taskStatistic.name,
           style: {}
         },
         {
           key: "type_id",
-          type: "select",
+          type: "time",
           disabled: false,
-          value: taskStatusesTypes,
+          value: getTimeFromMins(taskStatistic.execution_time),
           style: {}
         }
       ]);
-    }); */
+    });
 
     return taskStatisticList;
   }
@@ -105,20 +104,27 @@ class TaskStatistic extends React.Component {
       <React.Fragment>
         <div className="datePickersContainer">
           <DatePicker
-            placeholderText="Дата начала"
-            width="144"
-            chosenDate={this.state.dateFrom}
+            placeholderText={getRussianFormatDate(this.state.dateFrom)}
+            width="90"
+            date={this.state.dateFrom}
+            onChange={dateFrom => this.onPickFromDate(dateFrom)}
           />
           <DatePicker
-            placeholderText="Дата завершения"
-            width="144"
-            chosenDate={this.state.dateTo}
+            placeholderText={getRussianFormatDate(this.state.dateTo)}
+            width="90"
+            date={this.state.dateTo}
+            onChange={dateTo => this.onPickToDate(dateTo)}
           />
         </div>
         <Table
           isResizeble={false}
           isEditable={false}
-          update={() => this.getAllTaskStatuses()}
+          update={() =>
+            this.getTaskStatisticByPeriod(
+              this.state.dateFrom,
+              this.state.dateTo
+            )
+          }
         >
           {this.getContent()}
         </Table>

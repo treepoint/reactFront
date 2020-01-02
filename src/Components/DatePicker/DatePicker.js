@@ -1,6 +1,4 @@
 import React from "react";
-import { getFormatDate } from "../../Libs/TimeUtils";
-
 import "./DatePicker.css";
 
 import DP from "react-datepicker";
@@ -12,11 +10,15 @@ registerLocale("ru", ru);
 class DatePicker extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { chosenDate: null };
+    this.state = { date: null };
+  }
+
+  componentDidMount() {
+    this.setState({ date: this.props.date });
   }
 
   onChange(date) {
-    this.setState({ chosenDate: date });
+    this.setState({ date });
     this.props.onChange(date);
   }
 
@@ -24,9 +26,9 @@ class DatePicker extends React.Component {
     let className = "datePicker";
     let selected = null;
 
-    if (this.props.chosenDay === getFormatDate(this.state.chosenDate)) {
+    if (this.props.date === this.state.date) {
       className = "datePicker chosen";
-      selected = this.state.chosenDate;
+      selected = this.state.date;
     }
 
     return (

@@ -7,7 +7,7 @@ import {
 } from "../../../../APIController/APIController";
 import { getTimeFromMins } from "../../../../Libs/TimeUtils";
 
-import { getCurrentDate } from "../../../../Libs/TimeUtils";
+import { getCurrentFormatDate } from "../../../../Libs/TimeUtils";
 
 class Tasks extends React.Component {
   //Сохраним изменяемую строку в ДБ
@@ -29,7 +29,7 @@ class Tasks extends React.Component {
       status_id: this.props.taskStatusesList[0].id,
       name: "",
       description: "<br>",
-      create_date: getCurrentDate()
+      create_date: getCurrentFormatDate()
     };
 
     let promise = createTask(task);

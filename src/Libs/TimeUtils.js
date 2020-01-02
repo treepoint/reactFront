@@ -22,7 +22,7 @@ export function getTimeFromMins(mins) {
   }
 }
 
-export function getCurrentDate() {
+export function getCurrentFormatDate() {
   let date = new Date();
 
   return getFormatDate(date);
@@ -37,6 +37,15 @@ export function getFormatDate(date) {
   return yyyy + "-" + mm + "-" + dd;
 }
 
+export function getRussianFormatDate(date) {
+  var russianFormatDate = new Date(date);
+  var dd = String(russianFormatDate.getDate()).padStart(2, "0");
+  var mm = String(russianFormatDate.getMonth() + 1).padStart(2, "0");
+  var yyyy = russianFormatDate.getFullYear();
+
+  return dd + "." + mm + "." + yyyy;
+}
+
 export function getCurrentTimeFormat() {
   //Получим сегодняшную дату
   var date = new Date();
@@ -45,7 +54,7 @@ export function getCurrentTimeFormat() {
 }
 
 export function getCurrentDateWithTime() {
-  return getCurrentDate() + " " + getCurrentTimeFormat();
+  return getCurrentFormatDate() + " " + getCurrentTimeFormat();
 }
 
 export function getCurrentDayName() {

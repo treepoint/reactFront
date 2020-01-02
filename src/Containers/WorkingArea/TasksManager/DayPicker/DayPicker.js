@@ -2,7 +2,6 @@ import React from "react";
 import Button from "../../../../Components/Button/Button";
 import DatePicker from "../../../../Components/DatePicker/DatePicker";
 import {
-  getCurrentDate,
   getShortDayNameByID,
   getDDbyDate,
   getMMbyDate,
@@ -14,11 +13,13 @@ import "./DayPicker.css";
 class DayPicker extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { chosenDay: getCurrentDate() };
+    this.state = { date: null };
   }
 
   componentDidMount() {
-    this.getDaysMenu();
+    let date = new Date();
+
+    this.setState({ date }, () => this.getDaysMenu());
   }
 
   componentDidUpdate() {
@@ -27,13 +28,13 @@ class DayPicker extends React.Component {
 
   //Обрабатываем нажатие с кнопок
   onClick(event) {
-    this.setState({ chosenDay: getFormatDate(event.target.name) });
+    this.setState({ date: event.target.name });
     this.props.onChange(getFormatDate(event.target.name));
   }
 
   //Обрабатываем выбор в Date Picker
   onPickDate(date) {
-    this.setState({ chosenDay: getFormatDate(date) });
+    this.setState({ date: date });
     this.props.onChange(getFormatDate(date));
   }
 
@@ -73,7 +74,7 @@ class DayPicker extends React.Component {
       }
 
       //Выделим выбранный день
-      if (this.state.chosenDay === getFormatDate(date)) {
+      if (getFormatDate(this.state.date) === getFormatDate(date)) {
         isPrimary = true;
       } else {
         isPrimary = false;
@@ -110,7 +111,7 @@ class DayPicker extends React.Component {
     daysMenu.unshift(
       <DatePicker
         onChange={date => this.onPickDate(date)}
-        chosenDay={this.state.chosenDay}
+        date={this.state.date}
         placeholderText="Указать дату"
         width="106"
       />

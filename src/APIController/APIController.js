@@ -4,6 +4,7 @@
 import { read_cookie } from "../Libs/Sfcookies";
 import Axios from "axios";
 import { APIURL } from "./Settings";
+import { getFormatDate } from "../Libs/TimeUtils";
 
 /*
  * Токены
@@ -610,7 +611,12 @@ export function getTaskStatisticByPeriod(from, to) {
     return;
   }
 
-  let url = APIURL + "/tasks/statistic/period/" + from + "/" + to;
+  let url =
+    APIURL +
+    "/tasks/statistic/period/" +
+    getFormatDate(from) +
+    "/" +
+    getFormatDate(to);
 
   return Axios.get(url, headers).then(response => {
     return response.data;
