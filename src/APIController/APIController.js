@@ -597,3 +597,22 @@ export function getAllTaskStatusesTypes() {
     return response.data;
   });
 }
+
+/*
+ * Статистика
+ */
+
+//Получить статистику по задачам за период
+export function getTaskStatisticByPeriod(from, to) {
+  let headers = getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let url = APIURL + "/tasks/statistic/period/" + from + "/" + to;
+
+  return Axios.get(url, headers).then(response => {
+    return response.data;
+  });
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import { getFormatDate } from "../../../../../Libs/TimeUtils";
+import { getFormatDate } from "../../Libs/TimeUtils";
 
 import "./DatePicker.css";
 
@@ -30,14 +30,16 @@ class DatePicker extends React.Component {
     }
 
     return (
-      <DP
-        locale="ru"
-        className={className}
-        placeholderText="Указать дату"
-        selected={selected}
-        onChange={date => this.onChange(date)}
-        dateFormat="dd.MM.yyyy"
-      />
+      <div style={{ width: this.props.width + "px", marginRight: "27px" }}>
+        <DP
+          locale="ru"
+          className={className}
+          placeholderText={this.props.placeholderText}
+          selected={selected}
+          onChange={date => this.onChange(date)}
+          dateFormat="dd.MM.yyyy"
+        />
+      </div>
     );
   }
 }

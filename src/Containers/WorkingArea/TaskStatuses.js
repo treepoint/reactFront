@@ -148,11 +148,9 @@ class TaskStatuses extends React.Component {
   }
 
   render() {
-    console.log(this.getContent());
     return (
       <Table
         isResizeble={true}
-        isSingleLineMode={true}
         addRow={(row, callback) => this.addRowToDataBase(row, callback)}
         saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
         deleteRow={row => this.deleteRowFromDataBase(row)}

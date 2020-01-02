@@ -82,3 +82,15 @@ export function getDDbyDate(date) {
 export function getMMbyDate(date) {
   return String(date.getMonth() + 1).padStart(2, "0");
 }
+
+export function revokeDays(date, count) {
+  let offsetDate = new Date(date);
+
+  return offsetDate.setDate(offsetDate.getDate() - count);
+}
+
+export function addDays(date, count) {
+  let offsetDate = new Date(date);
+
+  return offsetDate.setDate(offsetDate.getDate() + count);
+}

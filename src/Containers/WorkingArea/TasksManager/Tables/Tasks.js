@@ -69,7 +69,7 @@ class Tasks extends React.Component {
         key: "name",
         type: "string",
         disabled: true,
-        value: "Название",
+        value: "Задача",
         style: { width: 336 }
       },
       {

@@ -1,12 +1,13 @@
 import React from "react";
 import Button from "../../../../Components/Button/Button";
-import DatePicker from "./DatePicker/DatePicker";
+import DatePicker from "../../../../Components/DatePicker/DatePicker";
 import {
   getCurrentDate,
   getShortDayNameByID,
   getDDbyDate,
   getMMbyDate,
-  getFormatDate
+  getFormatDate,
+  revokeDays
 } from "../../../../Libs/TimeUtils";
 import "./DayPicker.css";
 
@@ -46,23 +47,23 @@ class DayPicker extends React.Component {
      * Если же наступила среда — показываем текущую неделю + следующую.
      */
 
-    let currentDate = new Date().getDay();
+    let currentDay = new Date().getDay();
     let from;
     let to;
 
-    if (currentDate <= 2) {
-      from = -5 + currentDate;
-      to = 7 + currentDate;
+    if (currentDay > 2) {
+      from = -(12 - currentDay);
+      to = 12 + from;
     } else {
-      from = -6 - currentDate;
-      to = 6 - currentDate;
+      from = -(6 - currentDay);
+      to = 6 + currentDay;
     }
 
     let background = "#fff";
 
     while (from < to) {
       date = new Date();
-      date = new Date(date.setDate(date.getDate() - from));
+      date = new Date(revokeDays(date, from));
 
       //Субботу и воскресенье сделаем серыми, чтобы разграничивать недели
       if (date.getDay() === 6 || date.getDay() === 0) {
@@ -110,6 +111,8 @@ class DayPicker extends React.Component {
       <DatePicker
         onChange={date => this.onPickDate(date)}
         chosenDay={this.state.chosenDay}
+        placeholderText="Указать дату"
+        width="106"
       />
     );
 

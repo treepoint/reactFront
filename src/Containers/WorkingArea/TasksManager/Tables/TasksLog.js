@@ -65,7 +65,7 @@ class TasksLog extends React.Component {
         key: "task_id",
         type: "string",
         disabled: true,
-        value: "Название задачи",
+        value: "Задача",
         style: { width: 336 }
       },
       {
