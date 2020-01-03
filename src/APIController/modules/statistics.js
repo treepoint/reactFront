@@ -9,7 +9,7 @@ const tokens = require("./tokens.js");
  */
 
 //Получить время исполнения по всем категориям
-export function getTimeExecutionForAllCategories() {
+export function getTimeExecutionForAllCategories(callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
@@ -18,13 +18,17 @@ export function getTimeExecutionForAllCategories() {
 
   let url = APIURL + "/categories/time_execution/all";
 
-  return Axios.get(url, headers).then(response => {
-    return response.data;
+  Axios.get(url, headers).then(response => {
+    let result = response.data;
+
+    if (Array.isArray(result)) {
+      callback(result);
+    }
   });
 }
 
 //Получить время исполнения по всем категориям за определенный день
-export function getTimeExecutionForAllCategoriesByDate(date) {
+export function getTimeExecutionForAllCategoriesByDate(date, callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
@@ -33,8 +37,12 @@ export function getTimeExecutionForAllCategoriesByDate(date) {
 
   let url = APIURL + "/categories/time_execution/date/" + date;
 
-  return Axios.get(url, headers).then(response => {
-    return response.data;
+  Axios.get(url, headers).then(response => {
+    let result = response.data;
+
+    if (Array.isArray(result)) {
+      callback(result);
+    }
   });
 }
 
@@ -43,7 +51,7 @@ export function getTimeExecutionForAllCategoriesByDate(date) {
  */
 
 //Получить статистику по задачам за период
-export function getTaskStatisticByPeriod(from, to) {
+export function getTaskStatisticByPeriod(dateFrom, dateTo, callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
@@ -53,11 +61,15 @@ export function getTaskStatisticByPeriod(from, to) {
   let url =
     APIURL +
     "/tasks/statistic/period/" +
-    getFormatDate(from) +
+    getFormatDate(dateFrom) +
     "/" +
-    getFormatDate(to);
+    getFormatDate(dateTo);
 
-  return Axios.get(url, headers).then(response => {
-    return response.data;
+  Axios.get(url, headers).then(response => {
+    let result = response.data;
+
+    if (Array.isArray(result)) {
+      callback(result);
+    }
   });
 }

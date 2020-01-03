@@ -194,13 +194,13 @@ export function getAllTaskStatusesTypes(callback) {
  */
 
 //Получаем время исполнения по всем категориям
-export function getTimeExecutionForAllCategories() {
-  return statistics.getTimeExecutionForAllCategories();
+export function getTimeExecutionForAllCategories(callback) {
+  return statistics.getTimeExecutionForAllCategories(callback);
 }
 
 //Получаем время исполнения по всем категориям за определенный день
-export function getTimeExecutionForAllCategoriesByDate(date) {
-  return statistics.getTimeExecutionForAllCategoriesByDate(date);
+export function getTimeExecutionForAllCategoriesByDate(date, callback) {
+  return statistics.getTimeExecutionForAllCategoriesByDate(date, callback);
 }
 
 /*
@@ -208,6 +208,6 @@ export function getTimeExecutionForAllCategoriesByDate(date) {
  */
 
 //Получить статистику по задачам за период
-export function getTaskStatisticByPeriod(from, to) {
-  return statistics.getTaskStatisticByPeriod(from, to);
+export function getTaskStatisticByPeriod(dateFrom, dateTo, callback) {
+  return statistics.getTaskStatisticByPeriod(dateFrom, dateTo, callback);
 }
