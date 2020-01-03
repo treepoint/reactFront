@@ -5,50 +5,37 @@ const tokens = require("./tokens.js");
 const URL = APIURL + "/task_statuses";
 
 //Получить статус как объект по ID
-export function getTaskStatusByID(ID) {
+export function getTaskStatusByID(ID, callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.get(URL + "/" + ID, headers).then(response => {
-    return response.data[0];
+  Axios.get(URL + "/" + ID, headers).then(response => {
+    callback(response.data[0]);
   });
 }
 
 //Получить все статусы
-export function getAllTaskStatuses() {
+export function getAllTaskStatuses(callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.get(URL, headers).then(response => {
-    return response.data;
-  });
-}
+  Axios.get(URL, headers).then(response => {
+    let result = response.data;
 
-//Обновить статус по ID
-export function updateStatus(ID, status) {
-  if (typeof status !== "object") {
-    return false;
-  }
-
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  return Axios.put(URL + "/" + ID, status, headers).then(response => {
-    return response.data;
+    if (Array.isArray(result)) {
+      callback(result);
+    }
   });
 }
 
 //Создать статус
-export function createStatus(status) {
+export function createStatus(status, callback) {
   if (typeof status !== "object") {
     return false;
   }
@@ -61,26 +48,53 @@ export function createStatus(status) {
 
   return Axios.post(URL, status, headers)
     .then(response => {
-      return response.data;
+      if (typeof response.data.insertId === "number") {
+        callback(true);
+      }
     })
     .catch(error => {
-      return error;
+      callback(false);
     });
 }
 
-//Удалить статус
-export function deleteStatus(ID) {
+//Обновить статус по ID
+export function updateStatus(ID, status, callback) {
+  if (typeof status !== "object") {
+    return false;
+  }
+
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.delete(URL + "/" + ID, headers)
+  Axios.put(URL + "/" + ID, status, headers)
     .then(response => {
-      return response.data;
+      if (typeof response.data.affectedRows === "number") {
+        callback(true);
+      }
     })
     .catch(error => {
-      return error;
+      callback(false);
+    });
+}
+
+//Удалить статус
+export function deleteStatus(ID, callback) {
+  let headers = tokens.getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  Axios.delete(URL + "/" + ID, headers)
+    .then(response => {
+      if (typeof response.data.affectedRows === "number") {
+        callback(true);
+      }
+    })
+    .catch(error => {
+      callback(false);
     });
 }

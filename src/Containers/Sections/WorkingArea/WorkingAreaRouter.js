@@ -9,14 +9,6 @@ import TasksManager from "./TasksManager/TasksManager";
 import TaskStatistic from "./TaskStatistic/TaskStatistic";
 
 class WorkingAreaRouter extends React.Component {
-  constructor(props) {
-    super(props);
-    //Список пользователей
-    this.state = { usersList: [] };
-    //Список категорий
-    this.state = { categoriesList: [] };
-  }
-
   render() {
     //Соберем меню страницы
     let menuLinksArray = [

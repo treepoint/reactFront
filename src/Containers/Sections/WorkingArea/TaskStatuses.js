@@ -19,49 +19,30 @@ class TaskStatuses extends React.Component {
     this.getAllTaskStatusesTypes();
   }
 
-  getAllTaskStatusesTypes(callback) {
-    let promise = getAllTaskStatusesTypes();
-
-    promise.then(result => {
-      if (Array.isArray(result)) {
-        if (typeof callback === "function") {
-          this.setState({ taskStatusesTypesList: result }, () => callback());
-        } else {
-          this.setState({ taskStatusesTypesList: result });
-        }
-      }
+  //Получаем все типы статусов
+  getAllTaskStatusesTypes() {
+    getAllTaskStatusesTypes(result => {
+      this.setState({ taskStatusesTypesList: result });
     });
   }
 
+  //Получаем все статусы
   getAllTaskStatuses(callback) {
-    let promise = getAllTaskStatuses();
-
-    promise.then(result => {
-      if (Array.isArray(result)) {
-        if (typeof callback === "function") {
-          this.setState({ taskStatusesList: result }, () => callback());
-        } else {
-          this.setState({ taskStatusesList: result });
-        }
+    getAllTaskStatuses(result => {
+      if (typeof callback === "function") {
+        this.setState({ taskStatusesList: result }, () => callback());
+      } else {
+        this.setState({ taskStatusesList: result });
       }
     });
   }
 
+  //Добавим новую строку
   addRowToDataBase() {
-    let promise = createStatus({ name: "", type_id: 1 });
+    let status = { name: "", type_id: 1 };
 
-    promise.then(result => {
-      if (typeof result.insertId === "number") {
-        this.getAllTaskStatuses();
-      }
-    });
-  }
-
-  deleteRowFromDataBase(taskStatus) {
-    let promise = deleteStatus(taskStatus.id);
-
-    promise.then(result => {
-      if (result === "{success}") {
+    createStatus(status, ok => {
+      if (ok) {
         this.getAllTaskStatuses();
       }
     });
@@ -69,15 +50,23 @@ class TaskStatuses extends React.Component {
 
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(taskStatus, callback) {
-    let promise = updateStatus(taskStatus.id, taskStatus);
-
-    promise.then(result => {
-      if (typeof result.affectedRows === "number") {
+    updateStatus(taskStatus.id, taskStatus, ok => {
+      if (ok) {
         this.getAllTaskStatuses(callback);
       }
     });
   }
 
+  //Удалим строку
+  deleteRowFromDataBase(taskStatus) {
+    deleteStatus(taskStatus.id, ok => {
+      if (ok) {
+        this.getAllTaskStatuses();
+      }
+    });
+  }
+
+  //Получим контент для таблицы
   getContent() {
     let taskStatusesList = [
       [
@@ -151,7 +140,7 @@ class TaskStatuses extends React.Component {
     return (
       <Table
         isResizeble={true}
-        addRow={(row, callback) => this.addRowToDataBase(row, callback)}
+        addRow={row => this.addRowToDataBase(row)}
         saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
         deleteRow={row => this.deleteRowFromDataBase(row)}
         update={() => this.getAllTaskStatuses()}

@@ -157,36 +157,36 @@ export function deleteTaskLog(ID) {
  */
 
 //Получить статус как объект по ID
-export function getTaskStatusByID(ID) {
-  return tasksStatuses.getTaskStatusByID(ID);
+export function getTaskStatusByID(ID, callback) {
+  return tasksStatuses.getTaskStatusByID(ID, callback);
 }
 
 //Получить все статусы
-export function getAllTaskStatuses() {
-  return tasksStatuses.getAllTaskStatuses();
+export function getAllTaskStatuses(callback) {
+  return tasksStatuses.getAllTaskStatuses(callback);
 }
 
 //Обновить статус по ID
-export function updateStatus(ID, status) {
-  return tasksStatuses.updateStatus(ID, status);
+export function updateStatus(ID, status, callback) {
+  return tasksStatuses.updateStatus(ID, status, callback);
 }
 
 //Создать статус
-export function createStatus(status) {
-  return tasksStatuses.createStatus(status);
+export function createStatus(status, callback) {
+  return tasksStatuses.createStatus(status, callback);
 }
 
 //Удалить статус
-export function deleteStatus(ID) {
-  return tasksStatuses.deleteStatus(ID);
+export function deleteStatus(ID, callback) {
+  return tasksStatuses.deleteStatus(ID, callback);
 }
 
 /*
  * Типы статусов задач
  */
 
-export function getAllTaskStatusesTypes() {
-  return tasksStatusesTypes.getAllTaskStatusesTypes();
+export function getAllTaskStatusesTypes(callback) {
+  return tasksStatusesTypes.getAllTaskStatusesTypes(callback);
 }
 
 /*
