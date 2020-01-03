@@ -115,7 +115,7 @@ export function getUserTasks() {
 
 //Получить все задачи пользователя за дату
 export function getUserTasksByDate(date) {
-  return tasks.getUserTasks(date);
+  return tasks.getUserTasksByDate(date);
 }
 
 //Удалить задачу
