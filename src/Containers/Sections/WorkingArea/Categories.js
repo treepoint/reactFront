@@ -1,11 +1,11 @@
 import React from "react";
-import Table from "../../Components/Table/Table";
+import Table from "../../../Components/Table/Table";
 import {
   getUserCategories,
   updateCategory,
   createCategory,
   deleteCategory
-} from "../../APIController/APIController";
+} from "../../../APIController/APIController";
 
 class Categories extends React.Component {
   constructor(props) {

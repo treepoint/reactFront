@@ -1,13 +1,13 @@
 import React from "react";
-import Table from "../../../Components/Table/Table";
-import { getTaskStatisticByPeriod } from "../../../APIController/APIController";
-import DatePicker from "../../../Components/DatePicker/DatePicker";
+import Table from "../../../../Components/Table/Table";
+import { getTaskStatisticByPeriod } from "../../../../APIController/APIController";
+import DatePicker from "../../../../Components/DatePicker/DatePicker";
 import {
   revokeDays,
   addDays,
   getRussianFormatDate,
   getTimeFromMins
-} from "../../../Libs/TimeUtils";
+} from "../../../../Libs/TimeUtils";
 import "./TaskStatistic.css";
 
 class TaskStatistic extends React.Component {

@@ -1,12 +1,12 @@
 import React from "react";
-import Table from "../../Components/Table/Table";
+import Table from "../../../Components/Table/Table";
 import {
   getAllTaskStatuses,
   updateStatus,
   createStatus,
   deleteStatus,
   getAllTaskStatusesTypes
-} from "../../APIController/APIController";
+} from "../../../APIController/APIController";
 
 class TaskStatuses extends React.Component {
   constructor(props) {

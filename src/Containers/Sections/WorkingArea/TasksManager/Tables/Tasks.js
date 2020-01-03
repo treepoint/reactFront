@@ -1,13 +1,14 @@
 import React from "react";
-import Table from "../../../../Components/Table/Table";
+import Table from "../../../../../Components/Table/Table";
 import {
   updateTask,
   createTask,
   deleteTask
-} from "../../../../APIController/APIController";
-import { getTimeFromMins } from "../../../../Libs/TimeUtils";
-
-import { getCurrentFormatDate } from "../../../../Libs/TimeUtils";
+} from "../../../../../APIController/APIController";
+import {
+  getTimeFromMins,
+  getCurrentFormatDate
+} from "../../../../../Libs/TimeUtils";
 
 class Tasks extends React.Component {
   //Сохраним изменяемую строку в ДБ

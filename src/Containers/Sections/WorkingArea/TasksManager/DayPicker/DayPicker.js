@@ -1,13 +1,13 @@
 import React from "react";
-import Button from "../../../../Components/Button/Button";
-import DatePicker from "../../../../Components/DatePicker/DatePicker";
+import Button from "../../../../../Components/Button/Button";
+import DatePicker from "../../../../../Components/DatePicker/DatePicker";
 import {
   getShortDayNameByID,
   getDDbyDate,
   getMMbyDate,
   getFormatDate,
   revokeDays
-} from "../../../../Libs/TimeUtils";
+} from "../../../../../Libs/TimeUtils";
 import "./DayPicker.css";
 
 class DayPicker extends React.Component {

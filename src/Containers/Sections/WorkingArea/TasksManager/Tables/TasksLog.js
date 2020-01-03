@@ -1,14 +1,14 @@
 import React from "react";
-import Table from "../../../../Components/Table/Table";
+import Table from "../../../../../Components/Table/Table";
 import {
   getTimeFromMins,
   getCurrentTimeFormat
-} from "../../../../Libs/TimeUtils";
+} from "../../../../../Libs/TimeUtils";
 import {
   updateTaskLog,
   createTaskLog,
   deleteTaskLog
-} from "../../../../APIController/APIController";
+} from "../../../../../APIController/APIController";
 
 class TasksLog extends React.Component {
   //Добавим лог по задаче в ДБ

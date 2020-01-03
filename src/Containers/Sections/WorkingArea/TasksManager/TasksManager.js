@@ -8,9 +8,9 @@ import {
   getAllTaskStatuses,
   getUserCategories,
   getTimeExecutionForAllCategoriesByDate
-} from "../../../APIController/APIController";
+} from "../../../../APIController/APIController";
 
-import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
+import { getCurrentFormatDate } from "../../../../Libs/TimeUtils";
 import "./TasksManager.css";
 
 /* В общем, у нас здесь какая идея. Есть N таблиц, связанных между собой.
