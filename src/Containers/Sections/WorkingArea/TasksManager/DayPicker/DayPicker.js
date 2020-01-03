@@ -83,6 +83,7 @@ class DayPicker extends React.Component {
       //Добавим кнопки с датами
       daysMenu.unshift(
         <Button
+          key={from}
           name={date}
           style={{
             width: "84px",
