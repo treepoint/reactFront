@@ -17,40 +17,26 @@ class Categories extends React.Component {
     this.getUserCategories();
   }
 
+  //Получим все категории пользователя
   getUserCategories(callback) {
-    let promise = getUserCategories();
-
-    promise.then(result => {
-      if (Array.isArray(result)) {
-        if (typeof callback === "function") {
-          this.setState({ categoriesList: result }, () => callback());
-        } else {
-          this.setState({ categoriesList: result });
-        }
+    getUserCategories(result => {
+      if (typeof callback === "function") {
+        this.setState({ categoriesList: result }, () => callback());
+      } else {
+        this.setState({ categoriesList: result });
       }
     });
   }
 
-  //Добавим лог по задаче в ДБ
+  //Добавим категорию
   addCategoryToDataBase() {
-    let promise = createCategory({
+    let category = {
       name: "",
       description: ""
-    });
+    };
 
-    promise.then(result => {
-      if (typeof result.affectedRows === "number") {
-        this.getUserCategories();
-      }
-    });
-  }
-
-  //Удалим лог по задаче из ДБ
-  deleteCategoryFromDataBase(category) {
-    let promise = deleteCategory(category.id);
-
-    promise.then(result => {
-      if (result === "{success}") {
+    createCategory(category, ok => {
+      if (ok) {
         this.getUserCategories();
       }
     });
@@ -58,44 +44,52 @@ class Categories extends React.Component {
 
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(category, callback) {
-    let promise = updateCategory(category.id, category);
-
-    promise.then(result => {
-      if (typeof result.affectedRows === "number") {
+    updateCategory(category, ok => {
+      if (ok) {
         this.getUserCategories(callback);
       }
     });
   }
 
-  render() {
-    //Соберем таблицу для отображения
-    let categories = [];
-    categories[0] = [
-      {
-        key: "id",
-        type: "hidden",
-        disabled: true,
-        value: "ID",
-        style: {}
-      },
-      {
-        key: "name",
-        type: "string",
-        disabled: true,
-        value: "Название",
-        style: { width: 220 }
-      },
-      {
-        key: "description",
-        type: "string",
-        value: "Описание",
-        disabled: true,
-        style: { width: 400 }
+  //Удалим категорию
+  deleteCategoryFromDataBase(category) {
+    deleteCategory(category.id, ok => {
+      if (ok) {
+        this.getUserCategories();
       }
+    });
+  }
+
+  //Соберем таблицу для отображения
+  getContent() {
+    let content = [
+      [
+        {
+          key: "id",
+          type: "hidden",
+          disabled: true,
+          value: "ID",
+          style: {}
+        },
+        {
+          key: "name",
+          type: "string",
+          disabled: true,
+          value: "Название",
+          style: { width: 220 }
+        },
+        {
+          key: "description",
+          type: "string",
+          value: "Описание",
+          disabled: true,
+          style: { width: 400 }
+        }
+      ]
     ];
 
     this.state.categoriesList.forEach(category => {
-      categories.push([
+      content.push([
         {
           key: "id",
           type: "hidden",
@@ -120,6 +114,10 @@ class Categories extends React.Component {
       ]);
     });
 
+    return content;
+  }
+
+  render() {
     return (
       <Table
         isEditable={true}
@@ -130,7 +128,7 @@ class Categories extends React.Component {
         deleteRow={row => this.deleteCategoryFromDataBase(row)}
         update={() => this.getUserCategories()}
       >
-        {categories}
+        {this.getContent()}
       </Table>
     );
   }

@@ -58,18 +58,19 @@ export function createStatus(status, callback) {
 }
 
 //Обновить статус по ID
-export function updateStatus(ID, status, callback) {
+export function updateStatus(status, callback) {
   if (typeof status !== "object") {
     return false;
   }
 
+  let id = status.id;
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  Axios.put(URL + "/" + ID, status, headers)
+  Axios.put(URL + "/" + id, status, headers)
     .then(response => {
       if (typeof response.data.affectedRows === "number") {
         callback(true);

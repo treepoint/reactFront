@@ -51,8 +51,10 @@ class TasksManager extends React.Component {
     this.getRowData(getUserTasksByDate, "tasksList", callback, date);
   }
 
-  getUserCategories(callback) {
-    this.getRowData(getUserCategories, "categoriesList", callback);
+  getUserCategories() {
+    getUserCategories(result => {
+      this.setState({ categoriesList: result });
+    });
   }
 
   getAllTaskStatuses() {

@@ -4,59 +4,25 @@ import { APIURL } from "../Settings";
 const tokens = require("./tokens.js");
 const URL = APIURL + "/categories";
 
-//Создать категорию
-export function createCategory(category) {
-  if (typeof category !== "object") {
-    return false;
-  }
-
+//Получить все категории пользователя
+export function getUserCategories(callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.post(URL, category, headers).then(response => {
-    return response.data;
+  Axios.get(URL, headers).then(response => {
+    let result = response.data;
+
+    if (Array.isArray(result)) {
+      callback(result);
+    }
   });
-}
-
-//Обновить категорию
-export function updateCategory(ID, category) {
-  if (typeof category !== "object") {
-    return false;
-  }
-
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  return Axios.put(URL + "/" + ID, category, headers).then(response => {
-    return response.data;
-  });
-}
-
-//Удалить задачу
-export function deleteCategory(ID) {
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  return Axios.delete(URL + "/" + ID, headers)
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      return error;
-    });
 }
 
 //Получить категорию как объект по ID
-export function getCategoryByID(ID) {
+export function getCategoryByID(ID, callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
@@ -64,19 +30,72 @@ export function getCategoryByID(ID) {
   }
 
   return Axios.get(URL + "/" + ID, headers).then(response => {
-    return response.data[0];
+    callback(response.data[0]);
   });
 }
 
-//Получить все категории пользователя как объекты в массиве
-export function getUserCategories() {
+//Создать категорию
+export function createCategory(category, callback) {
+  if (typeof category !== "object") {
+    return false;
+  }
+
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.get(URL, headers).then(response => {
-    return response.data;
-  });
+  return Axios.post(URL, category, headers)
+    .then(response => {
+      if (typeof response.data.insertId === "number") {
+        callback(true);
+      }
+    })
+    .catch(error => {
+      callback(false);
+    });
+}
+
+//Обновить категорию
+export function updateCategory(category, callback) {
+  if (typeof category !== "object") {
+    return false;
+  }
+
+  let id = category.id;
+  let headers = tokens.getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  Axios.put(URL + "/" + id, category, headers)
+    .then(response => {
+      if (typeof response.data.affectedRows === "number") {
+        callback(true);
+      }
+    })
+    .catch(error => {
+      callback(false);
+    });
+}
+
+//Удалить категорию
+export function deleteCategory(ID, callback) {
+  let headers = tokens.getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  Axios.delete(URL + "/" + ID, headers)
+    .then(response => {
+      if (typeof response.data.affectedRows === "number") {
+        callback(true);
+      }
+    })
+    .catch(error => {
+      callback(false);
+    });
 }

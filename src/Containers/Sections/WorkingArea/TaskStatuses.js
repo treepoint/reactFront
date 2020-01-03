@@ -19,13 +19,6 @@ class TaskStatuses extends React.Component {
     this.getAllTaskStatusesTypes();
   }
 
-  //Получаем все типы статусов
-  getAllTaskStatusesTypes() {
-    getAllTaskStatusesTypes(result => {
-      this.setState({ taskStatusesTypesList: result });
-    });
-  }
-
   //Получаем все статусы
   getAllTaskStatuses(callback) {
     getAllTaskStatuses(result => {
@@ -34,6 +27,13 @@ class TaskStatuses extends React.Component {
       } else {
         this.setState({ taskStatusesList: result });
       }
+    });
+  }
+
+  //Получаем все типы статусов
+  getAllTaskStatusesTypes() {
+    getAllTaskStatusesTypes(result => {
+      this.setState({ taskStatusesTypesList: result });
     });
   }
 
@@ -50,7 +50,7 @@ class TaskStatuses extends React.Component {
 
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(taskStatus, callback) {
-    updateStatus(taskStatus.id, taskStatus, ok => {
+    updateStatus(taskStatus, ok => {
       if (ok) {
         this.getAllTaskStatuses(callback);
       }
@@ -68,7 +68,7 @@ class TaskStatuses extends React.Component {
 
   //Получим контент для таблицы
   getContent() {
-    let taskStatusesList = [
+    let content = [
       [
         {
           key: "id",
@@ -94,8 +94,8 @@ class TaskStatuses extends React.Component {
       ]
     ];
 
+    //Соберем список типов статусов
     this.state.taskStatusesList.forEach(taskStatus => {
-      //Соберем список типов статусов
       let taskStatusesTypesList = this.state.taskStatusesTypesList.map(
         taskStatusType => {
           return { value: taskStatusType.id, children: taskStatusType.name };
@@ -108,7 +108,7 @@ class TaskStatuses extends React.Component {
         current: taskStatus.type_id
       };
 
-      taskStatusesList.push([
+      content.push([
         {
           key: "id",
           type: "hidden",
@@ -133,7 +133,7 @@ class TaskStatuses extends React.Component {
       ]);
     });
 
-    return taskStatusesList;
+    return content;
   }
 
   render() {

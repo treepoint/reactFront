@@ -55,7 +55,7 @@ export function getUsers() {
  * Роли
  */
 
-//Получение списка пользователей как объектов в массиве
+//Получение списка пользователей
 export function getRoles() {
   return roles.getRoles();
 }
@@ -64,29 +64,29 @@ export function getRoles() {
  * Категории
  */
 
-//Создать категорию
-export function createCategory(category) {
-  return categories.createCategory(category);
-}
-
-//Обновить категорию
-export function updateCategory(ID, category) {
-  return categories.updateCategory(ID, category);
-}
-
-//Удалить категорию
-export function deleteCategory(ID) {
-  return categories.deleteCategory(ID);
+//Получить все категории пользователя
+export function getUserCategories(callback) {
+  return categories.getUserCategories(callback);
 }
 
 //Получить категорию как объект по ID
-export function getCategoryByID(ID) {
-  return categories.getCategoryByID(ID);
+export function getCategoryByID(ID, callback) {
+  return categories.getCategoryByID(ID, callback);
 }
 
-//Получить все категории пользователя как объекты в массиве
-export function getUserCategories() {
-  return categories.getUserCategories();
+//Создать категорию
+export function createCategory(category, callback) {
+  return categories.createCategory(category, callback);
+}
+
+//Обновить категорию
+export function updateCategory(category, callback) {
+  return categories.updateCategory(category, callback);
+}
+
+//Удалить категорию
+export function deleteCategory(ID, callback) {
+  return categories.deleteCategory(ID, callback);
 }
 
 /*
@@ -167,8 +167,8 @@ export function getAllTaskStatuses(callback) {
 }
 
 //Обновить статус по ID
-export function updateStatus(ID, status, callback) {
-  return tasksStatuses.updateStatus(ID, status, callback);
+export function updateStatus(status, callback) {
+  return tasksStatuses.updateStatus(status, callback);
 }
 
 //Создать статус
