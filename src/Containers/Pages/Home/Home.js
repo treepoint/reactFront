@@ -1,5 +1,5 @@
 import React from "react";
-import Page from "../../Components/Page/Page";
+import Page from "../../../Components/Page/Page";
 
 class Home extends React.Component {
   render() {

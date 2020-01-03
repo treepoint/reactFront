@@ -1,4 +1,4 @@
-import { emailReg } from "./REGULAR_EXP";
+import { emailReg } from "../../Libs/RegularExpressions";
 
 //Поля для «пользовательских»  форм
 export const email = {

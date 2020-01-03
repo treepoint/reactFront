@@ -2,7 +2,7 @@ import React from "react";
 //Подключаем роутинг
 import { Switch, Route } from "react-router-dom";
 //Подключаем компоненты
-import Page from "../../Components/Page/Page";
+import Page from "../../../Components/Page/Page";
 import Users from "./Users";
 
 class AdminPanelRouter extends React.Component {

@@ -12,10 +12,10 @@ import { getUserByID, reauth } from "../../APIController/APIController";
 import { getModalWindow } from "../../Components/ModalWindow/MODAL_WINDOWS";
 //Подключаем компоненты и контейнеры
 import Header from "../Header/Header";
-import Home from "../Contents/Home";
+import Home from "../Pages/Home/Home";
 import WorkingAreaRouter from "../WorkingArea/WorkingAreaRouter";
-import About from "../Contents/About";
-import AdminPanelRouter from "../AdminPanel/AdminPanelRouter";
+import About from "../Pages/About/About";
+import AdminPanelRouter from "../Pages/AdminPanel/AdminPanelRouter";
 import Bottom from "../Bottom/Bottom";
 //CSS
 import "./App.css";

@@ -31,6 +31,7 @@ class TaskStatistic extends React.Component {
     this.getTaskStatisticByPeriod(dateFrom, dateTo);
   }
 
+  //Получение статистики за нужный период
   getTaskStatisticByPeriod(dateFrom, dateTo, callback) {
     let promise = getTaskStatisticByPeriod(dateFrom, dateTo);
 

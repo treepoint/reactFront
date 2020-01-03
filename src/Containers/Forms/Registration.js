@@ -9,7 +9,7 @@ import { login } from "../../Components/ModalWindow/MODAL_WINDOWS";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
-import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
+import AnchorModalWindow from "../../Components/AnchorModalWindow/AnchorModalWindow";
 import Anchor from "../../Components/Anchor/Anchor";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 //Подрубаем вспомогательную функциональность

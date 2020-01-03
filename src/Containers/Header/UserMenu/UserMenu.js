@@ -1,6 +1,6 @@
 import React from "react";
 import HeaderAnchor from "../HeaderAnchor/HeaderAnchor";
-import AnchorModalWindow from "../../AnchorModalWindow/AnchorModalWindow";
+import AnchorModalWindow from "../../../Components/AnchorModalWindow/AnchorModalWindow";
 import UserIcon from "./UserIcon/UserIcon";
 import { connect } from "react-redux";
 import "./UserMenu.css";
