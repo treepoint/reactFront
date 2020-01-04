@@ -17,47 +17,40 @@ class Users extends React.Component {
     this.getRoles();
   }
 
+  //Получаем всех пользователей
   getUsers(callback) {
-    let promise = getUsers();
-
-    promise.then(result => {
-      if (Array.isArray(result)) {
-        if (typeof callback === "function") {
-          this.setState({ usersList: result }, () => callback());
-        } else {
-          this.setState({ usersList: result });
-        }
+    getUsers(result => {
+      if (typeof callback === "function") {
+        this.setState({ usersList: result }, () => callback());
+      } else {
+        this.setState({ usersList: result });
       }
     });
   }
 
+  //Получаем все возможные роли
   getRoles(callback) {
-    let promise = getRoles();
-
-    promise.then(result => {
-      if (Array.isArray(result)) {
-        if (typeof callback === "function") {
-          this.setState({ rolesList: result }, () => callback());
-        } else {
-          this.setState({ rolesList: result });
-        }
+    getRoles(result => {
+      if (typeof callback === "function") {
+        this.setState({ rolesList: result }, () => callback());
+      } else {
+        this.setState({ rolesList: result });
       }
     });
   }
 
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(user, callback) {
-    let promise = updateUser(user.id, user);
-
-    promise.then(result => {
-      if (typeof result.affectedRows === "number") {
-        this.getUsers(callback);
+    updateUser(user, ok => {
+      if (ok) {
+        this.getAllTaskStatuses(callback);
       }
     });
   }
 
-  render() {
-    let users = [
+  //Получим контент для таблицы
+  getContent() {
+    let content = [
       [
         {
           key: "id",
@@ -92,7 +85,7 @@ class Users extends React.Component {
       //добавим текущую
       let roles = { list, current: user.role_id };
 
-      users.push([
+      content.push([
         {
           key: "id",
           type: "string",
@@ -117,6 +110,10 @@ class Users extends React.Component {
       ]);
     });
 
+    return content;
+  }
+
+  render() {
     return (
       <Table
         isEditable={true}
@@ -125,7 +122,7 @@ class Users extends React.Component {
         saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
         update={() => this.getUsers()}
       >
-        {users}
+        {this.getContent()}
       </Table>
     );
   }

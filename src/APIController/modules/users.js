@@ -4,67 +4,76 @@ import { APIURL } from "../Settings";
 const tokens = require("./tokens.js");
 const URL = APIURL + "/users";
 
-//Получить пользователя как объект по ID
-export function getUserByID(ID) {
+//Получение списка пользователей как объектов в массиве
+export function getUsers(callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.get(URL + "/" + ID, headers).then(response => {
-    return response.data[0];
+  Axios.get(URL, headers).then(response => {
+    let result = response.data;
+
+    if (Array.isArray(result)) {
+      callback(result);
+    }
+  });
+}
+
+//Получить пользователя как объект по ID
+export function getUserByID(ID, callback) {
+  let headers = tokens.getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  Axios.get(URL + "/" + ID, headers).then(response => {
+    callback(response.data[0]);
   });
 }
 
 //Получить пользователя по имени и паролю
-export function getUserByEmailPassword(user) {
+export function getUserByEmailPassword(user, callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.post(URL + "/token", user, headers).then(response => {
-    return response.data;
+  Axios.post(URL + "/token", user, headers).then(response => {
+    callback(response.data);
   });
 }
 
-//Получение списка пользователей как объектов в массиве
-export function getUsers() {
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  return Axios.get(URL, headers).then(response => {
-    return response.data;
-  });
-}
-
-export function createUser(user) {
+//Создать пользователя
+export function createUser(user, callback) {
   if (typeof user !== "object") {
     return false;
   }
 
-  let newUser = Object.assign({}, user, { role_id: 2 });
+  //Роль по умолчанию — пользователь, вторая
+  let newUser = Object.assign(user, { role_id: 2 });
 
-  //Роль по умолчанию — пользователь. Вторая
-  return Axios.post(URL + "/registration", newUser, tokens.getHeaders())
+  Axios.post(URL + "/registration", newUser, tokens.getHeaders())
     .then(response => {
-      return response.data;
+      if (typeof response.data.insertId === "number") {
+        callback(true);
+      }
     })
     .catch(error => {
-      return error;
+      callback(false);
     });
 }
 
 //Обновить пользователя
-export function updateUser(ID, user) {
+export function updateUser(user, callback) {
   if (typeof user !== "object") {
     return false;
   }
+
+  let id = user.id;
 
   let headers = tokens.getHeaders();
 
@@ -72,7 +81,7 @@ export function updateUser(ID, user) {
     return;
   }
 
-  return Axios.put(URL + "/" + ID, user, headers).then(response => {
-    return response.data;
+  Axios.put(URL + "/" + id, user, headers).then(response => {
+    callback(response.data);
   });
 }

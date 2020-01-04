@@ -29,7 +29,7 @@ export function getCategoryByID(ID, callback) {
     return;
   }
 
-  return Axios.get(URL + "/" + ID, headers).then(response => {
+  Axios.get(URL + "/" + ID, headers).then(response => {
     callback(response.data[0]);
   });
 }
@@ -46,7 +46,7 @@ export function createCategory(category, callback) {
     return;
   }
 
-  return Axios.post(URL, category, headers)
+  Axios.post(URL, category, headers)
     .then(response => {
       if (typeof response.data.insertId === "number") {
         callback(true);

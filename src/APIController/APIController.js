@@ -26,38 +26,38 @@ export function reauth(refreshToken) {
  * Пользователи
  */
 
-//Создать пользователя
-export function createUser(user) {
-  return users.createUser(user);
-}
-
-//Обновить пользователя
-export function updateUser(ID, user) {
-  return users.updateUser(ID, user);
+//Получение списка пользователей как объектов в массиве
+export function getUsers(callback) {
+  users.getUsers(callback);
 }
 
 //Получить пользователя как объекта по ID
-export function getUserByID(ID) {
-  return users.getUserByID(ID);
+export function getUserByID(ID, callback) {
+  users.getUserByID(ID, callback);
 }
 
 //Получить пользователя как объекта по имени и паролю
-export function getUserByEmailPassword(user) {
-  return users.getUserByEmailPassword(user);
+export function getUserByEmailPassword(user, callback) {
+  users.getUserByEmailPassword(user, callback);
 }
 
-//Получение списка пользователей как объектов в массиве
-export function getUsers() {
-  return users.getUsers();
+//Создать пользователя
+export function createUser(user, callback) {
+  users.createUser(user, callback);
+}
+
+//Обновить пользователя
+export function updateUser(user, callback) {
+  users.updateUser(user, callback);
 }
 
 /*
  * Роли
  */
 
-//Получение списка пользователей
-export function getRoles() {
-  return roles.getRoles();
+//Получение списка ролей пользователей
+export function getRoles(callback) {
+  roles.getRoles(callback);
 }
 
 /*
@@ -66,27 +66,27 @@ export function getRoles() {
 
 //Получить все категории пользователя
 export function getUserCategories(callback) {
-  return categories.getUserCategories(callback);
+  categories.getUserCategories(callback);
 }
 
 //Получить категорию как объект по ID
 export function getCategoryByID(ID, callback) {
-  return categories.getCategoryByID(ID, callback);
+  categories.getCategoryByID(ID, callback);
 }
 
 //Создать категорию
 export function createCategory(category, callback) {
-  return categories.createCategory(category, callback);
+  categories.createCategory(category, callback);
 }
 
 //Обновить категорию
 export function updateCategory(category, callback) {
-  return categories.updateCategory(category, callback);
+  categories.updateCategory(category, callback);
 }
 
 //Удалить категорию
 export function deleteCategory(ID, callback) {
-  return categories.deleteCategory(ID, callback);
+  categories.deleteCategory(ID, callback);
 }
 
 /*
@@ -158,27 +158,27 @@ export function deleteTaskLog(ID) {
 
 //Получить статус как объект по ID
 export function getTaskStatusByID(ID, callback) {
-  return tasksStatuses.getTaskStatusByID(ID, callback);
+  tasksStatuses.getTaskStatusByID(ID, callback);
 }
 
 //Получить все статусы
 export function getAllTaskStatuses(callback) {
-  return tasksStatuses.getAllTaskStatuses(callback);
+  tasksStatuses.getAllTaskStatuses(callback);
 }
 
 //Обновить статус по ID
 export function updateStatus(status, callback) {
-  return tasksStatuses.updateStatus(status, callback);
+  tasksStatuses.updateStatus(status, callback);
 }
 
 //Создать статус
 export function createStatus(status, callback) {
-  return tasksStatuses.createStatus(status, callback);
+  tasksStatuses.createStatus(status, callback);
 }
 
 //Удалить статус
 export function deleteStatus(ID, callback) {
-  return tasksStatuses.deleteStatus(ID, callback);
+  tasksStatuses.deleteStatus(ID, callback);
 }
 
 /*
@@ -186,7 +186,7 @@ export function deleteStatus(ID, callback) {
  */
 
 export function getAllTaskStatusesTypes(callback) {
-  return tasksStatusesTypes.getAllTaskStatusesTypes(callback);
+  tasksStatusesTypes.getAllTaskStatusesTypes(callback);
 }
 
 /*
@@ -195,12 +195,12 @@ export function getAllTaskStatusesTypes(callback) {
 
 //Получаем время исполнения по всем категориям
 export function getTimeExecutionForAllCategories(callback) {
-  return statistics.getTimeExecutionForAllCategories(callback);
+  statistics.getTimeExecutionForAllCategories(callback);
 }
 
 //Получаем время исполнения по всем категориям за определенный день
 export function getTimeExecutionForAllCategoriesByDate(date, callback) {
-  return statistics.getTimeExecutionForAllCategoriesByDate(date, callback);
+  statistics.getTimeExecutionForAllCategoriesByDate(date, callback);
 }
 
 /*
@@ -209,5 +209,5 @@ export function getTimeExecutionForAllCategoriesByDate(date, callback) {
 
 //Получить статистику по задачам за период
 export function getTaskStatisticByPeriod(dateFrom, dateTo, callback) {
-  return statistics.getTaskStatisticByPeriod(dateFrom, dateTo, callback);
+  statistics.getTaskStatisticByPeriod(dateFrom, dateTo, callback);
 }

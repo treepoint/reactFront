@@ -47,10 +47,8 @@ class App extends React.Component {
       //Токен просто запишем
       this.props.setToken(token);
 
-      //Пользователя получим по ID и запишем
-      let promise = getUserByID(userId);
-
-      promise.then(user => {
+      //Пользователя получим по ID и запишем в сторе
+      getUserByID(userId, user => {
         this.props.setUser(user);
         callback(true);
       });
