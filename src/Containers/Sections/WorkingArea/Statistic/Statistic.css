@@ -1,0 +1,13 @@
+.statisticContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.taskStatistic {
+  display: flex;
+  flex-direction: column;
+}

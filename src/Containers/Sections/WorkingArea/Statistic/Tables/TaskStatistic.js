@@ -1,34 +1,34 @@
 import React from "react";
-import Table from "../../../../Components/Table/Table";
-import { getTaskStatisticByPeriod } from "../../../../APIController/APIController";
-import DatePicker from "../../../../Components/DatePicker/DatePicker";
+import Button from "../../../../../Components/Button/Button";
+import Table from "../../../../../Components/Table/Table";
+import { getTaskStatisticByPeriod } from "../../../../../APIController/APIController";
+import DatePicker from "../../../../../Components/DatePicker/DatePicker";
 import {
   revokeDays,
   addDays,
   getRussianFormatDate,
-  getTimeFromMins
-} from "../../../../Libs/TimeUtils";
+  getTimeFromMins,
+  getFirstDayOfCurrentMonth,
+  getLastDayOfCurrentMonth,
+  getFirstDayOfPreviousMonth,
+  getLastDayOfPreviousMonth
+} from "../../../../../Libs/TimeUtils";
 import "./TaskStatistic.css";
 
 class TaskStatistic extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { taskStatisticList: [], dateFrom: null, dateTo: null };
+    this.state = {
+      taskStatisticList: [],
+      dateFrom: null,
+      dateTo: null,
+      currentPeriod: null
+    };
   }
 
   componentDidMount() {
-    //Получим текущую дату
-    let currentDate = new Date();
-    //Получим начало недели — понедельник
-    let dateFrom = revokeDays(currentDate, currentDate.getDay() - 1);
-    //Получим конец недели — воскресенье
-    let dateTo = addDays(currentDate, 7 - currentDate.getDay());
-
-    //Запишем в стейт
-    this.setState({ dateFrom, dateTo });
-
     //Подтянем статистику за нужный период
-    this.getTaskStatisticByPeriod(dateFrom, dateTo);
+    this.setCurrentWeekDates();
   }
 
   //Получение статистики за нужный период
@@ -42,16 +42,53 @@ class TaskStatistic extends React.Component {
     });
   }
 
+  //При выборе даты "c"
   onPickFromDate(dateFrom) {
     this.setState({ dateFrom });
     //Подтянем статистику за нужный период
     this.getTaskStatisticByPeriod(dateFrom, this.state.dateTo);
   }
 
+  //При выборе даты "до"
   onPickToDate(dateTo) {
     this.setState({ dateTo });
     //Подтянем статистику за нужный период
     this.getTaskStatisticByPeriod(this.state.dateFrom, dateTo);
+  }
+
+  setCurrentWeekDates() {
+    //Получим текущую дату
+    let currentDate = new Date();
+    //Получим начало недели — понедельник
+    let dateFrom = revokeDays(currentDate, currentDate.getDay() - 1);
+    //Получим конец недели — воскресенье
+    let dateTo = addDays(currentDate, 7 - currentDate.getDay());
+
+    //Запишем в стейт
+    this.setState({ dateFrom, dateTo });
+    this.getTaskStatisticByPeriod(dateFrom, dateTo);
+  }
+
+  setCurrentMonthDates() {
+    //Получим начало текущего месяца
+    let dateFrom = getFirstDayOfCurrentMonth();
+    //Получим конец текущего месяца
+    let dateTo = getLastDayOfCurrentMonth();
+
+    //Запишем в стейт
+    this.setState({ dateFrom, dateTo });
+    this.getTaskStatisticByPeriod(dateFrom, dateTo);
+  }
+
+  setPreviousMonthDates() {
+    //Получим начало текущего месяца
+    let dateFrom = getFirstDayOfPreviousMonth();
+    //Получим конец текущего месяца
+    let dateTo = getLastDayOfPreviousMonth();
+
+    //Запишем в стейт
+    this.setState({ dateFrom, dateTo });
+    this.getTaskStatisticByPeriod(dateFrom, dateTo);
   }
 
   getContent() {
@@ -111,6 +148,18 @@ class TaskStatistic extends React.Component {
             width="90"
             date={this.state.dateTo}
             onChange={dateTo => this.onPickToDate(dateTo)}
+          />
+          <Button
+            value="Текущая неделя"
+            onClick={() => this.setCurrentWeekDates()}
+          />
+          <Button
+            value="Текущий месяц"
+            onClick={() => this.setCurrentMonthDates()}
+          />
+          <Button
+            value="Прошлый месяц"
+            onClick={() => this.setPreviousMonthDates()}
           />
         </div>
         <Table

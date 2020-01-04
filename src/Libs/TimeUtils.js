@@ -103,3 +103,43 @@ export function addDays(date, count) {
 
   return offsetDate.setDate(offsetDate.getDate() + count);
 }
+
+export function getFirstDayOfCurrentMonth() {
+  var date = new Date();
+  var yyyy = date.getFullYear();
+  var mm = String(date.getMonth() + 1).padStart(2, "0");
+
+  date = new Date(yyyy, mm - 1, 1);
+
+  return date;
+}
+
+export function getLastDayOfCurrentMonth() {
+  var date = new Date();
+  var yyyy = date.getFullYear();
+  var mm = String(date.getMonth() + 1).padStart(2, "0");
+
+  date = new Date(yyyy, mm, 0);
+
+  return date;
+}
+
+export function getFirstDayOfPreviousMonth() {
+  var date = new Date();
+  var yyyy = date.getFullYear();
+  var mm = String(date.getMonth() + 1).padStart(2, "0");
+
+  date = new Date(yyyy, mm - 2, 1);
+
+  return date;
+}
+
+export function getLastDayOfPreviousMonth() {
+  var date = new Date();
+  var yyyy = date.getFullYear();
+  var mm = String(date.getMonth() + 1).padStart(2, "0");
+
+  date = new Date(yyyy, mm - 1, 0);
+
+  return date;
+}

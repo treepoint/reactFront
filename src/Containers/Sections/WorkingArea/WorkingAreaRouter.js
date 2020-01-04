@@ -6,7 +6,7 @@ import Page from "../../../Components/Page/Page";
 import Categories from "./Categories";
 import TaskStatuses from "./TaskStatuses";
 import TasksManager from "./TasksManager/TasksManager";
-import TaskStatistic from "./TaskStatistic/TaskStatistic";
+import Statistic from "./Statistic/Statistic";
 
 class WorkingAreaRouter extends React.Component {
   render() {
@@ -15,7 +15,7 @@ class WorkingAreaRouter extends React.Component {
       { to: "/working", value: "Список" },
       { to: "/working/categories", value: "Категории" },
       { to: "/working/task_statuses", value: "Статусы" },
-      { to: "/working/task_statistic", value: "Статистика" }
+      { to: "/working/statistic", value: "Статистика" }
     ];
 
     return (
@@ -24,7 +24,7 @@ class WorkingAreaRouter extends React.Component {
           <Route exact to path="/working" component={TasksManager} />
           <Route path="/working/categories" component={Categories} />
           <Route path="/working/task_statuses" component={TaskStatuses} />
-          <Route path="/working/task_statistic" component={TaskStatistic} />
+          <Route path="/working/statistic" component={Statistic} />
         </Switch>
       </Page>
     );
