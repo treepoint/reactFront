@@ -98,34 +98,34 @@ export function deleteCategory(ID, callback) {
  * Задачи
  */
 
-//Создать задачу
-export function createTask(task) {
-  return tasks.createTask(task);
-}
-
-//Обновить задачу
-export function updateTask(ID, task) {
-  return tasks.updateTask(ID, task);
-}
-
 //Получить задачу как объект по ID
-export function getTaskByID(ID) {
-  return tasks.getTaskByID(ID);
+export function getTaskByID(ID, callback) {
+  tasks.getTaskByID(ID, callback);
 }
 
 //Получить все задачи пользователя
-export function getUserTasks() {
-  return tasks.getUserTasks();
+export function getUserTasks(callback) {
+  tasks.getUserTasks(callback);
 }
 
 //Получить все задачи пользователя за дату
-export function getUserTasksByDate(date) {
-  return tasks.getUserTasksByDate(date);
+export function getUserTasksByDate(date, callback) {
+  tasks.getUserTasksByDate(date, callback);
+}
+
+//Создать задачу
+export function createTask(task, callback) {
+  tasks.createTask(task, callback);
+}
+
+//Обновить задачу
+export function updateTask(task, callback) {
+  tasks.updateTask(task, callback);
 }
 
 //Удалить задачу
-export function deleteTask(ID) {
-  return tasks.deleteTask(ID);
+export function deleteTask(ID, callback) {
+  tasks.deleteTask(ID, callback);
 }
 
 /*
@@ -133,28 +133,28 @@ export function deleteTask(ID) {
  */
 
 //Получить весь лог выполнения всех задач
-export function getTasksLog() {
-  return tasksLog.getTasksLog();
+export function getTasksLog(callback) {
+  tasksLog.getTasksLog(callback);
 }
 
 //Получить весь лог выполнения всех задач за день
-export function getTasksLogByDate(date) {
-  return tasksLog.getTasksLogByDate(date);
+export function getTasksLogByDate(date, callback) {
+  tasksLog.getTasksLogByDate(date, callback);
 }
 
 //Обновить лог по ID
-export function updateTaskLog(ID, taskLog) {
-  return tasksLog.updateTaskLog(ID, taskLog);
+export function updateTaskLog(taskLog, callback) {
+  tasksLog.updateTaskLog(taskLog, callback);
 }
 
 //Добавить запись в лог выполнения задач
-export function createTaskLog(taskLog) {
-  return tasksLog.createTaskLog(taskLog);
+export function createTaskLog(taskLog, callback) {
+  tasksLog.createTaskLog(taskLog, callback);
 }
 
 //Удалить запись из лога выполнения задач
-export function deleteTaskLog(ID) {
-  return tasksLog.deleteTaskLog(ID);
+export function deleteTaskLog(ID, callback) {
+  tasksLog.deleteTaskLog(ID, callback);
 }
 
 /*

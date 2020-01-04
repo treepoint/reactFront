@@ -11,20 +11,8 @@ import {
 } from "../../../../../Libs/TimeUtils";
 
 class Tasks extends React.Component {
-  //Сохраним изменяемую строку в ДБ
-  saveTaskToDataBase(task, callback) {
-    let promise = updateTask(task.id, task);
-
-    promise.then(result => {
-      if (typeof result.affectedRows === "number") {
-        this.props.getTasks(callback);
-        this.props.getTasksLog();
-      }
-    });
-  }
-
   //Сохраним задачу в ДБ
-  addTaskToDataBase() {
+  addRowToDataBase() {
     let task = {
       category_id: this.props.categoriesList[0].id,
       status_id: this.props.taskStatusesList[0].id,
@@ -33,22 +21,28 @@ class Tasks extends React.Component {
       create_date: getCurrentFormatDate()
     };
 
-    let promise = createTask(task);
-
-    promise.then(result => {
-      if (typeof result.affectedRows === "number") {
+    createTask(task, ok => {
+      if (ok) {
         this.props.getTasks();
         this.props.getTasksLog();
       }
     });
   }
 
-  //Удалим задачу из ДБ
-  deleteTaskFromDataBase(task) {
-    let promise = deleteTask(task.id);
+  //Сохраним изменяемую строку в ДБ
+  saveRowToDataBase(task, callback) {
+    updateTask(task, ok => {
+      if (ok) {
+        this.props.getTasks(callback);
+        this.props.getTasksLog();
+      }
+    });
+  }
 
-    promise.then(result => {
-      if (result === "{success}") {
+  //Удалим задачу из ДБ
+  deleteRowFromDataBase(task) {
+    deleteTask(task.id, ok => {
+      if (ok) {
         this.props.getTasks();
         this.props.getTasksLog();
       }
@@ -57,50 +51,51 @@ class Tasks extends React.Component {
 
   //Соберем таблицу для отображения задач
   getContent() {
-    let tasks = [];
-    tasks[0] = [
-      {
-        key: "id",
-        type: "hidden",
-        disabled: true,
-        value: "ID",
-        style: {}
-      },
-      {
-        key: "name",
-        type: "string",
-        disabled: true,
-        value: "Задача",
-        style: { width: 336 }
-      },
-      {
-        key: "category_name",
-        type: "string",
-        disabled: true,
-        value: "Категория",
-        style: { width: 180 }
-      },
-      {
-        key: "status_name",
-        type: "string",
-        disabled: true,
-        value: "Статус",
-        style: { width: 200 }
-      },
-      {
-        key: "description",
-        type: "string",
-        disabled: true,
-        value: "Описание",
-        style: { width: 220 }
-      },
-      {
-        key: "execution_time",
-        type: "string",
-        disabled: true,
-        value: "Время выполнения",
-        style: { width: 160 }
-      }
+    let content = [
+      [
+        {
+          key: "id",
+          type: "hidden",
+          disabled: true,
+          value: "ID",
+          style: {}
+        },
+        {
+          key: "name",
+          type: "string",
+          disabled: true,
+          value: "Задача",
+          style: { width: 336 }
+        },
+        {
+          key: "category_name",
+          type: "string",
+          disabled: true,
+          value: "Категория",
+          style: { width: 180 }
+        },
+        {
+          key: "status_name",
+          type: "string",
+          disabled: true,
+          value: "Статус",
+          style: { width: 200 }
+        },
+        {
+          key: "description",
+          type: "string",
+          disabled: true,
+          value: "Описание",
+          style: { width: 220 }
+        },
+        {
+          key: "execution_time",
+          type: "string",
+          disabled: true,
+          value: "Время выполнения",
+          style: { width: 160 }
+        }
+      ]
     ];
 
     this.props.tasksList.forEach(task => {
@@ -130,7 +125,7 @@ class Tasks extends React.Component {
       //Соберем контент для селекта статусов с указанием текущего
       let statuses = { list: statusesList, current: task.status_id };
 
-      tasks.push([
+      content.push([
         {
           key: "id",
           type: "hidden",
@@ -176,7 +171,7 @@ class Tasks extends React.Component {
       ]);
     });
 
-    return tasks;
+    return content;
   }
 
   render() {
@@ -185,10 +180,10 @@ class Tasks extends React.Component {
         isEditable={true}
         isResizeble={true}
         isStylable={true}
-        saveRow={(row, callback) => this.saveTaskToDataBase(row, callback)}
+        saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
         update={() => this.props.getTasks()}
-        addRow={() => this.addTaskToDataBase()}
-        deleteRow={row => this.deleteTaskFromDataBase(row)}
+        addRow={() => this.addRowToDataBase()}
+        deleteRow={row => this.deleteRowFromDataBase(row)}
       >
         {this.getContent()}
       </Table>

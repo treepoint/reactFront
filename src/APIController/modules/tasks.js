@@ -4,42 +4,8 @@ import { APIURL } from "../Settings";
 const tokens = require("./tokens.js");
 const URL = APIURL + "/tasks";
 
-//Создать задачу
-export function createTask(task) {
-  if (typeof task !== "object") {
-    return false;
-  }
-
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  return Axios.post(URL, task, headers).then(response => {
-    return response.data;
-  });
-}
-
-//Обновить задачу
-export function updateTask(ID, task) {
-  if (typeof task !== "object") {
-    return false;
-  }
-
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  return Axios.put(URL + "/" + ID, task, headers).then(response => {
-    return response.data;
-  });
-}
-
 //Получить задачу как объект по ID
-export function getTaskByID(ID) {
+export function getTaskByID(ID, callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
@@ -47,49 +13,107 @@ export function getTaskByID(ID) {
   }
 
   return Axios.get(URL + "/" + ID, headers).then(response => {
-    return response.data[0];
+    callback(response.data[0]);
   });
 }
 
 //Получить все задачи пользователя
-export function getUserTasks() {
+export function getUserTasks(callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.get(URL, headers).then(response => {
-    return response.data;
+  Axios.get(URL, headers).then(response => {
+    let result = response.data;
+
+    if (Array.isArray(result)) {
+      callback(result);
+    }
   });
 }
 
 //Получить все задачи пользователя за дату
-export function getUserTasksByDate(date) {
+export function getUserTasksByDate(date, callback) {
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.get(URL + "/date/" + date, headers).then(response => {
-    return response.data;
+  Axios.get(URL + "/date/" + date, headers).then(response => {
+    let result = response.data;
+
+    if (Array.isArray(result)) {
+      callback(result);
+    }
   });
 }
 
-//Удалить задачу
-export function deleteTask(ID) {
+//Создать задачу
+export function createTask(task, callback) {
+  if (typeof task !== "object") {
+    return false;
+  }
+
   let headers = tokens.getHeaders();
 
   if (headers === null) {
     return;
   }
 
-  return Axios.delete(URL + "/" + ID, headers)
+  return Axios.post(URL, task, headers)
     .then(response => {
-      return response.data;
+      if (typeof response.data.insertId === "number") {
+        callback(true);
+      }
     })
     .catch(error => {
-      return error;
+      callback(false);
+    });
+}
+
+//Обновить задачу
+export function updateTask(task, callback) {
+  if (typeof task !== "object") {
+    return false;
+  }
+
+  let headers = tokens.getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let id = task.id;
+
+  Axios.put(URL + "/" + id, task, headers)
+    .then(response => {
+      if (typeof response.data.affectedRows === "number") {
+        callback(true);
+      }
+    })
+    .catch(error => {
+      callback(false);
+    });
+}
+
+//Удалить задачу
+export function deleteTask(ID, callback) {
+  let headers = tokens.getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  Axios.delete(URL + "/" + ID, headers)
+    .then(response => {
+      if (typeof response.data.affectedRows === "number") {
+        callback(true);
+      }
+    })
+    .catch(error => {
+      callback(false);
     });
 }

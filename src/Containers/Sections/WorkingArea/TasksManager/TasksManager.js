@@ -6,8 +6,7 @@ import {
   getUserTasksByDate,
   getTasksLogByDate,
   getAllTaskStatuses,
-  getUserCategories,
-  getTimeExecutionForAllCategoriesByDate
+  getUserCategories
 } from "../../../../APIController/APIController";
 
 import { getCurrentFormatDate } from "../../../../Libs/TimeUtils";
@@ -48,7 +47,23 @@ class TasksManager extends React.Component {
   }
 
   getTasks(date, callback) {
-    this.getRowData(getUserTasksByDate, "tasksList", callback, date);
+    getUserTasksByDate(date, result => {
+      if (typeof callback === "function") {
+        this.setState({ tasksList: result }, () => callback());
+      } else {
+        this.setState({ tasksList: result });
+      }
+    });
+  }
+
+  getTasksLog(date, callback) {
+    getTasksLogByDate(date, result => {
+      if (typeof callback === "function") {
+        this.setState({ tasksLogList: result }, () => callback());
+      } else {
+        this.setState({ tasksLogList: result });
+      }
+    });
   }
 
   getUserCategories() {
@@ -60,39 +75,6 @@ class TasksManager extends React.Component {
   getAllTaskStatuses() {
     getAllTaskStatuses(result => {
       this.setState({ taskStatusesList: result });
-    });
-  }
-
-  getTasksLog(date, callback) {
-    this.getRowData(getTasksLogByDate, "tasksLogList", callback, date);
-  }
-
-  getTimeExecutionForAllCategories(date, callback) {
-    this.getRowData(
-      getTimeExecutionForAllCategoriesByDate,
-      "categoriesExecutionTimeList",
-      callback,
-      date
-    );
-  }
-
-  getRowData(updateFunction, list, callback, date) {
-    let promise;
-
-    if (date !== null) {
-      promise = updateFunction(date);
-    } else {
-      promise = updateFunction();
-    }
-
-    promise.then(result => {
-      if (Array.isArray(result)) {
-        if (typeof callback === "function") {
-          this.setState({ [list]: result }, () => callback());
-        } else {
-          this.setState({ [list]: result });
-        }
-      }
     });
   }
 

@@ -12,26 +12,24 @@ import {
 
 class TasksLog extends React.Component {
   //Добавим лог по задаче в ДБ
-  addTaskLogToDataBase() {
-    let promise = createTaskLog({
+  addRowToDataBase() {
+    let taskLog = {
       task_id: this.props.tasksList[0].id,
       execution_start: this.props.date + " " + getCurrentTimeFormat(),
       execution_end: this.props.date
-    });
+    };
 
-    promise.then(result => {
-      if (typeof result.affectedRows === "number") {
+    createTaskLog(taskLog, ok => {
+      if (ok) {
         this.props.getTasksLog();
       }
     });
   }
 
   //Сохраним изменяемую строку в ДБ
-  saveTaskLogToDataBase(taskLog, callback) {
-    let promise = updateTaskLog(taskLog.id, taskLog);
-
-    promise.then(result => {
-      if (typeof result.affectedRows === "number") {
+  saveRowToDataBase(taskLog, callback) {
+    updateTaskLog(taskLog, ok => {
+      if (ok) {
         this.props.getTasksLog(callback);
         this.props.getTasks();
       }
@@ -39,11 +37,9 @@ class TasksLog extends React.Component {
   }
 
   //Удалим лог по задаче из ДБ
-  deleteTaskLogFromDataBase(taskLog) {
-    let promise = deleteTaskLog(taskLog.id);
-
-    promise.then(result => {
-      if (result === "{success}") {
+  deleteRowFromDataBase(taskLog) {
+    deleteTaskLog(taskLog.id, ok => {
+      if (ok) {
         this.props.getTasksLog();
         this.props.getTasks();
       }
@@ -52,43 +48,44 @@ class TasksLog extends React.Component {
 
   //Соберем таблицу для отображения лога по задачам
   getContent() {
-    let tasksLog = [];
-    tasksLog[0] = [
-      {
-        key: "id",
-        type: "hidden",
-        disabled: true,
-        value: "ID",
-        style: {}
-      },
-      {
-        key: "task_id",
-        type: "string",
-        disabled: true,
-        value: "Задача",
-        style: { width: 336 }
-      },
-      {
-        key: "execution_start",
-        type: "string",
-        disabled: true,
-        value: "Начал",
-        style: { width: 120 }
-      },
-      {
-        key: "execution_end",
-        type: "string",
-        disabled: true,
-        value: "Закончил",
-        style: { width: 120 }
-      },
-      {
-        key: "execution_time",
-        type: "string",
-        disabled: true,
-        value: "Время выполнения",
-        style: { width: 164 }
-      }
+    let content = [
+      [
+        {
+          key: "id",
+          type: "hidden",
+          disabled: true,
+          value: "ID",
+          style: {}
+        },
+        {
+          key: "task_id",
+          type: "string",
+          disabled: true,
+          value: "Задача",
+          style: { width: 336 }
+        },
+        {
+          key: "execution_start",
+          type: "string",
+          disabled: true,
+          value: "Начал",
+          style: { width: 120 }
+        },
+        {
+          key: "execution_end",
+          type: "string",
+          disabled: true,
+          value: "Закончил",
+          style: { width: 120 }
+        },
+        {
+          key: "execution_time",
+          type: "string",
+          disabled: true,
+          value: "Время выполнения",
+          style: { width: 164 }
+        }
+      ]
     ];
 
     this.props.tasksLogList.forEach(tasksLogList => {
@@ -100,7 +97,7 @@ class TasksLog extends React.Component {
       //добавим текущую
       let tasks = { list: tasksList, current: tasksLogList.task_id };
 
-      tasksLog.push([
+      content.push([
         { key: "id", type: "hidden", value: tasksLogList.id, style: {} },
         {
           key: "task_id",
@@ -133,7 +130,7 @@ class TasksLog extends React.Component {
       ]);
     });
 
-    return tasksLog;
+    return content;
   }
 
   render() {
@@ -141,10 +138,10 @@ class TasksLog extends React.Component {
       <Table
         isEditable={false}
         isResizeble={true}
-        saveRow={(row, callback) => this.saveTaskLogToDataBase(row, callback)}
+        saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
         update={() => this.props.getTasksLog()}
-        addRow={() => this.addTaskLogToDataBase()}
-        deleteRow={row => this.deleteTaskLogFromDataBase(row)}
+        addRow={() => this.addRowToDataBase()}
+        deleteRow={row => this.deleteRowFromDataBase(row)}
       >
         {this.getContent()}
       </Table>
