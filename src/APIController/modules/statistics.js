@@ -46,6 +46,30 @@ export function getTimeExecutionForAllCategoriesByDate(date, callback) {
   });
 }
 
+//Получить статистику по категориям за период
+export function getCategoriesStatisticByPeriod(dateFrom, dateTo, callback) {
+  let headers = tokens.getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  let url =
+    APIURL +
+    "/categories/statistic/period/" +
+    getFormatDate(dateFrom) +
+    "/" +
+    getFormatDate(dateTo);
+
+  Axios.get(url, headers).then(response => {
+    let result = response.data;
+
+    if (Array.isArray(result)) {
+      callback(result);
+    }
+  });
+}
+
 /*
  * Статистика по задача
  */

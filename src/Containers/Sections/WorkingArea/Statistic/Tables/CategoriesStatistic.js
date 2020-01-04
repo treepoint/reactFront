@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../../../../../Components/Button/Button";
 import Table from "../../../../../Components/Table/Table";
-import { getTaskStatisticByPeriod } from "../../../../../APIController/APIController";
+import { getCategoriesStatisticByPeriod } from "../../../../../APIController/APIController";
 import DatePicker from "../../../../../Components/DatePicker/DatePicker";
 import {
   getRussianFormatDate,
@@ -13,13 +13,13 @@ import {
   getFirstDayOfCurrentWeek,
   getLastDayOfCurrentWeek
 } from "../../../../../Libs/TimeUtils";
-import "./TaskStatistic.css";
+import "./CategoriesStatistic.css";
 
 class TaskStatistic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      taskStatisticList: [],
+      categoriesStatisticList: [],
       dateFrom: null,
       dateTo: null,
       currentPeriod: {}
@@ -32,12 +32,12 @@ class TaskStatistic extends React.Component {
   }
 
   //Получение статистики за нужный период
-  getTaskStatisticByPeriod(dateFrom, dateTo, callback) {
-    getTaskStatisticByPeriod(dateFrom, dateTo, result => {
+  getCategoriesStatisticByPeriod(dateFrom, dateTo, callback) {
+    getCategoriesStatisticByPeriod(dateFrom, dateTo, result => {
       if (typeof callback === "function") {
-        this.setState({ taskStatisticList: result }, () => callback());
+        this.setState({ categoriesStatisticList: result }, () => callback());
       } else {
-        this.setState({ taskStatisticList: result });
+        this.setState({ categoriesStatisticList: result });
       }
     });
   }
@@ -46,7 +46,7 @@ class TaskStatistic extends React.Component {
   onPickFromDate(dateFrom) {
     this.setState({ dateFrom });
     //Подтянем статистику за нужный период
-    this.getTaskStatisticByPeriod(dateFrom, this.state.dateTo);
+    this.getCategoriesStatisticByPeriod(dateFrom, this.state.dateTo);
 
     this.setState({ currentPeriod: { custom: true } });
   }
@@ -55,7 +55,7 @@ class TaskStatistic extends React.Component {
   onPickToDate(dateTo) {
     this.setState({ dateTo });
     //Подтянем статистику за нужный период
-    this.getTaskStatisticByPeriod(this.state.dateFrom, dateTo);
+    this.getCategoriesStatisticByPeriod(this.state.dateFrom, dateTo);
 
     this.setState({ currentPeriod: { custom: true } });
   }
@@ -68,7 +68,7 @@ class TaskStatistic extends React.Component {
 
     //Запишем в стейт
     this.setState({ dateFrom, dateTo });
-    this.getTaskStatisticByPeriod(dateFrom, dateTo);
+    this.getCategoriesStatisticByPeriod(dateFrom, dateTo);
 
     this.setState({ currentPeriod: { currentWeak: true } });
   }
@@ -81,7 +81,7 @@ class TaskStatistic extends React.Component {
 
     //Запишем в стейт
     this.setState({ dateFrom, dateTo });
-    this.getTaskStatisticByPeriod(dateFrom, dateTo);
+    this.getCategoriesStatisticByPeriod(dateFrom, dateTo);
 
     this.setState({ currentPeriod: { currentMonth: true } });
   }
@@ -94,7 +94,7 @@ class TaskStatistic extends React.Component {
 
     //Запишем в стейт
     this.setState({ dateFrom, dateTo });
-    this.getTaskStatisticByPeriod(dateFrom, dateTo);
+    this.getCategoriesStatisticByPeriod(dateFrom, dateTo);
 
     this.setState({ currentPeriod: { previousMonth: true } });
   }
@@ -106,7 +106,7 @@ class TaskStatistic extends React.Component {
           key: "name",
           type: "string",
           disabled: true,
-          value: "Задача",
+          value: "Категория",
           style: { width: 500 }
         },
         {
@@ -119,7 +119,7 @@ class TaskStatistic extends React.Component {
       ]
     ];
 
-    this.state.taskStatisticList.forEach(taskStatistic => {
+    this.state.categoriesStatisticList.forEach(taskStatistic => {
       content.push([
         {
           key: "name",
@@ -144,7 +144,7 @@ class TaskStatistic extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="tasksDatePickersContainer">
+        <div className="categoriesDatePickersContainer">
           <DatePicker
             placeholderText={getRussianFormatDate(this.state.dateFrom)}
             width="90"

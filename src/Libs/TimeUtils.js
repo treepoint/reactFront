@@ -143,3 +143,25 @@ export function getLastDayOfPreviousMonth() {
 
   return date;
 }
+
+export function getFirstDayOfCurrentWeek() {
+  //Получим текущую дату
+  let currentDate = new Date();
+
+  if (currentDate.getDay() === 0) {
+    return revokeDays(currentDate, 6);
+  } else {
+    return revokeDays(currentDate, currentDate.getDay() - 1);
+  }
+}
+
+export function getLastDayOfCurrentWeek() {
+  //Получим текущую дату
+  let currentDate = new Date();
+
+  if (currentDate.getDay() === 0) {
+    return currentDate;
+  } else {
+    return addDays(currentDate, 7 - currentDate.getDay());
+  }
+}
