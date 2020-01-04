@@ -105,7 +105,7 @@ class TaskStatistic extends React.Component {
           key: "type",
           type: "string",
           disabled: true,
-          value: "Время выполнения",
+          value: "Время, всего",
           style: { width: 164 }
         }
       ]

@@ -62,28 +62,28 @@ class TasksLog extends React.Component {
           type: "string",
           disabled: true,
           value: "Задача",
-          style: { width: 336 }
+          style: { width: 342 }
         },
         {
           key: "execution_start",
           type: "string",
           disabled: true,
-          value: "Начал",
+          value: "Старт",
           style: { width: 120 }
         },
         {
           key: "execution_end",
           type: "string",
           disabled: true,
-          value: "Закончил",
+          value: "Стоп",
           style: { width: 120 }
         },
         {
           key: "execution_time",
           type: "string",
           disabled: true,
-          value: "Время выполнения",
-          style: { width: 164 }
+          value: "Время",
+          style: { width: 120 }
         }
       ]
     ];

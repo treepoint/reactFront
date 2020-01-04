@@ -65,7 +65,7 @@ class Tasks extends React.Component {
           type: "string",
           disabled: true,
           value: "Задача",
-          style: { width: 336 }
+          style: { width: 342 }
         },
         {
           key: "category_name",
@@ -82,18 +82,18 @@ class Tasks extends React.Component {
           style: { width: 200 }
         },
         {
-          key: "description",
+          key: "execution_time_day",
           type: "string",
           disabled: true,
-          value: "Описание",
-          style: { width: 220 }
+          value: "Время, за день",
+          style: { width: 124 }
         },
         {
-          key: "execution_time",
+          key: "execution_time_all",
           type: "string",
           disabled: true,
-          value: "Время выполнения",
-          style: { width: 160 }
+          value: "Время, всего",
+          style: { width: 124 }
         }
       ]
     ];
@@ -155,17 +155,17 @@ class Tasks extends React.Component {
           style: {}
         },
         {
-          key: "description",
-          type: "text",
-          disabled: false,
-          value: task.description,
-          style: {}
-        },
-        {
-          key: "execution_time",
+          key: "execution_time_day",
           type: "time",
           disabled: true,
-          value: getTimeFromMins(task.execution_time),
+          value: getTimeFromMins(task.execution_time_day),
+          style: { width: 160 }
+        },
+        {
+          key: "execution_time_all",
+          type: "time",
+          disabled: true,
+          value: getTimeFromMins(task.execution_time_to_day),
           style: { width: 160 }
         }
       ]);

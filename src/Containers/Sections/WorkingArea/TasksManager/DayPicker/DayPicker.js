@@ -55,6 +55,9 @@ class DayPicker extends React.Component {
     if (currentDay > 2) {
       from = -(12 - currentDay);
       to = 12 + from;
+    } else if (currentDay === 0) {
+      from = -(6 - 1);
+      to = 6 + 1;
     } else {
       from = -(6 - currentDay);
       to = 6 + currentDay;
