@@ -59,11 +59,11 @@ export function createUser(user, callback) {
   Axios.post(URL + "/registration", newUser, tokens.getHeaders())
     .then(response => {
       if (typeof response.data.insertId === "number") {
-        callback(true);
+        callback(response);
       }
     })
     .catch(error => {
-      callback(false);
+      callback(error);
     });
 }
 
@@ -81,7 +81,32 @@ export function updateUser(user, callback) {
     return;
   }
 
-  Axios.put(URL + "/" + id, user, headers).then(response => {
-    callback(response.data);
-  });
+  Axios.put(URL + "/" + id, user, headers)
+    .then(response => {
+      if (typeof response.data.affectedRows === "number") {
+        callback(true);
+      }
+    })
+    .catch(error => {
+      callback(false);
+    });
+}
+
+//Удалить пользователя
+export function deleteUser(ID, callback) {
+  let headers = tokens.getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  Axios.delete(URL + "/" + ID, headers)
+    .then(response => {
+      if (typeof response.data.affectedRows === "number") {
+        callback(true);
+      }
+    })
+    .catch(error => {
+      callback(false);
+    });
 }

@@ -13,13 +13,13 @@ const tasksStatusesTypes = require("./modules/tasksStatusesTypes");
  */
 
 //Создание токена
-export function getToken(user) {
-  return tokens.getToken(user);
+export function getToken(user, callback) {
+  tokens.getToken(user, callback);
 }
 
 //Обновить токен
-export function reauth(refreshToken) {
-  return tokens.reauth(refreshToken);
+export function reauth(refreshToken, callback) {
+  tokens.reauth(refreshToken, callback);
 }
 
 /*
@@ -49,6 +49,11 @@ export function createUser(user, callback) {
 //Обновить пользователя
 export function updateUser(user, callback) {
   users.updateUser(user, callback);
+}
+
+//Удалить пользователя
+export function deleteUser(ID, callback) {
+  users.deleteUser(ID, callback);
 }
 
 /*

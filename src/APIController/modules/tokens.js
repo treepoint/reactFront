@@ -18,31 +18,31 @@ export function getHeaders() {
 }
 
 //Создание токена
-export function getToken(user) {
+export function getToken(user, callback) {
   let url = APIURL + "/auth";
 
-  return Axios.post(url, user)
+  Axios.post(url, user)
     .then(response => {
-      return response.data;
+      callback(response.data);
     })
     .catch(error => {
-      return error;
+      callback(error);
     });
 }
 
 //Обновить токен
-export function reauth(refreshToken) {
+export function reauth(refreshToken, callback) {
   let url = APIURL + "/reauth";
 
   //Если есть refresh токен
   if (refreshToken.length !== 0) {
     //Пытаемся обновить данные по нему
-    return Axios.post(url, { refreshToken })
+    Axios.post(url, { refreshToken })
       .then(response => {
-        return response.data;
+        callback(response.data);
       })
       .catch(error => {
-        return error;
+        callback(error);
       });
   }
 }

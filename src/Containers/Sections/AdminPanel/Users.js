@@ -3,7 +3,8 @@ import Table from "../../../Components/Table/Table";
 import {
   getUsers,
   getRoles,
-  updateUser
+  updateUser,
+  deleteUser
 } from "../../../APIController/APIController";
 
 class Users extends React.Component {
@@ -43,7 +44,16 @@ class Users extends React.Component {
   saveRowToDataBase(user, callback) {
     updateUser(user, ok => {
       if (ok) {
-        this.getAllTaskStatuses(callback);
+        this.getUsers(callback);
+      }
+    });
+  }
+
+  //Удалим пользователя
+  deleteRowFromDataBase(user) {
+    deleteUser(user.id, ok => {
+      if (ok) {
+        this.getUsers();
       }
     });
   }
@@ -120,6 +130,7 @@ class Users extends React.Component {
         isResizeble={true}
         isSingleLineMode={true}
         saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+        deleteRow={row => this.deleteRowFromDataBase(row)}
         update={() => this.getUsers()}
       >
         {this.getContent()}

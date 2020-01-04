@@ -52,7 +52,7 @@ class Categories extends React.Component {
   }
 
   //Удалим категорию
-  deleteCategoryFromDataBase(category) {
+  deleteRowFromDataBase(category) {
     deleteCategory(category.id, ok => {
       if (ok) {
         this.getUserCategories();
@@ -125,7 +125,7 @@ class Categories extends React.Component {
         isSingleLineMode={true}
         saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
         addRow={() => this.addCategoryToDataBase()}
-        deleteRow={row => this.deleteCategoryFromDataBase(row)}
+        deleteRow={row => this.deleteRowFromDataBase(row)}
         update={() => this.getUserCategories()}
       >
         {this.getContent()}

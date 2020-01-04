@@ -46,9 +46,7 @@ class Registration extends React.Component {
         //Сохраняем только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
           //Создаем пользователя
-          let promise = createUser(this.state.user);
-
-          promise.then(result => {
+          createUser(this.state.user, result => {
             //Если есть ошибки
             if (typeof result.response !== "undefined") {
               switch (result.response.status) {

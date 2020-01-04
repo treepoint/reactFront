@@ -40,9 +40,7 @@ class Login extends React.Component {
         //Переходим к аутентификации если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
           //Создаем токен
-          let promise = getToken(this.state.user);
-
-          promise.then(result => {
+          getToken(this.state.user, result => {
             //Если есть ошибки
             if (typeof result.response !== "undefined") {
               switch (result.response.status) {

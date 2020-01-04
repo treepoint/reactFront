@@ -53,7 +53,11 @@ class Profile extends React.Component {
           this.props.writeToStore(this.state.user, true, false);
 
           //Обновляем пользователя в базе
-          updateUser(this.state.user.id, this.state.user);
+          updateUser(this.state.user, ok => {
+            if (ok) {
+              this.props.closeModalWindow();
+            }
+          });
         }
       }
     );

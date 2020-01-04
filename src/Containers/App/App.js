@@ -66,9 +66,7 @@ class App extends React.Component {
       return;
     }
 
-    let promise = reauth(refreshToken);
-
-    promise.then(result => {
+    reauth(refreshToken, result => {
       //Если есть ошибки
       if (typeof result.response !== "undefined") {
         return;
