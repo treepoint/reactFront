@@ -1,0 +1,8 @@
+.datePeriodPicker {
+  display: flex;
+  flex-direction: row;
+}
+
+.lable {
+  margin: 20px 4px auto auto;
+}

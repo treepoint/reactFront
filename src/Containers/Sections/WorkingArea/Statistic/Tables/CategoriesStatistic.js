@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../../../../Components/Button/Button";
 import Table from "../../../../../Components/Table/Table";
 import { getCategoriesStatisticByPeriod } from "../../../../../APIController/APIController";
-import DatePicker from "../../../../../Components/DatePicker/DatePicker";
+import DatePeriodPicker from "../../../../../Components/DatePeriodPicker/DatePeriodPicker";
 import {
   getRussianFormatDate,
   getTimeFromMins,
@@ -43,7 +43,7 @@ class TaskStatistic extends React.Component {
   }
 
   //При выборе даты "c"
-  onPickFromDate(dateFrom) {
+  onPickDateFrom(dateFrom) {
     this.setState({ dateFrom });
     //Подтянем статистику за нужный период
     this.getCategoriesStatisticByPeriod(dateFrom, this.state.dateTo);
@@ -52,7 +52,7 @@ class TaskStatistic extends React.Component {
   }
 
   //При выборе даты "до"
-  onPickToDate(dateTo) {
+  onPickDateTo(dateTo) {
     this.setState({ dateTo });
     //Подтянем статистику за нужный период
     this.getCategoriesStatisticByPeriod(this.state.dateFrom, dateTo);
@@ -145,18 +145,16 @@ class TaskStatistic extends React.Component {
     return (
       <React.Fragment>
         <div className="categoriesDatePickersContainer">
-          <DatePicker
-            placeholderText={getRussianFormatDate(this.state.dateFrom)}
+          <DatePeriodPicker
             width="90"
-            date={this.state.dateFrom}
-            onChange={dateFrom => this.onPickFromDate(dateFrom)}
+            placeholderTextDateFrom={getRussianFormatDate(this.state.dateFrom)}
+            dateFrom={this.state.dateFrom}
+            onPickDateFrom={dateFrom => this.onPickDateFrom(dateFrom)}
+            placeholderTextDateTo={getRussianFormatDate(this.state.dateTo)}
+            dateTo={this.state.dateTo}
+            onPickDateTo={dateTo => this.onPickDateTo(dateTo)}
           />
-          <DatePicker
-            placeholderText={getRussianFormatDate(this.state.dateTo)}
-            width="90"
-            date={this.state.dateTo}
-            onChange={dateTo => this.onPickToDate(dateTo)}
-          />
+
           <Button
             value="Текущая неделя"
             onClick={() => this.setCurrentWeekDates()}
