@@ -105,19 +105,29 @@ class Tasks extends React.Component {
 
     this.props.tasksList.forEach(task => {
       //Соберем список категорий
-      let categoriesList = this.props.categoriesList.map(category => {
-        return { value: category.id, children: category.name };
+      let categoriesList = [];
+
+      this.props.categoriesList.forEach(category => {
+        //Добавляем если категория активна, или эта категория проставлена у задачи
+        if (category.close_date === null || category.id === task.category_id) {
+          categoriesList.push({ value: category.id, children: category.name });
+        }
       });
 
-      //добавим текущую
+      //Соберем контент для селекта категорий с указанием текущей
       let categories = { list: categoriesList, current: task.category_id };
 
       //Соберем список статусов
-      let statusesList = this.props.taskStatusesList.map(status => {
-        return { value: status.id, children: status.name };
+      let statusesList = [];
+
+      this.props.taskStatusesList.forEach(status => {
+        //Добавляем если статус активен, или этот статус проставлен у задачи
+        if (status.close_date === null || status.id === task.status_id) {
+          statusesList.push({ value: status.id, children: status.name });
+        }
       });
 
-      //добавим текущий
+      //Соберем контент для селекта статусов с указанием текущего
       let statuses = { list: statusesList, current: task.status_id };
 
       tasks.push([

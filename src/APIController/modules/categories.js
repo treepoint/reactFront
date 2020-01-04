@@ -4,6 +4,19 @@ import { APIURL } from "../Settings";
 const tokens = require("./tokens.js");
 const URL = APIURL + "/categories";
 
+//Получить категорию как объект по ID
+export function getCategoryByID(ID, callback) {
+  let headers = tokens.getHeaders();
+
+  if (headers === null) {
+    return;
+  }
+
+  Axios.get(URL + "/" + ID, headers).then(response => {
+    callback(response.data[0]);
+  });
+}
+
 //Получить все категории пользователя
 export function getUserCategories(callback) {
   let headers = tokens.getHeaders();
@@ -18,19 +31,6 @@ export function getUserCategories(callback) {
     if (Array.isArray(result)) {
       callback(result);
     }
-  });
-}
-
-//Получить категорию как объект по ID
-export function getCategoryByID(ID, callback) {
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  Axios.get(URL + "/" + ID, headers).then(response => {
-    callback(response.data[0]);
   });
 }
 

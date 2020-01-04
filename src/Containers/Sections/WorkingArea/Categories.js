@@ -89,29 +89,32 @@ class Categories extends React.Component {
     ];
 
     this.state.categoriesList.forEach(category => {
-      content.push([
-        {
-          key: "id",
-          type: "hidden",
-          disabled: true,
-          value: category.id,
-          style: {}
-        },
-        {
-          key: "name",
-          type: "string",
-          disabled: false,
-          value: category.name,
-          style: {}
-        },
-        {
-          key: "description",
-          type: "string",
-          disabled: false,
-          value: category.description,
-          style: {}
-        }
-      ]);
+      //Если категории не закрыты — отобразим их
+      if (category.close_date === null) {
+        content.push([
+          {
+            key: "id",
+            type: "hidden",
+            disabled: true,
+            value: category.id,
+            style: {}
+          },
+          {
+            key: "name",
+            type: "string",
+            disabled: false,
+            value: category.name,
+            style: {}
+          },
+          {
+            key: "description",
+            type: "string",
+            disabled: false,
+            value: category.description,
+            style: {}
+          }
+        ]);
+      }
     });
 
     return content;

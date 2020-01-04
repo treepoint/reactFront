@@ -96,41 +96,44 @@ class TaskStatuses extends React.Component {
 
     //Соберем список типов статусов
     this.state.taskStatusesList.forEach(taskStatus => {
-      let taskStatusesTypesList = this.state.taskStatusesTypesList.map(
-        taskStatusType => {
-          return { value: taskStatusType.id, children: taskStatusType.name };
-        }
-      );
+      //Если статусы не закрыты — отобразим их
+      if (taskStatus.close_date === null) {
+        let taskStatusesTypesList = this.state.taskStatusesTypesList.map(
+          taskStatusType => {
+            return { value: taskStatusType.id, children: taskStatusType.name };
+          }
+        );
 
-      //добавим текущую
-      let taskStatusesTypes = {
-        list: taskStatusesTypesList,
-        current: taskStatus.type_id
-      };
+        //добавим текущую
+        let taskStatusesTypes = {
+          list: taskStatusesTypesList,
+          current: taskStatus.type_id
+        };
 
-      content.push([
-        {
-          key: "id",
-          type: "hidden",
-          disabled: true,
-          value: taskStatus.id,
-          style: {}
-        },
-        {
-          key: "name",
-          type: "string",
-          disabled: false,
-          value: taskStatus.name,
-          style: {}
-        },
-        {
-          key: "type_id",
-          type: "select",
-          disabled: false,
-          value: taskStatusesTypes,
-          style: {}
-        }
-      ]);
+        content.push([
+          {
+            key: "id",
+            type: "hidden",
+            disabled: true,
+            value: taskStatus.id,
+            style: {}
+          },
+          {
+            key: "name",
+            type: "string",
+            disabled: false,
+            value: taskStatus.name,
+            style: {}
+          },
+          {
+            key: "type_id",
+            type: "select",
+            disabled: false,
+            value: taskStatusesTypes,
+            style: {}
+          }
+        ]);
+      }
     });
 
     return content;
