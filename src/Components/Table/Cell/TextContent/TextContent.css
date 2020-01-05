@@ -1,7 +1,7 @@
 .textContent {
   padding-top: 6px;
   padding-bottom: 6px;
-  padding-left: 3px;
+  padding-left: 6px;
   white-space: nowrap;
   overflow-x: hidden;
   overflow-y: auto;
@@ -19,9 +19,8 @@
   z-index: 1000;
   position: fixed !important;
   box-shadow: 0px 0px 4px rgb(34, 101, 146);
-  text-overflow: clip;
-  width: max-content !important;
-  white-space: pre;
+  text-overflow: unset;
+  white-space: pre-line;
   resize: vertical;
   max-height: none !important;
 }

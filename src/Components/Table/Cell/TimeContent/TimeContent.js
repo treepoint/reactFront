@@ -14,7 +14,7 @@ class TimeContent extends React.Component {
 
     if (!!this.props.isHeader) {
       style = {
-        width: this.props.width - 7 + "px",
+        width: this.props.width - 9 + "px",
         height: this.props.height - 2 + "px",
         fontWeight: "900",
         background: "rgb(243, 243, 243)",
@@ -22,7 +22,7 @@ class TimeContent extends React.Component {
       };
     } else {
       style = {
-        width: this.props.width - 6 + "px",
+        width: this.props.width - 8 + "px",
         height: this.props.height - 2 + "px",
         fontWeight: "200"
       };

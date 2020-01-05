@@ -85,15 +85,15 @@ class Tasks extends React.Component {
           key: "execution_time_day",
           type: "string",
           disabled: true,
-          value: "Время, за день",
-          style: { width: 124 }
+          value: "Время за день",
+          style: { width: 125 }
         },
         {
           key: "execution_time_all",
           type: "string",
           disabled: true,
           value: "Время, всего",
-          style: { width: 124 }
+          style: { width: 125 }
         }
       ]
     ];
@@ -159,14 +159,14 @@ class Tasks extends React.Component {
           type: "time",
           disabled: true,
           value: getTimeFromMins(task.execution_time_day),
-          style: { width: 160 }
+          style: {}
         },
         {
           key: "execution_time_all",
           type: "time",
           disabled: true,
           value: getTimeFromMins(task.execution_time_to_day),
-          style: { width: 160 }
+          style: {}
         }
       ]);
     });

@@ -97,7 +97,7 @@ class TextContent extends React.Component {
 
     style = {
       fontWeight: "900",
-      width: this.props.width - 5 + "px",
+      width: this.props.width - 8 + "px",
       height: this.props.height - 12 + "px",
       color: "#000"
     };
@@ -115,7 +115,7 @@ class TextContent extends React.Component {
       marginTop: !!this.state.wideEditAreaIsHidden
         ? 0 + "px"
         : -this.props.scrollTop + "px",
-      width: this.props.width - 5 + "px",
+      width: this.props.width - 8 + "px",
       height: this.props.height - 12 + "px",
       background: !!this.props.disabled
         ? "rgb(251, 251, 251)"
@@ -123,7 +123,7 @@ class TextContent extends React.Component {
       fontWeight: !!this.props.style.bold ? "900" : "200",
       fontStyle: !!this.props.style.italic ? "italic" : "normal",
       color: !!this.props.disabled ? "#444" : "#000",
-      minWidth: this.props.width - 5 + "px",
+      minWidth: this.props.width - 8 + "px",
       minHeight: this.props.height - 12 + "px"
     };
   }
