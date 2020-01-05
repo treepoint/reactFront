@@ -1,6 +1,7 @@
 .radioButtonCarousel {
   display: flex;
   flex-direction: row;
+  margin-right: 12px;
 }
 
 .radioButton {
@@ -23,10 +24,11 @@
 }
 
 .radioButton.primary:hover {
-  color: #000;
+  color: #36266b;
 }
 
 .radioButton:hover {
+  color: #36266b;
   background: #f2f2f2;
 }
 

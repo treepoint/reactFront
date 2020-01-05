@@ -1,5 +1,6 @@
 import React from "react";
-import DatePicker from "../DatePicker/DatePicker";
+import DatePicker from "./DatePicker/DatePicker";
+import calendarIcon from "../../Images/icon_calendar.png";
 import "./DatePeriodPicker.css";
 
 class DatePeriodPicker extends React.Component {
@@ -17,16 +18,26 @@ class DatePeriodPicker extends React.Component {
     return (
       <div className="datePeriodPicker">
         <DatePicker
+          className="datePicker left"
           placeholderText={this.props.placeholderTextDateFrom}
           width={this.props.width}
           date={this.props.dateFrom}
           onChange={dateFrom => this.onPickDateFrom(dateFrom)}
         />
         <DatePicker
+          className="datePicker right"
           placeholderText={this.props.placeholderTextDateTo}
-          width={this.props.width}
+          width={this.props.width + 21}
           date={this.props.dateTo}
           onChange={dateTo => this.onPickDateTo(dateTo)}
+        />
+        <div
+          className="datePeriodPickerCalendarIcon"
+          style={{
+            background:
+              "url(" + calendarIcon + ") no-repeat scroll 100% 0 transparent",
+            backgroundSize: "20px 20px"
+          }}
         />
       </div>
     );

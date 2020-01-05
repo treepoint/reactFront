@@ -12,11 +12,11 @@
 }
 
 .datePicker:hover {
-  border: 1px solid rgba(68, 68, 68, 0.73);
+  border-color: rgba(68, 68, 68, 0.73);
 }
 
 .datePicker:active {
-  border: 1px solid #36266b;
+  border-color: #36266b;
   background-color: rgb(240, 240, 240);
 }
 
@@ -25,17 +25,14 @@
   border-color: #000;
 }
 
-.datePicker.chosen {
+.datePicker.left.chosen {
   border: 1px solid #000;
 }
 
-.datePickerCalendarIcon {
-  opacity: 0.3;
-  margin-right: 59px;
-  display: block;
-  width: 20px;
-  margin-left: 112px;
-  margin-top: -25px;
-  height: 20px;
-  position: absolute;
+.datePicker.left {
+  border-radius: 4px 0px 0px 4px;
+}
+
+.datePicker.right {
+  border-radius: 0px 4px 4px 0px;
 }

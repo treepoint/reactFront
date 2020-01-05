@@ -1,8 +1,16 @@
 .datePeriodPicker {
   display: flex;
   flex-direction: row;
+  margin-right: 12px;
 }
 
-.lable {
-  margin: 20px 4px auto auto;
+.datePeriodPickerCalendarIcon {
+  opacity: 0.3;
+  margin-right: 59px;
+  display: block;
+  width: 20px;
+  margin-left: 203px;
+  margin-top: 19px;
+  height: 20px;
+  position: absolute;
 }

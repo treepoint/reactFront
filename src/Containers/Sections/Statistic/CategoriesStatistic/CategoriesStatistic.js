@@ -171,8 +171,9 @@ class TaskStatistic extends React.Component {
     return (
       <React.Fragment>
         <div className="tasksDatePickersContainer">
+          <RadioButtonCarousel items={this.getPeriodCarousel()} />
           <DatePeriodPicker
-            width="90"
+            width={90}
             placeholderTextDateFrom={getRussianFormatDate(this.state.dateFrom)}
             dateFrom={this.state.dateFrom}
             onPickDateFrom={dateFrom => this.onPickDateFrom(dateFrom)}
@@ -180,8 +181,6 @@ class TaskStatistic extends React.Component {
             dateTo={this.state.dateTo}
             onPickDateTo={dateTo => this.onPickDateTo(dateTo)}
           />
-
-          <RadioButtonCarousel items={this.getPeriodCarousel()} />
         </div>
         <Table
           isResizeble={false}

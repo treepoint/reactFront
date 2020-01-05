@@ -104,9 +104,8 @@ class DayPicker extends React.Component {
           onChange={date => this.onPickDate(date)}
           date={this.state.date}
           placeholderText="Указать дату"
-          width="106"
+          width={100}
         />
-
         <RadioButtonCarousel items={this.getDaysMenu()} />
       </div>
     );
