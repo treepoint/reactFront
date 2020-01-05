@@ -83,6 +83,18 @@ class ContextMenu extends React.Component {
     return (
       <div style={{ position: "absolute", top: "51px", left: "71px" }}>
         <TwitterPicker
+          colors={[
+            "#a9d08e", //Нежно зеленый
+            "#bdd7ee", //Небесно голубой
+            "#ffe699", //Клево желтый
+            "#fce4d6", //Противно красный
+            "#F78DA7", //Опасно красный
+            "#d9d9d9", //Серый как твоя жизнь
+            "#74bce5", //Ярко-голубой
+            "#ABB8C3",
+            "#EB144C",
+            "#FFFFFF"
+          ]}
           className={
             !!this.state.isBackgroundColorPickerActive
               ? "twitterPicker"
