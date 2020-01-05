@@ -39,3 +39,8 @@
   height: 20px;
   position: absolute;
 }
+
+.react-datepicker {
+  font-family: "Open Sans", "Source Sans Pro";
+  font-size: 15px;
+}

@@ -40,3 +40,8 @@
 .datePicker.right {
   border-radius: 0px 4px 4px 0px;
 }
+
+.react-datepicker {
+  font-family: "Open Sans", "Source Sans Pro";
+  font-size: 15px;
+}
