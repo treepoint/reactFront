@@ -32,7 +32,14 @@ class TasksStatistic extends React.Component {
           type: "string",
           disabled: true,
           value: "Задача",
-          style: { width: 500 }
+          style: { width: 450 }
+        },
+        {
+          key: "name",
+          type: "string",
+          disabled: true,
+          value: "Категория",
+          style: { width: 300 }
         },
         {
           key: "type",
@@ -51,6 +58,13 @@ class TasksStatistic extends React.Component {
           type: "string",
           disabled: true,
           value: taskStatistic.name,
+          style: {}
+        },
+        {
+          key: "category_name",
+          type: "string",
+          disabled: true,
+          value: taskStatistic.category_name,
           style: {}
         },
         {
