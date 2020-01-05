@@ -108,7 +108,7 @@ class Categories extends React.Component {
           },
           {
             key: "description",
-            type: "string",
+            type: "text",
             disabled: false,
             value: category.description,
             style: {}

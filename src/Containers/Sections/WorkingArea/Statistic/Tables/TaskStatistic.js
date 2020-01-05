@@ -124,14 +124,14 @@ class TaskStatistic extends React.Component {
         {
           key: "name",
           type: "string",
-          disabled: false,
+          disabled: true,
           value: taskStatistic.name,
           style: {}
         },
         {
           key: "type_id",
           type: "time",
-          disabled: false,
+          disabled: true,
           value: getTimeFromMins(taskStatistic.execution_time),
           style: {}
         }

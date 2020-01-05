@@ -3,7 +3,6 @@ import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
 import TextContent from "./TextContent/TextContent";
 import SelectContent from "./SelectContent/SelectContent";
-import StringContent from "./StringContent/StringContent";
 import TimeContent from "./TimeContent/TimeContent";
 import "./Cell.css";
 
@@ -140,12 +139,18 @@ class Cell extends React.Component {
         );
       case "string":
         return (
-          <StringContent
+          <TextContent
             content={this.state.htmlContent}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
+            isStylable={this.props.isStylable}
+            isSingleLineMode={true}
+            style={this.state.style}
+            setStyle={style => {
+              this.setStyle(style);
+            }}
             onChange={content => this.onChange(content)}
           />
         );

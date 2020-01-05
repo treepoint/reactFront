@@ -1,9 +1,8 @@
 import React from "react";
-import { debounce } from "lodash";
 //Подключаем redux
 import { connect } from "react-redux";
 //Подключаем компоненты
-import ContentEditable from "react-contenteditable";
+import TextareaAutosize from "react-autosize-textarea";
 import ContextMenu from "./ContextMenu/ContextMenu";
 import WideEditAreaBlur from "./WideEditAreaBlur/WideEditAreaBlur";
 import "./TextContent.css";
@@ -13,14 +12,36 @@ class TextContent extends React.Component {
     super();
     this.state = {
       contextMenuIsHidden: true,
-      wideEditAreaIsHidden: true
+      wideEditAreaIsHidden: true,
+      isReadOnly: true,
+      content: ""
     };
   }
 
+  componentDidMount() {
+    this.setState({ content: this.props.content });
+  }
+
   //Изменяем контент по вводу
-  onChange = debounce(event => {
-    this.props.onChange(event.target.value);
-  }, 700);
+  onChange(event) {
+    let content = event.target.value;
+
+    if (this.props.isSingleLineMode) {
+      content = content.replace(/\n/g, "");
+    }
+
+    this.setState({ content });
+  }
+
+  onBlur(event) {
+    if (!this.state.isReadOnly) {
+      if (this.state.content !== this.props.content) {
+        this.props.onChange(this.state.content);
+      }
+    }
+
+    this.setWideEditAreaHidden();
+  }
 
   //Обрабатываем изменения стиля контента в ячейке в
   //зависимости от того, что было задано в контекстном меню
@@ -59,7 +80,8 @@ class TextContent extends React.Component {
   //Скроем большую форму редактирования
   setWideEditAreaHidden() {
     this.setState({
-      wideEditAreaIsHidden: true
+      wideEditAreaIsHidden: true,
+      isReadOnly: true
     });
   }
 
@@ -69,7 +91,7 @@ class TextContent extends React.Component {
 
     style = {
       fontWeight: "900",
-      width: this.props.width - 4 + "px",
+      width: this.props.width - 5 + "px",
       height: this.props.height - 12 + "px",
       color: "#000"
     };
@@ -94,26 +116,22 @@ class TextContent extends React.Component {
         : this.props.style.backgroundColor,
       fontWeight: !!this.props.style.bold ? "900" : "200",
       fontStyle: !!this.props.style.italic ? "italic" : "normal",
-      color: !!this.props.disabled ? "#444" : "#000"
+      color: !!this.props.disabled ? "#444" : "#000",
+      minWidth: this.props.width - 5 + "px",
+      minHeight: this.props.height - 12 + "px"
     };
   }
 
-  //Срабатывает при потере фокуса в том числе
-  hideWideEditArea() {
-    this.setState({
-      wideEditAreaIsHidden: true
-    });
-  }
-
   //Срабатывает при двойном клике
-  showWideEditArea() {
+  showWideEditArea(event) {
     if (this.props.disabled || this.props.isHeader) {
       return;
     }
 
     this.setState({
       wideEditAreaIsHidden: false,
-      contextMenuIsHidden: true
+      contextMenuIsHidden: true,
+      isReadOnly: false
     });
   }
 
@@ -128,25 +146,26 @@ class TextContent extends React.Component {
   //Получаем контент ячейки в зависимости от того шапка таблицы это или обычная ячейка
   getCellContent() {
     return (
-      <ContentEditable
-        ref="textarea"
+      <TextareaAutosize
         spellCheck="false"
         className={this.getClassName()}
         style={
           !!this.props.isHeader ? this.getHeaderStyle() : this.getRegularStyle()
         }
         //Задаем контент
-        html={this.props.content}
-        //Задаем редактируемость
+        value={this.state.content}
         disabled={!!this.props.disabled ? true : false}
+        //Задаем редактируемость
+        readOnly={this.state.isReadOnly}
         onChange={event => this.onChange(event)}
         //Обрабатываем двойной клик
         onDoubleClick={event => this.showWideEditArea(event)}
         //Обрабатываем контекстное меню
         onContextMenu={event => this.showContextMenu(event)}
-        //Обрабатываем прокрутку
-        onWheel={event => this.hideAllEditing(event)}
-      ></ContentEditable>
+        //Обрабатываем потерю фокуса
+        onBlur={event => this.onBlur(event)}
+        maxRows={1}
+      />
     );
   }
 
