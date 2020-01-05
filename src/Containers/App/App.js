@@ -14,6 +14,7 @@ import { getModalWindow } from "../../Components/ModalWindow/MODAL_WINDOWS";
 import Header from "../Header/Header";
 import Home from "../Sections/Home/Home";
 import WorkingAreaRouter from "../Sections/WorkingArea/WorkingAreaRouter";
+import StatisticRouter from "../Sections/Statistic/StatisticRouter";
 import About from "../Sections/About/About";
 import AdminPanelRouter from "../Sections/AdminPanel/AdminPanelRouter";
 import Bottom from "../Bottom/Bottom";
@@ -94,6 +95,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/working" component={WorkingAreaRouter} />
+          <Route path="/statistic" component={StatisticRouter} />
           <Route path="/admin" component={AdminPanelRouter} />
           <Route path="/about" component={About} />
         </Switch>
