@@ -22,11 +22,15 @@
 
 .datePicker:focus {
   color: #222;
-  border-color: #000;
+  border-color: #36266b;
 }
 
 .datePicker.left.chosen {
-  border: 1px solid #000;
+  border: 1px solid #36266b;
+}
+
+.datePicker.right.chosen {
+  border: 1px solid #36266b;
 }
 
 .datePicker.left {

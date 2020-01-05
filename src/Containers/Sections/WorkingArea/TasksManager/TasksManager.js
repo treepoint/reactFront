@@ -1,7 +1,7 @@
 import React from "react";
 import Tasks from "./Tables/Tasks";
 import TasksLog from "./Tables/TasksLog";
-import DayPicker from "./DayPicker/DayPicker";
+import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
 import {
   getUserTasksByDate,
   getTasksLogByDate,
@@ -87,7 +87,7 @@ class TasksManager extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <DayPicker onChange={date => this.onPickDate(date)} />
+        <DayPickerCarousel onChange={date => this.onPickDate(date)} />
         <div className="taskContainer">
           {
             /*Таблица с задачами*/

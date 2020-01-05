@@ -1,6 +1,6 @@
 import React from "react";
 import RadioButtonCarousel from "../../../../../Components/RadioButtonCarousel/RadioButtonCarousel";
-import DatePicker from "../../../../../Components/DatePicker/DatePicker";
+import DayPicker from "../../../../../Components/DayPicker/DayPicker";
 import {
   getShortDayNameByID,
   getDDbyDate,
@@ -8,9 +8,9 @@ import {
   getFormatDate,
   revokeDays
 } from "../../../../../Libs/TimeUtils";
-import "./DayPicker.css";
+import "./DayPickerCarousel.css";
 
-class DayPicker extends React.Component {
+class DayPickerCarousel extends React.Component {
   constructor(props) {
     super(props);
     this.state = { date: null };
@@ -99,8 +99,8 @@ class DayPicker extends React.Component {
 
   render() {
     return (
-      <div className="dayPicker">
-        <DatePicker
+      <div className="dayPickerCarousel">
+        <DayPicker
           onChange={date => this.onPickDate(date)}
           date={this.state.date}
           placeholderText="Указать дату"
@@ -112,4 +112,4 @@ class DayPicker extends React.Component {
   }
 }
 
-export default DayPicker;
+export default DayPickerCarousel;
