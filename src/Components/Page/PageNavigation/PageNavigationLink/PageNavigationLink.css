@@ -7,7 +7,7 @@
 }
 
 .pageNavigation.link.current {
-  color: rgb(20, 20, 20);
+  color: #36266b;
   text-decoration: none;
   border-bottom: 1px solid #2b2b2b;
 }

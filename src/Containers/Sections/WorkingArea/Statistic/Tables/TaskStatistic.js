@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../../../../Components/Button/Button";
+import RadioButtonCarousel from "../../../../../Components/RadioButtonCarousel/RadioButtonCarousel";
 import Table from "../../../../../Components/Table/Table";
 import { getTaskStatisticByPeriod } from "../../../../../APIController/APIController";
 import DatePeriodPicker from "../../../../../Components/DatePeriodPicker/DatePeriodPicker";
@@ -141,6 +141,32 @@ class TaskStatistic extends React.Component {
     return content;
   }
 
+  getPeriodCarousel() {
+    let radioButtonItems = [];
+
+    radioButtonItems.push({
+      key: 1,
+      isPrimary: !!this.state.currentPeriod.currentWeak ? true : false,
+      value: "Текущая неделя",
+      onClick: event => this.setCurrentWeekDates(event)
+    });
+
+    radioButtonItems.push({
+      key: 2,
+      isPrimary: !!this.state.currentPeriod.currentMonth ? true : false,
+      value: "Текущий месяц",
+      onClick: event => this.setCurrentMonthDates(event)
+    });
+
+    radioButtonItems.push({
+      key: 3,
+      isPrimary: !!this.state.currentPeriod.previousMonth ? true : false,
+      value: "Прошлый месяц",
+      onClick: event => this.setPreviousMonthDates(event)
+    });
+    return radioButtonItems;
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -155,21 +181,7 @@ class TaskStatistic extends React.Component {
             onPickDateTo={dateTo => this.onPickDateTo(dateTo)}
           />
 
-          <Button
-            value="Текущая неделя"
-            onClick={() => this.setCurrentWeekDates()}
-            isPrimary={!!this.state.currentPeriod.currentWeak ? true : false}
-          />
-          <Button
-            value="Текущий месяц"
-            onClick={() => this.setCurrentMonthDates()}
-            isPrimary={!!this.state.currentPeriod.currentMonth ? true : false}
-          />
-          <Button
-            value="Прошлый месяц"
-            onClick={() => this.setPreviousMonthDates()}
-            isPrimary={!!this.state.currentPeriod.previousMonth ? true : false}
-          />
+          <RadioButtonCarousel items={this.getPeriodCarousel()} />
         </div>
         <Table
           isResizeble={false}

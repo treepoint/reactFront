@@ -1,0 +1,44 @@
+.radioButtonCarousel {
+  display: flex;
+  flex-direction: row;
+}
+
+.radioButton {
+  background-color: rgb(255, 255, 255);
+  padding: 6px 12px;
+  border: 1px solid rgba(138, 138, 138, 0.73);
+  border-left: 0;
+  border-right: 1px solid rgba(138, 138, 138, 0.73);
+  font-family: "Source Sans Pro";
+  font-size: 16px;
+  margin-top: 12px;
+  border-radius: 0;
+  color: #555555;
+  border-width: thin;
+}
+
+.radioButton.primary {
+  color: #36266b;
+  font-weight: bold;
+}
+
+.radioButton.primary:hover {
+  color: #000;
+}
+
+.radioButton:hover {
+  background: #f2f2f2;
+}
+
+.radioButton:active {
+  color: #36266b;
+}
+
+.radioButton.first {
+  border-radius: 4px 0px 0px 4px;
+  border-left: 1px solid rgba(138, 138, 138, 0.73);
+}
+
+.radioButton.last {
+  border-radius: 0px 4px 4px 0px;
+}

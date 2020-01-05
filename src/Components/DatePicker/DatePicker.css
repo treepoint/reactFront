@@ -3,7 +3,7 @@
   font-size: 15px;
   margin-top: 12px;
   margin-right: 12px;
-  height: 34px;
+  height: 30px;
   border-radius: 4px;
   border: 1px solid rgba(138, 138, 138, 0.73);
   padding-left: 12px;
@@ -16,7 +16,7 @@
 }
 
 .datePicker:active {
-  border: 1px solid rgba(68, 68, 68, 0.73);
+  border: 1px solid #36266b;
   background-color: rgb(240, 240, 240);
 }
 
