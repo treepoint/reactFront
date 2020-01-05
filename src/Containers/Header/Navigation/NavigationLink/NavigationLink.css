@@ -18,9 +18,9 @@
   color: rgb(150, 150, 150);
 }
 .navigation.link.current {
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 2px solid #e6e6e6;
 }
 
 .navigation.link.current:hover {
-  border-bottom: 1px solid rgb(173, 173, 173);
+  border-color: rgb(173, 173, 173);
 }
