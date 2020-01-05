@@ -4,11 +4,11 @@ import calendarIcon from "../../Images/icon_calendar.png";
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale } from "react-datepicker";
 import ru from "date-fns/locale/ru";
-import "./DayPicker.css";
+import "./DatePickerButton.css";
 
 registerLocale("ru", ru);
 
-class DatePicker extends React.Component {
+class DatePickerButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = { date: null };
@@ -24,7 +24,7 @@ class DatePicker extends React.Component {
   }
 
   render() {
-    let className = "dayPicker";
+    let className = "datePickerButton";
     let selected = null;
 
     if (this.props.date === this.state.date) {
@@ -43,7 +43,7 @@ class DatePicker extends React.Component {
           dateFormat="dd.MM.yyyy"
         />
         <div
-          className="dayPickerCalendarIcon"
+          className="datePickerButtonCalendarIcon"
           style={{
             background:
               "url(" + calendarIcon + ") no-repeat scroll 100% 0 transparent",
@@ -55,4 +55,4 @@ class DatePicker extends React.Component {
   }
 }
 
-export default DatePicker;
+export default DatePickerButton;

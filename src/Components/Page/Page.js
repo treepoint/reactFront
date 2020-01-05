@@ -13,8 +13,10 @@ class Page extends React.Component {
   //Обрабатываем скролл контента
   //Нужно для правильного позиционирования элементов в таблицах
   handleVerticalScroll() {
-    this.props.setScrollTop(this._scrollBarRef.scrollTop);
-    this.props.setScrollLeft(this._scrollBarRef.scrollLeft);
+    if (this._scrollBarRef !== null) {
+      this.props.setScrollTop(this._scrollBarRef.scrollTop);
+      this.props.setScrollLeft(this._scrollBarRef.scrollLeft);
+    }
   }
 
   render() {
@@ -32,7 +34,7 @@ class Page extends React.Component {
           ref={ref => {
             this._scrollBarRef = ref;
           }}
-          onScrollStop={event => this.handleVerticalScroll(event)}
+          onScrollStop={() => this.handleVerticalScroll()}
         >
           <PageContent
             isAdmin={this.props.isAdmin}

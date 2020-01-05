@@ -1,6 +1,6 @@
 import React from "react";
 import RadioButtonCarousel from "../../../../../Components/RadioButtonCarousel/RadioButtonCarousel";
-import DayPicker from "../../../../../Components/DayPicker/DayPicker";
+import DatePickerButton from "../../../../../Components/DatePickerButton/DatePickerButton";
 import {
   getShortDayNameByID,
   getDDbyDate,
@@ -100,7 +100,7 @@ class DayPickerCarousel extends React.Component {
   render() {
     return (
       <div className="dayPickerCarousel">
-        <DayPicker
+        <DatePickerButton
           onChange={date => this.onPickDate(date)}
           date={this.state.date}
           placeholderText="Указать дату"
