@@ -143,6 +143,14 @@ class Tasks extends React.Component {
       //Соберем контент для селекта статусов с указанием текущего
       let statuses = { list: statusesList, current: task.status_id };
 
+      let name_style = {};
+
+      if (task.name_style !== null) {
+        try {
+          name_style = JSON.parse(task.name_style);
+        } catch {}
+      }
+
       content.push([
         {
           key: "id",
@@ -156,7 +164,7 @@ class Tasks extends React.Component {
           type: "string",
           disabled: false,
           value: task.name,
-          style: {}
+          style: name_style
         },
         {
           key: "category_id",

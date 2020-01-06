@@ -44,12 +44,27 @@ class Row extends React.Component {
   }
 
   //Обрабатываем изменение контента
-  onChange(content, index) {
+  onChangeValue(content, index) {
     //Получим текущий массив, содержащий значения всех ячеек
     let rowContent = this.props.rowsContent;
 
     //Обновим в нем нужное значение
     rowContent[index].value = content;
+
+    //Добавим его в state
+    this.setState({ rowContent });
+
+    //Передадим выше, для сохранения
+    this.props.saveRow(rowContent);
+  }
+
+  //Обрабатываем изменения стиля контента в ячейке
+  onChangeStyle(style, index) {
+    //Получим текущий массив, содержащий значения всех ячеек
+    let rowContent = this.props.rowsContent;
+
+    //Обновим в нем нужное значение
+    rowContent[index].style = style;
 
     //Добавим его в state
     this.setState({ rowContent });
@@ -99,7 +114,8 @@ class Row extends React.Component {
           changeWidth={width => this.changeWidth(width, index)}
           changeHeight={height => this.changeHeight(height)}
           stopChangeDimensions={() => this.stopChangeDimensions()}
-          onChange={content => this.onChange(content, index)}
+          onChangeValue={content => this.onChangeValue(content, index)}
+          onChangeStyle={style => this.onChangeStyle(style, index)}
         />
       );
     });

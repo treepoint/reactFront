@@ -14,35 +14,35 @@ class TextContent extends React.Component {
       contextMenuIsHidden: true,
       wideEditAreaIsHidden: true,
       isReadOnly: true,
-      content: ""
+      value: ""
     };
   }
 
   componentDidMount() {
-    this.setState({ content: this.props.content });
+    this.setState({ value: this.props.value });
   }
 
   componentDidUpdate() {
-    if (this.state.content !== this.props.content && this.state.isReadOnly) {
-      this.setState({ content: this.props.content });
+    if (this.state.value !== this.props.value && this.state.isReadOnly) {
+      this.setState({ value: this.props.value });
     }
   }
 
   //Изменяем контент по вводу
   onChange(event) {
-    let content = event.target.value;
+    let value = event.target.value;
 
     if (this.props.isSingleLineMode) {
-      content = content.replace(/\n/g, "");
+      value = value.replace(/\n/g, "");
     }
 
-    this.setState({ content });
+    this.setState({ value });
   }
 
-  onBlur(event) {
+  onBlur() {
     if (!this.state.isReadOnly) {
-      if (this.state.content !== this.props.content) {
-        this.props.onChange(this.state.content);
+      if (this.state.value !== this.props.value) {
+        this.props.onChangeValue(this.state.value);
       }
     }
 
@@ -51,8 +51,8 @@ class TextContent extends React.Component {
 
   //Обрабатываем изменения стиля контента в ячейке в
   //зависимости от того, что было задано в контекстном меню
-  setStyle(style) {
-    this.props.setStyle(style);
+  onChangeStyle(style) {
+    this.props.onChangeStyle(style);
   }
 
   //Срабатывает при вызове контекстного меню
@@ -159,7 +159,7 @@ class TextContent extends React.Component {
           !!this.props.isHeader ? this.getHeaderStyle() : this.getRegularStyle()
         }
         //Задаем контент
-        value={this.state.content}
+        value={this.state.value}
         disabled={!!this.props.disabled ? true : false}
         //Задаем редактируемость
         readOnly={this.state.isReadOnly}
@@ -183,7 +183,7 @@ class TextContent extends React.Component {
           scrollLeft={this.props.scrollLeft}
           cellStyle={this.props.style}
           setContextMenuHidden={event => this.setContextMenuHidden(event)}
-          setCellStyle={style => this.setStyle(style)}
+          onChangeStyle={style => this.onChangeStyle(style)}
           onWheel={event => this.setContextMenuHidden(event)}
         />
       );

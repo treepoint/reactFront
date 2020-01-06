@@ -11,10 +11,7 @@ class Cell extends React.Component {
     super();
     this.state = {
       uuid: "",
-      //Текущий контент ячейки
-      currentContent: " ",
-      //Пришедший из вне контент ячейки
-      initContent: " ",
+      value: " ",
       //Тип контента
       type: "",
       //Стиль по умолчанию
@@ -33,11 +30,19 @@ class Cell extends React.Component {
     //Задаем редактируемость контента, пока только при инициализации
     this.updateContentDisabled();
 
-    this.updateContent();
+    //Задаем стиль контента
+    this.updateStyleContent();
+
+    //Обновляем значение в ячейке
+    this.updateValue();
   }
 
   componentDidUpdate() {
-    this.updateContent();
+    //Задаем стиль контента
+    this.updateStyleContent();
+
+    //Обновляем значение в ячейке
+    this.updateValue();
   }
 
   //Задаем тип контента
@@ -54,23 +59,47 @@ class Cell extends React.Component {
     }
   }
 
-  //Обновляем контент в ячейке
-  updateContent() {
+  //Задаем стиль контента
+  updateStyleContent() {
+    if (
+      typeof this.props.content.style === "undefined" ||
+      this.props.content.style === null
+    ) {
+      return null;
+    }
+
+    let style = this.state.style;
+
+    if (typeof this.props.content.style.bold !== "undefined") {
+      style.bold = this.props.content.style.bold;
+    }
+    if (typeof this.props.content.style.italic !== "undefined") {
+      style.italic = this.props.content.style.italic;
+    }
+    if (typeof this.props.content.style.backgroundColor !== "undefined") {
+      style.backgroundColor = this.props.content.style.backgroundColor;
+    }
+
+    if (style !== this.state.style) {
+      this.setState({ style });
+    }
+  }
+
+  //Обновляем значение в ячейке
+  updateValue() {
     if (typeof this.props.content !== "undefined") {
-      let initContent = this.props.content.value;
+      let value = this.props.content.value;
 
       //Если тип поля — текст, то на всякий случай конвертим в текст
       if (
         this.props.content.type === "text" ||
         this.props.content.type === "string"
       ) {
-        initContent = String(initContent);
+        value = String(value);
       }
 
-      if (initContent !== this.state.initContent) {
-        //Задаем сам контент
-        this.setState({ initContent });
-        this.setState({ currentContent: initContent });
+      if (value !== this.state.value) {
+        this.setState({ value });
       }
     }
   }
@@ -103,13 +132,13 @@ class Cell extends React.Component {
   }
 
   //Обрабатываем изменения стиля контента в ячейке
-  setStyle(style) {
-    this.setState({ style });
+  onChangeStyle(style) {
+    this.props.onChangeStyle({ style });
   }
 
   //Обрабатываем изменения контента в ячейке
-  onChange(content) {
-    this.props.onChange(content);
+  onChangeValue(content) {
+    this.props.onChangeValue(content);
   }
 
   //Обрабатываем изменение размеров
@@ -142,19 +171,19 @@ class Cell extends React.Component {
       case "time":
         return (
           <TimeContent
-            content={this.state.currentContent}
+            value={this.state.value}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
-            onChange={content => this.onChange(content)}
+            onChangeValue={value => this.onChangeValue(value)}
           />
         );
       //Строки
       case "string":
         return (
           <TextContent
-            content={this.state.currentContent}
+            value={this.state.value}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
@@ -162,38 +191,38 @@ class Cell extends React.Component {
             isStylable={this.props.isStylable}
             isSingleLineMode={true}
             style={this.state.style}
-            setStyle={style => {
-              this.setStyle(style);
+            onChangeStyle={style => {
+              this.onChangeStyle(style);
             }}
-            onChange={content => this.onChange(content)}
+            onChangeValue={value => this.onChangeValue(value)}
           />
         );
       //Многострочный текст
       case "text":
         return (
           <TextContent
-            content={this.state.currentContent}
+            value={this.state.value}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
             isStylable={this.props.isStylable}
             style={this.state.style}
-            setStyle={style => {
-              this.setStyle(style);
+            onChangeStyle={style => {
+              this.onChangeStyle(style);
             }}
-            onChange={content => this.onChange(content)}
+            onChangeValue={value => this.onChangeValue(value)}
           />
         );
       //Выпадающий список
       case "select":
         return (
           <SelectContent
-            content={this.state.currentContent}
+            value={this.state.value}
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
-            onChange={content => this.onChange(content)}
+            onChangeValue={value => this.onChangeValue(value)}
           />
         );
 

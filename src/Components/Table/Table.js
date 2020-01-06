@@ -152,9 +152,11 @@ class Table extends React.Component {
           break;
         case "string":
           object[item.key] = item.value;
+          object[item.key + "_style"] = item.style.style;
           break;
         case "text":
           object[item.key] = item.value;
+          object[item.key + "_style"] = item.style.style;
           break;
         case "select":
           object[item.key] = item.value.current;

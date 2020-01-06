@@ -7,7 +7,7 @@ class SelectContent extends React.Component {
   constructor() {
     super();
     this.state = {
-      content: { list: [] }
+      value: { list: [] }
     };
   }
 
@@ -20,21 +20,19 @@ class SelectContent extends React.Component {
   }
 
   updateContent() {
-    if (
-      JSON.stringify(this.state.content) !== JSON.stringify(this.props.content)
-    ) {
-      this.setState({ content: this.props.content });
+    if (JSON.stringify(this.state.value) !== JSON.stringify(this.props.value)) {
+      this.setState({ value: this.props.value });
     }
   }
 
-  onChange(event) {
-    let content = this.state.content;
-    content.current = Number(event.target.value);
-    this.props.onChange(content);
+  onChangeValue(event) {
+    let value = this.state.value;
+    value.current = Number(event.target.value);
+    this.props.onChangeValue(value);
   }
 
   getOptions() {
-    let options = this.state.content.list.map((option, index) => {
+    let options = this.state.value.list.map((option, index) => {
       //нам сюда может прийти как html, так и строка. В любом случае конвертим в строку
       return (
         <option value={option.value} key={index}>
@@ -50,7 +48,7 @@ class SelectContent extends React.Component {
     return (
       <select
         //Задаем значение по умолчанию
-        value={this.state.content.current}
+        value={this.state.value.current}
         className="selectContent"
         disabled={!!this.props.disabled ? true : false}
         style={{
@@ -60,7 +58,7 @@ class SelectContent extends React.Component {
             "url(" + IconExpand + ") no-repeat scroll 98% 50% transparent",
           backgroundSize: "20px 20px"
         }}
-        onChange={event => this.onChange(event)}
+        onChange={event => this.onChangeValue(event)}
       >
         {this.getOptions()}
       </select>

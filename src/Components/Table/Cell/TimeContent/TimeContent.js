@@ -4,8 +4,8 @@ import TimeField from "react-simple-timefield";
 import "./TimeContent.css";
 
 class TimeContent extends React.Component {
-  onChange = debounce(event => {
-    this.props.onChange(event.target.value);
+  onChangeValue = debounce(event => {
+    this.props.onChangeValue(event.target.value);
   }, 700);
 
   //Получаем стиль ячейки заголовка на основании стиля контента
@@ -34,11 +34,11 @@ class TimeContent extends React.Component {
   render() {
     return (
       <TimeField
-        value={this.props.content}
+        value={this.props.value}
         disabled={!!this.props.disabled ? true : false}
         className="timeContent"
         style={this.getStyle()}
-        onChange={event => this.onChange(event)}
+        onChange={event => this.onChangeValue(event)}
       />
     );
   }

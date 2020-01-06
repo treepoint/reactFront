@@ -9,6 +9,7 @@ import ContextMenuBlur from "./ContextMenuBlur/ContextMenuBlur";
 import iconBold from "../../../../../Images/icon_bold.png";
 import iconItalic from "../../../../../Images/icon_italic.png";
 import iconBackgroundColor from "../../../../../Images/icon_backgroundColor.png";
+import iconBroom from "../../../../../Images/icon_broom.png";
 import "./ContextMenu.css";
 
 class ContextMenu extends React.Component {
@@ -37,7 +38,22 @@ class ContextMenu extends React.Component {
       cellStyle: newState
     });
 
-    this.props.setCellStyle(newState);
+    this.props.onChangeStyle(newState);
+  }
+
+  clearCellStyle(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.setState({
+      cellStyle: {}
+    });
+
+    this.props.onChangeStyle({
+      bold: false,
+      italic: false,
+      backgroundColor: "#ffffff"
+    });
   }
 
   //Выставляем жирное начертание
@@ -157,6 +173,10 @@ class ContextMenu extends React.Component {
             isPressed={this.state.isBackgroundColorPickerActive}
             onClick={event => this.showBackgroundColorPicker(event)}
           />
+          <Action
+            icon={iconBroom}
+            onClick={event => this.clearCellStyle(event)}
+          />
           {this.getBackgroundColorPicker()}
         </div>
       </React.Fragment>
@@ -166,7 +186,8 @@ class ContextMenu extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    scrollTop: state.scrollTop
+    scrollTop: state.scrollTop,
+    scrollLeft: state.scrollLeft
   };
 };
 
