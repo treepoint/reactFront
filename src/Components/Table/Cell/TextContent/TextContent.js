@@ -18,14 +18,14 @@ class TextContent extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.setState({ content: this.props.content });
+  }
+
   componentDidUpdate() {
     if (this.state.content !== this.props.content && this.state.isReadOnly) {
       this.setState({ content: this.props.content });
     }
-  }
-
-  componentDidMount() {
-    this.setState({ content: this.props.content });
   }
 
   //Изменяем контент по вводу

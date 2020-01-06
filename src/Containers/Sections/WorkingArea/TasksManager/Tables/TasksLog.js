@@ -95,7 +95,10 @@ class TasksLog extends React.Component {
       });
 
       //добавим текущую
-      let tasks = { list: tasksList, current: tasksLogList.task_id };
+      let tasks = {
+        list: tasksList,
+        current: tasksLogList.task_id
+      };
 
       content.push([
         { key: "id", type: "hidden", value: tasksLogList.id, style: {} },

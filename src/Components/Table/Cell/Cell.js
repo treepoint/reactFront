@@ -10,53 +10,67 @@ class Cell extends React.Component {
   constructor() {
     super();
     this.state = {
-      //HTML контент ячейки
-      htmlContent: " ",
-      initHtmlContent: " ",
-      typeContent: "",
-      disabled: true,
       uuid: "",
+      //Текущий контент ячейки
+      currentContent: " ",
+      //Пришедший из вне контент ячейки
+      initContent: " ",
+      //Тип контента
+      type: "",
       //Стиль по умолчанию
-      style: { bold: false, italic: false, backgroundColor: "#ffffff" }
+      style: { bold: false, italic: false, backgroundColor: "#ffffff" },
+      disabled: true
     };
   }
 
   componentDidMount() {
-    this.updateContent();
-
     //Генерируем UUID для ячейки
     this.setState({ uuid: uuid() });
+
+    //Задаем тип контента, пока только при инициализации
+    this.updateTypeContent();
+
+    //Задаем редактируемость контента, пока только при инициализации
+    this.updateContentDisabled();
+
+    this.updateContent();
   }
 
   componentDidUpdate() {
     this.updateContent();
   }
 
+  //Задаем тип контента
+  updateTypeContent() {
+    if (typeof this.props.content.type !== "undefined") {
+      this.setState({ type: this.props.content.type });
+    }
+  }
+
+  //Задаем редактируемость контента
+  updateContentDisabled() {
+    if (typeof this.props.content.disabled !== "undefined") {
+      this.setState({ disabled: this.props.content.disabled });
+    }
+  }
+
   //Обновляем контент в ячейке
   updateContent() {
-    if (typeof this.props.initHtmlContent !== "undefined") {
-      let initHtmlContent;
+    if (typeof this.props.content !== "undefined") {
+      let initContent = this.props.content.value;
 
       //Если тип поля — текст, то на всякий случай конвертим в текст
       if (
-        this.state.typeContent === "text" ||
-        this.state.typeContent === "string"
+        this.props.content.type === "text" ||
+        this.props.content.type === "string"
       ) {
-        initHtmlContent = String(this.props.initHtmlContent.value);
-      } else {
-        initHtmlContent = this.props.initHtmlContent.value;
+        initContent = String(initContent);
       }
 
-      if (initHtmlContent !== this.state.initHtmlContent) {
+      if (initContent !== this.state.initContent) {
         //Задаем сам контент
-        this.setState({ initHtmlContent });
-        this.setState({ htmlContent: initHtmlContent });
-        //Задаем тип контента
-        this.setState({ typeContent: this.props.initHtmlContent.type });
-        //Задаем редактируемость контента
-        if (typeof this.props.initHtmlContent.disabled !== "undefined") {
-          this.setState({ disabled: this.props.initHtmlContent.disabled });
-        }
+        this.setState({ initContent });
+        this.setState({ currentContent: initContent });
       }
     }
   }
@@ -123,13 +137,12 @@ class Cell extends React.Component {
   }
 
   getCellContent() {
-    //Если тип контента просто текст — отображаем просто текст
-
-    switch (this.state.typeContent) {
+    switch (this.state.type) {
+      //Время в формате 00:00
       case "time":
         return (
           <TimeContent
-            content={this.state.htmlContent}
+            content={this.state.currentContent}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
@@ -137,10 +150,11 @@ class Cell extends React.Component {
             onChange={content => this.onChange(content)}
           />
         );
+      //Строки
       case "string":
         return (
           <TextContent
-            content={this.state.htmlContent}
+            content={this.state.currentContent}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
@@ -154,10 +168,11 @@ class Cell extends React.Component {
             onChange={content => this.onChange(content)}
           />
         );
+      //Многострочный текст
       case "text":
         return (
           <TextContent
-            content={this.state.htmlContent}
+            content={this.state.currentContent}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
             width={this.props.width}
@@ -170,11 +185,11 @@ class Cell extends React.Component {
             onChange={content => this.onChange(content)}
           />
         );
-      //Если выпадающий список — используем выпадающие списки
+      //Выпадающий список
       case "select":
         return (
           <SelectContent
-            content={this.state.htmlContent}
+            content={this.state.currentContent}
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
@@ -189,7 +204,7 @@ class Cell extends React.Component {
 
   render() {
     //Если тип контента — скрытый, вообще ничего не рисуем
-    if (this.state.typeContent === "hidden") {
+    if (this.state.type === "hidden") {
       return null;
     }
 
