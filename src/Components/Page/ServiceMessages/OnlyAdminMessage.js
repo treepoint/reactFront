@@ -1,6 +1,6 @@
 import React from "react";
 //Подключаем модалки
-import { login } from "../../ModalWindow/MODAL_WINDOWS";
+import { login } from "../../GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 import AnchorModalWindow from "../../AnchorModalWindow/AnchorModalWindow";
 //Импортируем компоненты
 import Anchor from "../../Anchor/Anchor";

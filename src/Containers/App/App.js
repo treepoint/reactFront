@@ -9,7 +9,7 @@ import { bake_cookie, read_cookie } from "../../Libs/Sfcookies";
 //Подключаем API
 import { getUserByID, reauth } from "../../APIController/APIController";
 //Подключаем модальные окна
-import { getModalWindow } from "../../Components/ModalWindow/MODAL_WINDOWS";
+import { getGlobalModalWindow } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Подключаем компоненты и контейнеры
 import Header from "../Header/Header";
 import Home from "../Sections/Home/Home";
@@ -99,7 +99,7 @@ class App extends React.Component {
           <Route path="/admin" component={AdminPanelRouter} />
           <Route path="/about" component={About} />
         </Switch>
-        {getModalWindow(
+        {getGlobalModalWindow(
           this.props.modalWindowState,
           this.props.modalWindowName
         )}

@@ -5,7 +5,7 @@ import { setModalWindowName } from "../../Store/actions";
 //Подключаем API
 import { createUser } from "../../APIController/APIController";
 //Подключаем модалки
-import { login } from "../../Components/ModalWindow/MODAL_WINDOWS";
+import { login } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";

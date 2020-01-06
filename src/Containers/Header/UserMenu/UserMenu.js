@@ -8,7 +8,7 @@ import {
   registration,
   login,
   profile
-} from "../../../Components/ModalWindow/MODAL_WINDOWS";
+} from "../../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 
 class UserMenu extends React.Component {
   render() {

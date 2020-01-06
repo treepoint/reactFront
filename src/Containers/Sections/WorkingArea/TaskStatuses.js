@@ -8,10 +8,16 @@ import {
   getAllTaskStatusesTypes
 } from "../../../APIController/APIController";
 
+import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
+
 class TaskStatuses extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { taskStatusesList: [], taskStatusesTypesList: [] };
+    this.state = {
+      taskStatusesList: [],
+      taskStatusesTypesList: [],
+      deleteModalWindow: { isHidden: true, row: null }
+    };
   }
 
   componentDidMount() {
@@ -57,9 +63,17 @@ class TaskStatuses extends React.Component {
     });
   }
 
+  closeDeleteModal() {
+    this.setState({ deleteModalWindow: { isHidden: true, row: null } });
+  }
+
+  showDeleteModal(row) {
+    this.setState({ deleteModalWindow: { isHidden: false, row } });
+  }
+
   //Удалим строку
-  deleteRowFromDataBase(taskStatus) {
-    deleteStatus(taskStatus.id, ok => {
+  deleteRowFromDataBase() {
+    deleteStatus(this.state.deleteModalWindow.row.id, ok => {
       if (ok) {
         this.getAllTaskStatuses();
       }
@@ -141,15 +155,24 @@ class TaskStatuses extends React.Component {
 
   render() {
     return (
-      <Table
-        isResizeble={true}
-        addRow={row => this.addRowToDataBase(row)}
-        saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
-        deleteRow={row => this.deleteRowFromDataBase(row)}
-        update={() => this.getAllTaskStatuses()}
-      >
-        {this.getContent()}
-      </Table>
+      <React.Fragment>
+        <ConfirmModalWindow
+          title="Удалить статус?"
+          message="Статус останется назначенным для текущих задач, но будет недоступен для новых"
+          isHidden={this.state.deleteModalWindow.isHidden}
+          onCancel={() => this.closeDeleteModal()}
+          onConfirm={() => this.deleteRowFromDataBase()}
+        />
+        <Table
+          isResizeble={true}
+          addRow={row => this.addRowToDataBase(row)}
+          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+          deleteRow={row => this.showDeleteModal(row)}
+          update={() => this.getAllTaskStatuses()}
+        >
+          {this.getContent()}
+        </Table>
+      </React.Fragment>
     );
   }
 }

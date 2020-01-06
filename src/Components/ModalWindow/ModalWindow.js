@@ -1,35 +1,25 @@
 import React from "react";
-//Подключаем redux
-import { connect } from "react-redux";
-import { setModalWindowState } from "../../Store/actions";
 //Подключаем CSS
 import "./ModalWindow.css";
 
 class ModalWindow extends React.Component {
+  getHidden() {
+    if (this.props.isHidden === true) {
+      return " hidden";
+    } else return "";
+  }
+
   render() {
     return (
       <div
-        className="modalWindowBlur"
-        onClick={event => this.props.hideModalWindow(event)}
+        className={"modalWindowBlur" + this.getHidden()}
+        onClick={event => this.props.onClose(event)}
       >
-        <div className="modalWindowClose" />
-        <div className="modalWindow">{this.props.contentToWrap}</div>
+        <div className={"modalWindowClose" + this.getHidden()} />
+        <div className="modalWindow">{this.props.children}</div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    hideModalWindow: event => {
-      event.stopPropagation();
-      event.preventDefault();
-      dispatch(setModalWindowState(false));
-    }
-  };
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(ModalWindow);
+export default ModalWindow;
