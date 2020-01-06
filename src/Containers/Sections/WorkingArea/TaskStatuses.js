@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../../../Components/Table/Table";
+import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
 import {
   getAllTaskStatuses,
   updateStatus,
@@ -7,8 +8,6 @@ import {
   deleteStatus,
   getAllTaskStatusesTypes
 } from "../../../APIController/APIController";
-
-import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
 
 class TaskStatuses extends React.Component {
   constructor(props) {
@@ -63,14 +62,6 @@ class TaskStatuses extends React.Component {
     });
   }
 
-  closeDeleteModal() {
-    this.setState({ deleteModalWindow: { isHidden: true, row: null } });
-  }
-
-  showDeleteModal(row) {
-    this.setState({ deleteModalWindow: { isHidden: false, row } });
-  }
-
   //Удалим строку
   deleteRowFromDataBase() {
     deleteStatus(this.state.deleteModalWindow.row.id, ok => {
@@ -78,6 +69,16 @@ class TaskStatuses extends React.Component {
         this.getAllTaskStatuses();
       }
     });
+  }
+
+  //Закрыть модальное окно
+  closeDeleteModal() {
+    this.setState({ deleteModalWindow: { isHidden: true, row: null } });
+  }
+
+  //Показать модальное окно
+  showDeleteModal(row) {
+    this.setState({ deleteModalWindow: { isHidden: false, row } });
   }
 
   //Получим контент для таблицы
@@ -158,7 +159,7 @@ class TaskStatuses extends React.Component {
       <React.Fragment>
         <ConfirmModalWindow
           title="Удалить статус?"
-          message="Статус останется назначенным для текущих задач, но будет недоступен для новых"
+          message="Статус останется назначенным для текущих и выполненных задач, но будет недоступен для новых"
           isHidden={this.state.deleteModalWindow.isHidden}
           onCancel={() => this.closeDeleteModal()}
           onConfirm={() => this.deleteRowFromDataBase()}

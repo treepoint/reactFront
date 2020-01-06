@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../../../Components/Table/Table";
+import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
 import {
   getUserCategories,
   updateCategory,
@@ -10,7 +11,10 @@ import {
 class Categories extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { categoriesList: [] };
+    this.state = {
+      categoriesList: [],
+      deleteModalWindow: { isHidden: true, row: null }
+    };
   }
 
   componentDidMount() {
@@ -52,12 +56,22 @@ class Categories extends React.Component {
   }
 
   //Удалим категорию
-  deleteRowFromDataBase(category) {
-    deleteCategory(category.id, ok => {
+  deleteRowFromDataBase() {
+    deleteCategory(this.state.deleteModalWindow.row.id, ok => {
       if (ok) {
         this.getUserCategories();
       }
     });
+  }
+
+  //Закрыть модальное окно
+  closeDeleteModal() {
+    this.setState({ deleteModalWindow: { isHidden: true, row: null } });
+  }
+
+  //Показать модальное окно
+  showDeleteModal(row) {
+    this.setState({ deleteModalWindow: { isHidden: false, row } });
   }
 
   //Соберем таблицу для отображения
@@ -122,17 +136,26 @@ class Categories extends React.Component {
 
   render() {
     return (
-      <Table
-        isEditable={true}
-        isResizeble={true}
-        isSingleLineMode={true}
-        saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
-        addRow={() => this.addCategoryToDataBase()}
-        deleteRow={row => this.deleteRowFromDataBase(row)}
-        update={() => this.getUserCategories()}
-      >
-        {this.getContent()}
-      </Table>
+      <React.Fragment>
+        <ConfirmModalWindow
+          title="Удалить категорию?"
+          message="Категория останется назначенной для текущих и выполненных задач, но будет недоступна для новых"
+          isHidden={this.state.deleteModalWindow.isHidden}
+          onCancel={() => this.closeDeleteModal()}
+          onConfirm={() => this.deleteRowFromDataBase()}
+        />
+        <Table
+          isEditable={true}
+          isResizeble={true}
+          isSingleLineMode={true}
+          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+          addRow={() => this.addCategoryToDataBase()}
+          deleteRow={row => this.showDeleteModal(row)}
+          update={() => this.getUserCategories()}
+        >
+          {this.getContent()}
+        </Table>
+      </React.Fragment>
     );
   }
 }

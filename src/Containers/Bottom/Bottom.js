@@ -5,7 +5,7 @@ class Bottom extends React.Component {
   render() {
     return (
       <div className="bottom">
-        <BroadCastMessage message="Веб-приложение находится в разработке. Номер сборки: 0.3.7" />
+        <BroadCastMessage message="Веб-приложение находится в разработке. Номер сборки: 0.4.0" />
       </div>
     );
   }

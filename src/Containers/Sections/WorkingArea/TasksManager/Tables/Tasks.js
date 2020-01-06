@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../../../../../Components/Table/Table";
+import ConfirmModalWindow from "../../../../../Components/ConfirmModalWindow/ConfirmModalWindow";
 import {
   updateTask,
   createTask,
@@ -11,6 +12,13 @@ import {
 } from "../../../../../Libs/TimeUtils";
 
 class Tasks extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      deleteModalWindow: { isHidden: true, row: null }
+    };
+  }
+
   //Сохраним задачу в ДБ
   addRowToDataBase() {
     let task = {
@@ -40,13 +48,23 @@ class Tasks extends React.Component {
   }
 
   //Удалим задачу из ДБ
-  deleteRowFromDataBase(task) {
-    deleteTask(task.id, ok => {
+  deleteRowFromDataBase() {
+    deleteTask(this.state.deleteModalWindow.row.id, ok => {
       if (ok) {
         this.props.getTasks();
         this.props.getTasksLog();
       }
     });
+  }
+
+  //Закрыть модальное окно
+  closeDeleteModal() {
+    this.setState({ deleteModalWindow: { isHidden: true, row: null } });
+  }
+
+  //Показать модальное окно
+  showDeleteModal(row) {
+    this.setState({ deleteModalWindow: { isHidden: false, row } });
   }
 
   //Соберем таблицу для отображения задач
@@ -176,17 +194,26 @@ class Tasks extends React.Component {
 
   render() {
     return (
-      <Table
-        isEditable={true}
-        isResizeble={true}
-        isStylable={true}
-        saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
-        update={() => this.props.getTasks()}
-        addRow={() => this.addRowToDataBase()}
-        deleteRow={row => this.deleteRowFromDataBase(row)}
-      >
-        {this.getContent()}
-      </Table>
+      <React.Fragment>
+        <ConfirmModalWindow
+          title="Удалить задачу?"
+          message="Вместе с задачей будут удалены все записи из лога и статистики"
+          isHidden={this.state.deleteModalWindow.isHidden}
+          onCancel={() => this.closeDeleteModal()}
+          onConfirm={() => this.deleteRowFromDataBase()}
+        />
+        <Table
+          isEditable={true}
+          isResizeble={true}
+          isStylable={true}
+          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+          update={() => this.props.getTasks()}
+          addRow={() => this.addRowToDataBase()}
+          deleteRow={row => this.showDeleteModal(row)}
+        >
+          {this.getContent()}
+        </Table>
+      </React.Fragment>
     );
   }
 }
