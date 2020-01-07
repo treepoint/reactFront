@@ -12,9 +12,18 @@ class TimeContent extends React.Component {
   getStyle() {
     let style;
 
+    //Вот такого делать никогда не нужно. Но если очень хочется — все равно не надо
+    //Они держат мою жену в заложниках и сказали сделать быстро, поэтому так
+
+    let isChrome = false;
+
+    if (navigator.userAgent.indexOf("Chrome") + 1) {
+      isChrome = true;
+    }
+
     if (!!this.props.isHeader) {
       style = {
-        width: this.props.width - 9 + "px",
+        width: this.props.width - (!!isChrome ? 7 : 9) + "px",
         height: this.props.height - 2 + "px",
         fontWeight: "900",
         background: "rgb(243, 243, 243)",
@@ -22,7 +31,7 @@ class TimeContent extends React.Component {
       };
     } else {
       style = {
-        width: this.props.width - 8 + "px",
+        width: this.props.width - (!!isChrome ? 7 : 8) + "px",
         height: this.props.height - 2 + "px",
         fontWeight: "200"
       };

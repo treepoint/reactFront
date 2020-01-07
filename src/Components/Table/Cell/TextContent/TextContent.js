@@ -95,11 +95,20 @@ class TextContent extends React.Component {
   getHeaderStyle() {
     let style;
 
+    //Вот такого делать никогда не нужно. Но если очень хочется — все равно не надо
+    //Они держат мою жену в заложниках и сказали сделать быстро, поэтому так
+
+    let isChrome = false;
+
+    if (navigator.userAgent.indexOf("Chrome") + 1) {
+      isChrome = true;
+    }
+
     style = {
       fontWeight: "900",
-      width: this.props.width - 8 + "px",
+      width: this.props.width - (!!isChrome ? 9 : 8) + "px",
       height: this.props.height - 13 + "px",
-      minWidth: this.props.width - 8 + "px",
+      minWidth: this.props.width - (!!isChrome ? 9 : 8) + "px",
       minHeight: this.props.height - 13 + "px",
       color: "#000"
     };
@@ -109,6 +118,15 @@ class TextContent extends React.Component {
 
   //Получаем стиль обычной ячейки на основании стиля контента
   getRegularStyle() {
+    //Вот такого делать никогда не нужно. Но если очень хочется — все равно не надо
+    //Они держат мою жену в заложниках и сказали сделать быстро, поэтому так
+
+    let isChrome = false;
+
+    if (navigator.userAgent.indexOf("Chrome") + 1) {
+      isChrome = true;
+    }
+
     return {
       //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
       marginLeft: !!this.state.wideEditAreaIsHidden
@@ -117,7 +135,7 @@ class TextContent extends React.Component {
       marginTop: !!this.state.wideEditAreaIsHidden
         ? 0 + "px"
         : -this.props.scrollTop + "px",
-      width: this.props.width - 8 + "px",
+      width: this.props.width - (!!isChrome ? 9 : 8) + "px",
       height: this.props.height - 12 + "px",
       background: !!this.props.disabled
         ? "rgb(251, 251, 251)"
@@ -125,7 +143,7 @@ class TextContent extends React.Component {
       fontWeight: !!this.props.style.bold ? "900" : "200",
       fontStyle: !!this.props.style.italic ? "italic" : "normal",
       color: !!this.props.disabled ? "#444" : "#000",
-      minWidth: this.props.width - 8 + "px",
+      minWidth: this.props.width - (!!isChrome ? 9 : 8) + "px",
       minHeight: this.props.height - 12 + "px"
     };
   }
