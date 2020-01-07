@@ -89,22 +89,21 @@ class TaskStatuses extends React.Component {
           key: "id",
           type: "hidden",
           disabled: true,
-          value: "ID",
-          style: {}
+          value: "ID"
         },
         {
           key: "name",
           type: "string",
           disabled: true,
           value: "Название",
-          style: { width: 300 }
+          width: 300
         },
         {
           key: "type",
           type: "string",
           disabled: true,
           value: "Тип статуса",
-          style: { width: 300 }
+          width: 300
         }
       ]
     ];
@@ -125,27 +124,37 @@ class TaskStatuses extends React.Component {
           current: taskStatus.type_id
         };
 
+        let name_style = undefined;
+
+        if (taskStatus.name_style !== undefined) {
+          try {
+            name_style = JSON.parse(taskStatus.name_style);
+
+            if (name_style === null) {
+              name_style = {};
+            }
+          } catch {}
+        }
+
         content.push([
           {
             key: "id",
             type: "hidden",
             disabled: true,
-            value: taskStatus.id,
-            style: {}
+            value: taskStatus.id
           },
           {
             key: "name",
             type: "string",
             disabled: false,
             value: taskStatus.name,
-            style: {}
+            style: name_style
           },
           {
             key: "type_id",
             type: "select",
             disabled: false,
-            value: taskStatusesTypes,
-            style: {}
+            value: taskStatusesTypes
           }
         ]);
       }

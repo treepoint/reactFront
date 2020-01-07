@@ -32,14 +32,14 @@ class TaskStatistic extends React.Component {
           type: "string",
           disabled: true,
           value: "Категория",
-          style: { width: 500 }
+          width: 500
         },
         {
           key: "type",
           type: "string",
           disabled: true,
           value: "Время, всего",
-          style: { width: 164 }
+          width: 164
         }
       ]
     ];
@@ -50,15 +50,13 @@ class TaskStatistic extends React.Component {
           key: "name",
           type: "string",
           disabled: true,
-          value: taskStatistic.name,
-          style: {}
+          value: taskStatistic.name
         },
         {
           key: "type_id",
           type: "time",
           disabled: true,
-          value: getTimeFromMins(taskStatistic.execution_time),
-          style: {}
+          value: getTimeFromMins(taskStatistic.execution_time)
         }
       ]);
     });

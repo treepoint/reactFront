@@ -82,21 +82,21 @@ class Users extends React.Component {
           type: "string",
           disabled: true,
           value: "ID",
-          style: { width: 30 }
+          width: 30
         },
         {
           key: "email",
           type: "string",
           disabled: true,
           value: "Email",
-          style: { width: 300 }
+          width: 300
         },
         {
           key: "role",
           type: "string",
           disabled: true,
           value: "Роль",
-          style: { width: 120 }
+          width: 120
         }
       ]
     ];
@@ -115,22 +115,19 @@ class Users extends React.Component {
           key: "id",
           type: "string",
           disabled: true,
-          value: user.id,
-          style: {}
+          value: user.id
         },
         {
           key: "email",
           type: "string",
           disabled: false,
-          value: user.email,
-          style: {}
+          value: user.email
         },
         {
           key: "role_id",
           type: "select",
           disabled: false,
-          value: roles,
-          style: {}
+          value: roles
         }
       ]);
     });

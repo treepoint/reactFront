@@ -46,7 +46,7 @@ class Table extends React.Component {
       try {
         return {
           //Текущая, ну или начальная ширина
-          width: column.style.width,
+          width: column.width,
           //И прошлая ширина. По умолчанию всегда 0
           prevWidth: 0,
           type: column.type
@@ -152,11 +152,15 @@ class Table extends React.Component {
           break;
         case "string":
           object[item.key] = item.value;
-          object[item.key + "_style"] = item.style.style;
+          if (typeof item.style !== "undefined") {
+            object[item.key + "_style"] = item.style.style;
+          }
           break;
         case "text":
           object[item.key] = item.value;
-          object[item.key + "_style"] = item.style.style;
+          if (typeof item.style !== "undefined") {
+            object[item.key + "_style"] = item.style.style;
+          }
           break;
         case "select":
           object[item.key] = item.value.current;
@@ -214,8 +218,6 @@ class Table extends React.Component {
           isHeader={!!!this.props.isHeaderless && index === 0 ? true : false}
           //Задаем возможность изменения размеров ячеек
           isResizeble={this.props.isResizeble}
-          //Задаем возможность применения стилей
-          isStylable={this.props.isStylable}
           //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
           uuid={this.state.uuid}
           //Передадим содержимое столбцов из шапки

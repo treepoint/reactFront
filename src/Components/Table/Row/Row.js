@@ -104,7 +104,6 @@ class Row extends React.Component {
         <Cell
           key={index}
           isResizeble={this.props.isResizeble}
-          isStylable={this.props.isStylable}
           isHeader={this.props.isHeader}
           uuid={this.props.uuid}
           width={column.width}

@@ -82,27 +82,38 @@ class Categories extends React.Component {
           key: "id",
           type: "hidden",
           disabled: true,
-          value: "ID",
-          style: {}
+          value: "ID"
         },
         {
           key: "name",
           type: "string",
           disabled: true,
           value: "Название",
-          style: { width: 220 }
+          width: 220
         },
         {
           key: "description",
           type: "string",
           value: "Описание",
           disabled: true,
-          style: { width: 400 }
+          width: 400
         }
       ]
     ];
 
     this.state.categoriesList.forEach(category => {
+      let name_style = undefined;
+
+      if (category.name_style !== undefined) {
+        try {
+          name_style = JSON.parse(category.name_style);
+
+          if (name_style === null) {
+            name_style = {};
+          }
+        } catch {}
+      }
+
       //Если категории не закрыты — отобразим их
       if (category.close_date === null) {
         content.push([
@@ -110,22 +121,20 @@ class Categories extends React.Component {
             key: "id",
             type: "hidden",
             disabled: true,
-            value: category.id,
-            style: {}
+            value: category.id
           },
           {
             key: "name",
             type: "string",
             disabled: false,
             value: category.name,
-            style: {}
+            style: name_style
           },
           {
             key: "description",
             type: "text",
             disabled: false,
-            value: category.description,
-            style: {}
+            value: category.description
           }
         ]);
       }

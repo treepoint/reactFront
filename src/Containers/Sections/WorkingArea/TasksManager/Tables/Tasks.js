@@ -75,43 +75,42 @@ class Tasks extends React.Component {
           key: "id",
           type: "hidden",
           disabled: true,
-          value: "ID",
-          style: {}
+          value: "ID"
         },
         {
           key: "name",
           type: "string",
           disabled: true,
           value: "Задача",
-          style: { width: 342 }
+          width: 342
         },
         {
           key: "category_name",
           type: "string",
           disabled: true,
           value: "Категория",
-          style: { width: 180 }
+          width: 180
         },
         {
           key: "status_name",
           type: "string",
           disabled: true,
           value: "Статус",
-          style: { width: 200 }
+          width: 200
         },
         {
           key: "execution_time_day",
           type: "string",
           disabled: true,
           value: "Время за день",
-          style: { width: 125 }
+          width: 125
         },
         {
           key: "execution_time_all",
           type: "string",
           disabled: true,
           value: "Время, всего",
-          style: { width: 125 }
+          width: 125
         }
       ]
     ];
@@ -143,11 +142,15 @@ class Tasks extends React.Component {
       //Соберем контент для селекта статусов с указанием текущего
       let statuses = { list: statusesList, current: task.status_id };
 
-      let name_style = {};
+      let name_style = undefined;
 
-      if (task.name_style !== null) {
+      if (task.name_style !== undefined) {
         try {
           name_style = JSON.parse(task.name_style);
+
+          if (name_style === null) {
+            name_style = {};
+          }
         } catch {}
       }
 
@@ -156,8 +159,7 @@ class Tasks extends React.Component {
           key: "id",
           type: "hidden",
           disabled: true,
-          value: task.id,
-          style: {}
+          value: task.id
         },
         {
           key: "name",
@@ -170,15 +172,13 @@ class Tasks extends React.Component {
           key: "category_id",
           type: "select",
           disabled: false,
-          value: categories,
-          style: {}
+          value: categories
         },
         {
           key: "status_id",
           type: "select",
           disabled: false,
-          value: statuses,
-          style: {}
+          value: statuses
         },
         {
           key: "execution_time_day",
@@ -213,7 +213,6 @@ class Tasks extends React.Component {
         <Table
           isEditable={true}
           isResizeble={true}
-          isStylable={true}
           saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
           update={() => this.props.getTasks()}
           addRow={() => this.addRowToDataBase()}

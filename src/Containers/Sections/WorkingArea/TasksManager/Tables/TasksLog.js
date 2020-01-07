@@ -54,36 +54,35 @@ class TasksLog extends React.Component {
           key: "id",
           type: "hidden",
           disabled: true,
-          value: "ID",
-          style: {}
+          value: "ID"
         },
         {
           key: "task_id",
           type: "string",
           disabled: true,
           value: "Задача",
-          style: { width: 342 }
+          width: 342
         },
         {
           key: "execution_start",
           type: "string",
           disabled: true,
           value: "Старт",
-          style: { width: 120 }
+          width: 120
         },
         {
           key: "execution_end",
           type: "string",
           disabled: true,
           value: "Стоп",
-          style: { width: 120 }
+          width: 120
         },
         {
           key: "execution_time",
           type: "string",
           disabled: true,
           value: "Время",
-          style: { width: 120 }
+          width: 120
         }
       ]
     ];
@@ -106,29 +105,25 @@ class TasksLog extends React.Component {
           key: "task_id",
           type: "select",
           disabled: false,
-          value: tasks,
-          style: {}
+          value: tasks
         },
         {
           key: "execution_start",
           type: "time",
           disabled: false,
-          value: tasksLogList.execution_start,
-          style: {}
+          value: tasksLogList.execution_start
         },
         {
           key: "execution_end",
           type: "time",
           disabled: false,
-          value: tasksLogList.execution_end,
-          style: {}
+          value: tasksLogList.execution_end
         },
         {
           key: "execution_time",
           type: "time",
           disabled: true,
-          value: getTimeFromMins(tasksLogList.execution_time),
-          style: {}
+          value: getTimeFromMins(tasksLogList.execution_time)
         }
       ]);
     });

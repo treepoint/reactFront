@@ -16,7 +16,8 @@ class Cell extends React.Component {
       type: "",
       //Стиль по умолчанию
       style: { bold: false, italic: false, backgroundColor: "#ffffff" },
-      disabled: true
+      disabled: true,
+      isStylable: false
     };
   }
 
@@ -61,11 +62,12 @@ class Cell extends React.Component {
 
   //Задаем стиль контента
   updateStyleContent() {
-    if (
-      typeof this.props.content.style === "undefined" ||
-      this.props.content.style === null
-    ) {
+    if (typeof this.props.content.style === "undefined") {
       return null;
+    }
+
+    if (!this.state.isStylable) {
+      this.setState({ isStylable: true });
     }
 
     let style = this.state.style;
@@ -188,7 +190,7 @@ class Cell extends React.Component {
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
-            isStylable={this.props.isStylable}
+            isStylable={this.state.isStylable}
             isSingleLineMode={true}
             style={this.state.style}
             onChangeStyle={style => {
@@ -206,7 +208,7 @@ class Cell extends React.Component {
             disabled={this.state.disabled}
             width={this.props.width}
             height={this.props.height}
-            isStylable={this.props.isStylable}
+            isStylable={this.state.isStylable}
             style={this.state.style}
             onChangeStyle={style => {
               this.onChangeStyle(style);
