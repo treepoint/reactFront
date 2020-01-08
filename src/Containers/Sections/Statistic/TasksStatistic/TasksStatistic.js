@@ -46,7 +46,7 @@ class TasksStatistic extends React.Component {
           type: "string",
           disabled: true,
           value: "Время, всего",
-          width: 164
+          width: 120
         }
       ]
     ];
@@ -57,13 +57,15 @@ class TasksStatistic extends React.Component {
           key: "name",
           type: "string",
           disabled: true,
-          value: taskStatistic.name
+          value: taskStatistic.name,
+          style: taskStatistic.name_style
         },
         {
           key: "category_name",
           type: "string",
           disabled: true,
-          value: taskStatistic.category_name
+          value: taskStatistic.category_name,
+          style: taskStatistic.category_name_style
         },
         {
           key: "type_id",
@@ -85,16 +87,7 @@ class TasksStatistic extends React.Component {
             this.getTaskStatisticByPeriod(dateFrom, dateTo)
           }
         />
-        <Table
-          isResizeble={false}
-          isEditable={false}
-          update={() =>
-            this.getTaskStatisticByPeriod(
-              this.state.dateFrom,
-              this.state.dateTo
-            )
-          }
-        >
+        <Table isResizeble={false} isEditable={false}>
           {this.getContent()}
         </Table>
       </React.Fragment>

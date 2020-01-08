@@ -85,7 +85,7 @@ class Cell extends React.Component {
       return null;
     }
 
-    if (!this.state.isStylable) {
+    if (!this.state.isStylable && this.state.disabled) {
       this.setState({ isStylable: true });
     }
 

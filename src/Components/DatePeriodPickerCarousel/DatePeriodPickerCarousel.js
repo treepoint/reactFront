@@ -24,7 +24,7 @@ class DatePeriodPickerCarousel extends React.Component {
 
   componentDidMount() {
     //Подтянем статистику за нужный период
-    this.setCurrentWeekDates();
+    this.setTodayDates();
   }
 
   //При выборе даты "c"
@@ -37,6 +37,17 @@ class DatePeriodPickerCarousel extends React.Component {
   onPickDateTo(dateTo) {
     this.setState({ dateTo, currentPeriod: { custom: true } });
     this.props.onPickDate(this.state.dateFrom, dateTo);
+  }
+
+  setTodayDates() {
+    let today = new Date();
+
+    let dateFrom = today;
+    let dateTo = today;
+
+    //Запишем в стейт
+    this.setState({ dateFrom, dateTo, currentPeriod: { today: true } });
+    this.props.onPickDate(today, today);
   }
 
   setCurrentWeekDates() {
@@ -74,6 +85,13 @@ class DatePeriodPickerCarousel extends React.Component {
 
   getPeriodCarousel() {
     let radioButtonItems = [];
+
+    radioButtonItems.push({
+      key: 1,
+      isPrimary: !!this.state.currentPeriod.today ? true : false,
+      value: "Сегодня",
+      onClick: event => this.setTodayDates(event)
+    });
 
     radioButtonItems.push({
       key: 1,

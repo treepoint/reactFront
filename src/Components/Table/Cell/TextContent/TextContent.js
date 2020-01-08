@@ -127,10 +127,6 @@ class TextContent extends React.Component {
       isChrome = true;
     }
 
-    let backgroundColor = !!this.props.disabled
-      ? "rgb(251, 251, 251)"
-      : this.props.style.backgroundColor;
-
     return {
       //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
       marginLeft: !!this.state.wideEditAreaIsHidden
@@ -141,7 +137,8 @@ class TextContent extends React.Component {
         : -this.props.scrollTop + "px",
       width: this.props.width - (!!isChrome ? 17 : 16) + "px",
       height: this.props.height - 12 + "px",
-      borderLeft: "8px solid" + backgroundColor,
+      backgroundColor: !!this.props.disabled ? "rgb(251, 251, 251)" : "#ffffff",
+      borderLeft: "8px solid " + this.props.style.backgroundColor,
       fontWeight: !!this.props.style.bold ? "900" : "200",
       fontStyle: !!this.props.style.italic ? "italic" : "normal",
       color: !!this.props.disabled ? "#444" : "#000",
