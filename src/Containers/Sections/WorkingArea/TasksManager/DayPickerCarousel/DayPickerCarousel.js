@@ -100,13 +100,13 @@ class DayPickerCarousel extends React.Component {
   render() {
     return (
       <div className="dayPickerCarousel">
+        <RadioButtonCarousel items={this.getDaysMenu()} />
         <DatePickerButton
           onChange={date => this.onPickDate(date)}
           date={this.state.date}
           placeholderText="Указать дату"
           width={100}
         />
-        <RadioButtonCarousel items={this.getDaysMenu()} />
       </div>
     );
   }
