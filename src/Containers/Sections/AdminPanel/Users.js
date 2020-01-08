@@ -104,7 +104,7 @@ class Users extends React.Component {
     this.state.usersList.forEach(user => {
       //Соберем список ролей
       let list = this.state.rolesList.map(role => {
-        return { value: role.id, children: role.name };
+        return { value: role.id, label: role.name };
       });
 
       //добавим текущую

@@ -90,7 +90,11 @@ class TasksLog extends React.Component {
     this.props.tasksLogList.forEach(tasksLogList => {
       //Соберем список задач
       let tasksList = this.props.tasksList.map(task => {
-        return { value: task.id, children: task.name };
+        return {
+          value: task.id,
+          label: task.name,
+          style: task.name_style
+        };
       });
 
       //добавим текущую

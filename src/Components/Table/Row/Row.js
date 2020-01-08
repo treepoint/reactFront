@@ -46,13 +46,10 @@ class Row extends React.Component {
   //Обрабатываем изменение контента
   onChangeValue(content, index) {
     //Получим текущий массив, содержащий значения всех ячеек
-    let rowContent = this.props.rowsContent;
+    let rowContent = JSON.parse(JSON.stringify(this.props.rowsContent));
 
     //Обновим в нем нужное значение
     rowContent[index].value = content;
-
-    //Добавим его в state
-    this.setState({ rowContent });
 
     //Передадим выше, для сохранения
     this.props.saveRow(rowContent);
@@ -61,13 +58,10 @@ class Row extends React.Component {
   //Обрабатываем изменения стиля контента в ячейке
   onChangeStyle(style, index) {
     //Получим текущий массив, содержащий значения всех ячеек
-    let rowContent = this.props.rowsContent;
+    let rowContent = JSON.parse(JSON.stringify(this.props.rowsContent));
 
     //Обновим в нем нужное значение
-    rowContent[index].style = style;
-
-    //Добавим его в state
-    this.setState({ rowContent });
+    rowContent[index] = Object.assign(rowContent[index], style);
 
     //Передадим выше, для сохранения
     this.props.saveRow(rowContent);

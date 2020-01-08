@@ -153,13 +153,13 @@ class Table extends React.Component {
         case "string":
           object[item.key] = item.value;
           if (typeof item.style !== "undefined") {
-            object[item.key + "_style"] = item.style.style;
+            object[item.key + "_style"] = item.style;
           }
           break;
         case "text":
           object[item.key] = item.value;
           if (typeof item.style !== "undefined") {
-            object[item.key + "_style"] = item.style.style;
+            object[item.key + "_style"] = item.style;
           }
           break;
         case "select":

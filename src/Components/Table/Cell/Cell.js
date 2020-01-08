@@ -15,7 +15,7 @@ class Cell extends React.Component {
       //Тип контента
       type: "",
       //Стиль по умолчанию
-      style: { bold: false, italic: false, backgroundColor: "#ffffff" },
+      style: {},
       disabled: true,
       isStylable: false
     };
@@ -60,33 +60,6 @@ class Cell extends React.Component {
     }
   }
 
-  //Задаем стиль контента
-  updateStyleContent() {
-    if (typeof this.props.content.style === "undefined") {
-      return null;
-    }
-
-    if (!this.state.isStylable) {
-      this.setState({ isStylable: true });
-    }
-
-    let style = this.state.style;
-
-    if (typeof this.props.content.style.bold !== "undefined") {
-      style.bold = this.props.content.style.bold;
-    }
-    if (typeof this.props.content.style.italic !== "undefined") {
-      style.italic = this.props.content.style.italic;
-    }
-    if (typeof this.props.content.style.backgroundColor !== "undefined") {
-      style.backgroundColor = this.props.content.style.backgroundColor;
-    }
-
-    if (style !== this.state.style) {
-      this.setState({ style });
-    }
-  }
-
   //Обновляем значение в ячейке
   updateValue() {
     if (typeof this.props.content !== "undefined") {
@@ -103,6 +76,34 @@ class Cell extends React.Component {
       if (value !== this.state.value) {
         this.setState({ value });
       }
+    }
+  }
+
+  //Задаем стиль контента
+  updateStyleContent() {
+    if (typeof this.props.content.style === "undefined") {
+      return null;
+    }
+
+    if (!this.state.isStylable) {
+      this.setState({ isStylable: true });
+    }
+
+    let style = JSON.parse(JSON.stringify(this.props.content.style));
+
+    //Заполняем его параметрами. Если пришел из вне — ставим его, иначе из текущего стиля
+    if (typeof style.bold === "undefined") {
+      style.bold = false;
+    }
+    if (typeof style.italic === "undefined") {
+      style.italic = false;
+    }
+    if (typeof style.backgroundColor === "undefined") {
+      style.backgroundColor = "#f7f7f7";
+    }
+
+    if (JSON.stringify(style) !== JSON.stringify(this.state.style)) {
+      this.setState({ style });
     }
   }
 

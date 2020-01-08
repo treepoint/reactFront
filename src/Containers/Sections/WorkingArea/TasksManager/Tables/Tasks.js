@@ -25,6 +25,7 @@ class Tasks extends React.Component {
       category_id: this.props.categoriesList[0].id,
       status_id: this.props.taskStatusesList[0].id,
       name: "",
+      name_style: "{}",
       description: "<br>",
       create_date: getCurrentFormatDate()
     };
@@ -89,14 +90,14 @@ class Tasks extends React.Component {
           type: "string",
           disabled: true,
           value: "Категория",
-          width: 180
+          width: 220
         },
         {
           key: "status_name",
           type: "string",
           disabled: true,
           value: "Статус",
-          width: 200
+          width: 210
         },
         {
           key: "execution_time_day",
@@ -122,7 +123,11 @@ class Tasks extends React.Component {
       this.props.categoriesList.forEach(category => {
         //Добавляем если категория активна, или эта категория проставлена у задачи
         if (category.close_date === null || category.id === task.category_id) {
-          categoriesList.push({ value: category.id, children: category.name });
+          categoriesList.push({
+            value: category.id,
+            label: category.name,
+            style: category.name_style
+          });
         }
       });
 
@@ -135,24 +140,16 @@ class Tasks extends React.Component {
       this.props.taskStatusesList.forEach(status => {
         //Добавляем если статус активен, или этот статус проставлен у задачи
         if (status.close_date === null || status.id === task.status_id) {
-          statusesList.push({ value: status.id, children: status.name });
+          statusesList.push({
+            value: status.id,
+            label: status.name,
+            style: status.name_style
+          });
         }
       });
 
       //Соберем контент для селекта статусов с указанием текущего
       let statuses = { list: statusesList, current: task.status_id };
-
-      let name_style = undefined;
-
-      if (task.name_style !== undefined) {
-        try {
-          name_style = JSON.parse(task.name_style);
-
-          if (name_style === null) {
-            name_style = {};
-          }
-        } catch {}
-      }
 
       content.push([
         {
@@ -166,7 +163,7 @@ class Tasks extends React.Component {
           type: "string",
           disabled: false,
           value: task.name,
-          style: name_style
+          style: task.name_style
         },
         {
           key: "category_id",
@@ -196,7 +193,6 @@ class Tasks extends React.Component {
         }
       ]);
     });
-
     return content;
   }
 
@@ -205,7 +201,8 @@ class Tasks extends React.Component {
       <React.Fragment>
         <ConfirmModalWindow
           title="Удалить задачу?"
-          message="Вместе с задачей будут удалены все записи из лога и статистики"
+          message="Вместе с задачей будут удалены все записи из лога и статистики. 
+          Если вы хотите закрыть задачу — проставьте у неё статус с типом «Окончательный»."
           isHidden={this.state.deleteModalWindow.isHidden}
           onCancel={() => this.closeDeleteModal()}
           onConfirm={() => this.deleteRowFromDataBase()}

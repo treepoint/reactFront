@@ -36,6 +36,7 @@ class Categories extends React.Component {
   addCategoryToDataBase() {
     let category = {
       name: "",
+      name_style: "{}",
       description: ""
     };
 
@@ -102,18 +103,6 @@ class Categories extends React.Component {
     ];
 
     this.state.categoriesList.forEach(category => {
-      let name_style = undefined;
-
-      if (category.name_style !== undefined) {
-        try {
-          name_style = JSON.parse(category.name_style);
-
-          if (name_style === null) {
-            name_style = {};
-          }
-        } catch {}
-      }
-
       //Если категории не закрыты — отобразим их
       if (category.close_date === null) {
         content.push([
@@ -128,7 +117,7 @@ class Categories extends React.Component {
             type: "string",
             disabled: false,
             value: category.name,
-            style: name_style
+            style: category.name_style
           },
           {
             key: "description",

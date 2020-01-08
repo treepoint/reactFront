@@ -52,7 +52,7 @@ class ContextMenu extends React.Component {
     this.props.onChangeStyle({
       bold: false,
       italic: false,
-      backgroundColor: "#ffffff"
+      backgroundColor: "#f7f7f7"
     });
   }
 
@@ -100,16 +100,16 @@ class ContextMenu extends React.Component {
       <div style={{ position: "absolute", top: "51px", left: "71px" }}>
         <TwitterPicker
           colors={[
-            "#a9d08e", //Нежно зеленый
-            "#bdd7ee", //Небесно голубой
-            "#ffe699", //Клево желтый
-            "#fce4d6", //Противно красный
+            "#88d154", //Бодряще зеленый
+            "#74bce5", //Уверенно голубой
+            "#ffd966", //Солнечно желтый
+            "#fc9558", //Подгорающе оранжевый
             "#F78DA7", //Опасно красный
-            "#d9d9d9", //Серый как твоя жизнь
-            "#74bce5", //Ярко-голубой
-            "#ABB8C3",
-            "#EB144C",
-            "#FFFFFF"
+            "#EB144C", //Конечности в огне
+            "#cccccc", //Серый как твоя жизнь
+            "#303030", //Темно серый, как это описание
+            "#8174e5", //Цвет Донателло
+            "#f7f7f7" //По умолчанию
           ]}
           className={
             !!this.state.isBackgroundColorPickerActive

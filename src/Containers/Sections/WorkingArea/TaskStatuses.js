@@ -44,7 +44,7 @@ class TaskStatuses extends React.Component {
 
   //Добавим новую строку
   addRowToDataBase() {
-    let status = { name: "", type_id: 1 };
+    let status = { name: "", name_style: "{}", type_id: 1 };
 
     createStatus(status, ok => {
       if (ok) {
@@ -114,7 +114,7 @@ class TaskStatuses extends React.Component {
       if (taskStatus.close_date === null) {
         let taskStatusesTypesList = this.state.taskStatusesTypesList.map(
           taskStatusType => {
-            return { value: taskStatusType.id, children: taskStatusType.name };
+            return { value: taskStatusType.id, label: taskStatusType.name };
           }
         );
 
@@ -123,18 +123,6 @@ class TaskStatuses extends React.Component {
           list: taskStatusesTypesList,
           current: taskStatus.type_id
         };
-
-        let name_style = undefined;
-
-        if (taskStatus.name_style !== undefined) {
-          try {
-            name_style = JSON.parse(taskStatus.name_style);
-
-            if (name_style === null) {
-              name_style = {};
-            }
-          } catch {}
-        }
 
         content.push([
           {
@@ -148,7 +136,7 @@ class TaskStatuses extends React.Component {
             type: "string",
             disabled: false,
             value: taskStatus.name,
-            style: name_style
+            style: taskStatus.name_style
           },
           {
             key: "type_id",
