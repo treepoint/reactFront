@@ -68,6 +68,7 @@ class SelectContent extends React.Component {
         border: "none",
         borderRadius: "none",
         minHeight: "34px",
+        height: this.props.height + "px",
         boxShadow: "none",
         outline: !!state.isFocused ? "1px solid rgb(96, 191, 255)" : "none",
         outlineOffset: "-1px",
@@ -117,6 +118,11 @@ class SelectContent extends React.Component {
         ...styles,
         maxWidth: "calc(100% - 5px)",
         paddingRight: "2px"
+      }),
+      noOptionsMessage: styles => ({
+        ...styles,
+        fontFamily: '"Open Sans", "Source Sans Pro"',
+        fontSize: "15px"
       })
     };
 
