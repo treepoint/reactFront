@@ -6,12 +6,23 @@ class TimeContent extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: "00:00"
+      value: "00:00",
+      isReadOnly: false
     };
   }
 
   componentDidMount() {
     this.setState({ value: this.props.value });
+  }
+
+  componentDidUpdate() {
+    if (this.state.value !== this.props.value && !this.state.isReadOnly) {
+      this.setState({ value: this.props.value });
+    }
+  }
+
+  onFocus() {
+    this.setState({ isReadOnly: true });
   }
 
   onChangeValue(event) {
@@ -21,6 +32,7 @@ class TimeContent extends React.Component {
   onKeyPress(event) {
     if (event.key === "Enter") {
       this.props.onChangeValue(this.state.value);
+      this.setState({ isReadOnly: false });
     }
   }
 
@@ -28,6 +40,8 @@ class TimeContent extends React.Component {
     if (this.state.value !== this.props.value) {
       this.props.onChangeValue(this.state.value);
     }
+
+    this.setState({ isReadOnly: false });
   }
 
   //Получаем стиль ячейки заголовка на основании стиля контента
@@ -69,6 +83,7 @@ class TimeContent extends React.Component {
         disabled={!!this.props.disabled ? true : false}
         className="timeContent"
         style={this.getStyle()}
+        onFocus={event => this.onFocus(event)}
         onChange={event => this.onChangeValue(event)}
         onBlur={event => this.onBlur(event)}
         onKeyPress={event => this.onKeyPress(event)}
