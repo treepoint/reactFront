@@ -36,14 +36,17 @@ class TasksManager extends React.Component {
   }
 
   componentDidMount() {
+    //Категории и статусы обновляем только когда монтируем
+    //Предполагается, что они не мутируют в процессе
+    this.getUserCategories();
+    this.getAllTaskStatuses();
+
     this.updateData(this.state.date);
   }
 
   updateData(date) {
-    this.getTasks(date);
-    this.getUserCategories();
-    this.getTasksLog(date);
-    this.getAllTaskStatuses();
+    //Сначала обновляем таски, а потом лог
+    this.getTasks(date, this.getTasksLog(date));
   }
 
   getTasks(date, callback) {
