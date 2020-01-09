@@ -79,6 +79,13 @@ class Tasks extends React.Component {
           value: "ID"
         },
         {
+          key: "status_name",
+          type: "string",
+          disabled: true,
+          value: "Статус",
+          width: 210
+        },
+        {
           key: "name",
           type: "string",
           disabled: true,
@@ -91,13 +98,6 @@ class Tasks extends React.Component {
           disabled: true,
           value: "Категория",
           width: 220
-        },
-        {
-          key: "status_name",
-          type: "string",
-          disabled: true,
-          value: "Статус",
-          width: 210
         },
         {
           key: "execution_time_day",
@@ -159,6 +159,12 @@ class Tasks extends React.Component {
           value: task.id
         },
         {
+          key: "status_id",
+          type: "select",
+          disabled: false,
+          value: statuses
+        },
+        {
           key: "name",
           type: "string",
           disabled: false,
@@ -170,12 +176,6 @@ class Tasks extends React.Component {
           type: "select",
           disabled: false,
           value: categories
-        },
-        {
-          key: "status_id",
-          type: "select",
-          disabled: false,
-          value: statuses
         },
         {
           key: "execution_time_day",
