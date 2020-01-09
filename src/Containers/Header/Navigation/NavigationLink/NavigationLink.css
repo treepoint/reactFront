@@ -4,6 +4,7 @@
   text-decoration: none;
   user-select: none;
   display: inline-block;
+  margin-right: 12px;
 }
 
 .navigation.hidden {
