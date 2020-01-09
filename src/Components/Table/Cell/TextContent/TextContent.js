@@ -32,6 +32,16 @@ class TextContent extends React.Component {
     this.setState({ value });
   }
 
+  onKeyPress(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      this.props.onChangeValue(this.state.value);
+      this.setWideEditAreaHidden();
+    }
+  }
+
   onBlur() {
     if (this.state.value !== this.props.value) {
       this.props.onChangeValue(this.state.value);
@@ -181,6 +191,7 @@ class TextContent extends React.Component {
         //Обрабатываем потерю фокуса
         onBlur={event => this.onBlur(event)}
         maxRows={1}
+        onKeyPress={event => this.onKeyPress(event)}
       />
     );
   }
