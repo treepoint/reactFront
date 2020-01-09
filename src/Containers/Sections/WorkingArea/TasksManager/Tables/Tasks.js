@@ -83,7 +83,7 @@ class Tasks extends React.Component {
           type: "string",
           disabled: true,
           value: "Задача",
-          width: 342
+          width: 574
         },
         {
           key: "category_name",
