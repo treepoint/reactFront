@@ -1,12 +1,34 @@
 import React from "react";
-import { debounce } from "lodash";
 import TimeField from "react-simple-timefield";
 import "./TimeContent.css";
 
 class TimeContent extends React.Component {
-  onChangeValue = debounce(event => {
-    this.props.onChangeValue(event.target.value);
-  }, 700);
+  constructor() {
+    super();
+    this.state = {
+      value: "00:00"
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ value: this.props.value });
+  }
+
+  onChangeValue(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  onKeyPress(event) {
+    if (event.key === "Enter") {
+      this.props.onChangeValue(this.state.value);
+    }
+  }
+
+  onBlur() {
+    if (this.state.value !== this.props.value) {
+      this.props.onChangeValue(this.state.value);
+    }
+  }
 
   //Получаем стиль ячейки заголовка на основании стиля контента
   getStyle() {
@@ -43,11 +65,13 @@ class TimeContent extends React.Component {
   render() {
     return (
       <TimeField
-        value={this.props.value}
+        value={this.state.value}
         disabled={!!this.props.disabled ? true : false}
         className="timeContent"
         style={this.getStyle()}
         onChange={event => this.onChangeValue(event)}
+        onBlur={event => this.onBlur(event)}
+        onKeyPress={event => this.onKeyPress(event)}
       />
     );
   }
