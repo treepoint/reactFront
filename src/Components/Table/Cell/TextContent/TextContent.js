@@ -13,12 +13,23 @@ class TextContent extends React.Component {
     this.state = {
       contextMenuIsHidden: true,
       wideEditAreaIsHidden: true,
-      value: ""
+      value: "",
+      isReadOnly: false
     };
   }
 
   componentDidMount() {
     this.setState({ value: this.props.value });
+  }
+
+  componentDidUpdate() {
+    if (this.state.value !== this.props.value && !this.state.isReadOnly) {
+      this.setState({ value: this.props.value });
+    }
+  }
+
+  onFocus() {
+    this.setState({ isReadOnly: true });
   }
 
   //Изменяем контент по вводу
@@ -39,6 +50,7 @@ class TextContent extends React.Component {
 
       this.props.onChangeValue(this.state.value);
       this.setWideEditAreaHidden();
+      this.setState({ isReadOnly: false });
     }
   }
 
@@ -48,6 +60,7 @@ class TextContent extends React.Component {
     }
 
     this.setWideEditAreaHidden();
+    this.setState({ isReadOnly: false });
   }
 
   //Обрабатываем изменения стиля контента в ячейке в
@@ -182,6 +195,7 @@ class TextContent extends React.Component {
         }
         //Задаем контент
         value={this.state.value}
+        onFocus={event => this.onFocus(event)}
         disabled={!!this.props.disabled ? true : false}
         onChange={event => this.onChange(event)}
         //Обрабатываем двойной клик
