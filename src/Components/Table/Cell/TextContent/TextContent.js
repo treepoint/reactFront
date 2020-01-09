@@ -13,19 +13,12 @@ class TextContent extends React.Component {
     this.state = {
       contextMenuIsHidden: true,
       wideEditAreaIsHidden: true,
-      isReadOnly: true,
       value: ""
     };
   }
 
   componentDidMount() {
     this.setState({ value: this.props.value });
-  }
-
-  componentDidUpdate() {
-    if (this.state.value !== this.props.value && this.state.isReadOnly) {
-      this.setState({ value: this.props.value });
-    }
   }
 
   //Изменяем контент по вводу
@@ -40,10 +33,8 @@ class TextContent extends React.Component {
   }
 
   onBlur() {
-    if (!this.state.isReadOnly) {
-      if (this.state.value !== this.props.value) {
-        this.props.onChangeValue(this.state.value);
-      }
+    if (this.state.value !== this.props.value) {
+      this.props.onChangeValue(this.state.value);
     }
 
     this.setWideEditAreaHidden();
@@ -86,8 +77,7 @@ class TextContent extends React.Component {
   //Скроем большую форму редактирования
   setWideEditAreaHidden() {
     this.setState({
-      wideEditAreaIsHidden: true,
-      isReadOnly: true
+      wideEditAreaIsHidden: true
     });
   }
 
@@ -159,8 +149,7 @@ class TextContent extends React.Component {
 
     this.setState({
       wideEditAreaIsHidden: false,
-      contextMenuIsHidden: true,
-      isReadOnly: false
+      contextMenuIsHidden: true
     });
   }
 
@@ -184,8 +173,6 @@ class TextContent extends React.Component {
         //Задаем контент
         value={this.state.value}
         disabled={!!this.props.disabled ? true : false}
-        //Задаем редактируемость
-        readOnly={this.state.isReadOnly}
         onChange={event => this.onChange(event)}
         //Обрабатываем двойной клик
         onDoubleClick={event => this.showWideEditArea(event)}
