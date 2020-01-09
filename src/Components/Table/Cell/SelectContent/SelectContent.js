@@ -68,6 +68,7 @@ class SelectContent extends React.Component {
         border: "none",
         borderRadius: "none",
         minHeight: "34px",
+        transition: "all",
         height: this.props.height + "px",
         boxShadow: "none",
         outline: !!state.isFocused ? "1px solid rgb(96, 191, 255)" : "none",
