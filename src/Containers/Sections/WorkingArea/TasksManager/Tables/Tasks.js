@@ -27,7 +27,7 @@ class Tasks extends React.Component {
       name: "",
       name_style: "{}",
       description: "<br>",
-      create_date: getCurrentFormatDate()
+      create_date: this.props.date
     };
 
     createTask(task, ok => {

@@ -90,7 +90,7 @@ class Categories extends React.Component {
           type: "string",
           disabled: true,
           value: "Название",
-          width: 220
+          width: 320
         },
         {
           key: "description",

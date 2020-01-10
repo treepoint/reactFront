@@ -95,6 +95,7 @@ class TasksManager extends React.Component {
           {
             /*Таблица с задачами*/
             <Tasks
+              date={this.state.date}
               getTasks={callback => this.getTasks(this.state.date, callback)}
               getTasksLog={callback =>
                 this.getTasksLog(this.state.date, callback)
