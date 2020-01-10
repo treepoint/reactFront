@@ -6,10 +6,7 @@ import {
   createTask,
   deleteTask
 } from "../../../../../APIController/APIController";
-import {
-  getTimeFromMins,
-  getCurrentFormatDate
-} from "../../../../../Libs/TimeUtils";
+import { getTimeFromMins } from "../../../../../Libs/TimeUtils";
 
 class Tasks extends React.Component {
   constructor(props) {

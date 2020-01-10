@@ -9,6 +9,7 @@ import { delete_cookie } from "../../Libs/Sfcookies";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
+import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 //Подрубаем вспомогательную функциональность
 import { email, password } from "./USER_INPUTS";
 import { getInvalidMessagesAsObj } from "./FormsUtils";
@@ -53,8 +54,22 @@ class Profile extends React.Component {
           this.props.writeToStore(this.state.user, true, false);
 
           //Обновляем пользователя в базе
-          updateUser(this.state.user, ok => {
-            if (ok) {
+          updateUser(this.state.user, result => {
+            //Если есть ошибки
+            if (typeof result.response !== "undefined") {
+              switch (result.response.status) {
+                case 409:
+                  this.setState({
+                    errorMessage: "Такой email уже есть в базе"
+                  });
+                  break;
+                default:
+                  this.setState({
+                    errorMessage: "Произошла неизвестная ошибка"
+                  });
+              }
+            } else {
+              //Просто закроем модалку
               this.props.closeModalWindow();
             }
           });
@@ -81,6 +96,7 @@ class Profile extends React.Component {
               }
             />
           ))}
+          <ErrorMessage message={this.state.errorMessage} />
           <Button
             isPrimary={true}
             value="Сохранить"

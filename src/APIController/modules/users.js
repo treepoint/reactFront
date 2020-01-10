@@ -84,11 +84,11 @@ export function updateUser(user, callback) {
   Axios.put(URL + "/" + id, user, headers)
     .then(response => {
       if (typeof response.data.affectedRows === "number") {
-        callback(true);
+        callback(response);
       }
     })
     .catch(error => {
-      callback(false);
+      callback(error);
     });
 }
 
