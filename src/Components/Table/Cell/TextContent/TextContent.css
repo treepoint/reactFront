@@ -1,8 +1,6 @@
 .textContent {
-  padding-top: 6px;
-  padding-bottom: 6px;
   padding-left: 6px;
-  white-space: nowrap;
+  white-space: pre-line;
   overflow-x: hidden;
   overflow-y: auto;
   text-overflow: ellipsis;
@@ -11,6 +9,7 @@
   font-family: "Open Sans", "Source Sans Pro";
   font-size: 15px;
   resize: none;
+  line-height: 30px;
 }
 
 .textContent.chosen {

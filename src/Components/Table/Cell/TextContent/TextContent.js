@@ -160,7 +160,7 @@ class TextContent extends React.Component {
       minWidth: !!this.props.isStylable
         ? this.props.width - (!!isChrome ? 17 : 16) + "px"
         : this.props.width - (!!isChrome ? 9 : 8) + "px",
-      minHeight: this.props.height - 12 + "px"
+      minHeight: this.props.height + "px"
     };
   }
 
