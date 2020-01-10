@@ -28,6 +28,10 @@ class RadioButtonCarousel extends React.Component {
         className += " primary";
       }
 
+      if (item.isToday) {
+        className += " today";
+      }
+
       return (
         <input
           id={item.key}

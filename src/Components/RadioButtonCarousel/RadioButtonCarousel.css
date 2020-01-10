@@ -18,6 +18,10 @@
   border-width: thin;
 }
 
+.radioButton.today {
+  font-weight: bold;
+}
+
 .radioButton.primary {
   color: #36266b;
   font-weight: bold;

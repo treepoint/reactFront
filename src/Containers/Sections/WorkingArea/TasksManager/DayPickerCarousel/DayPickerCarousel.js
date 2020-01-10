@@ -42,6 +42,8 @@ class DayPickerCarousel extends React.Component {
     let date;
     let daysMenu = [];
     let isPrimary = false;
+    let isToday = false;
+    let today = new Date();
 
     let currentDay = new Date().getDay();
     let from;
@@ -66,14 +68,20 @@ class DayPickerCarousel extends React.Component {
     }
 
     while (from < to) {
-      date = new Date();
-      date = new Date(revokeDays(date, from));
+      date = new Date(revokeDays(today, from));
 
-      //Выделим выбранный день
+      //Если сегодня — укажем это
       if (getFormatDate(this.state.date) === getFormatDate(date)) {
         isPrimary = true;
       } else {
         isPrimary = false;
+      }
+
+      //Выделим выбранный день
+      if (getFormatDate(today) === getFormatDate(date)) {
+        isToday = true;
+      } else {
+        isToday = false;
       }
 
       //Добавим кнопки с датами
@@ -81,6 +89,7 @@ class DayPickerCarousel extends React.Component {
         name: date,
         key: from,
         isPrimary: isPrimary,
+        isToday: isToday,
         value: !!from
           ? getDDbyDate(date) +
             "." +
