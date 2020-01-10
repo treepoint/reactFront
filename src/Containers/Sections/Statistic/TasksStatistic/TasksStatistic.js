@@ -46,7 +46,7 @@ class TasksStatistic extends React.Component {
           type: "string",
           disabled: true,
           value: "Время, всего",
-          width: 120
+          width: 122
         }
       ]
     ];
