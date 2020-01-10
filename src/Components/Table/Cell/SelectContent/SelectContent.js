@@ -7,7 +7,7 @@ class SelectContent extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: { list: [] }
+      value: { list: [], isOpened: false }
     };
   }
 
@@ -17,6 +17,14 @@ class SelectContent extends React.Component {
 
   componentDidUpdate() {
     this.updateContent();
+  }
+
+  onFocus() {
+    this.setState({ isOpened: true });
+  }
+
+  onBlur() {
+    this.setState({ isOpened: false });
   }
 
   updateContent() {
@@ -143,20 +151,32 @@ class SelectContent extends React.Component {
     }
 
     return (
-      <Select
-        menuPortalTarget={document.querySelector("body")}
-        options={options}
-        controlColor={style.backgroundColor}
-        isBold={style.bold}
-        isItalic={style.italic}
-        value={currentValue}
-        noOptionsMessage={() => {
-          return "Нет совпадений :(";
-        }}
-        placeholder=""
-        onChange={option => this.onChangeValue(option)}
-        styles={colourStyles}
-      />
+      <React.Fragment>
+        <Select
+          options={options}
+          controlColor={style.backgroundColor}
+          isBold={style.bold}
+          isItalic={style.italic}
+          value={currentValue}
+          menuPlacement="auto"
+          closeMenuOnScroll={event => {
+            return (
+              !!!(event.target.classList.value.indexOf("MenuList") + 1) &&
+              this.state.isOpened
+            );
+          }}
+          noOptionsMessage={() => {
+            return "Нет совпадений :(";
+          }}
+          placeholder=""
+          hideSelectedOptions
+          menuPosition="fixed"
+          onFocus={() => this.onFocus()}
+          onBlur={() => this.onBlur()}
+          onChange={option => this.onChangeValue(option)}
+          styles={colourStyles}
+        />
+      </React.Fragment>
     );
   }
 }

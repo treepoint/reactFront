@@ -1,5 +1,5 @@
 import React from "react";
-import BroadCastMessage from "../Bottom/BroadCastMessage/BroadCastMessage";
+import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
 
 class Bottom extends React.Component {
   render() {

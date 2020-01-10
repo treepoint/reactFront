@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 //Подключаем компоненты
 import { TwitterPicker } from "react-color";
 import Action from "../../../../Action/Action";
-import ContextMenuBlur from "./ContextMenuBlur/ContextMenuBlur";
+import Blur from "../../../../Blur/Blur";
 //Подключаем изображения иконок и CSS
 import iconBold from "../../../../../Images/icon_bold.png";
 import iconItalic from "../../../../../Images/icon_italic.png";
@@ -124,7 +124,7 @@ class ContextMenu extends React.Component {
 
   getBlur() {
     return (
-      <ContextMenuBlur
+      <Blur
         onClick={event => {
           this.props.setContextMenuHidden(event);
           this.setState({

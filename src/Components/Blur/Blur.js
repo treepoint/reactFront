@@ -1,11 +1,11 @@
 import React from "react";
-import "./ContextMenuBlur.css";
+import "./Blur.css";
 
-class ContextMenuBlur extends React.Component {
+class Blur extends React.Component {
   render() {
     return (
       <div
-        className="contextMenuBlur"
+        className="blur"
         onClick={event => {
           this.props.onClick(event);
         }}
@@ -20,4 +20,4 @@ class ContextMenuBlur extends React.Component {
   }
 }
 
-export default ContextMenuBlur;
+export default Blur;
