@@ -151,7 +151,7 @@ class TextContent extends React.Component {
       width: !!this.props.isStylable
         ? this.props.width - (!!isChrome ? 17 : 16) + "px"
         : this.props.width - (!!isChrome ? 9 : 8) + "px",
-      height: this.props.height - (!!isChrome ? 16 : 12) + "px" + "px",
+      height: this.props.height - (!!isChrome ? 16 : 12) + "px",
       backgroundColor: !!this.props.disabled ? "rgb(251, 251, 251)" : "#ffffff",
       borderLeft: "8px solid " + this.props.style.backgroundColor,
       fontWeight: !!this.props.style.bold ? "900" : "200",

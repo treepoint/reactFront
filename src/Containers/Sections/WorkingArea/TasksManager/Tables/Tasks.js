@@ -104,7 +104,7 @@ class Tasks extends React.Component {
           type: "string",
           disabled: true,
           value: "Время за день",
-          width: 125
+          width: 133
         },
         {
           key: "execution_time_all",
