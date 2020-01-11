@@ -246,10 +246,10 @@ class Cell extends React.Component {
         //Выставляем размеры ячейки
         size={{
           width: this.props.width + "px",
-          height: this.props.height + "px"
+          height: this.props.height + 1 + "px"
         }}
         //Задаем минимальную высоту
-        minHeight={34}
+        minHeight={35}
         minWidth={20}
         //Указываем какие грани ячейки активны для изменения размеров
         enable={this.setEnabled()}

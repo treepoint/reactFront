@@ -115,8 +115,8 @@ class Row extends React.Component {
 
     return (
       <div className="row">
-        {cells}
         {this.getActionButton()}
+        {cells}
       </div>
     );
   }
