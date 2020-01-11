@@ -72,6 +72,10 @@ class Row extends React.Component {
   }
 
   getActionButton() {
+    if (!this.props.isEditable) {
+      return null;
+    }
+
     if (this.props.isHeader) {
       if (this.props.addRow === null) {
         return <AddButton disabled={true} />;
@@ -115,8 +119,7 @@ class Row extends React.Component {
 
     return (
       <div className="row">
-        {this.getActionButton()}
-        {cells}
+        {cells} {this.getActionButton()}
       </div>
     );
   }

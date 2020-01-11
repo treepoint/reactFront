@@ -50,7 +50,14 @@ export function getCurrentTimeFormat() {
   //Получим сегодняшную дату
   var date = new Date();
 
-  return date.getHours() + "-" + date.getMinutes();
+  var mm = date.getMinutes();
+  var hh = date.getHours();
+
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+
+  return hh + "-" + mm;
 }
 
 export function getCurrentDateWithTime() {

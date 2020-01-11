@@ -107,13 +107,13 @@ class TasksManager extends React.Component {
           }
           {/*Таблица с логом по задачам*/}
           <TasksLog
+            date={this.state.date}
             getTasksLog={callback =>
               this.getTasksLog(this.state.date, callback)
             }
             getTasks={callback => this.getTasks(this.state.date, callback)}
             tasksList={this.state.tasksList}
             tasksLogList={this.state.tasksLogList}
-            date={this.state.date}
           />
         </div>
       </React.Fragment>

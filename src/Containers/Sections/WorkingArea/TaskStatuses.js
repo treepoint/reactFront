@@ -163,6 +163,7 @@ class TaskStatuses extends React.Component {
         />
         <Table
           isResizeble={true}
+          isEditable={true}
           addRow={row => this.addRowToDataBase(row)}
           saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
           deleteRow={row => this.showDeleteModal(row)}

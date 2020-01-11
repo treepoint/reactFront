@@ -12,7 +12,10 @@ class DeleteButton extends React.Component {
     }
 
     return (
-      <div className="deleteButton">
+      <div
+        className="deleteButton"
+        style={{ marginLeft: this.props.tableWidth + "px" }}
+      >
         <Action
           icon={deleteIcon}
           onClick={onClick}

@@ -6,7 +6,10 @@ import {
   createTask,
   deleteTask
 } from "../../../../../APIController/APIController";
-import { getTimeFromMins } from "../../../../../Libs/TimeUtils";
+import {
+  getTimeFromMins,
+  getCurrentTimeFormat
+} from "../../../../../Libs/TimeUtils";
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -37,12 +40,17 @@ class Tasks extends React.Component {
 
   //Сохраним изменяемую строку в ДБ
   saveRowToDataBase(task, callback) {
-    updateTask(task, ok => {
-      if (ok) {
-        this.props.getTasks(callback);
-        this.props.getTasksLog();
+    updateTask(
+      Object.assign(task, {
+        update_date: this.props.date + " " + getCurrentTimeFormat()
+      }),
+      ok => {
+        if (ok) {
+          this.props.getTasks(callback);
+          this.props.getTasksLog();
+        }
       }
-    });
+    );
   }
 
   //Удалим задачу из ДБ

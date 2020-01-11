@@ -218,6 +218,7 @@ class Table extends React.Component {
           isHeader={!!!this.props.isHeaderless && index === 0 ? true : false}
           //Задаем возможность изменения размеров ячеек
           isResizeble={this.props.isResizeble}
+          isEditable={this.props.isEditable}
           //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
           uuid={this.state.uuid}
           //Передадим содержимое столбцов из шапки

@@ -1,9 +1,9 @@
 .tableMenu {
-  background: #fff;
+  background: rgb(243, 243, 243);
   border-bottom: 1px solid #e3e3e3;
   border-left: 1px solid #e3e3e3;
   border-right: 1px solid #e3e3e3;
   width: max-content;
-  margin-right: auto;
+  margin-left: auto;
   border-radius: 0px 0px 4px 4px;
 }

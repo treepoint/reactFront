@@ -152,7 +152,7 @@ class TasksLog extends React.Component {
   render() {
     return (
       <Table
-        isEditable={false}
+        isEditable={true}
         isResizeble={true}
         saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
         update={() => this.props.getTasksLog()}
