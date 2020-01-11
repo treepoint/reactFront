@@ -15,6 +15,7 @@ class TasksLog extends React.Component {
   addRowToDataBase() {
     let taskLog = {
       task_id: this.props.tasksList[0].id,
+      comment: "",
       execution_start: this.props.date + " " + getCurrentTimeFormat(),
       execution_end: this.props.date
     };
@@ -68,21 +69,28 @@ class TasksLog extends React.Component {
           type: "string",
           disabled: true,
           value: "Старт",
-          width: 120
+          width: 80
         },
         {
           key: "execution_end",
           type: "string",
           disabled: true,
           value: "Стоп",
-          width: 120
+          width: 80
         },
         {
           key: "execution_time",
           type: "string",
           disabled: true,
           value: "Время",
-          width: 120
+          width: 80
+        },
+        {
+          key: "comment",
+          type: "string",
+          disabled: true,
+          value: "Комментарий",
+          width: 250
         }
       ]
     ];
@@ -128,6 +136,12 @@ class TasksLog extends React.Component {
           type: "time",
           disabled: true,
           value: getTimeFromMins(tasksLogList.execution_time)
+        },
+        {
+          key: "comment",
+          type: "text",
+          disabled: false,
+          value: tasksLogList.comment
         }
       ]);
     });
