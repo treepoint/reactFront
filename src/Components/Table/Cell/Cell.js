@@ -1,9 +1,9 @@
 import React from "react";
 import uuid from "uuid/v4";
 import { Resizable } from "re-resizable";
-import TextContent from "./TextContent/TextContent";
-import SelectContent from "./SelectContent/SelectContent";
-import TimeContent from "./TimeContent/TimeContent";
+import TextContent from "../../TextContent/TextContent";
+import SelectContent from "../../SelectContent/SelectContent";
+import TimeContent from "../../TimeContent/TimeContent";
 import "./Cell.css";
 
 class Cell extends React.Component {
@@ -186,6 +186,7 @@ class Cell extends React.Component {
       case "string":
         return (
           <TextContent
+            isFixed={this.props.isFixed}
             value={this.state.value}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}
@@ -204,6 +205,7 @@ class Cell extends React.Component {
       case "text":
         return (
           <TextContent
+            isFixed={this.props.isFixed}
             value={this.state.value}
             isHeader={this.props.isHeader}
             disabled={this.state.disabled}

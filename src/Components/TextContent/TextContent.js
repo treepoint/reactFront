@@ -144,10 +144,10 @@ class TextContent extends React.Component {
       //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
       marginLeft: !!this.state.wideEditAreaIsHidden
         ? 0 + "px"
-        : -this.props.scrollLeft + "px",
+        : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
       marginTop: !!this.state.wideEditAreaIsHidden
         ? 0 + "px"
-        : -this.props.scrollTop + "px",
+        : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
       width: !!this.props.isStylable
         ? this.props.width - (!!isChrome ? 17 : 16) + "px"
         : this.props.width - (!!isChrome ? 9 : 8) + "px",
@@ -215,7 +215,8 @@ class TextContent extends React.Component {
     if (!this.state.contextMenuIsHidden) {
       return (
         <ContextMenu
-          scrollLeft={this.props.scrollLeft}
+          scrollLeft={!!this.props.isFixed ? 0 : this.props.scrollLeft}
+          scrollTop={!!this.props.isFixed ? 0 : this.props.scrollTop}
           cellStyle={this.props.style}
           setContextMenuHidden={event => this.setContextMenuHidden(event)}
           onChangeStyle={style => this.onChangeStyle(style)}

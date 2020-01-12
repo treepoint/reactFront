@@ -28,8 +28,7 @@ class Action extends React.Component {
         className={this.getClassName()}
         style={{
           background:
-            "url(" + this.props.icon + ") no-repeat scroll 4px 2px transparent",
-          backgroundSize: "24px 24px"
+            "url(" + this.props.icon + ") no-repeat scroll 4px 2px transparent"
         }}
         onClick={event => this.onClick(event)}
       ></div>

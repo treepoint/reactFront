@@ -1,12 +1,9 @@
 .table {
   width: max-content;
   height: max-content;
-  margin-top: 6px;
 }
 
 .tableWrapper {
   overflow: hidden;
   width: max-content;
-  margin-right: 18px;
-  margin-bottom: 12px;
 }

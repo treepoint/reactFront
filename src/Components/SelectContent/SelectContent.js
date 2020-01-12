@@ -40,6 +40,10 @@ class SelectContent extends React.Component {
   }
 
   getOptions() {
+    if (this.state.value === null) {
+      return null;
+    }
+
     let options = this.state.value.list.map((option, index) => {
       //нам сюда может прийти как html, так и строка. В любом случае конвертим в строку
       let label = HtmlToText.fromString(option.label);
@@ -74,6 +78,8 @@ class SelectContent extends React.Component {
       control: (styles, state) => ({
         ...styles,
         border: "none",
+        opacity: !!this.props.isMinimized ? "0.6" : "1",
+        width: !!this.props.isMinimized ? "28px" : "inherit",
         borderRadius: "none",
         minHeight: "34px",
         transition: "all",
@@ -90,7 +96,7 @@ class SelectContent extends React.Component {
         ...styles,
         height: "34px",
         paddingLeft: 0,
-        paddingRight: 6
+        paddingRight: !!this.props.isMinimized ? 0 : 6
       }),
       indicatorSeparator: styles => ({}),
       option: (styles, { data, isFocused, isSelected }) => ({
@@ -117,11 +123,12 @@ class SelectContent extends React.Component {
         marginTop: "0px",
         outline: "1px solid #d2d2d2",
         outlineTop: "none",
-        outlineOffset: "-1px"
+        outlineOffset: "-1px",
+        width: !!this.props.isMinimized ? "max-content" : "inherit"
       }),
       valueContainer: styles => ({
         ...styles,
-        padding: "2px 4px"
+        padding: !!this.props.isMinimized ? "0" : "2px 4px"
       }),
       singleValue: styles => ({
         ...styles,
@@ -138,15 +145,19 @@ class SelectContent extends React.Component {
     //Получаем список опций
     let options = this.getOptions();
 
-    //Получаем текущую опцию
-    let currentValue = options.find(option => {
-      return option.value === this.state.value.current;
-    });
+    let currentValue;
+
+    if (options !== null) {
+      //Получаем текущую опцию
+      currentValue = options.find(option => {
+        return option.value === this.state.value.current;
+      });
+    }
 
     //Получим стиль текущей ячейки
     let style = {};
 
-    if (typeof currentValue !== "undefined") {
+    if (typeof currentValue !== "undefined" && currentValue !== null) {
       style = currentValue.style;
     }
 
@@ -157,6 +168,7 @@ class SelectContent extends React.Component {
           controlColor={style.backgroundColor}
           isBold={style.bold}
           isItalic={style.italic}
+          isSearchable={!this.props.isMinimized}
           value={currentValue}
           menuPlacement="auto"
           closeMenuOnScroll={event => {
@@ -169,7 +181,6 @@ class SelectContent extends React.Component {
             return "Нет совпадений :(";
           }}
           placeholder=""
-          hideSelectedOptions
           menuPosition="fixed"
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}

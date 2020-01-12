@@ -1,7 +1,7 @@
 .row {
   display: flex;
   justify-content: left;
-  border-left: 1px solid #e3e3e3;
+  border-left: 1px solid #c0c0c0;
 }
 
 .row.header {

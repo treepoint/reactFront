@@ -1,0 +1,18 @@
+.addTask {
+  width: 226px;
+  display: flex;
+  flex-direction: column;
+  margin: 6px;
+  padding: 6px;
+}
+
+.addTaskButton {
+  height: 96px;
+  width: 96px;
+  margin: auto;
+  opacity: 0.3;
+}
+
+.addTaskButton:hover {
+  opacity: 0.5;
+}

@@ -1,8 +1,8 @@
 .taskContainer {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  margin-bottom: 12px;
+  justify-content: center;
   width: 100%;
   flex-wrap: wrap;
+  margin-top: 12px;
 }

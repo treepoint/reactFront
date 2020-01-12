@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../../../Components/Table/Table";
+import Page from "../../../Components/Page/Page";
 import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
 import {
   getUserCategories,
@@ -134,7 +135,7 @@ class Categories extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Page title="Управление категориями задач">
         <ConfirmModalWindow
           title="Удалить категорию?"
           message="Категория останется назначенной для текущих и выполненных задач, но будет недоступна для новых"
@@ -153,7 +154,7 @@ class Categories extends React.Component {
         >
           {this.getContent()}
         </Table>
-      </React.Fragment>
+      </Page>
     );
   }
 }

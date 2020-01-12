@@ -1,15 +1,16 @@
 import React from "react";
 import Tasks from "./Tables/Tasks";
 import TasksLog from "./Tables/TasksLog";
+import Page from "../../../Components/Page/Page";
 import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
 import {
   getUserTasksByDate,
   getTasksLogByDate,
   getAllTaskStatuses,
   getUserCategories
-} from "../../../../APIController/APIController";
+} from "../../../APIController/APIController";
 
-import { getCurrentFormatDate } from "../../../../Libs/TimeUtils";
+import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
 import "./TasksManager.css";
 
 /* В общем, у нас здесь какая идея. Есть N таблиц, связанных между собой.
@@ -89,34 +90,31 @@ class TasksManager extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Page isPrivate={true} isNotScrollable={true}>
         <DayPickerCarousel onChange={date => this.onPickDate(date)} />
-        <div className="taskContainer">
-          {
-            /*Таблица с задачами*/
-            <Tasks
+        <Tasks
+          date={this.state.date}
+          getTasks={callback => this.getTasks(this.state.date, callback)}
+          getTasksLog={callback => this.getTasksLog(this.state.date, callback)}
+          tasksList={this.state.tasksList}
+          categoriesList={this.state.categoriesList}
+          taskStatusesList={this.state.taskStatusesList}
+        />
+
+        <div className="taskLogTableContainer">
+          <div className="taskLogTable">
+            <TasksLog
               date={this.state.date}
-              getTasks={callback => this.getTasks(this.state.date, callback)}
               getTasksLog={callback =>
                 this.getTasksLog(this.state.date, callback)
               }
+              getTasks={callback => this.getTasks(this.state.date, callback)}
               tasksList={this.state.tasksList}
-              categoriesList={this.state.categoriesList}
-              taskStatusesList={this.state.taskStatusesList}
+              tasksLogList={this.state.tasksLogList}
             />
-          }
-          {/*Таблица с логом по задачам*/}
-          <TasksLog
-            date={this.state.date}
-            getTasksLog={callback =>
-              this.getTasksLog(this.state.date, callback)
-            }
-            getTasks={callback => this.getTasks(this.state.date, callback)}
-            tasksList={this.state.tasksList}
-            tasksLogList={this.state.tasksLogList}
-          />
+          </div>
         </div>
-      </React.Fragment>
+      </Page>
     );
   }
 }

@@ -1,13 +1,13 @@
 import React from "react";
-import RadioButtonCarousel from "../../../../../Components/RadioButtonCarousel/RadioButtonCarousel";
-import DatePickerButton from "../../../../../Components/DatePickerButton/DatePickerButton";
+import RadioButtonCarousel from "../../../../Components/RadioButtonCarousel/RadioButtonCarousel";
+import DatePickerButton from "../../../../Components/DatePickerButton/DatePickerButton";
 import {
   getShortDayNameByID,
   getDDbyDate,
   getMMbyDate,
   getFormatDate,
   revokeDays
-} from "../../../../../Libs/TimeUtils";
+} from "../../../../Libs/TimeUtils";
 import "./DayPickerCarousel.css";
 
 class DayPickerCarousel extends React.Component {

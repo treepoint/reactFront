@@ -81,7 +81,9 @@ class TimeContent extends React.Component {
       <TimeField
         value={this.state.value}
         disabled={!!this.props.disabled ? true : false}
-        className="timeContent"
+        className={
+          !!this.props.isStandalone ? "timeContent standalone" : "timeContent"
+        }
         style={this.getStyle()}
         onFocus={event => this.onFocus(event)}
         onChange={event => this.onChangeValue(event)}

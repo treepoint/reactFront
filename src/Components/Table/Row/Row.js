@@ -101,6 +101,7 @@ class Row extends React.Component {
       return (
         <Cell
           key={index}
+          isFixed={this.props.isFixed}
           isResizeble={this.props.isResizeble}
           isHeader={this.props.isHeader}
           uuid={this.props.uuid}

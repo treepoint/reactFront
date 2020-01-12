@@ -1,16 +1,33 @@
 import React from "react";
-import Table from "../../../../../Components/Table/Table";
+import Table from "../../../../Components/Table/Table";
 import {
   getTimeFromMins,
   getCurrentTimeFormat
-} from "../../../../../Libs/TimeUtils";
+} from "../../../../Libs/TimeUtils";
 import {
   updateTaskLog,
   createTaskLog,
   deleteTaskLog
-} from "../../../../../APIController/APIController";
+} from "../../../../APIController/APIController";
+
+import Action from "../../../../Components/Action/Action";
+import arrowUpIcon from "../../../../Images/icon_arrow_up.png";
+import arrowDownIcon from "../../../../Images/icon_arrow_down.png";
+
+import "./TaskLog.css";
 
 class TasksLog extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMinimized: true
+    };
+  }
+
+  minimizeTaskLog() {
+    this.setState({ isMinimized: !this.state.isMinimized });
+  }
+
   //Добавим лог по задаче в ДБ
   addRowToDataBase() {
     let taskLog = {
@@ -95,7 +112,7 @@ class TasksLog extends React.Component {
       ]
     ];
 
-    this.props.tasksLogList.forEach(tasksLogList => {
+    this.props.tasksLogList.forEach((tasksLogList, index) => {
       //Соберем список задач
       let tasksList = this.props.tasksList.map(task => {
         return {
@@ -151,16 +168,27 @@ class TasksLog extends React.Component {
 
   render() {
     return (
-      <Table
-        isEditable={true}
-        isResizeble={true}
-        saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
-        update={() => this.props.getTasksLog()}
-        addRow={() => this.addRowToDataBase()}
-        deleteRow={row => this.deleteRowFromDataBase(row)}
-      >
-        {this.getContent()}
-      </Table>
+      <React.Fragment>
+        <div className="taskLog">
+          <div className="taskLogResize">
+            <Action
+              icon={!!this.state.isMinimized ? arrowUpIcon : arrowDownIcon}
+              onClick={() => this.minimizeTaskLog()}
+            />
+          </div>
+          <Table
+            maxHeight={!!this.state.isMinimized ? "70px" : "none"}
+            isFixed={true}
+            isEditable={true}
+            isResizeble={true}
+            saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+            addRow={() => this.addRowToDataBase()}
+            deleteRow={row => this.deleteRowFromDataBase(row)}
+          >
+            {this.getContent()}
+          </Table>
+        </div>
+      </React.Fragment>
     );
   }
 }

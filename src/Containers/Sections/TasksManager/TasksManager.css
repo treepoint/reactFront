@@ -1,0 +1,11 @@
+.taskLogTableContainer {
+  background: #fff;
+  width: calc(100% - 112px);
+  position: absolute;
+  bottom: 28px;
+}
+
+.taskLogTable {
+  margin: auto;
+  width: max-content;
+}

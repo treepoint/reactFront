@@ -19,14 +19,20 @@ class Page extends React.Component {
     }
   }
 
-  render() {
-    return (
-      <div className="page">
-        <PageTitle
-          title={this.props.title}
-          menuLinksArray={this.props.menuLinksArray}
-        />
-        <div className="page hr" />
+  getPageContent() {
+    let content = (
+      <PageContent
+        isAdmin={this.props.isAdmin}
+        isPrivate={this.props.isPrivate}
+      >
+        {this.props.children}
+      </PageContent>
+    );
+
+    if (this.props.isNotScrollable) {
+      return content;
+    } else {
+      return (
         <ReactCustomScroll
           //Задаем стиль
           style={{ width: "100%", height: "calc(-112px + 100vh)" }}
@@ -36,24 +42,33 @@ class Page extends React.Component {
           }}
           onScrollStop={() => this.handleVerticalScroll()}
         >
-          <PageContent
-            isAdmin={this.props.isAdmin}
-            isPrivate={this.props.isPrivate}
-          >
-            {this.props.children}
-          </PageContent>
+          {content}
         </ReactCustomScroll>
-      </div>
-    );
+      );
+    }
+  }
+
+  getPage() {
+    if (typeof this.props.title === "undefined") {
+      return <div className="page">{this.getPageContent()}</div>;
+    } else {
+      return (
+        <div className="page">
+          <PageTitle
+            title={this.props.title}
+            menuLinksArray={this.props.menuLinksArray}
+          />
+          <div className="page hr" />
+          {this.getPageContent()}
+        </div>
+      );
+    }
+  }
+
+  render() {
+    return this.getPage();
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    scrollTop: state.scrollTop,
-    scrollLeft: state.scrollLeft
-  };
-};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -67,6 +82,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Page);

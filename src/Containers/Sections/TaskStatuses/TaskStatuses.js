@@ -8,6 +8,7 @@ import {
   deleteStatus,
   getAllTaskStatusesTypes
 } from "../../../APIController/APIController";
+import Page from "../../../Components/Page/Page";
 
 class TaskStatuses extends React.Component {
   constructor(props) {
@@ -153,7 +154,7 @@ class TaskStatuses extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Page title="Управление статусами задач">
         <ConfirmModalWindow
           title="Удалить статус?"
           message="Статус останется назначенным для текущих и выполненных задач, но будет недоступен для новых"
@@ -171,7 +172,7 @@ class TaskStatuses extends React.Component {
         >
           {this.getContent()}
         </Table>
-      </React.Fragment>
+      </Page>
     );
   }
 }

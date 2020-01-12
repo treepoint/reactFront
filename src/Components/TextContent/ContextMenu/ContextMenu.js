@@ -1,15 +1,13 @@
 import React from "react";
-//Подключаем redux
-import { connect } from "react-redux";
 //Подключаем компоненты
 import { TwitterPicker } from "react-color";
-import Action from "../../../../Action/Action";
-import Blur from "../../../../Blur/Blur";
+import Action from "../../Action/Action";
+import Blur from "../../Blur/Blur";
 //Подключаем изображения иконок и CSS
-import iconBold from "../../../../../Images/icon_bold.png";
-import iconItalic from "../../../../../Images/icon_italic.png";
-import iconBackgroundColor from "../../../../../Images/icon_backgroundColor.png";
-import iconBroom from "../../../../../Images/icon_broom.png";
+import iconBold from "../../../Images/icon_bold.png";
+import iconItalic from "../../../Images/icon_italic.png";
+import iconBackgroundColor from "../../../Images/icon_backgroundColor.png";
+import iconBroom from "../../../Images/icon_broom.png";
 import "./ContextMenu.css";
 
 class ContextMenu extends React.Component {
@@ -184,11 +182,4 @@ class ContextMenu extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    scrollTop: state.scrollTop,
-    scrollLeft: state.scrollLeft
-  };
-};
-
-export default connect(mapStateToProps)(ContextMenu);
+export default ContextMenu;

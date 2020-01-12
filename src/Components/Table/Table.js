@@ -214,6 +214,7 @@ class Table extends React.Component {
       return (
         <Row
           key={index}
+          isFixed={this.props.isFixed}
           //Указываем, на наличие шапки. По умолчанию — есть
           isHeader={!!!this.props.isHeaderless && index === 0 ? true : false}
           //Задаем возможность изменения размеров ячеек
@@ -246,7 +247,10 @@ class Table extends React.Component {
 
     return (
       <div style={{ width: "max-content" }}>
-        <div className="tableWrapper">
+        <div
+          className="tableWrapper"
+          style={{ maxHeight: this.props.maxHeight }}
+        >
           <div className="table">
             {table}
             <SaveMark
