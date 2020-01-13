@@ -165,6 +165,7 @@ class SelectContent extends React.Component {
       <React.Fragment>
         <Select
           options={options}
+          classNamePrefix="selectContent"
           controlColor={style.backgroundColor}
           isBold={style.bold}
           isItalic={style.italic}
@@ -172,10 +173,8 @@ class SelectContent extends React.Component {
           value={currentValue}
           menuPlacement="auto"
           closeMenuOnScroll={event => {
-            console.log(event.target.classList.value);
-
             return (
-              !!!(event.target.classList.value.indexOf("MenuList") + 1) &&
+              !!!(event.target.classList.value.indexOf("selectContent") + 1) &&
               this.state.isOpened
             );
           }}
