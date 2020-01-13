@@ -8,8 +8,8 @@ class Navigation extends React.Component {
     return (
       <div className="navigation">
         <NavigationLink to="/tasks_manager" value="Задачи" />
-        <NavigationLink to="/categories" value="Категории" />
         <NavigationLink to="/task_statuses" value="Статусы" />
+        <NavigationLink to="/categories" value="Категории" />
         <NavigationLink to="/statistic" value="Статистика" />
         <NavigationLink to="/admin" value="Админ.панель" onlyAdmin={true} />
         <NavigationLink to="/about" value="Справка" />
