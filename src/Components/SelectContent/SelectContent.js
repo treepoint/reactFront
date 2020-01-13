@@ -172,6 +172,8 @@ class SelectContent extends React.Component {
           value={currentValue}
           menuPlacement="auto"
           closeMenuOnScroll={event => {
+            console.log(event.target.classList.value);
+
             return (
               !!!(event.target.classList.value.indexOf("MenuList") + 1) &&
               this.state.isOpened
