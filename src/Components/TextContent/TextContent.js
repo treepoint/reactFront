@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 //Подключаем компоненты
 import TextareaAutosize from "react-autosize-textarea";
 import ContextMenu from "./ContextMenu/ContextMenu";
-import WideEditAreaBlur from "./WideEditAreaBlur/WideEditAreaBlur";
+import Blur from "../Blur/Blur";
 import "./TextContent.css";
 
 class TextContent extends React.Component {
@@ -14,7 +14,8 @@ class TextContent extends React.Component {
       contextMenuIsHidden: true,
       wideEditAreaIsHidden: true,
       value: "",
-      isReadOnly: false
+      isReadOnly: false,
+      isChrome: this.isChrome()
     };
   }
 
@@ -23,9 +24,21 @@ class TextContent extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.value !== this.props.value && !this.state.isReadOnly) {
+    if (this.state.isReadOnly) {
+      return null;
+    }
+
+    if (this.state.value !== this.props.value) {
       this.setState({ value: this.props.value });
     }
+  }
+
+  isChrome() {
+    if (navigator.userAgent.indexOf("Chrome") + 1) {
+      return true;
+    }
+
+    return false;
   }
 
   onFocus() {
@@ -106,66 +119,60 @@ class TextContent extends React.Component {
 
   //Получаем стиль ячейки заголовка на основании стиля контента
   getHeaderStyle() {
-    let style;
-
-    //Вот такого делать никогда не нужно. Но если очень хочется — все равно не надо
-    //Они держат мою жену в заложниках и сказали сделать быстро, поэтому так
-
-    let isChrome = false;
-
-    if (navigator.userAgent.indexOf("Chrome") + 1) {
-      isChrome = true;
-    }
-
-    style = {
+    return {
       fontWeight: "900",
-      width: this.props.width - (!!isChrome ? 9 : 8) + "px",
+      width: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
       height: this.props.height - 13 + "px",
-      minWidth: this.props.width - (!!isChrome ? 9 : 8) + "px",
+      minWidth: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
       minHeight: this.props.height - 13 + "px",
       color: "#000"
     };
-
-    return style;
   }
 
   //Получаем стиль обычной ячейки на основании стиля контента
   getRegularStyle() {
-    //Вот такого делать никогда не нужно. Но если очень хочется — все равно не надо
-    //Они держат мою жену в заложниках и сказали сделать быстро, поэтому так
-
-    let isChrome = false;
-
-    if (navigator.userAgent.indexOf("Chrome") + 1) {
-      isChrome = true;
+    if (this.state.isChrome) {
+      return {
+        marginLeft: !!this.state.wideEditAreaIsHidden
+          ? 0 + "px"
+          : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
+        marginTop: !!this.state.wideEditAreaIsHidden
+          ? 0 + "px"
+          : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
+        backgroundColor: !!this.props.disabled
+          ? "rgb(251, 251, 251)"
+          : "#ffffff",
+        borderLeft: "8px solid " + this.props.backgroundColor,
+        fontWeight: !!this.props.bold ? "900" : "200",
+        fontStyle: !!this.props.italic ? "italic" : "normal",
+        color: !!this.props.disabled ? "#444" : "#000",
+        minWidth: this.props.width - 17 + "px",
+        minHeight: this.props.height - 4 + "px"
+      };
+    } else {
+      return {
+        //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
+        marginLeft: !!this.state.wideEditAreaIsHidden
+          ? 0 + "px"
+          : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
+        marginTop: !!this.state.wideEditAreaIsHidden
+          ? 0 + "px"
+          : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
+        backgroundColor: !!this.props.disabled
+          ? "rgb(251, 251, 251)"
+          : "#ffffff",
+        borderLeft: "8px solid " + this.props.backgroundColor,
+        fontWeight: !!this.props.bold ? "900" : "200",
+        fontStyle: !!this.props.italic ? "italic" : "normal",
+        color: !!this.props.disabled ? "#444" : "#000",
+        minWidth: this.props.width - 16 + "px",
+        minHeight: this.props.height + "px"
+      };
     }
-
-    return {
-      //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
-      marginLeft: !!this.state.wideEditAreaIsHidden
-        ? 0 + "px"
-        : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
-      marginTop: !!this.state.wideEditAreaIsHidden
-        ? 0 + "px"
-        : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
-      width: !!this.props.isStylable
-        ? this.props.width - (!!isChrome ? 17 : 16) + "px"
-        : this.props.width - (!!isChrome ? 9 : 8) + "px",
-      height: this.props.height - (!!isChrome ? 16 : 12) + "px",
-      backgroundColor: !!this.props.disabled ? "rgb(251, 251, 251)" : "#ffffff",
-      borderLeft: "8px solid " + this.props.style.backgroundColor,
-      fontWeight: !!this.props.style.bold ? "900" : "200",
-      fontStyle: !!this.props.style.italic ? "italic" : "normal",
-      color: !!this.props.disabled ? "#444" : "#000",
-      minWidth: !!this.props.isStylable
-        ? this.props.width - (!!isChrome ? 17 : 16) + "px"
-        : this.props.width - (!!isChrome ? 9 : 8) + "px",
-      minHeight: this.props.height - (!!isChrome ? 4 : 0) + "px"
-    };
   }
 
   //Срабатывает при двойном клике
-  showWideEditArea(event) {
+  showWideEditArea() {
     if (this.props.disabled || this.props.isHeader) {
       return;
     }
@@ -177,11 +184,11 @@ class TextContent extends React.Component {
   }
 
   getClassName() {
-    let className = "textContent";
     if (!this.state.wideEditAreaIsHidden) {
-      className = className + " chosen";
+      return "textContent chosen";
     }
-    return className;
+
+    return "textContent";
   }
 
   //Получаем контент ячейки в зависимости от того шапка таблицы это или обычная ячейка
@@ -199,11 +206,11 @@ class TextContent extends React.Component {
         disabled={!!this.props.disabled ? true : false}
         onChange={event => this.onChange(event)}
         //Обрабатываем двойной клик
-        onDoubleClick={event => this.showWideEditArea(event)}
+        onDoubleClick={() => this.showWideEditArea()}
         //Обрабатываем контекстное меню
         onContextMenu={event => this.showContextMenu(event)}
         //Обрабатываем потерю фокуса
-        onBlur={event => this.onBlur(event)}
+        onBlur={() => this.onBlur()}
         maxRows={1}
         onKeyPress={event => this.onKeyPress(event)}
       />
@@ -217,7 +224,11 @@ class TextContent extends React.Component {
         <ContextMenu
           scrollLeft={!!this.props.isFixed ? 0 : this.props.scrollLeft}
           scrollTop={!!this.props.isFixed ? 0 : this.props.scrollTop}
-          cellStyle={this.props.style}
+          //Настройки стиля
+          bold={this.props.bold}
+          italic={this.props.italic}
+          backgroundColor={this.props.backgroundColor}
+          //Функции
           setContextMenuHidden={event => this.setContextMenuHidden(event)}
           onChangeStyle={style => this.onChangeStyle(style)}
           onWheel={event => this.setContextMenuHidden(event)}
@@ -227,10 +238,10 @@ class TextContent extends React.Component {
   }
 
   //Получим блюр для зоны редактирования
-  getWideEditAreaBlur() {
+  getBlur() {
     if (!this.state.wideEditAreaIsHidden) {
       return (
-        <WideEditAreaBlur
+        <Blur
           onClick={() => {
             this.hideAllEditing();
           }}
@@ -247,7 +258,7 @@ class TextContent extends React.Component {
       <React.Fragment>
         {this.getContextMenu()}
         {this.getCellContent()}
-        {this.getWideEditAreaBlur()}
+        {this.getBlur()}
       </React.Fragment>
     );
   }

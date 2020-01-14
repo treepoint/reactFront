@@ -27,7 +27,7 @@ class Table extends React.Component {
   }
 
   setTable() {
-    let table = this.isValidTable(this.props.children);
+    let table = this.props.children;
 
     //Если новая таблица отличается от того, что хранится в стейте — обновим её
     if (JSON.stringify(table) !== JSON.stringify(this.state.table)) {
@@ -66,6 +66,7 @@ class Table extends React.Component {
     });
   }
 
+  //Подсчет ширины таблицы
   getTableWidth() {
     let tableWidth = 0;
 
@@ -87,6 +88,7 @@ class Table extends React.Component {
 
     //Скопируем текущий стейт
     let colsDescription = this.state.colsDescription;
+
     //Обновим состояние нужного столбца
     colsDescription[column] = {
       //Ширину перезапишем
@@ -123,19 +125,6 @@ class Table extends React.Component {
 
     //Обновим стейт
     this.setState({ colsDescription, uuid: "" });
-  }
-
-  //Чекаем, что нам передали валидную таблицу
-  isValidTable(table) {
-    if (typeof table !== "object") {
-      return [["Ошибка"], ["Передан не массив"]];
-    }
-
-    if (table.length === 0) {
-      return [["Ошибка"], ["Передан пустой массив"]];
-    }
-
-    return table;
   }
 
   getObjectFromRowContent(rowContent) {
@@ -208,7 +197,7 @@ class Table extends React.Component {
     this.props.deleteRow(object);
   }
 
-  render() {
+  getRows() {
     //Соберем тушку для отрисовки
     let table = this.state.table.map((row, index) => {
       return (
@@ -219,6 +208,7 @@ class Table extends React.Component {
           isHeader={!!!this.props.isHeaderless && index === 0 ? true : false}
           //Задаем возможность изменения размеров ячеек
           isResizeble={this.props.isResizeble}
+          //Задаем возможность редактирования ячеек
           isEditable={this.props.isEditable}
           //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
           uuid={this.state.uuid}
@@ -245,23 +235,22 @@ class Table extends React.Component {
       );
     });
 
+    return table;
+  }
+
+  render() {
     return (
-      <div style={{ width: "max-content" }}>
-        <div
-          className="tableWrapper"
-          style={{ maxHeight: this.props.maxHeight }}
-        >
-          <div className="table">
-            {table}
-            <SaveMark
-              marginLeft={this.getTableWidth()}
-              isDisplayed={this.state.displaySaveMark}
-            />
-          </div>
-          <TableMenu
-            update={!!this.props.update ? () => this.props.update() : null}
+      <div className="tableWrapper" style={{ maxHeight: this.props.maxHeight }}>
+        <div className="table">
+          {this.getRows()}
+          <SaveMark
+            marginLeft={this.getTableWidth()}
+            isDisplayed={this.state.displaySaveMark}
           />
         </div>
+        <TableMenu
+          update={!!this.props.update ? () => this.props.update() : null}
+        />
       </div>
     );
   }

@@ -14,9 +14,13 @@ class Cell extends React.Component {
       value: " ",
       //Тип контента
       type: "",
-      //Стиль по умолчанию
-      style: {},
+      //Стиль оформления контента
+      bold: false,
+      italic: false,
+      backgroundColor: "#f7f7f7",
+      //Активность
       disabled: true,
+      //Возможность стилизации
       isStylable: false
     };
   }
@@ -81,29 +85,41 @@ class Cell extends React.Component {
 
   //Задаем стиль контента
   updateStyleContent() {
+    if (this.state.disabled) {
+      return null;
+    }
+
     if (typeof this.props.content.style === "undefined") {
       return null;
     }
 
-    if (!this.state.isStylable && this.state.disabled) {
+    if (!this.state.isStylable) {
       this.setState({ isStylable: true });
     }
 
-    let style = JSON.parse(JSON.stringify(this.props.content.style));
+    //Обновим жирность
+    let bold = this.props.content.style.bold;
 
     //Заполняем его параметрами. Если пришел из вне — ставим его, иначе из текущего стиля
-    if (typeof style.bold === "undefined") {
-      style.bold = false;
-    }
-    if (typeof style.italic === "undefined") {
-      style.italic = false;
-    }
-    if (typeof style.backgroundColor === "undefined") {
-      style.backgroundColor = "#f7f7f7";
+    if (typeof bold !== "undefined" && bold !== this.state.bold) {
+      this.setState({ bold });
     }
 
-    if (JSON.stringify(style) !== JSON.stringify(this.state.style)) {
-      this.setState({ style });
+    //Обновим курсив
+    let italic = this.props.content.style.italic;
+
+    if (typeof italic !== "undefined" && italic !== this.state.italic) {
+      this.setState({ italic });
+    }
+
+    //Обновим цвет фона
+    let backgroundColor = this.props.content.style.backgroundColor;
+
+    if (
+      typeof backgroundColor !== "undefined" &&
+      backgroundColor !== this.state.backgroundColor
+    ) {
+      this.setState({ backgroundColor });
     }
   }
 
@@ -194,7 +210,11 @@ class Cell extends React.Component {
             height={this.props.height}
             isStylable={this.state.isStylable}
             isSingleLineMode={true}
-            style={this.state.style}
+            //Настройки стиля
+            bold={this.state.bold}
+            italic={this.state.italic}
+            backgroundColor={this.state.backgroundColor}
+            //Функции
             onChangeStyle={style => {
               this.onChangeStyle(style);
             }}
@@ -212,7 +232,11 @@ class Cell extends React.Component {
             width={this.props.width}
             height={this.props.height}
             isStylable={this.state.isStylable}
-            style={this.state.style}
+            //Настройки стиля
+            bold={this.state.bold}
+            italic={this.state.italic}
+            backgroundColor={this.state.backgroundColor}
+            //Функции
             onChangeStyle={style => {
               this.onChangeStyle(style);
             }}

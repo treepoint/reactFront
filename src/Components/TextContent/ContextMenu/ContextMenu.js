@@ -20,7 +20,13 @@ class ContextMenu extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ cellStyle: this.props.cellStyle });
+    this.setState({
+      cellStyle: {
+        bold: this.props.bold,
+        italic: this.props.italic,
+        backgroundColor: this.props.backgroundColor
+      }
+    });
   }
 
   onClick(event) {

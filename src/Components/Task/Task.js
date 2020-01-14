@@ -5,6 +5,8 @@ import TimeContent from "../TimeContent/TimeContent";
 import ConfirmModalWindow from "../ConfirmModalWindow/ConfirmModalWindow";
 import Action from "../Action/Action";
 import deleteIcon from "../../Images/icon_delete.png";
+import archiveIcon from "../../Images/icon_archive.png";
+import dearchiveIcon from "../../Images/icon_dearchive.png";
 import timeSpanIcon from "../../Images/icon_time_span.png";
 import minimizeIcon from "../../Images/icon_minimize.png";
 import maximizedIcon from "../../Images/icon_maximized.png";
@@ -22,16 +24,16 @@ class Task extends React.Component {
     super();
     this.state = {
       content: {
-        name: {
-          value: null,
-          style: { backgroundColor: "#fff", bold: false, italic: false }
-        },
-        status_id: { value: null },
-        category_id: { value: null },
-        execution_time_day: { value: null },
-        execution_time_all: { value: null }
+        id: null,
+        name: null,
+        name_style: { backgroundColor: "#fff", bold: false, italic: false },
+        statuses: null,
+        categories: null,
+        execution_time_day: null,
+        execution_time_all: null,
+        in_archive: 1
       },
-      deleteModalWindow: { isHidden: true },
+      isModalWindowHidden: true,
       isMinimized: true
     };
   }
@@ -48,46 +50,64 @@ class Task extends React.Component {
     }
   }
 
-  minimizeTask() {
+  //Изменим вид таска — сделаем большим или маленьким
+  changeTaskView() {
     this.setState({ isMinimized: !this.state.isMinimized });
   }
 
   //Закрыть модальное окно
   closeDeleteModal() {
-    this.setState({ deleteModalWindow: { isHidden: true } });
+    this.setState({ isModalWindowHidden: true });
   }
 
   //Показать модальное окно
-  showDeleteModal(row) {
-    this.setState({ deleteModalWindow: { isHidden: false } });
+  showDeleteModal() {
+    this.setState({ isModalWindowHidden: false });
   }
 
   //Сохраним изменяемую строку в ДБ
   saveTaskToDatabase(callback) {
     let task = {
-      id: this.state.content.id.value,
-      name: this.state.content.name.value,
-      name_style: this.state.content.name.style,
-      status_id: this.state.content.status_id.value.current,
-      category_id: this.state.content.category_id.value.current
+      id: this.state.content.id,
+      name: this.state.content.name,
+      name_style: this.state.content.name_style,
+      status_id: this.state.content.statuses.current,
+      category_id: this.state.content.categories.current,
+      in_archive: this.state.content.in_archive,
+      update_date: this.props.date + " " + getCurrentTimeFormat()
     };
 
-    updateTask(
-      Object.assign(task, {
-        update_date: this.props.date + " " + getCurrentTimeFormat()
-      }),
-      ok => {
-        if (ok) {
-          this.props.getTasks(callback);
-          this.props.getTasksLog();
-        }
+    updateTask(task, ok => {
+      if (ok) {
+        this.props.getTasks(callback);
+        this.props.getTasksLog();
       }
-    );
+    });
+  }
+
+  //Если нужно — перенесем в архив или достанем из архива
+  moveToAchrive(value, callback) {
+    let task = {
+      id: this.state.content.id,
+      name: this.state.content.name,
+      name_style: this.state.content.name_style,
+      status_id: this.state.content.statuses.current,
+      category_id: this.state.content.categories.current,
+      update_date: this.props.date + " " + getCurrentTimeFormat(),
+      in_archive: value
+    };
+
+    updateTask(task, ok => {
+      if (ok) {
+        this.props.getTasks(callback);
+        this.props.getTasksLog();
+      }
+    });
   }
 
   //Удалим задачу из ДБ
   deleteRowFromDataBase() {
-    deleteTask(this.state.content.id.value, ok => {
+    deleteTask(this.state.content.id, ok => {
       if (ok) {
         this.props.getTasks();
         this.props.getTasksLog();
@@ -100,7 +120,7 @@ class Task extends React.Component {
     this.setState(
       {
         content: Object.assign(this.state.content, {
-          name: { value, style: this.state.content.name.style }
+          name: value
         })
       },
       this.saveTaskToDatabase()
@@ -110,7 +130,7 @@ class Task extends React.Component {
   //Добавим лог по задаче в ДБ
   addRowToDataBase() {
     let taskLog = {
-      task_id: this.state.content.id.value,
+      task_id: this.state.content.id,
       comment: "",
       execution_start: this.props.date + " " + getCurrentTimeFormat(),
       execution_end: this.props.date
@@ -128,7 +148,7 @@ class Task extends React.Component {
     this.setState(
       {
         content: Object.assign(this.state.content, {
-          name: { value: this.state.content.name.value, style }
+          name_style: style
         })
       },
       this.saveTaskToDatabase()
@@ -140,11 +160,9 @@ class Task extends React.Component {
     this.setState(
       {
         content: Object.assign(this.state.content, {
-          status_id: {
-            value: {
-              current: status.current,
-              list: this.state.content.status_id.value.list
-            }
+          statuses: {
+            current: status.current,
+            list: this.state.content.statuses.list
           }
         })
       },
@@ -157,11 +175,9 @@ class Task extends React.Component {
     this.setState(
       {
         content: Object.assign(this.state.content, {
-          category_id: {
-            value: {
-              current: category.current,
-              list: this.state.content.category_id.value.list
-            }
+          categories: {
+            current: category.current,
+            list: this.state.content.categories.list
           }
         })
       },
@@ -173,11 +189,15 @@ class Task extends React.Component {
     return (
       <div className="textField">
         <TextContent
-          value={this.state.content.name.value}
+          value={this.state.content.name}
           width={226}
           height={68}
           isStylable={true}
-          style={this.state.content.name.style}
+          //Стиль оформления контента
+          bold={this.state.content.name_style.bold}
+          italic={this.state.content.name_style.italic}
+          backgroundColor={this.state.content.name_style.backgroundColor}
+          //Функции
           onChangeStyle={style => {
             this.onChangeNameStyle(style);
           }}
@@ -196,7 +216,7 @@ class Task extends React.Component {
       >
         <SelectContent
           isMinimized={this.state.isMinimized}
-          value={this.state.content.status_id.value}
+          value={this.state.content.statuses}
           height={34}
           onChangeValue={value => this.onChangeStatus(value)}
         />
@@ -213,7 +233,7 @@ class Task extends React.Component {
       >
         <SelectContent
           isMinimized={this.state.isMinimized}
-          value={this.state.content.category_id.value}
+          value={this.state.content.categories}
           height={34}
           onChangeValue={value => this.onChangeCategory(value)}
         />
@@ -229,13 +249,13 @@ class Task extends React.Component {
             !!this.state.isMinimized ? "timeLabel hidden" : "timeLabel"
           }
         >
-          За день:{" "}
+          За день:
         </div>
-        <div style={{ width: "60px", height: "34px", marginBottom: "12px" }}>
+        <div style={{ width: "50px", height: "34px", marginBottom: "12px" }}>
           <TimeContent
             disabled={true}
             isStandalone={true}
-            value={this.state.content.execution_time_day.value}
+            value={this.state.content.execution_time_day}
             width={50}
             height={34}
           />
@@ -250,11 +270,11 @@ class Task extends React.Component {
         className={!!this.state.isMinimized ? "timeField hidden" : "timeField"}
       >
         <div className="timeLabel">Всего: </div>
-        <div style={{ width: "60px", height: "34px" }}>
+        <div style={{ width: "50px", height: "34px" }}>
           <TimeContent
             disabled={true}
             isStandalone={true}
-            value={this.state.content.execution_time_all.value}
+            value={this.state.content.execution_time_all}
             width={50}
             height={34}
           />
@@ -266,17 +286,30 @@ class Task extends React.Component {
   getActions() {
     return (
       <div className="taskActions">
-        <Action icon={timeSpanIcon} onClick={() => this.addRowToDataBase()} />
-        <Action icon={deleteIcon} onClick={() => this.showDeleteModal()} />
+        {!!this.state.content.in_archive ? null : (
+          <Action icon={timeSpanIcon} onClick={() => this.addRowToDataBase()} />
+        )}
+
+        {!!this.state.content.in_archive ? (
+          <React.Fragment>
+            <Action
+              icon={dearchiveIcon}
+              onClick={() => this.moveToAchrive(0)}
+            />
+            <Action icon={deleteIcon} onClick={() => this.showDeleteModal()} />
+          </React.Fragment>
+        ) : (
+          <Action icon={archiveIcon} onClick={() => this.moveToAchrive(1)} />
+        )}
         <Action
           icon={!!this.state.isMinimized ? maximizedIcon : minimizeIcon}
-          onClick={() => this.minimizeTask()}
+          onClick={() => this.changeTaskView()}
         />
       </div>
     );
   }
 
-  getOptionlaPart() {
+  getOptionalPart() {
     if (this.state.isMinimized) {
       return (
         <div className="optionalPart">
@@ -303,22 +336,27 @@ class Task extends React.Component {
     }
   }
 
-  render() {
-    return (
-      <React.Fragment>
+  getDeleteModalWindow() {
+    if (!this.state.isModalWindowHidden) {
+      return (
         <ConfirmModalWindow
           title="Удалить задачу?"
           message="Вместе с задачей будут удалены все записи из лога и статистики. 
-      Если вы хотите закрыть задачу — проставьте у неё статус с типом «Окончательный»."
-          isHidden={this.state.deleteModalWindow.isHidden}
+Если вы хотите закрыть задачу — проставьте у неё статус с типом «Окончательный»."
           onCancel={() => this.closeDeleteModal()}
           onConfirm={() => this.deleteRowFromDataBase()}
         />
-        <div className="task">
-          {this.getTaskName()}
-          {this.getOptionlaPart()}
-        </div>
-      </React.Fragment>
+      );
+    }
+  }
+
+  render() {
+    return (
+      <div className="task">
+        {this.getDeleteModalWindow()}
+        {this.getTaskName()}
+        {this.getOptionalPart()}
+      </div>
     );
   }
 }

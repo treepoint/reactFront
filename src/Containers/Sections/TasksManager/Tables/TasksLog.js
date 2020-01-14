@@ -1,12 +1,8 @@
 import React from "react";
 import Table from "../../../../Components/Table/Table";
-import {
-  getTimeFromMins,
-  getCurrentTimeFormat
-} from "../../../../Libs/TimeUtils";
+import { getTimeFromMins } from "../../../../Libs/TimeUtils";
 import {
   updateTaskLog,
-  createTaskLog,
   deleteTaskLog
 } from "../../../../APIController/APIController";
 
@@ -26,22 +22,6 @@ class TasksLog extends React.Component {
 
   minimizeTaskLog() {
     this.setState({ isMinimized: !this.state.isMinimized });
-  }
-
-  //Добавим лог по задаче в ДБ
-  addRowToDataBase() {
-    let taskLog = {
-      task_id: this.props.tasksList[0].id,
-      comment: "",
-      execution_start: this.props.date + " " + getCurrentTimeFormat(),
-      execution_end: this.props.date
-    };
-
-    createTaskLog(taskLog, ok => {
-      if (ok) {
-        this.props.getTasksLog();
-      }
-    });
   }
 
   //Сохраним изменяемую строку в ДБ
@@ -79,7 +59,7 @@ class TasksLog extends React.Component {
           type: "string",
           disabled: true,
           value: "Задача",
-          width: 574
+          width: 480
         },
         {
           key: "execution_start",
@@ -112,16 +92,17 @@ class TasksLog extends React.Component {
       ]
     ];
 
-    this.props.tasksLogList.forEach((tasksLogList, index) => {
-      //Соберем список задач
-      let tasksList = this.props.tasksList.map(task => {
-        return {
-          value: task.id,
-          label: task.name,
-          style: task.name_style
-        };
-      });
+    //Соберем список задач. Он одинаковый для каждой записи в логе
+    let tasksList = this.props.tasksList.map(task => {
+      return {
+        value: task.id,
+        label: task.name,
+        style: task.name_style
+      };
+    });
 
+    //После этого пройдемся и соберем все записи таск лога
+    this.props.tasksLogList.forEach(tasksLogList => {
       //добавим текущую
       let tasks = {
         list: tasksList,
@@ -129,7 +110,7 @@ class TasksLog extends React.Component {
       };
 
       content.push([
-        { key: "id", type: "hidden", value: tasksLogList.id, style: {} },
+        { key: "id", type: "hidden", value: tasksLogList.id },
         {
           key: "task_id",
           type: "select",
@@ -177,12 +158,11 @@ class TasksLog extends React.Component {
             />
           </div>
           <Table
-            maxHeight={!!this.state.isMinimized ? "70px" : "none"}
+            maxHeight={!!this.state.isMinimized ? "70px" : "50vh"}
             isFixed={true}
             isEditable={true}
-            isResizeble={true}
+            isResizeble={false}
             saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
-            addRow={() => this.addRowToDataBase()}
             deleteRow={row => this.deleteRowFromDataBase(row)}
           >
             {this.getContent()}
