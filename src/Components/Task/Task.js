@@ -66,7 +66,7 @@ class Task extends React.Component {
   }
 
   //Сохраним изменяемую строку в ДБ
-  saveTaskToDatabase(callback) {
+  saveTaskToDatabase() {
     let task = {
       id: this.state.content.id,
       name: this.state.content.name,
@@ -79,14 +79,14 @@ class Task extends React.Component {
 
     updateTask(task, ok => {
       if (ok) {
-        this.props.getTasks(callback);
+        this.props.getTasks();
         this.props.getTasksLog();
       }
     });
   }
 
   //Если нужно — перенесем в архив или достанем из архива
-  moveToAchrive(value, callback) {
+  moveToAchrive(value) {
     let task = {
       id: this.state.content.id,
       name: this.state.content.name,
@@ -99,7 +99,7 @@ class Task extends React.Component {
 
     updateTask(task, ok => {
       if (ok) {
-        this.props.getTasks(callback);
+        this.props.getTasks();
         this.props.getTasksLog();
       }
     });
@@ -251,7 +251,6 @@ class Task extends React.Component {
         >
           За день:
         </div>
-        <div style={{ width: "50px", height: "34px", marginBottom: "12px" }}>
           <TimeContent
             disabled={true}
             isStandalone={true}
@@ -260,7 +259,6 @@ class Task extends React.Component {
             height={34}
           />
         </div>
-      </div>
     );
   }
 
@@ -270,7 +268,6 @@ class Task extends React.Component {
         className={!!this.state.isMinimized ? "timeField hidden" : "timeField"}
       >
         <div className="timeLabel">Всего: </div>
-        <div style={{ width: "50px", height: "34px" }}>
           <TimeContent
             disabled={true}
             isStandalone={true}
@@ -278,7 +275,6 @@ class Task extends React.Component {
             width={50}
             height={34}
           />
-        </div>
       </div>
     );
   }
