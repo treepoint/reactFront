@@ -85,9 +85,6 @@ class Cell extends React.Component {
 
   //Задаем стиль контента
   updateStyleContent() {
-    if (this.state.disabled) {
-      return null;
-    }
 
     if (typeof this.props.content.style === "undefined") {
       return null;
