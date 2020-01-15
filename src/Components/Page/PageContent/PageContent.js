@@ -14,19 +14,17 @@ class PageContent extends React.Component {
       return this.props.children;
     }
 
-    //Иначе нужен токен и email как минимум
-    if (!!this.props.token && !!this.props.user.email) {
-      //Но если нужны еще и админские права — чекнем их
-      if (this.props.isAdmin) {
-        if (this.props.user.role !== "admin") {
-          return <OnlyAdminMessage />;
-        }
-      }
-      //Если не админка и есть токен и email — так же отдадим контент
-      return this.props.children;
+    //Но если нужны еще и админские права — чекнем их
+    if (this.props.isAdmin && this.props.user.role !== "admin") {
+      return <OnlyAdminMessage />;
     }
 
-    return <OnlyRegistredUsersMessage />;
+    //Иначе нужен токен и email как минимум
+    if (!!!this.props.token && !!!this.props.user.email) {
+      return <OnlyRegistredUsersMessage />;
+    }
+
+    return this.props.children;
   }
 
   render() {

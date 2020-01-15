@@ -48,25 +48,27 @@ class Page extends React.Component {
     }
   }
 
-  getPage() {
-    if (typeof this.props.title === "undefined") {
-      return <div className="page">{this.getPageContent()}</div>;
-    } else {
+  getTitle() {
+    if (typeof this.props.title !== "undefined") {
       return (
-        <div className="page">
+        <React.Fragment>
           <PageTitle
             title={this.props.title}
             menuLinksArray={this.props.menuLinksArray}
           />
           <div className="page hr" />
-          {this.getPageContent()}
-        </div>
+        </React.Fragment>
       );
     }
   }
 
   render() {
-    return this.getPage();
+    return (
+      <div className="page">
+        {this.getTitle()}
+        {this.getPageContent()}
+      </div>
+    );
   }
 }
 
