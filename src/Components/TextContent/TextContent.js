@@ -122,9 +122,8 @@ class TextContent extends React.Component {
     return {
       fontWeight: "900",
       width: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
-      height: this.props.height - 13 + "px",
       minWidth: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
-      minHeight: this.props.height - 13 + "px",
+      minHeight: this.props.height - 4 + "px",
       color: "#000"
     };
   }
