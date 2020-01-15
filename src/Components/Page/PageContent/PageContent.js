@@ -9,10 +9,6 @@ import "./PageContent.css";
 
 class PageContent extends React.Component {
   getContent() {
-    if (this.props.loading === true) {
-      return;
-    }
-
     //Если страница не приватная и доступна не только админам — cразу отдадим контент
     if (!this.props.isPrivate && !this.props.isAdmin) {
       return this.props.children;
@@ -41,8 +37,7 @@ class PageContent extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    token: state.token,
-    loading: state.loading
+    token: state.token
   };
 };
 

@@ -24,13 +24,6 @@ export function setModalWindowName(text) {
   return { type: SET_MODAL_WINDOW_NAME, text };
 }
 
-//Состояние загрузки
-export const LOADING = "LOADING";
-
-export function setLoading(boolean) {
-  return { type: LOADING, boolean };
-}
-
 //Состояние страницы
 export const SCROLL_TOP = "SCROLL_TOP";
 export const SCROLL_LEFT = "SCROLL_LEFT";

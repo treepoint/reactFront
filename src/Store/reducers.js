@@ -3,7 +3,6 @@ import {
   SET_USER,
   SET_MODAL_WINDOW_STATE,
   SET_MODAL_WINDOW_NAME,
-  LOADING,
   SCROLL_TOP,
   SCROLL_LEFT
 } from "./actions";
@@ -46,15 +45,6 @@ function modalWindowName(state = "", action) {
   }
 }
 
-function loading(state = true, action) {
-  switch (action.type) {
-    case LOADING:
-      return action.boolean;
-    default:
-      return state;
-  }
-}
-
 function scrollTop(state = 0, action) {
   switch (action.type) {
     case SCROLL_TOP:
@@ -78,7 +68,6 @@ const appReducer = combineReducers({
   user,
   modalWindowState,
   modalWindowName,
-  loading,
   scrollTop,
   scrollLeft
 });
