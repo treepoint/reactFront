@@ -3,7 +3,8 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setToken, setUser } from "../../Store/actions";
+import { setToken } from "../../Store/actions/token";
+import { setUser } from "../../Store/actions/user";
 //Подключаем cookies
 import { bake_cookie, read_cookie } from "../../Libs/Sfcookies";
 //Подключаем API

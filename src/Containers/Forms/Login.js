@@ -1,7 +1,9 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setUser, setToken, setModalWindowState } from "../../Store/actions";
+import { setUser } from "../../Store/actions/user";
+import { setToken } from "../../Store/actions/token";
+import { setModalWindowState } from "../../Store/actions/globalModalWindow";
 //Подключаем API
 import { getToken } from "../../APIController/APIController";
 //Подключаем cookies

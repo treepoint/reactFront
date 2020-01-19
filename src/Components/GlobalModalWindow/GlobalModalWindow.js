@@ -1,7 +1,7 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setModalWindowState } from "../../Store/actions";
+import { setModalWindowState } from "../../Store/actions/globalModalWindow";
 import ModalWindow from "../ModalWindow/ModalWindow";
 
 class GlobalModalWindow extends React.Component {

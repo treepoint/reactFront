@@ -5,7 +5,7 @@ import AddTaskButton from "../../../../Components/AddTaskButton/AddTaskButton";
 import ReactCustomScroll from "react-scrollbars-custom";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setScrollTop, setScrollLeft } from "../../../../Store/actions";
+import { setScrollTop, setScrollLeft } from "../../../../Store/actions/page";
 import { getTimeFromMins } from "../../../../Libs/TimeUtils";
 import "./Tasks.css";
 

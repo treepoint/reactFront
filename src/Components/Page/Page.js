@@ -3,7 +3,7 @@ import React from "react";
 import ReactCustomScroll from "react-scrollbars-custom";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setScrollTop, setScrollLeft } from "../../Store/actions";
+import { setScrollTop, setScrollLeft } from "../../Store/actions/page";
 //Импортируем компоненты
 import PageTitle from "./PageTitle/PageTitle";
 import PageContent from "./PageContent/PageContent";

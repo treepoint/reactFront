@@ -3,16 +3,15 @@ import ReactDOM from "react-dom";
 //Подключаем роутер
 import { BrowserRouter } from "react-router-dom";
 //Подключаем Redux
-import { createStore } from "redux";
 import { Provider } from "react-redux";
-import appReducer from "./Store/reducers";
+import configureStore from "./Store/configureStore";
 
 //Импортируем само приложение
 import App from "./Containers/App/App";
 //Подключаем CSS
 import "./index.css";
 
-let store = createStore(appReducer);
+const store = configureStore();
 
 ReactDOM.render(
   <BrowserRouter>

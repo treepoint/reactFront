@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setModalWindowState, setModalWindowName } from "../../Store/actions";
+import {
+  setModalWindowState,
+  setModalWindowName
+} from "../../Store/actions/globalModalWindow";
 
 class AnchorModalWindow extends React.Component {
   render() {

@@ -1,7 +1,7 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setModalWindowName } from "../../Store/actions";
+import { setModalWindowName } from "../../Store/actions/globalModalWindow";
 //Подключаем API
 import { createUser } from "../../APIController/APIController";
 //Подключаем модалки
