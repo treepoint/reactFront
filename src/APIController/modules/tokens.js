@@ -17,19 +17,6 @@ export function getHeaders() {
   };
 }
 
-//Создание токена
-export function getToken(user, callback) {
-  let url = APIURL + "/auth";
-
-  Axios.post(url, user)
-    .then(response => {
-      callback(response.data);
-    })
-    .catch(error => {
-      callback(error);
-    });
-}
-
 //Обновить токен
 export function reauth(refreshToken, callback) {
   let url = APIURL + "/reauth";

@@ -67,31 +67,6 @@ export function createUser(user, callback) {
     });
 }
 
-//Обновить пользователя
-export function updateUser(user, callback) {
-  if (typeof user !== "object") {
-    return false;
-  }
-
-  let id = user.id;
-
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  Axios.put(URL + "/" + id, user, headers)
-    .then(response => {
-      if (typeof response.data.affectedRows === "number") {
-        callback(response);
-      }
-    })
-    .catch(error => {
-      callback(error);
-    });
-}
-
 //Удалить пользователя
 export function deleteUser(ID, callback) {
   let headers = tokens.getHeaders();
