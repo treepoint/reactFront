@@ -7,6 +7,7 @@ import { read_cookie, bake_cookie, delete_cookie } from "../../Libs/Sfcookies";
 import { clearToken, setToken } from "./token";
 import { clearUser, setUserAndAdminByID, setUserAndAdmin } from "./user";
 import { setModalWindowState } from "./globalModalWindow";
+import { clearTaskStatusesTypes } from "./taskStatusesTypes";
 
 export const SET_USER_AUTH_STATE = "SET_USER_AUTH_STATE";
 export const SET_AUTH_ERROR = "AUTH_ERROR";
@@ -27,6 +28,8 @@ export function logoff() {
     dispatch(clearToken());
     //Очистим пользователя
     dispatch(clearUser());
+    //Очистим типы статусов
+    dispatch(clearTaskStatusesTypes());
 
     //Очистим cookies
     delete_cookie("token");

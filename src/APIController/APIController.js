@@ -1,4 +1,3 @@
-const tokens = require("./modules/tokens");
 const users = require("./modules/users");
 const roles = require("./modules/roles");
 const categories = require("./modules/categories");
@@ -6,21 +5,6 @@ const statistics = require("./modules/statistics");
 const tasks = require("./modules/tasks");
 const tasksLog = require("./modules/tasksLog");
 const tasksStatuses = require("./modules/tasksStatuses");
-const tasksStatusesTypes = require("./modules/tasksStatusesTypes");
-
-/*
- * Токены
- */
-
-//Создание токена
-export function getToken(user, callback) {
-  tokens.getToken(user, callback);
-}
-
-//Обновить токен
-export function reauth(refreshToken, callback) {
-  tokens.reauth(refreshToken, callback);
-}
 
 /*
  * Пользователи
@@ -31,24 +15,9 @@ export function getUsers(callback) {
   users.getUsers(callback);
 }
 
-//Получить пользователя как объекта по ID
-export function getUserByID(ID, callback) {
-  users.getUserByID(ID, callback);
-}
-
-//Получить пользователя как объекта по имени и паролю
-export function getUserByEmailPassword(user, callback) {
-  users.getUserByEmailPassword(user, callback);
-}
-
-//Создать пользователя
-export function createUser(user, callback) {
-  users.createUser(user, callback);
-}
-
 //Обновить пользователя
 export function updateUser(user, callback) {
-  users.updateUser(user, callback);
+  callback(false);
 }
 
 //Удалить пользователя
@@ -184,14 +153,6 @@ export function createStatus(status, callback) {
 //Удалить статус
 export function deleteStatus(ID, callback) {
   tasksStatuses.deleteStatus(ID, callback);
-}
-
-/*
- * Типы статусов задач
- */
-
-export function getAllTaskStatusesTypes(callback) {
-  tasksStatusesTypes.getAllTaskStatusesTypes(callback);
 }
 
 /*

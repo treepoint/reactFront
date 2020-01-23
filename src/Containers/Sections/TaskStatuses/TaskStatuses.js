@@ -1,28 +1,32 @@
 import React from "react";
+//Redux
+import { connect } from "react-redux";
+import { fetchTaskStatusesTypes } from "../../../Store/actions/taskStatusesTypes";
+//Компоненты
 import Table from "../../../Components/Table/Table";
 import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
+import Page from "../../../Components/Page/Page";
+//API
 import {
   getAllTaskStatuses,
   updateStatus,
   createStatus,
-  deleteStatus,
-  getAllTaskStatusesTypes
+  deleteStatus
 } from "../../../APIController/APIController";
-import Page from "../../../Components/Page/Page";
 
 class TaskStatuses extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       taskStatusesList: [],
-      taskStatusesTypesList: [],
       deleteModalWindow: { isHidden: true, row: null }
     };
   }
 
   componentDidMount() {
     this.getAllTaskStatuses();
-    this.getAllTaskStatusesTypes();
+    //Получаем все типы статусов
+    this.props.fetchTaskStatusesTypes();
   }
 
   //Получаем все статусы
@@ -33,13 +37,6 @@ class TaskStatuses extends React.Component {
       } else {
         this.setState({ taskStatusesList: result });
       }
-    });
-  }
-
-  //Получаем все типы статусов
-  getAllTaskStatusesTypes() {
-    getAllTaskStatusesTypes(result => {
-      this.setState({ taskStatusesTypesList: result });
     });
   }
 
@@ -113,7 +110,7 @@ class TaskStatuses extends React.Component {
     this.state.taskStatusesList.forEach(taskStatus => {
       //Если статусы не закрыты — отобразим их
       if (taskStatus.close_date === null) {
-        let taskStatusesTypesList = this.state.taskStatusesTypesList.map(
+        let taskStatusesTypesList = this.props.taskStatusesTypes.map(
           taskStatusType => {
             return { value: taskStatusType.id, label: taskStatusType.name };
           }
@@ -177,4 +174,21 @@ class TaskStatuses extends React.Component {
   }
 }
 
-export default TaskStatuses;
+const mapStateToProps = state => {
+  return {
+    taskStatusesTypes: state.taskStatusesTypes
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchTaskStatusesTypes: () => {
+      dispatch(fetchTaskStatusesTypes());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TaskStatuses);

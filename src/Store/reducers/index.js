@@ -5,6 +5,7 @@ import { modalWindowState, modalWindowName } from "./globalModalWindow";
 import { token } from "./token";
 import { user, userUpdateError, userCreateError, UserIsAdmin } from "./user";
 import { scrollTop, scrollLeft } from "./page";
+import { taskStatusesTypes } from "./taskStatusesTypes";
 
 export default combineReducers({
   //app
@@ -22,5 +23,7 @@ export default combineReducers({
   user,
   userUpdateError,
   userCreateError,
-  UserIsAdmin
+  UserIsAdmin,
+  //taskStatusesTypes
+  taskStatusesTypes
 });

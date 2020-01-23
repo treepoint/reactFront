@@ -1,8 +1,8 @@
 //Обвязка для API
 import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
-import { setModalWindowState, setModalWindowName } from "./globalModalWindow";
 //Модалки
+import { setModalWindowState, setModalWindowName } from "./globalModalWindow";
 import { login } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 
 const URL = APIURL + "/users";
