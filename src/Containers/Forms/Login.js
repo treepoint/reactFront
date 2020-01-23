@@ -17,7 +17,7 @@ const INPUTS = [email, password];
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { validation: {} };
+    this.state = { validation: {}, isTouched: false };
   }
 
   onChange(event) {

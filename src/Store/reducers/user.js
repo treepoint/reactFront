@@ -1,4 +1,9 @@
-import { SET_USER, UPDATE_ERROR, SET_USER_IS_ADMIN } from "../actions/user";
+import {
+  SET_USER,
+  UPDATE_ERROR,
+  CREATE_ERROR,
+  SET_USER_IS_ADMIN
+} from "../actions/user";
 
 export function user(state = {}, action) {
   switch (action.type) {
@@ -12,6 +17,15 @@ export function user(state = {}, action) {
 export function userUpdateError(state = null, action) {
   switch (action.type) {
     case UPDATE_ERROR:
+      return action.text;
+    default:
+      return state;
+  }
+}
+
+export function userCreateError(state = null, action) {
+  switch (action.type) {
+    case CREATE_ERROR:
       return action.text;
     default:
       return state;

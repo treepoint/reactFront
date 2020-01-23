@@ -21,39 +21,6 @@ export function getUsers(callback) {
   });
 }
 
-//Получить пользователя по имени и паролю
-export function getUserByEmailPassword(user, callback) {
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  Axios.post(URL + "/token", user, headers).then(response => {
-    callback(response.data);
-  });
-}
-
-//Создать пользователя
-export function createUser(user, callback) {
-  if (typeof user !== "object") {
-    return false;
-  }
-
-  //Роль по умолчанию — пользователь, вторая
-  let newUser = Object.assign(user, { role_id: 2 });
-
-  Axios.post(URL + "/registration", newUser, tokens.getHeaders())
-    .then(response => {
-      if (typeof response.data.insertId === "number") {
-        callback(response);
-      }
-    })
-    .catch(error => {
-      callback(error);
-    });
-}
-
 //Удалить пользователя
 export function deleteUser(ID, callback) {
   let headers = tokens.getHeaders();

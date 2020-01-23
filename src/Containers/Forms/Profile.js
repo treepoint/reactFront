@@ -17,7 +17,7 @@ const INPUTS = [email, password];
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: this.props.user, validation: {} };
+    this.state = { user: this.props.user, validation: {}, isTouched: false };
   }
 
   onChange(event) {

@@ -1,9 +1,7 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setModalWindowName } from "../../Store/actions/globalModalWindow";
-//Подключаем API
-import { createUser } from "../../APIController/APIController";
+import { setUser, createUser } from "../../Store/actions/user";
 //Подключаем модалки
 import { login } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Импортируем компоненты
@@ -24,14 +22,17 @@ const INPUTS = [email, password];
 class Registration extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: {}, errorMessage: "" };
+    this.state = { isTouched: false, validation: {} };
   }
 
-  updateUserInState(event) {
-    let user = { [event.target.name]: event.target.value };
-    this.setState({
-      user: Object.assign(this.state.user, user)
-    });
+  onChange(event) {
+    let user = {
+      email: this.props.user.email,
+      password: this.props.user.password
+    };
+
+    user = Object.assign(user, { [event.target.name]: event.target.value });
+    this.props.setUser(user);
   }
 
   createUser(event) {
@@ -40,32 +41,13 @@ class Registration extends React.Component {
     this.setState(
       {
         isTouched: true,
-        validation: getInvalidMessagesAsObj(INPUTS, this.state.user)
+        validation: getInvalidMessagesAsObj(INPUTS, this.props.user)
       },
       () => {
         //Сохраняем только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
           //Создаем пользователя
-          createUser(this.state.user, result => {
-            //Если есть ошибки
-            if (typeof result.response !== "undefined") {
-              switch (result.response.status) {
-                case 409:
-                  this.setState({
-                    errorMessage:
-                      "Пользователь с таким email уже зарегистрирован"
-                  });
-                  break;
-                default:
-                  this.setState({
-                    errorMessage: "Произошла неизвестная ошибка"
-                  });
-              }
-            } else {
-              //Открываем окно входа
-              this.props.openLoginWindow();
-            }
-          });
+          this.props.createUser(this.props.user);
         }
       }
     );
@@ -80,9 +62,9 @@ class Registration extends React.Component {
             placeholder={inputs.placeholder}
             name={inputs.name}
             type={inputs.type}
-            value={this.state[inputs.name]}
+            value={this.props.user[inputs.name]}
             defaultValue={inputs.defaultValue}
-            onChange={event => this.updateUserInState(event)}
+            onChange={event => this.onChange(event)}
             invalidMessage={
               !!this.state.isTouched ? this.state.validation[inputs.name] : ""
             }
@@ -94,7 +76,7 @@ class Registration extends React.Component {
             <AnchorModalWindow value="Войти" modalWindowName={login} />
           </Anchor>
         </div>
-        <ErrorMessage message={this.state.errorMessage} />
+        <ErrorMessage message={this.props.createError} />
         <Button
           isPrimary={true}
           value="Отправить"
@@ -105,15 +87,25 @@ class Registration extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    createError: state.userCreateError
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-    openLoginWindow: () => {
-      dispatch(setModalWindowName(login));
+    createUser: () => {
+      dispatch(createUser());
+    },
+    setUser: user => {
+      dispatch(setUser(user));
     }
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Registration);
