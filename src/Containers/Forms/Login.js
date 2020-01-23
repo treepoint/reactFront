@@ -2,8 +2,7 @@ import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
 import { setUser } from "../../Store/actions/user";
-import { fetchToken } from "../../Store/actions/token";
-import { setModalWindowState } from "../../Store/actions/globalModalWindow";
+import { login } from "../../Store/actions/app";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
@@ -19,12 +18,6 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = { validation: {} };
-  }
-
-  componentDidUpdate() {
-    if (this.props.token !== null) {
-      this.props.closeModalWindow();
-    }
   }
 
   onChange(event) {
@@ -51,8 +44,7 @@ class Login extends React.Component {
           Object.keys(getInvalidMessagesAsObj(INPUTS, this.props.user))
             .length === 0
         ) {
-          //Получим токен
-          this.props.fetchToken();
+          this.props.login();
         }
       }
     );
@@ -99,11 +91,8 @@ const mapDispatchToProps = dispatch => {
     setUser: user => {
       dispatch(setUser(user));
     },
-    fetchToken: () => {
-      dispatch(fetchToken());
-    },
-    closeModalWindow: () => {
-      dispatch(setModalWindowState(false));
+    login: () => {
+      dispatch(login());
     }
   };
 };

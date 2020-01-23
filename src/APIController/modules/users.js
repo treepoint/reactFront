@@ -21,19 +21,6 @@ export function getUsers(callback) {
   });
 }
 
-//Получить пользователя как объект по ID
-export function getUserByID(ID, callback) {
-  let headers = tokens.getHeaders();
-
-  if (headers === null) {
-    return;
-  }
-
-  Axios.get(URL + "/" + ID, headers).then(response => {
-    callback(response.data[0]);
-  });
-}
-
 //Получить пользователя по имени и паролю
 export function getUserByEmailPassword(user, callback) {
   let headers = tokens.getHeaders();

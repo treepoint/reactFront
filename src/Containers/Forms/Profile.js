@@ -1,8 +1,8 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { clearUser, updateUser, setUser } from "../../Store/actions/user";
-import { setModalWindowState } from "../../Store/actions/globalModalWindow";
+import { updateUser } from "../../Store/actions/user";
+import { logoff } from "../../Store/actions/app";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
@@ -22,25 +22,15 @@ class Profile extends React.Component {
 
   onChange(event) {
     let user = { [event.target.name]: event.target.value };
-    this.setState({ user: Object.assign(this.state.user, user) });
-  }
-
-  componentDidUpdate() {
-    if (this.props.token === null) {
-      this.props.closeModalWindow();
-    }
-
-    if (this.state.user === this.props.user) {
-      this.props.closeModalWindow();
-    }
+    this.setState({ user: Object.assign({}, this.state.user, user) });
   }
 
   logoff(event) {
     event.preventDefault();
-    this.props.clearUser();
+    this.props.logoff();
   }
 
-  saveUser(event) {
+  updateUser(event) {
     event.preventDefault();
 
     this.setState(
@@ -54,7 +44,6 @@ class Profile extends React.Component {
           Object.keys(getInvalidMessagesAsObj(INPUTS, this.state.user))
             .length === 0
         ) {
-          //Обновим пользователя
           this.props.updateUser(this.state.user);
         }
       }
@@ -72,7 +61,7 @@ class Profile extends React.Component {
               name={inputs.name}
               type={inputs.type}
               value={this.state.user[inputs.name]}
-              defaultValue={this.props.user[inputs.name]}
+              defaultValue={this.state.user[inputs.name]}
               onChange={event => this.onChange(event)}
               invalidMessage={
                 !!this.state.isTouched ? this.state.validation[inputs.name] : ""
@@ -83,7 +72,7 @@ class Profile extends React.Component {
           <Button
             isPrimary={true}
             value="Сохранить"
-            onClick={event => this.saveUser(event)}
+            onClick={event => this.updateUser(event)}
           />
           <Button value="Выйти" onClick={event => this.logoff(event)} />
         </form>
@@ -102,14 +91,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    clearUser: () => {
-      dispatch(clearUser());
+    logoff: () => {
+      dispatch(logoff());
     },
-    updateUser: user => dispatch(updateUser(user)),
-    setUser: user => dispatch(setUser(user)),
-    closeModalWindow: () => {
-      dispatch(setModalWindowState(false));
-    }
+    updateUser: user => dispatch(updateUser(user))
   };
 };
 

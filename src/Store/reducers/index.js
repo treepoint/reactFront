@@ -1,18 +1,25 @@
 import { combineReducers } from "redux";
 
+import { userAuthState, authError } from "./app";
 import { modalWindowState, modalWindowName } from "./globalModalWindow";
-import { token, authError } from "./token";
-import { user, clearUser, userUpdateError } from "./user";
+import { token } from "./token";
+import { user, userUpdateError, UserIsAdmin } from "./user";
 import { scrollTop, scrollLeft } from "./page";
 
 export default combineReducers({
-  token,
+  //app
+  userAuthState,
   authError,
-  user,
-  userUpdateError,
-  clearUser,
+  //Page
+  scrollTop,
+  scrollLeft,
+  //globalModalWindow
   modalWindowState,
   modalWindowName,
-  scrollTop,
-  scrollLeft
+  //token
+  token,
+  //user
+  user,
+  userUpdateError,
+  UserIsAdmin
 });

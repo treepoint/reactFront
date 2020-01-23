@@ -1,4 +1,4 @@
-import { SET_USER, CLEAR_USER, UPDATE_ERROR } from "../actions/user";
+import { SET_USER, UPDATE_ERROR, SET_USER_IS_ADMIN } from "../actions/user";
 
 export function user(state = {}, action) {
   switch (action.type) {
@@ -9,19 +9,19 @@ export function user(state = {}, action) {
   }
 }
 
-export function clearUser(state = {}, action) {
+export function userUpdateError(state = null, action) {
   switch (action.type) {
-    case CLEAR_USER:
-      return {};
+    case UPDATE_ERROR:
+      return action.text;
     default:
       return state;
   }
 }
 
-export function userUpdateError(state = null, action) {
+export function UserIsAdmin(state = false, action) {
   switch (action.type) {
-    case UPDATE_ERROR:
-      return action.text;
+    case SET_USER_IS_ADMIN:
+      return action.boolean;
     default:
       return state;
   }
