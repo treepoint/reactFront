@@ -4,7 +4,7 @@ import Axios from "axios";
 const URL = APIURL + "/task_statuses";
 
 export const SET_TASK_STATUSES = "SET_TASK_STATUSES";
-export const IS_UPDATING = "IS_UPDATING";
+export const IS_TASK_STATUSES_UPDATING = "IS_TASK_STATUSES_UPDATING";
 export const REMOVE_TASK_STATUS = "REMOVE_TASK_STATUS";
 export const CLEAR_TASK_STATUSES = "CLEAR_TASK_STATUSES";
 export const TASK_STATUS_CREATE_ERROR = "TASK_STATUS_CREATE_ERROR";
@@ -16,7 +16,7 @@ export function setTaskStatuses(object) {
 }
 
 export function setIsUpdating(boolean) {
-  return { type: IS_UPDATING, boolean };
+  return { type: IS_TASK_STATUSES_UPDATING, boolean };
 }
 
 export function clearTaskStatuses(object) {

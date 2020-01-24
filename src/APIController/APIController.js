@@ -1,5 +1,4 @@
 const users = require("./modules/users");
-const categories = require("./modules/categories");
 const statistics = require("./modules/statistics");
 const tasks = require("./modules/tasks");
 const tasksLog = require("./modules/tasksLog");
@@ -21,35 +20,6 @@ export function updateUser(user, callback) {
 //Удалить пользователя
 export function deleteUser(ID, callback) {
   users.deleteUser(ID, callback);
-}
-
-/*
- * Категории
- */
-
-//Получить все категории пользователя
-export function getUserCategories(callback) {
-  categories.getUserCategories(callback);
-}
-
-//Получить категорию как объект по ID
-export function getCategoryByID(ID, callback) {
-  categories.getCategoryByID(ID, callback);
-}
-
-//Создать категорию
-export function createCategory(category, callback) {
-  categories.createCategory(category, callback);
-}
-
-//Обновить категорию
-export function updateCategory(category, callback) {
-  categories.updateCategory(category, callback);
-}
-
-//Удалить категорию
-export function deleteCategory(ID, callback) {
-  categories.deleteCategory(ID, callback);
 }
 
 /*

@@ -23,16 +23,21 @@ class Tasks extends React.Component {
     //Соберем список категорий
     let categoriesList = [];
 
-    this.props.categoriesList.forEach(category => {
+    const categories = this.props.categories;
+
+    for (var c in categories) {
       //Добавляем если категория активна, или эта категория проставлена у задачи
-      if (category.close_date === null || category.id === task.category_id) {
+      if (
+        categories[c].close_date === null ||
+        categories[c].id === task.category_id
+      ) {
         categoriesList.push({
-          value: category.id,
-          label: category.name,
-          style: category.name_style
+          value: categories[c].id,
+          label: categories[c].name,
+          style: categories[c].name_style
         });
       }
-    });
+    }
 
     //Соберем контент для селекта категорий с указанием текущей
     return { list: categoriesList, current: task.category_id };
@@ -105,7 +110,7 @@ class Tasks extends React.Component {
         date={this.props.date}
         getTasks={() => this.props.getTasks()}
         getTasksLog={() => this.props.getTasksLog()}
-        categoriesList={this.props.categoriesList}
+        categories={this.props.categories}
         taskStatuses={this.props.taskStatuses}
       />
     );

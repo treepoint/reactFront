@@ -15,6 +15,13 @@ import {
   taskStatusCreateError
 } from "./taskStatuses";
 
+import {
+  categories,
+  categoriesIsUpdating,
+  categoryUpdateError,
+  categoryCreateError
+} from "./categories";
+
 const appReducer = combineReducers({
   //app
   userAuthState,
@@ -40,7 +47,12 @@ const appReducer = combineReducers({
   taskStatuses,
   taskStatusIsUpdating,
   taskStatusUpdateError,
-  taskStatusCreateError
+  taskStatusCreateError,
+  //categories
+  categories,
+  categoriesIsUpdating,
+  categoryUpdateError,
+  categoryCreateError
 });
 
 const rootReducer = (state, action) => {

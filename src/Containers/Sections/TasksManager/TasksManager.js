@@ -8,11 +8,11 @@ import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
 //Redux
 import { connect } from "react-redux";
 import { fetchTaskStatuses } from "../../../Store/actions/taskStatuses";
+import { fetchCategories } from "../../../Store/actions/categories";
 //API
 import {
   getUserTasksByDate,
-  getTasksLogByDate,
-  getUserCategories
+  getTasksLogByDate
 } from "../../../APIController/APIController";
 
 import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
@@ -43,7 +43,7 @@ class TasksManager extends React.Component {
   componentDidMount() {
     //Категории и статусы обновляем только когда монтируем
     //Предполагается, что они не мутируют в процессе
-    this.getUserCategories();
+    this.props.fetchCategories();
     this.props.fetchTaskStatuses();
 
     this.updateData(this.state.date);
@@ -74,12 +74,6 @@ class TasksManager extends React.Component {
     });
   }
 
-  getUserCategories() {
-    getUserCategories(result => {
-      this.setState({ categoriesList: result });
-    });
-  }
-
   onPickDate(date) {
     this.setState({ date });
 
@@ -94,7 +88,7 @@ class TasksManager extends React.Component {
           getTasks={callback => this.getTasks(this.state.date, callback)}
           getTasksLog={callback => this.getTasksLog(this.state.date, callback)}
           tasksList={this.state.tasksList}
-          categoriesList={this.state.categoriesList}
+          categories={this.props.categories}
           taskStatuses={this.props.taskStatuses}
         />
         <div className="taskLogTableContainer">
@@ -121,8 +115,8 @@ class TasksManager extends React.Component {
         date={this.state.date}
         getTasks={callback => this.getTasks(this.state.date, callback)}
         getTasksLog={callback => this.getTasksLog(this.state.date, callback)}
-        tasksList={this.state.tasksList}
-        categoriesList={this.state.categoriesList}
+        categories={this.props.categories}
+        taskStatuses={this.props.taskStatuses}
         taskStatusesList={this.state.taskStatusesList}
       />
     );
@@ -163,7 +157,8 @@ class TasksManager extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    taskStatuses: state.taskStatuses
+    taskStatuses: state.taskStatuses,
+    categories: state.categories
   };
 };
 
@@ -171,6 +166,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTaskStatuses: () => {
       dispatch(fetchTaskStatuses());
+    },
+    fetchCategories: () => {
+      dispatch(fetchCategories());
     }
   };
 };

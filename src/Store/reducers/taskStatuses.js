@@ -1,6 +1,6 @@
 import {
   SET_TASK_STATUSES,
-  IS_UPDATING,
+  IS_TASK_STATUSES_UPDATING,
   REMOVE_TASK_STATUS,
   CLEAR_TASK_STATUSES,
   TASK_STATUS_UPDATE_ERROR,
@@ -24,7 +24,7 @@ export function taskStatuses(state = {}, action) {
 
 export function taskStatusIsUpdating(state = false, action) {
   switch (action.type) {
-    case IS_UPDATING:
+    case IS_TASK_STATUSES_UPDATING:
       return action.boolean;
     default:
       return state;
