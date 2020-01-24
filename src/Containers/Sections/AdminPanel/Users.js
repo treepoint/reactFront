@@ -146,7 +146,6 @@ class Users extends React.Component {
           isSingleLineMode={true}
           saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
           deleteRow={row => this.showDeleteModal(row)}
-          update={() => this.getUsers()}
         >
           {this.getContent()}
         </Table>

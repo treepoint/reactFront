@@ -150,7 +150,6 @@ class Categories extends React.Component {
           saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
           addRow={() => this.addCategoryToDataBase()}
           deleteRow={row => this.showDeleteModal(row)}
-          update={() => this.getUserCategories()}
         >
           {this.getContent()}
         </Table>

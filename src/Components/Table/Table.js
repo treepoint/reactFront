@@ -1,7 +1,6 @@
 import React from "react";
 //Подключаем компоненты
 import SaveMark from "./SaveMark/SaveMark";
-import TableMenu from "./TableMenu/TableMenu";
 import Row from "./Row/Row";
 import "./Table.css";
 
@@ -231,9 +230,6 @@ class Table extends React.Component {
             isSaving={this.props.isUpdating}
           />
         </div>
-        <TableMenu
-          update={!!this.props.update ? () => this.props.update() : null}
-        />
       </div>
     );
   }
