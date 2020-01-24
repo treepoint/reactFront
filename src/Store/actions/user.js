@@ -8,8 +8,8 @@ import { login } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 const URL = APIURL + "/users";
 
 export const SET_USER = "SET_USER";
-export const UPDATE_ERROR = "UPDATE_ERROR";
-export const CREATE_ERROR = "CREATE_ERROR";
+export const USER_UPDATE_ERROR = "USER_UPDATE_ERROR";
+export const USER_CREATE_ERROR = "USER_CREATE_ERROR";
 export const SET_USER_IS_ADMIN = "SET_USER_IS_ADMIN";
 
 export function setUserAndAdmin(object) {
@@ -34,11 +34,11 @@ export function clearUser() {
 }
 
 export function setUpdateError(text) {
-  return { type: UPDATE_ERROR, text };
+  return { type: USER_UPDATE_ERROR, text };
 }
 
 export function setCreateError(text) {
-  return { type: CREATE_ERROR, text };
+  return { type: USER_CREATE_ERROR, text };
 }
 
 export function setUserIsAdmin(boolean) {

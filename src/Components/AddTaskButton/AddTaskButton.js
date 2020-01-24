@@ -8,7 +8,7 @@ class AddTaskButton extends React.Component {
   addTaskToDataBase() {
     let task = {
       category_id: this.props.categoriesList[0].id,
-      status_id: this.props.taskStatusesList[0].id,
+      status_id: Object.keys(this.props.taskStatuses)[0],
       name: "",
       name_style: "{}",
       description: "<br>",

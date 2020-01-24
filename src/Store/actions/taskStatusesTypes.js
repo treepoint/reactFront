@@ -4,21 +4,26 @@ import Axios from "axios";
 const URL = APIURL + "/task_statuses_types";
 
 export const SET_TASK_STATUSES_TYPES = "SET_TASK_STATUSES_TYPES";
+export const CLEAR_TASK_STATUSES_TYPES = "CLEAR_TASK_STATUSES_TYPES";
 
-export function setTaskStatusesTypes(array) {
-  return { type: SET_TASK_STATUSES_TYPES, array };
+export function setTaskStatusesTypes(object) {
+  return { type: SET_TASK_STATUSES_TYPES, object };
 }
 
-export function clearTaskStatusesTypes() {
-  return dispatch => {
-    console.log("kek");
-    dispatch(setTaskStatusesTypes([]));
-  };
+export function clearTaskStatusesTypes(object) {
+  return { type: CLEAR_TASK_STATUSES_TYPES, object };
 }
 
 //Получить все типы статусов задач
 export function fetchTaskStatusesTypes() {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const state = getState();
+
+    //Если в сторе уже есть — ничего не делаем
+    if (JSON.stringify(state.taskStatusesTypes) !== "{}") {
+      return;
+    }
+
     let headers = getHeaders();
 
     if (headers === null) {

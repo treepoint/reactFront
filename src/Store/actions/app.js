@@ -4,13 +4,13 @@ import Axios from "axios";
 //Подключаем cookies
 import { read_cookie, bake_cookie, delete_cookie } from "../../Libs/Sfcookies";
 //Другие actions
-import { clearToken, setToken } from "./token";
-import { clearUser, setUserAndAdminByID, setUserAndAdmin } from "./user";
+import { setToken } from "./token";
+import { setUserAndAdminByID, setUserAndAdmin } from "./user";
 import { setModalWindowState } from "./globalModalWindow";
-import { clearTaskStatusesTypes } from "./taskStatusesTypes";
 
 export const SET_USER_AUTH_STATE = "SET_USER_AUTH_STATE";
 export const SET_AUTH_ERROR = "AUTH_ERROR";
+export const CLEAR_STATE = "CLEAR_STATE";
 
 export function setUserAuthState(boolean) {
   return { type: SET_USER_AUTH_STATE, boolean };
@@ -20,28 +20,19 @@ export function setAuthError(text) {
   return { type: SET_AUTH_ERROR, text };
 }
 
+export function clearState() {
+  return { type: CLEAR_STATE };
+}
+
 export function logoff() {
-  return (dispatch, getState) => {
-    //Очистим авторизацию
-    dispatch(setUserAuthState(false));
-    //Очистим токен
-    dispatch(clearToken());
-    //Очистим пользователя
-    dispatch(clearUser());
-    //Очистим типы статусов
-    dispatch(clearTaskStatusesTypes());
+  return dispatch => {
+    //Очистим стор
+    dispatch(clearState());
 
     //Очистим cookies
     delete_cookie("token");
     delete_cookie("user_id");
     delete_cookie("refresh_token");
-
-    const state = getState();
-
-    //Если открыто модальное окно — закроем
-    if (state.modalWindowState === true) {
-      dispatch(setModalWindowState(false));
-    }
   };
 }
 

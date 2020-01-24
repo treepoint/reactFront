@@ -43,16 +43,21 @@ class Tasks extends React.Component {
     //Соберем список статусов
     let statusesList = [];
 
-    this.props.taskStatusesList.forEach(status => {
+    let taskStatuses = this.props.taskStatuses;
+
+    for (var ts in taskStatuses) {
       //Добавляем если статус активен, или этот статус проставлен у задачи
-      if (status.close_date === null || status.id === task.status_id) {
+      if (
+        taskStatuses[ts].close_date === null ||
+        taskStatuses[ts].id === task.status_id
+      ) {
         statusesList.push({
-          value: status.id,
-          label: status.name,
-          style: status.name_style
+          value: taskStatuses[ts].id,
+          label: taskStatuses[ts].name,
+          style: taskStatuses[ts].name_style
         });
       }
-    });
+    }
 
     //Соберем контент для селекта статусов с указанием текущего
     return { list: statusesList, current: task.status_id };
@@ -101,7 +106,7 @@ class Tasks extends React.Component {
         getTasks={() => this.props.getTasks()}
         getTasksLog={() => this.props.getTasksLog()}
         categoriesList={this.props.categoriesList}
-        taskStatusesList={this.props.taskStatusesList}
+        taskStatuses={this.props.taskStatuses}
       />
     );
   }

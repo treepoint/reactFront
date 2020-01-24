@@ -4,7 +4,6 @@ const categories = require("./modules/categories");
 const statistics = require("./modules/statistics");
 const tasks = require("./modules/tasks");
 const tasksLog = require("./modules/tasksLog");
-const tasksStatuses = require("./modules/tasksStatuses");
 
 /*
  * Пользователи
@@ -124,35 +123,6 @@ export function createTaskLog(taskLog, callback) {
 //Удалить запись из лога выполнения задач
 export function deleteTaskLog(ID, callback) {
   tasksLog.deleteTaskLog(ID, callback);
-}
-
-/*
- * Статусы задач
- */
-
-//Получить статус как объект по ID
-export function getTaskStatusByID(ID, callback) {
-  tasksStatuses.getTaskStatusByID(ID, callback);
-}
-
-//Получить все статусы
-export function getAllTaskStatuses(callback) {
-  tasksStatuses.getAllTaskStatuses(callback);
-}
-
-//Обновить статус по ID
-export function updateStatus(status, callback) {
-  tasksStatuses.updateStatus(status, callback);
-}
-
-//Создать статус
-export function createStatus(status, callback) {
-  tasksStatuses.createStatus(status, callback);
-}
-
-//Удалить статус
-export function deleteStatus(ID, callback) {
-  tasksStatuses.deleteStatus(ID, callback);
 }
 
 /*

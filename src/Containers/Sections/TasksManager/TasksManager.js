@@ -5,10 +5,13 @@ import Tasks from "./Tables/Tasks";
 import TasksLog from "./Tables/TasksLog";
 import Page from "../../../Components/Page/Page";
 import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
+//Redux
+import { connect } from "react-redux";
+import { fetchTaskStatuses } from "../../../Store/actions/taskStatuses";
+//API
 import {
   getUserTasksByDate,
   getTasksLogByDate,
-  getAllTaskStatuses,
   getUserCategories
 } from "../../../APIController/APIController";
 
@@ -33,7 +36,6 @@ class TasksManager extends React.Component {
       tasksList: [],
       tasksLogList: [],
       categoriesList: [],
-      taskStatusesList: [],
       date: getCurrentFormatDate()
     };
   }
@@ -42,7 +44,7 @@ class TasksManager extends React.Component {
     //Категории и статусы обновляем только когда монтируем
     //Предполагается, что они не мутируют в процессе
     this.getUserCategories();
-    this.getAllTaskStatuses();
+    this.props.fetchTaskStatuses();
 
     this.updateData(this.state.date);
   }
@@ -78,12 +80,6 @@ class TasksManager extends React.Component {
     });
   }
 
-  getAllTaskStatuses() {
-    getAllTaskStatuses(result => {
-      this.setState({ taskStatusesList: result });
-    });
-  }
-
   onPickDate(date) {
     this.setState({ date });
 
@@ -99,7 +95,7 @@ class TasksManager extends React.Component {
           getTasksLog={callback => this.getTasksLog(this.state.date, callback)}
           tasksList={this.state.tasksList}
           categoriesList={this.state.categoriesList}
-          taskStatusesList={this.state.taskStatusesList}
+          taskStatuses={this.props.taskStatuses}
         />
         <div className="taskLogTableContainer">
           <div className="taskLogTable">
@@ -165,4 +161,21 @@ class TasksManager extends React.Component {
   }
 }
 
-export default TasksManager;
+const mapStateToProps = state => {
+  return {
+    taskStatuses: state.taskStatuses
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchTaskStatuses: () => {
+      dispatch(fetchTaskStatuses());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TasksManager);

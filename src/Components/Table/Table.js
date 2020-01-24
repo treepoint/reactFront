@@ -13,8 +13,7 @@ class Table extends React.Component {
       tableHeader: [],
       tableBody: [],
       table: [],
-      uuid: "",
-      displaySaveMark: null
+      uuid: ""
     };
   }
 
@@ -172,23 +171,7 @@ class Table extends React.Component {
     let object = this.getObjectFromRowContent(rowContent);
 
     //Отправим на сохранение в ДБ
-    this.props.saveRow(object, () => {
-      let table = this.state.table;
-
-      table[index] = rowContent;
-
-      this.setState({ table }, () => {
-        //Покажем марку сохранения
-        this.setState({ displaySaveMark: true });
-        //Повесим небольшую задержку на скрытие дискеты сохранения
-        setTimeout(
-          function() {
-            this.setState({ displaySaveMark: false });
-          }.bind(this),
-          30
-        );
-      });
-    });
+    this.props.saveRow(object);
   }
 
   deleteRow(rowContent) {
@@ -245,7 +228,7 @@ class Table extends React.Component {
           {this.getRows()}
           <SaveMark
             marginLeft={this.getTableWidth()}
-            isDisplayed={this.state.displaySaveMark}
+            isSaving={this.props.isUpdating}
           />
         </div>
         <TableMenu
