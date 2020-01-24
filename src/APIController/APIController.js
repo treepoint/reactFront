@@ -1,5 +1,4 @@
 const users = require("./modules/users");
-const roles = require("./modules/roles");
 const categories = require("./modules/categories");
 const statistics = require("./modules/statistics");
 const tasks = require("./modules/tasks");
@@ -22,15 +21,6 @@ export function updateUser(user, callback) {
 //Удалить пользователя
 export function deleteUser(ID, callback) {
   users.deleteUser(ID, callback);
-}
-
-/*
- * Роли
- */
-
-//Получение списка ролей пользователей
-export function getRoles(callback) {
-  roles.getRoles(callback);
 }
 
 /*

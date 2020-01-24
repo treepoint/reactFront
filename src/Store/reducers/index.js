@@ -5,6 +5,7 @@ import { userAuthState, authError } from "./app";
 import { modalWindowState, modalWindowName } from "./globalModalWindow";
 import { token } from "./token";
 import { user, userUpdateError, userCreateError, UserIsAdmin } from "./user";
+import { userRoles } from "./userRoles";
 import { scrollTop, scrollLeft } from "./page";
 import { taskStatusesTypes } from "./taskStatusesTypes";
 import {
@@ -31,6 +32,8 @@ const appReducer = combineReducers({
   userUpdateError,
   userCreateError,
   UserIsAdmin,
+  //userRoles
+  userRoles,
   //taskStatusesTypes
   taskStatusesTypes,
   //taskStatuses

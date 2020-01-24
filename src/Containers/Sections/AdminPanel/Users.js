@@ -1,9 +1,13 @@
 import React from "react";
+//Redux
+import { connect } from "react-redux";
+import { fetchUserRoles } from "../../../Store/actions/userRoles";
+//Компоненты
 import Table from "../../../Components/Table/Table";
 import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
+//API
 import {
   getUsers,
-  getRoles,
   updateUser,
   deleteUser
 } from "../../../APIController/APIController";
@@ -13,14 +17,13 @@ class Users extends React.Component {
     super(props);
     this.state = {
       usersList: [],
-      rolesList: [],
       deleteModalWindow: { isHidden: true, row: null }
     };
   }
 
   componentDidMount() {
     this.getUsers();
-    this.getRoles();
+    this.props.fetchUserRoles();
   }
 
   //Получаем всех пользователей
@@ -30,17 +33,6 @@ class Users extends React.Component {
         this.setState({ usersList: result }, () => callback());
       } else {
         this.setState({ usersList: result });
-      }
-    });
-  }
-
-  //Получаем все возможные роли
-  getRoles(callback) {
-    getRoles(result => {
-      if (typeof callback === "function") {
-        this.setState({ rolesList: result }, () => callback());
-      } else {
-        this.setState({ rolesList: result });
       }
     });
   }
@@ -103,9 +95,12 @@ class Users extends React.Component {
 
     this.state.usersList.forEach(user => {
       //Соберем список ролей
-      let list = this.state.rolesList.map(role => {
-        return { value: role.id, label: role.name };
-      });
+      let userRoles = this.props.userRoles;
+      let list = [];
+
+      for (var ur in userRoles) {
+        list.push({ value: userRoles[ur].id, label: userRoles[ur].name });
+      }
 
       //добавим текущую
       let roles = { list, current: user.role_id };
@@ -160,4 +155,21 @@ class Users extends React.Component {
   }
 }
 
-export default Users;
+const mapStateToProps = state => {
+  return {
+    userRoles: state.userRoles
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchUserRoles: () => {
+      dispatch(fetchUserRoles());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Users);
