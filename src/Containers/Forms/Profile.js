@@ -1,7 +1,7 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { updateUser } from "../../Store/actions/user";
+import { updateUser } from "../../Store/actions/currentUser";
 import { logoff } from "../../Store/actions/app";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
@@ -85,7 +85,7 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     token: state.token,
-    updateError: state.userUpdateError
+    updateError: state.updateProfileError
   };
 };
 

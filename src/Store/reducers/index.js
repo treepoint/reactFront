@@ -4,10 +4,18 @@ import { CLEAR_STATE } from "../actions/app";
 import { userAuthState, authError } from "./app";
 import { modalWindowState, modalWindowName } from "./globalModalWindow";
 import { token } from "./token";
-import { user, userUpdateError, userCreateError, UserIsAdmin } from "./user";
+
+import {
+  currentUser,
+  currentUserIsAdmin,
+  registrationError,
+  updateProfileError
+} from "./currentUser";
+
 import { userRoles } from "./userRoles";
 import { scrollTop, scrollLeft } from "./page";
 import { taskStatusesTypes } from "./taskStatusesTypes";
+
 import {
   taskStatuses,
   taskStatusIsUpdating,
@@ -22,6 +30,13 @@ import {
   categoryCreateError
 } from "./categories";
 
+import {
+  users,
+  usersIsUpdating,
+  userUpdateError,
+  userDeleteError
+} from "./users";
+
 const appReducer = combineReducers({
   //app
   userAuthState,
@@ -34,11 +49,11 @@ const appReducer = combineReducers({
   modalWindowName,
   //token
   token,
-  //user
-  user,
-  userUpdateError,
-  userCreateError,
-  UserIsAdmin,
+  //currentUser
+  currentUser,
+  updateProfileError,
+  registrationError,
+  currentUserIsAdmin,
   //userRoles
   userRoles,
   //taskStatusesTypes
@@ -52,7 +67,12 @@ const appReducer = combineReducers({
   categories,
   categoriesIsUpdating,
   categoryUpdateError,
-  categoryCreateError
+  categoryCreateError,
+  //users
+  users,
+  usersIsUpdating,
+  userUpdateError,
+  userDeleteError
 });
 
 const rootReducer = (state, action) => {

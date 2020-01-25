@@ -17,7 +17,7 @@ class UserMenu extends React.Component {
         {!!this.props.userAuthState ? (
           <HeaderAnchor>
             <AnchorModalWindow
-              value={this.props.user.email}
+              value={this.props.currentUser.email}
               modalWindowName={profile}
             />
           </HeaderAnchor>
@@ -43,7 +43,7 @@ class UserMenu extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
+    currentUser: state.currentUser,
     userAuthState: state.userAuthState
   };
 };

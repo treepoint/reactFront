@@ -1,7 +1,7 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setUser } from "../../Store/actions/user";
+import { setCurrentUser } from "../../Store/actions/currentUser";
 import { login } from "../../Store/actions/app";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
@@ -27,7 +27,7 @@ class Login extends React.Component {
     };
 
     user = Object.assign(user, { [event.target.name]: event.target.value });
-    this.props.setUser(user);
+    this.props.setCurrentUser(user);
   }
 
   login(event) {
@@ -88,8 +88,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUser: user => {
-      dispatch(setUser(user));
+    setCurrentUser: user => {
+      dispatch(setCurrentUser(user));
     },
     login: () => {
       dispatch(login());

@@ -1,7 +1,7 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setUser, createUser } from "../../Store/actions/user";
+import { setCurrentUser, registration } from "../../Store/actions/currentUser";
 //Подключаем модалки
 import { login } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Импортируем компоненты
@@ -32,7 +32,7 @@ class Registration extends React.Component {
     };
 
     user = Object.assign(user, { [event.target.name]: event.target.value });
-    this.props.setUser(user);
+    this.props.setCurrentUser(user);
   }
 
   createUser(event) {
@@ -47,7 +47,7 @@ class Registration extends React.Component {
         //Сохраняем только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
           //Создаем пользователя
-          this.props.createUser(this.props.user);
+          this.props.registration(this.props.user);
         }
       }
     );
@@ -76,7 +76,7 @@ class Registration extends React.Component {
             <AnchorModalWindow value="Войти" modalWindowName={login} />
           </Anchor>
         </div>
-        <ErrorMessage message={this.props.createError} />
+        <ErrorMessage message={this.props.registrationError} />
         <Button
           isPrimary={true}
           value="Отправить"
@@ -90,17 +90,17 @@ class Registration extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    createError: state.userCreateError
+    registrationError: state.registrationError
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    createUser: () => {
-      dispatch(createUser());
+    registration: () => {
+      dispatch(registration());
     },
-    setUser: user => {
-      dispatch(setUser(user));
+    setCurrentUser: user => {
+      dispatch(setCurrentUser(user));
     }
   };
 };

@@ -7,46 +7,46 @@ import { login } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 
 const URL = APIURL + "/users";
 
-export const SET_USER = "SET_USER";
-export const USER_UPDATE_ERROR = "USER_UPDATE_ERROR";
-export const USER_CREATE_ERROR = "USER_CREATE_ERROR";
-export const SET_USER_IS_ADMIN = "SET_USER_IS_ADMIN";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const SET_CURRENT_USER_IS_ADMIN = "SET_CURRENT_USER_IS_ADMIN";
+export const REGISTRATION_ERROR = "REGISTRATION_ERROR";
+export const UPDATE_PROFILE_ERROR = "UPDATE_PROFILE_ERROR";
 
-export function setUserAndAdmin(object) {
+export function setCurrentUserAndAdmin(object) {
   return dispatch => {
     //Если админ — проставим
     if (object.role === "admin") {
-      dispatch(setUserIsAdmin(true));
+      dispatch(setCurrentUserIsAdmin(true));
     }
-    dispatch(setUser(object));
+    dispatch(setCurrentUser(object));
   };
 }
 
-export function setUser(object) {
-  return { type: SET_USER, object };
+export function setCurrentUser(object) {
+  return { type: SET_CURRENT_USER, object };
 }
 
-export function clearUser() {
+export function clearCurrentUser() {
   return dispatch => {
-    dispatch(setUserIsAdmin(false));
-    dispatch(setUser({}));
+    dispatch(setCurrentUserIsAdmin(false));
+    dispatch(setCurrentUser({}));
   };
 }
 
-export function setUpdateError(text) {
-  return { type: USER_UPDATE_ERROR, text };
+export function setUpdateProfileError(text) {
+  return { type: UPDATE_PROFILE_ERROR, text };
 }
 
-export function setCreateError(text) {
-  return { type: USER_CREATE_ERROR, text };
+export function setRegistrationError(text) {
+  return { type: REGISTRATION_ERROR, text };
 }
 
-export function setUserIsAdmin(boolean) {
-  return { type: SET_USER_IS_ADMIN, boolean };
+export function setCurrentUserIsAdmin(boolean) {
+  return { type: SET_CURRENT_USER_IS_ADMIN, boolean };
 }
 
-//Создать пользователя
-export function createUser() {
+//Зарегистрировать пользователя
+export function registration() {
   return (dispatch, getState) => {
     const state = getState();
 
@@ -71,7 +71,7 @@ export function createUser() {
           default:
             errorMessage = "Произошла неизвестная ошибка";
         }
-        dispatch(setCreateError(errorMessage));
+        dispatch(setRegistrationError(errorMessage));
       });
   };
 }
@@ -93,9 +93,9 @@ export function updateUser(user) {
       .then(response => {
         if (typeof response.data.affectedRows === "number") {
           //Обновим пользователя
-          dispatch(setUser(user));
+          dispatch(setCurrentUser(user));
           //Обнулим ошибку
-          dispatch(setUpdateError(null));
+          dispatch(setUpdateProfileError(null));
           //Если открыто модальное окно — закроем
           if (state.modalWindowState === true) {
             dispatch(setModalWindowState(false));
@@ -112,13 +112,13 @@ export function updateUser(user) {
           default:
             errorMessage = "Произошла неизвестная ошибка";
         }
-        dispatch(setUpdateError(errorMessage));
+        dispatch(setUpdateProfileError(errorMessage));
       });
   };
 }
 
 //Получить пользователя по ID из API и записать его
-export function setUserAndAdminByID(id) {
+export function setCurrentUserAndAdminByID(id) {
   return dispatch => {
     const headers = getHeaders();
 
@@ -126,7 +126,7 @@ export function setUserAndAdminByID(id) {
       return;
     }
     Axios.get(URL + "/" + id, headers).then(response => {
-      dispatch(setUserAndAdmin(response.data[0]));
+      dispatch(setCurrentUserAndAdmin(response.data[0]));
     });
   };
 }

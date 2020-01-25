@@ -5,7 +5,10 @@ import Axios from "axios";
 import { read_cookie, bake_cookie, delete_cookie } from "../../Libs/Sfcookies";
 //Другие actions
 import { setToken } from "./token";
-import { setUserAndAdminByID, setUserAndAdmin } from "./user";
+import {
+  setCurrentUserAndAdminByID,
+  setCurrentUserAndAdmin
+} from "./currentUser";
 import { setModalWindowState } from "./globalModalWindow";
 
 export const SET_USER_AUTH_STATE = "SET_USER_AUTH_STATE";
@@ -62,7 +65,7 @@ export function restoreFromCookies() {
       dispatch(setToken(token));
 
       //Пользователя получим по ID. Если токен не рабочий — ничего не получим, все четко.
-      dispatch(setUserAndAdminByID(userId));
+      dispatch(setCurrentUserAndAdminByID(userId));
 
       //Проставим авторизацию
       dispatch(setUserAuthState(true));
@@ -107,7 +110,7 @@ export function auth() {
         dispatch(setToken(response.data.token.value));
 
         //Пользователя
-        dispatch(setUserAndAdmin(response.data.user));
+        dispatch(setCurrentUserAndAdmin(response.data.user));
 
         //Обнулим ошибку авторизации
         dispatch(setAuthError(null));
@@ -157,7 +160,7 @@ export function reauth(refreshToken) {
       //Проставим токен
       dispatch(setToken(response.data.token.value));
       //Пользователя
-      dispatch(setUserAndAdmin(response.data.user));
+      dispatch(setCurrentUserAndAdmin(response.data.user));
 
       //Авторизацию
       dispatch(setUserAuthState(true));

@@ -15,7 +15,7 @@ class PageContent extends React.Component {
     }
 
     //Но если нужны еще и админские права — чекнем их
-    if (this.props.isAdmin && !this.props.UserIsAdmin) {
+    if (this.props.isAdmin && !this.props.userIsAdmin) {
       return <OnlyAdminMessage />;
     }
 
@@ -36,7 +36,7 @@ class PageContent extends React.Component {
 const mapStateToProps = state => {
   return {
     userAuthState: state.userAuthState,
-    UserIsAdmin: state.UserIsAdmin,
+    userIsAdmin: state.currentUserIsAdmin,
     user: state.user
   };
 };

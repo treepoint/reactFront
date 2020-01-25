@@ -35,8 +35,7 @@ class NavigationLink extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    isAdmin: state.UserIsAdmin
+    isAdmin: state.currentUserIsAdmin
   };
 };
 

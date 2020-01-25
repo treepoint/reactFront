@@ -1,26 +1,6 @@
-const users = require("./modules/users");
 const statistics = require("./modules/statistics");
 const tasks = require("./modules/tasks");
 const tasksLog = require("./modules/tasksLog");
-
-/*
- * Пользователи
- */
-
-//Получение списка пользователей как объектов в массиве
-export function getUsers(callback) {
-  users.getUsers(callback);
-}
-
-//Обновить пользователя
-export function updateUser(user, callback) {
-  callback(false);
-}
-
-//Удалить пользователя
-export function deleteUser(ID, callback) {
-  users.deleteUser(ID, callback);
-}
 
 /*
  * Задачи
