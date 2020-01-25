@@ -24,6 +24,13 @@ class Users extends React.Component {
     this.props.fetchUserRoles();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.userAuthState && !prevProps.userAuthState) {
+      this.props.fetchUsers();
+      this.props.fetchUserRoles();
+    }
+  }
+
   //Закрыть модальное окно
   closeDeleteModal() {
     this.setState({ deleteModalWindow: { isHidden: true, row: null } });

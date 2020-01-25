@@ -1,12 +1,17 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
+//Компоненты
 import Table from "../../../../Components/Table/Table";
-import { getTimeFromMins } from "../../../../Libs/TimeUtils";
+import Action from "../../../../Components/Action/Action";
+//API
 import {
   updateTaskLog,
   deleteTaskLog
 } from "../../../../APIController/APIController";
-
-import Action from "../../../../Components/Action/Action";
+//Утилиты
+import { getTimeFromMins } from "../../../../Libs/TimeUtils";
+//Картинки
 import arrowUpIcon from "../../../../Images/icon_arrow_up.png";
 import arrowDownIcon from "../../../../Images/icon_arrow_down.png";
 
@@ -93,13 +98,24 @@ class TasksLog extends React.Component {
     ];
 
     //Соберем список задач. Он одинаковый для каждой записи в логе
-    let tasksList = this.props.tasksList.map(task => {
-      return {
-        value: task.id,
-        label: task.name,
-        style: task.name_style
-      };
-    });
+    let tasksList = [];
+    const tasks = this.props.tasks;
+    let tasksForChosenDate = {};
+
+    //Отфильтруем за нужную дату
+    for (var ts in tasks) {
+      if (tasks[ts].for_date === this.props.date) {
+        tasksForChosenDate[tasks[ts].id] = tasks[ts];
+      }
+    }
+
+    for (var t in tasksForChosenDate) {
+      tasksList.push({
+        value: tasksForChosenDate[t].id,
+        label: tasksForChosenDate[t].name,
+        style: tasksForChosenDate[t].name_style
+      });
+    }
 
     //После этого пройдемся и соберем все записи таск лога
     this.props.tasksLogList.forEach(tasksLogList => {
@@ -149,28 +165,36 @@ class TasksLog extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <div className="taskLog">
-          <div className="taskLogResize">
-            <Action
-              icon={!!this.state.isMinimized ? arrowUpIcon : arrowDownIcon}
-              onClick={() => this.minimizeTaskLog()}
-            />
+      <div className="taskLogTableContainer">
+        <div className="taskLogTable">
+          <div className="taskLog">
+            <div className="taskLogResize">
+              <Action
+                icon={!!this.state.isMinimized ? arrowUpIcon : arrowDownIcon}
+                onClick={() => this.minimizeTaskLog()}
+              />
+            </div>
+            <Table
+              maxHeight={!!this.state.isMinimized ? "70px" : "50vh"}
+              isFixed={true}
+              isEditable={true}
+              isResizeble={false}
+              saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+              deleteRow={row => this.deleteRowFromDataBase(row)}
+            >
+              {this.getContent()}
+            </Table>
           </div>
-          <Table
-            maxHeight={!!this.state.isMinimized ? "70px" : "50vh"}
-            isFixed={true}
-            isEditable={true}
-            isResizeble={false}
-            saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
-            deleteRow={row => this.deleteRowFromDataBase(row)}
-          >
-            {this.getContent()}
-          </Table>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-export default TasksLog;
+const mapStateToProps = state => {
+  return {
+    tasks: state.tasks
+  };
+};
+
+export default connect(mapStateToProps)(TasksLog);

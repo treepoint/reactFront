@@ -10,3 +10,14 @@
   border-radius: 4px 0px 0px 0px;
   background: rgb(243, 243, 243);
 }
+
+.taskLogTableContainer {
+  width: calc(100% - 112px);
+  position: absolute;
+  bottom: 28px;
+}
+
+.taskLogTable {
+  margin: auto;
+  width: max-content;
+}

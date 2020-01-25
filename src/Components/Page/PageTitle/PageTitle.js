@@ -10,8 +10,11 @@ class PageTitle extends React.Component {
         {this.props.title}
         {/*Добавляем меню, если есть*/}
         <PageNavigation
-          linksArray={
-            !!this.props.menuLinksArray ? this.props.menuLinksArray : []
+          routerLinksArray={
+            !!this.props.routerLinksArray ? this.props.routerLinksArray : []
+          }
+          anchorLinksArray={
+            !!this.props.anchorLinksArray ? this.props.anchorLinksArray : []
           }
         />
       </div>

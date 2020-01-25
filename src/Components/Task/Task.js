@@ -1,23 +1,26 @@
 import React from "react";
+//Redux
+import { connect } from "react-redux";
+import { updateTask, deleteTask } from "../../Store/actions/tasks";
+//Компоненты
 import TextContent from "../TextContent/TextContent";
 import SelectContent from "../SelectContent/SelectContent";
 import TimeContent from "../TimeContent/TimeContent";
 import ConfirmModalWindow from "../ConfirmModalWindow/ConfirmModalWindow";
 import Action from "../Action/Action";
+//API
+import { createTaskLog } from "../../APIController/APIController";
+//Утилиты
+import { getCurrentTimeFormat } from "../../Libs/TimeUtils";
+//Картинки
 import deleteIcon from "../../Images/icon_delete.png";
 import archiveIcon from "../../Images/icon_archive.png";
 import dearchiveIcon from "../../Images/icon_dearchive.png";
 import timeSpanIcon from "../../Images/icon_time_span.png";
 import minimizeIcon from "../../Images/icon_minimize.png";
 import maximizedIcon from "../../Images/icon_maximized.png";
+//CSS
 import "./Task.css";
-
-import {
-  updateTask,
-  deleteTask,
-  createTaskLog
-} from "../../APIController/APIController";
-import { getCurrentTimeFormat } from "../../Libs/TimeUtils";
 
 class Task extends React.Component {
   constructor() {
@@ -77,12 +80,7 @@ class Task extends React.Component {
       update_date: this.props.date + " " + getCurrentTimeFormat()
     };
 
-    updateTask(task, ok => {
-      if (ok) {
-        this.props.getTasks();
-        this.props.getTasksLog();
-      }
-    });
+    this.props.updateTask(task, this.props.date);
   }
 
   //Если нужно — перенесем в архив или достанем из архива
@@ -97,22 +95,7 @@ class Task extends React.Component {
       in_archive: value
     };
 
-    updateTask(task, ok => {
-      if (ok) {
-        this.props.getTasks();
-        this.props.getTasksLog();
-      }
-    });
-  }
-
-  //Удалим задачу из ДБ
-  deleteRowFromDataBase() {
-    deleteTask(this.state.content.id, ok => {
-      if (ok) {
-        this.props.getTasks();
-        this.props.getTasksLog();
-      }
-    });
+    this.props.updateTask(task, this.props.date);
   }
 
   //Обрабатываем изменение контента
@@ -251,14 +234,14 @@ class Task extends React.Component {
         >
           За день:
         </div>
-          <TimeContent
-            disabled={true}
-            isStandalone={true}
-            value={this.state.content.execution_time_day}
-            width={50}
-            height={34}
-          />
-        </div>
+        <TimeContent
+          disabled={true}
+          isStandalone={true}
+          value={this.state.content.execution_time_day}
+          width={50}
+          height={34}
+        />
+      </div>
     );
   }
 
@@ -268,13 +251,13 @@ class Task extends React.Component {
         className={!!this.state.isMinimized ? "timeField hidden" : "timeField"}
       >
         <div className="timeLabel">Всего: </div>
-          <TimeContent
-            disabled={true}
-            isStandalone={true}
-            value={this.state.content.execution_time_all}
-            width={50}
-            height={34}
-          />
+        <TimeContent
+          disabled={true}
+          isStandalone={true}
+          value={this.state.content.execution_time_all}
+          width={50}
+          height={34}
+        />
       </div>
     );
   }
@@ -340,7 +323,7 @@ class Task extends React.Component {
           message="Вместе с задачей будут удалены все записи из лога и статистики. 
 Если вы хотите закрыть задачу — проставьте у неё статус с типом «Окончательный»."
           onCancel={() => this.closeDeleteModal()}
-          onConfirm={() => this.deleteRowFromDataBase()}
+          onConfirm={() => this.props.deleteTask(this.state.content.id)}
         />
       );
     }
@@ -357,4 +340,18 @@ class Task extends React.Component {
   }
 }
 
-export default Task;
+const mapDispatchToProps = dispatch => {
+  return {
+    updateTask: (task, forDate) => {
+      dispatch(updateTask(task, forDate));
+    },
+    deleteTask: id => {
+      dispatch(deleteTask(id));
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Task);

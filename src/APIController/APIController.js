@@ -6,31 +6,6 @@ const tasksLog = require("./modules/tasksLog");
  * Задачи
  */
 
-//Получить задачу как объект по ID
-export function getTaskByID(ID, callback) {
-  tasks.getTaskByID(ID, callback);
-}
-
-//Получить все задачи пользователя
-export function getUserTasks(callback) {
-  tasks.getUserTasks(callback);
-}
-
-//Получить все задачи пользователя за дату
-export function getUserTasksByDate(date, callback) {
-  tasks.getUserTasksByDate(date, callback);
-}
-
-//Создать задачу
-export function createTask(task, callback) {
-  tasks.createTask(task, callback);
-}
-
-//Обновить задачу
-export function updateTask(task, callback) {
-  tasks.updateTask(task, callback);
-}
-
 //Удалить задачу
 export function deleteTask(ID, callback) {
   tasks.deleteTask(ID, callback);

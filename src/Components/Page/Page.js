@@ -54,7 +54,8 @@ class Page extends React.Component {
         <React.Fragment>
           <PageTitle
             title={this.props.title}
-            menuLinksArray={this.props.menuLinksArray}
+            routerLinksArray={this.props.routerLinksArray}
+            anchorLinksArray={this.props.anchorLinksArray}
           />
           <div className="page hr" />
         </React.Fragment>

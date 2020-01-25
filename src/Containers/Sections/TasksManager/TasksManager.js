@@ -1,6 +1,5 @@
 import React from "react";
-//Подключаем роутинг
-import { Switch, Route } from "react-router-dom";
+//Компоненты
 import Tasks from "./Tasks/Tasks";
 import TasksLog from "./TasksLog/TasksLog";
 import Page from "../../../Components/Page/Page";
@@ -10,32 +9,16 @@ import { connect } from "react-redux";
 import { fetchTaskStatuses } from "../../../Store/actions/taskStatuses";
 import { fetchCategories } from "../../../Store/actions/categories";
 //API
-import {
-  getUserTasksByDate,
-  getTasksLogByDate
-} from "../../../APIController/APIController";
+import { getTasksLogByDate } from "../../../APIController/APIController";
 
 import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
-import "./TasksManager.css";
-
-/* В общем, у нас здесь какая идея. Есть N компонентов, связанных между собой.
- * Например, при добавлении новой задачи, она автоматически должна появится в выпадающем списке задач в логе выполнения,
- * чтобы её можно было выбрать для указания времени.
- *
- * Кроме того, один компонент может строится на данных из другого компонента. Таким образом,
- * кажды компоеннт должна уметь обновлять другие компоненты, уметь брать данные из других компонентов.
- * Поэтому данный контейнер хранит функции для обновления компонентов и сами листы с инфой.
- *
- * Если какому-то компоненту нужна функция обновления другого или лист инфы — просто передаем его туда как пропсы.
- */
 
 class TasksManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasksList: [],
+      isArchive: false,
       tasksLogList: [],
-      categoriesList: [],
       date: getCurrentFormatDate()
     };
   }
@@ -49,19 +32,16 @@ class TasksManager extends React.Component {
     this.updateData(this.state.date);
   }
 
-  updateData(date) {
-    //Сначала обновляем таски, а потом лог
-    this.getTasks(date, this.getTasksLog(date));
+  showArchiveTasks() {
+    this.setState({ isArchive: true });
   }
 
-  getTasks(date, callback) {
-    getUserTasksByDate(date, result => {
-      if (typeof callback === "function") {
-        this.setState({ tasksList: result }, () => callback());
-      } else {
-        this.setState({ tasksList: result });
-      }
-    });
+  showActiveTasks() {
+    this.setState({ isArchive: false });
+  }
+
+  updateData(date) {
+    this.getTasksLog(date);
   }
 
   getTasksLog(date, callback) {
@@ -83,73 +63,59 @@ class TasksManager extends React.Component {
   getCurrentTasksAndTaskLog = () => {
     return (
       <React.Fragment>
-        <Tasks
+        <Tasks date={this.state.date} />
+
+        <TasksLog
           date={this.state.date}
-          getTasks={callback => this.getTasks(this.state.date, callback)}
           getTasksLog={callback => this.getTasksLog(this.state.date, callback)}
+          getTasks={callback => this.getTasks(this.state.date, callback)}
           tasksList={this.state.tasksList}
-          categories={this.props.categories}
-          taskStatuses={this.props.taskStatuses}
+          tasksLogList={this.state.tasksLogList}
         />
-        <div className="taskLogTableContainer">
-          <div className="taskLogTable">
-            <TasksLog
-              date={this.state.date}
-              getTasksLog={callback =>
-                this.getTasksLog(this.state.date, callback)
-              }
-              getTasks={callback => this.getTasks(this.state.date, callback)}
-              tasksList={this.state.tasksList}
-              tasksLogList={this.state.tasksLogList}
-            />
-          </div>
-        </div>
       </React.Fragment>
     );
   };
 
   getArchiveTasks = () => {
-    return (
-      <Tasks
-        isArchive={true}
-        date={this.state.date}
-        getTasks={callback => this.getTasks(this.state.date, callback)}
-        getTasksLog={callback => this.getTasksLog(this.state.date, callback)}
-        categories={this.props.categories}
-        taskStatuses={this.props.taskStatuses}
-        taskStatusesList={this.state.taskStatusesList}
-      />
-    );
+    return <Tasks isArchive={true} date={this.state.date} />;
   };
 
   render() {
     //Соберем меню страницы
-    let menuLinksArray = [
-      { to: "/tasks_manager", value: "Текущие" },
-      { to: "/tasks_manager/archive", value: "Архив" }
+    let anchorLinksArray = [
+      {
+        value: "Текущие",
+        callback: () => this.showActiveTasks(),
+        isCurrent: !this.state.isArchive
+      },
+      {
+        value: "Архив",
+        callback: () => this.showArchiveTasks(),
+        isCurrent: this.state.isArchive
+      }
     ];
 
     return (
       <Page
         title="Задачи:"
-        menuLinksArray={menuLinksArray}
+        anchorLinksArray={anchorLinksArray}
         isPrivate={true}
         isNotScrollable={true}
       >
         <DayPickerCarousel onChange={date => this.onPickDate(date)} />
-
-        <Switch>
-          <Route
-            exact
-            to
-            path="/tasks_manager"
-            component={this.getCurrentTasksAndTaskLog}
+        {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было лага*/}
+        <div style={{ display: !!this.state.isArchive ? "none" : null }}>
+          <Tasks date={this.state.date} />
+        </div>
+        <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
+          <Tasks isArchive={true} date={this.state.date} />
+        </div>
+        {
+          <TasksLog
+            date={this.state.date}
+            tasksLogList={this.state.tasksLogList}
           />
-          <Route
-            path="/tasks_manager/archive"
-            component={this.getArchiveTasks}
-          />
-        </Switch>
+        }
       </Page>
     );
   }

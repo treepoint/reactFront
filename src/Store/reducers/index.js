@@ -37,6 +37,13 @@ import {
   userDeleteError
 } from "./users";
 
+import {
+  tasks,
+  tasksIsUpdating,
+  taskUpdateError,
+  taskDeleteError
+} from "./tasks";
+
 const appReducer = combineReducers({
   //app
   userAuthState,
@@ -72,7 +79,12 @@ const appReducer = combineReducers({
   users,
   usersIsUpdating,
   userUpdateError,
-  userDeleteError
+  userDeleteError,
+  //tasks
+  tasks,
+  tasksIsUpdating,
+  taskUpdateError,
+  taskDeleteError
 });
 
 const rootReducer = (state, action) => {

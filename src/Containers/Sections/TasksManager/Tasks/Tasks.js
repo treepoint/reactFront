@@ -6,10 +6,23 @@ import ReactCustomScroll from "react-scrollbars-custom";
 //Подключаем redux
 import { connect } from "react-redux";
 import { setScrollTop, setScrollLeft } from "../../../../Store/actions/page";
+import { fetchTasksByDate } from "../../../../Store/actions/tasks";
+//Утилиты
 import { getTimeFromMins } from "../../../../Libs/TimeUtils";
+//CSS
 import "./Tasks.css";
 
 class Tasks extends React.Component {
+  componentDidMount() {
+    this.props.fetchTasksByDate(this.props.date);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.date !== this.props.date) {
+      this.props.fetchTasksByDate(this.props.date);
+    }
+  }
+
   //Нужно для правильного позиционирования fixed элементов в тасках
   handleScroll() {
     if (this._scrollBarRef !== null) {
@@ -70,50 +83,63 @@ class Tasks extends React.Component {
 
   //Соберем таблицу для отображения задач
   getTasks() {
-    let tasks = [];
+    let content = [];
+    const tasks = this.props.tasks;
+    let tasksForChosenDate = {};
 
-    this.props.tasksList.forEach(task => {
+    //Отфильтруем за нужную дату
+    for (var ts in tasks) {
+      if (tasks[ts].for_date === this.props.date) {
+        tasksForChosenDate[tasks[ts].id] = tasks[ts];
+      }
+    }
+
+    for (var t in tasksForChosenDate) {
       //Отфильтруем в зависимости от того, смотрим мы по архиву или нет
-      if (task.in_archive === 1 && !this.props.isArchive) {
-        return null;
+      if (tasksForChosenDate[t].in_archive === 0 && !this.props.isArchive) {
+        let taskContent = {
+          id: tasksForChosenDate[t].id,
+          statuses: this.getStatusesByTask(tasksForChosenDate[t]),
+          name: tasksForChosenDate[t].name,
+          name_style: tasksForChosenDate[t].name_style,
+          categories: this.getCategoriesByTask(tasksForChosenDate[t]),
+          execution_time_day: getTimeFromMins(
+            tasksForChosenDate[t].execution_time_day
+          ),
+          execution_time_all: getTimeFromMins(
+            tasksForChosenDate[t].execution_time_to_day
+          ),
+          in_archive: tasksForChosenDate[t].in_archive
+        };
+
+        content.push(<Task date={this.props.date} content={taskContent} />);
       }
 
-      if (task.in_archive === 0 && this.props.isArchive) {
-        return null;
+      if (tasksForChosenDate[t].in_archive === 1 && this.props.isArchive) {
+        let taskContent = {
+          id: tasksForChosenDate[t].id,
+          statuses: this.getStatusesByTask(tasksForChosenDate[t]),
+          name: tasksForChosenDate[t].name,
+          name_style: tasksForChosenDate[t].name_style,
+          categories: this.getCategoriesByTask(tasksForChosenDate[t]),
+          execution_time_day: getTimeFromMins(
+            tasksForChosenDate[t].execution_time_day
+          ),
+          execution_time_all: getTimeFromMins(
+            tasksForChosenDate[t].execution_time_to_day
+          ),
+          in_archive: tasksForChosenDate[t].in_archive
+        };
+
+        content.push(<Task date={this.props.date} content={taskContent} />);
       }
+    }
 
-      tasks.push(
-        <Task
-          date={this.props.date}
-          getTasks={() => this.props.getTasks()}
-          getTasksLog={() => this.props.getTasksLog()}
-          content={{
-            id: task.id,
-            statuses: this.getStatusesByTask(task),
-            name: task.name,
-            name_style: task.name_style,
-            categories: this.getCategoriesByTask(task),
-            execution_time_day: getTimeFromMins(task.execution_time_day),
-            execution_time_all: getTimeFromMins(task.execution_time_to_day),
-            in_archive: task.in_archive
-          }}
-        />
-      );
-    });
-
-    return tasks;
+    return content;
   }
 
   getAddTaskButton() {
-    return (
-      <AddTaskButton
-        date={this.props.date}
-        getTasks={() => this.props.getTasks()}
-        getTasksLog={() => this.props.getTasksLog()}
-        categories={this.props.categories}
-        taskStatuses={this.props.taskStatuses}
-      />
-    );
+    return <AddTaskButton date={this.props.date} />;
   }
 
   render() {
@@ -140,6 +166,14 @@ class Tasks extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    tasks: state.tasks,
+    taskStatuses: state.taskStatuses,
+    categories: state.categories
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     setScrollTop: number => {
@@ -147,11 +181,14 @@ const mapDispatchToProps = dispatch => {
     },
     setScrollLeft: number => {
       dispatch(setScrollLeft(number));
+    },
+    fetchTasksByDate: date => {
+      dispatch(fetchTasksByDate(date));
     }
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Tasks);
