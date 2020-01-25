@@ -1,7 +1,7 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { updateUser } from "../../Store/actions/currentUser";
+import { updateProfile } from "../../Store/actions/currentUser";
 import { logoff } from "../../Store/actions/app";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
@@ -17,7 +17,11 @@ const INPUTS = [email, password];
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: this.props.user, validation: {}, isTouched: false };
+    this.state = {
+      user: this.props.currentUser,
+      validation: {},
+      isTouched: false
+    };
   }
 
   onChange(event) {
@@ -44,7 +48,7 @@ class Profile extends React.Component {
           Object.keys(getInvalidMessagesAsObj(INPUTS, this.state.user))
             .length === 0
         ) {
-          this.props.updateUser(this.state.user);
+          this.props.updateProfile(this.state.user);
         }
       }
     );
@@ -68,7 +72,7 @@ class Profile extends React.Component {
               }
             />
           ))}
-          <ErrorMessage message={this.props.updateError} />
+          <ErrorMessage message={this.props.updateProfileError} />
           <Button
             isPrimary={true}
             value="Сохранить"
@@ -83,9 +87,9 @@ class Profile extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
+    currentUser: state.currentUser,
     token: state.token,
-    updateError: state.updateProfileError
+    updateProfileError: state.updateProfileError
   };
 };
 
@@ -94,7 +98,7 @@ const mapDispatchToProps = dispatch => {
     logoff: () => {
       dispatch(logoff());
     },
-    updateUser: user => dispatch(updateUser(user))
+    updateProfile: user => dispatch(updateProfile(user))
   };
 };
 

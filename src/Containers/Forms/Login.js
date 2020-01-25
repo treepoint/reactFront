@@ -22,8 +22,8 @@ class Login extends React.Component {
 
   onChange(event) {
     let user = {
-      email: this.props.user.email,
-      password: this.props.user.password
+      email: this.props.currentUser.email,
+      password: this.props.currentUser.password
     };
 
     user = Object.assign(user, { [event.target.name]: event.target.value });
@@ -36,12 +36,12 @@ class Login extends React.Component {
     this.setState(
       {
         isTouched: true,
-        validation: getInvalidMessagesAsObj(INPUTS, this.props.user)
+        validation: getInvalidMessagesAsObj(INPUTS, this.props.currentUser)
       },
       () => {
         //Переходим к аутентификации если ошибок нет
         if (
-          Object.keys(getInvalidMessagesAsObj(INPUTS, this.props.user))
+          Object.keys(getInvalidMessagesAsObj(INPUTS, this.props.currentUser))
             .length === 0
         ) {
           this.props.login();
@@ -59,7 +59,7 @@ class Login extends React.Component {
             placeholder={inputs.placeholder}
             name={inputs.name}
             type={inputs.type}
-            value={this.props.user[inputs.name]}
+            value={this.props.currentUser[inputs.name]}
             defaultValue={inputs.defaultValue}
             onChange={event => this.onChange(event)}
             invalidMessage={
@@ -80,7 +80,7 @@ class Login extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
+    currentUser: state.currentUser,
     token: state.token,
     authError: state.authError
   };

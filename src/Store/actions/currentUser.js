@@ -77,7 +77,7 @@ export function registration() {
 }
 
 //Обновить пользователя
-export function updateUser(user) {
+export function updateProfile(user) {
   return (dispatch, getState) => {
     const id = user.id;
 
@@ -91,7 +91,7 @@ export function updateUser(user) {
 
     Axios.put(URL + "/" + id, user, headers)
       .then(response => {
-        if (typeof response.data.affectedRows === "number") {
+        if (typeof response.data === "object") {
           //Обновим пользователя
           dispatch(setCurrentUser(user));
           //Обнулим ошибку

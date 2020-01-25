@@ -39,20 +39,6 @@ export function logoff() {
   };
 }
 
-export function login() {
-  return (dispatch, getState) => {
-    //Авторизуемся
-    dispatch(auth());
-
-    const state = getState();
-
-    //Если открыто модальное окно — закроем
-    if (state.modalWindowState === true) {
-      dispatch(setModalWindowState(false));
-    }
-  };
-}
-
 export function restoreFromCookies() {
   return dispatch => {
     const token = read_cookie("token");
@@ -83,14 +69,14 @@ export function restoreFromCookies() {
   };
 }
 
-export function auth() {
+export function login() {
   return (dispatch, getState) => {
     //Создание токена
     let url = APIURL + "/auth";
 
     const state = getState();
 
-    Axios.post(url, state.user)
+    Axios.post(url, state.currentUser)
       .then(response => {
         //Unixtime в обычное время
         let tokenExp = new Date(response.data.token.exp * 1000);
@@ -117,6 +103,11 @@ export function auth() {
 
         //Проставим авторизацию
         dispatch(setUserAuthState(true));
+
+        //Если открыто модальное окно — закроем
+        if (state.modalWindowState === true) {
+          dispatch(setModalWindowState(false));
+        }
       })
       .catch(error => {
         let errorMessage = null;
