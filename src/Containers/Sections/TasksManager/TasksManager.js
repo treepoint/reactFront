@@ -1,8 +1,8 @@
 import React from "react";
 //Подключаем роутинг
 import { Switch, Route } from "react-router-dom";
-import Tasks from "./Tables/Tasks";
-import TasksLog from "./Tables/TasksLog";
+import Tasks from "./Tasks/Tasks";
+import TasksLog from "./TasksLog/TasksLog";
 import Page from "../../../Components/Page/Page";
 import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
 //Redux

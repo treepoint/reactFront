@@ -66,27 +66,17 @@ export function deleteTaskLog(ID, callback) {
 }
 
 /*
- * Статистика по категориям
- */
-
-//Получаем время исполнения по всем категориям
-export function getTimeExecutionForAllCategories(callback) {
-  statistics.getTimeExecutionForAllCategories(callback);
-}
-
-//Получаем время исполнения по всем категориям за определенный день
-export function getTimeExecutionForAllCategoriesByDate(date, callback) {
-  statistics.getTimeExecutionForAllCategoriesByDate(date, callback);
-}
-
-/*
- * Статистика по задачам
+ * Статистика по категория
  */
 
 //Получить статистику по категориям за период
 export function getCategoriesStatisticByPeriod(dateFrom, dateTo, callback) {
   statistics.getCategoriesStatisticByPeriod(dateFrom, dateTo, callback);
 }
+
+/*
+ * Статистика по задачам
+ */
 
 //Получить статистику по задачам за период
 export function getTaskStatisticByPeriod(dateFrom, dateTo, callback) {
