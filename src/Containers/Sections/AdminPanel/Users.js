@@ -119,6 +119,7 @@ class Users extends React.Component {
           isSingleLineMode={true}
           saveRow={user => this.props.updateUser(user)}
           deleteRow={row => this.showDeleteModal(row)}
+          isUpdating={this.props.isUpdating}
         >
           {this.getContent()}
         </Table>
@@ -130,7 +131,7 @@ class Users extends React.Component {
 const mapStateToProps = state => {
   return {
     userRoles: state.userRoles,
-    usersIsUpdating: state.usersIsUpdating,
+    isUpdating: state.usersIsUpdating,
     users: state.users
   };
 };
