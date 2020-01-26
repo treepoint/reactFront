@@ -145,7 +145,7 @@ export function deleteTask(id) {
 
           //Пройдемся по всему логу тасок и удалим все записи, завязанные на эту задачу
           for (var tl in tasksLog) {
-            if ((tasksLog[tl].task_id = id)) {
+            if (tasksLog[tl].task_id === id) {
               //Удаляем только из стора. Удалением из базы займется API, так быстрее
               dispatch(removeTaskLog(tasksLog[tl].id));
             }

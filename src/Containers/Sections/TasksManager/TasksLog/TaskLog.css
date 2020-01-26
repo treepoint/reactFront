@@ -13,7 +13,7 @@
 .taskLogTableContainer {
   width: calc(100% - 112px);
   position: absolute;
-  bottom: 28px;
+  bottom: 0;
 }
 
 .taskLogTable {

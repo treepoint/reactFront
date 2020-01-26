@@ -14,6 +14,7 @@ import { setModalWindowState } from "./globalModalWindow";
 export const SET_USER_AUTH_STATE = "SET_USER_AUTH_STATE";
 export const SET_AUTH_ERROR = "AUTH_ERROR";
 export const CLEAR_STATE = "CLEAR_STATE";
+export const SET_SHOW_BROADCAST_MESSAGE = "SET_SHOW_BROADCAST_MESSAGE";
 
 export function setUserAuthState(boolean) {
   return { type: SET_USER_AUTH_STATE, boolean };
@@ -25,6 +26,10 @@ export function setAuthError(text) {
 
 export function clearState() {
   return { type: CLEAR_STATE };
+}
+
+export function setShowBroadcastMessage(boolean) {
+  return { type: SET_SHOW_BROADCAST_MESSAGE, boolean };
 }
 
 export function logoff() {

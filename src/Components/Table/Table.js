@@ -1,6 +1,4 @@
 import React from "react";
-//Подключаем красивые скроллы
-import ReactCustomScroll from "react-scrollbars-custom";
 //Подключаем компоненты
 import SaveMark from "./SaveMark/SaveMark";
 import Row from "./Row/Row";
@@ -265,29 +263,7 @@ class Table extends React.Component {
       );
     });
 
-    //Если ограничений нет — скроллы не нужны
-    if (
-      typeof this.props.maxWidth === "undefined" &&
-      typeof this.props.maxHeight === "undefined"
-    ) {
-      return content;
-    } else {
-      return (
-        <ReactCustomScroll
-          noScroll={this.props.noScroll}
-          //Задаем стиль
-          style={{
-            width: this.props.maxWidth,
-            height: "calc(" + this.props.maxHeight + " - 48px)"
-          }}
-          ref={ref => {
-            this._scrollBarRef = ref;
-          }}
-        >
-          {content}
-        </ReactCustomScroll>
-      );
-    }
+    return content;
   }
 
   render() {

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 import { CLEAR_STATE } from "../actions/app";
-import { userAuthState, authError } from "./app";
+import { userAuthState, authError, showBroadcastMessage } from "./app";
 import { scrollTop, scrollLeft } from "./page";
 import { modalWindowState, modalWindowName } from "./globalModalWindow";
 import { token } from "./token";
@@ -56,6 +56,7 @@ const appReducer = combineReducers({
   //app
   userAuthState,
   authError,
+  showBroadcastMessage,
   //Page
   scrollTop,
   scrollLeft,
