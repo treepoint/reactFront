@@ -31,6 +31,20 @@ class Tasks extends React.Component {
       return true;
     }
 
+    if (
+      JSON.stringify(nextProps.taskStatuses) !==
+      JSON.stringify(this.props.taskStatuses)
+    ) {
+      return true;
+    }
+
+    if (
+      JSON.stringify(nextProps.categories) !==
+      JSON.stringify(this.props.categories)
+    ) {
+      return true;
+    }
+
     return false;
   }
 
