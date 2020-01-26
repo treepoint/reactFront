@@ -40,15 +40,7 @@ export function setDeleteError(text) {
 
 //Получить все статусы задач за определенный период
 export function fetchTasksByDate(date) {
-  return (dispatch, getState) => {
-    const state = getState();
-
-    //Если в сторе уже есть за определенную дату — проставим их как текущие
-    if (typeof state.tasks[date] !== "undefined") {
-      dispatch(fetchTaskStatuses());
-      dispatch(fetchCategories());
-    }
-
+  return dispatch => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -111,7 +103,7 @@ export function updateTask(task, forDate) {
       .then(response => {
         if (typeof response.data === "object") {
           let task = response.data;
-
+          //Проставим дату за которую считаем таску
           task[Object.keys(task)[0]].for_date = forDate;
           //Обновим список
           dispatch(setTasks(task));

@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 
 import { CLEAR_STATE } from "../actions/app";
 import { userAuthState, authError } from "./app";
+import { scrollTop, scrollLeft } from "./page";
 import { modalWindowState, modalWindowName } from "./globalModalWindow";
 import { token } from "./token";
 
@@ -12,16 +13,14 @@ import {
   updateProfileError
 } from "./currentUser";
 
-import { userRoles } from "./userRoles";
-import { scrollTop, scrollLeft } from "./page";
-import { taskStatusesTypes } from "./taskStatusesTypes";
-
 import {
   taskStatuses,
   taskStatusIsUpdating,
   taskStatusUpdateError,
   taskStatusCreateError
 } from "./taskStatuses";
+
+import { taskStatusesTypes } from "./taskStatusesTypes";
 
 import {
   categories,
@@ -37,12 +36,21 @@ import {
   userDeleteError
 } from "./users";
 
+import { userRoles } from "./userRoles";
+
 import {
   tasks,
   tasksIsUpdating,
   taskUpdateError,
   taskDeleteError
 } from "./tasks";
+
+import {
+  tasksLog,
+  tasksLogIsUpdating,
+  taskLogUpdateError,
+  taskLogDeleteError
+} from "./tasksLog";
 
 const appReducer = combineReducers({
   //app
@@ -84,7 +92,12 @@ const appReducer = combineReducers({
   tasks,
   tasksIsUpdating,
   taskUpdateError,
-  taskDeleteError
+  taskDeleteError,
+  //tasksLog
+  tasksLog,
+  tasksLogIsUpdating,
+  taskLogUpdateError,
+  taskLogDeleteError
 });
 
 const rootReducer = (state, action) => {

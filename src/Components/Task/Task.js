@@ -2,14 +2,13 @@ import React from "react";
 //Redux
 import { connect } from "react-redux";
 import { updateTask, deleteTask } from "../../Store/actions/tasks";
+import { createTaskLog } from "../../Store/actions/tasksLog";
 //Компоненты
 import TextContent from "../TextContent/TextContent";
 import SelectContent from "../SelectContent/SelectContent";
 import TimeContent from "../TimeContent/TimeContent";
 import ConfirmModalWindow from "../ConfirmModalWindow/ConfirmModalWindow";
 import Action from "../Action/Action";
-//API
-import { createTaskLog } from "../../APIController/APIController";
 //Утилиты
 import { getCurrentTimeFormat } from "../../Libs/TimeUtils";
 //Картинки
@@ -108,22 +107,6 @@ class Task extends React.Component {
       },
       this.saveTaskToDatabase()
     );
-  }
-
-  //Добавим лог по задаче в ДБ
-  addRowToDataBase() {
-    let taskLog = {
-      task_id: this.state.content.id,
-      comment: "",
-      execution_start: this.props.date + " " + getCurrentTimeFormat(),
-      execution_end: this.props.date
-    };
-
-    createTaskLog(taskLog, ok => {
-      if (ok) {
-        this.props.getTasksLog();
-      }
-    });
   }
 
   //Обрабатываем изменение контента
@@ -266,7 +249,12 @@ class Task extends React.Component {
     return (
       <div className="taskActions">
         {!!this.state.content.in_archive ? null : (
-          <Action icon={timeSpanIcon} onClick={() => this.addRowToDataBase()} />
+          <Action
+            icon={timeSpanIcon}
+            onClick={() =>
+              this.props.createTaskLog(this.state.content.id, this.props.date)
+            }
+          />
         )}
 
         {!!this.state.content.in_archive ? (
@@ -347,6 +335,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteTask: id => {
       dispatch(deleteTask(id));
+    },
+    createTaskLog: (taskId, date) => {
+      dispatch(createTaskLog(taskId, date));
     }
   };
 };

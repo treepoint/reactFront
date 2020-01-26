@@ -8,9 +8,7 @@ import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
 import { connect } from "react-redux";
 import { fetchTaskStatuses } from "../../../Store/actions/taskStatuses";
 import { fetchCategories } from "../../../Store/actions/categories";
-//API
-import { getTasksLogByDate } from "../../../APIController/APIController";
-
+//Утилиты
 import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
 
 class TasksManager extends React.Component {
@@ -18,18 +16,13 @@ class TasksManager extends React.Component {
     super(props);
     this.state = {
       isArchive: false,
-      tasksLogList: [],
       date: getCurrentFormatDate()
     };
   }
 
   componentDidMount() {
-    //Категории и статусы обновляем только когда монтируем
-    //Предполагается, что они не мутируют в процессе
     this.props.fetchCategories();
     this.props.fetchTaskStatuses();
-
-    this.updateData(this.state.date);
   }
 
   showArchiveTasks() {
@@ -40,24 +33,8 @@ class TasksManager extends React.Component {
     this.setState({ isArchive: false });
   }
 
-  updateData(date) {
-    this.getTasksLog(date);
-  }
-
-  getTasksLog(date, callback) {
-    getTasksLogByDate(date, result => {
-      if (typeof callback === "function") {
-        this.setState({ tasksLogList: result }, () => callback());
-      } else {
-        this.setState({ tasksLogList: result });
-      }
-    });
-  }
-
   onPickDate(date) {
     this.setState({ date });
-
-    this.updateData(date);
   }
 
   getCurrentTasksAndTaskLog = () => {
@@ -106,16 +83,11 @@ class TasksManager extends React.Component {
         {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было лага*/}
         <div style={{ display: !!this.state.isArchive ? "none" : null }}>
           <Tasks date={this.state.date} />
+          <TasksLog date={this.state.date} />
         </div>
         <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
           <Tasks isArchive={true} date={this.state.date} />
         </div>
-        {
-          <TasksLog
-            date={this.state.date}
-            tasksLogList={this.state.tasksLogList}
-          />
-        }
       </Page>
     );
   }
