@@ -1,12 +1,13 @@
 import React from "react";
-import Task from "../../../../Components/Task/Task";
-import AddTaskButton from "../../../../Components/AddTaskButton/AddTaskButton";
-//Подключаем красивые скроллы
-import ReactCustomScroll from "react-scrollbars-custom";
 //Подключаем redux
 import { connect } from "react-redux";
 import { setScrollTop, setScrollLeft } from "../../../../Store/actions/page";
 import { fetchTasksByDate } from "../../../../Store/actions/tasks";
+//Компоненты
+import Task from "../../../../Components/Task/Task";
+import AddTaskButton from "../../../../Components/AddTaskButton/AddTaskButton";
+//Подключаем красивые скроллы
+import ReactCustomScroll from "react-scrollbars-custom";
 //CSS
 import "./Tasks.css";
 

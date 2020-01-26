@@ -1,7 +1,10 @@
 import React from "react";
+//Подключаем красивые скроллы
+import ReactCustomScroll from "react-scrollbars-custom";
 //Подключаем компоненты
 import SaveMark from "./SaveMark/SaveMark";
 import Row from "./Row/Row";
+//CSS
 import "./Table.css";
 
 class Table extends React.Component {
@@ -22,6 +25,11 @@ class Table extends React.Component {
 
   componentDidUpdate() {
     this.setTable();
+
+    //Если при обновлении задали без скроллов — проскролим до самого верха
+    if (this.props.noScroll === true) {
+      this._scrollBarRef.scrollToTop();
+    }
   }
 
   setTable() {
@@ -179,15 +187,55 @@ class Table extends React.Component {
     this.props.deleteRow(object);
   }
 
-  getRows() {
+  getHeader() {
+    //Если шапки нет — вернем ничего
+    if (this.props.isHeaderless) {
+      return null;
+    }
+
+    //Иначе вернем шапку
+    return (
+      <Row
+        key={0}
+        isFixed={this.props.isFixed}
+        //Указываем, на наличие шапки. По умолчанию — есть
+        isHeader={true}
+        //Задаем возможность изменения размеров ячеек
+        isResizeble={this.props.isResizeble}
+        //Задаем возможность редактирования ячеек
+        isEditable={this.props.isEditable}
+        //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
+        uuid={this.state.uuid}
+        //Передадим содержимое столбцов из шапки
+        rowsContent={this.state.table[0]}
+        //Так же передадим описание столбцов — ширину и подобное
+        colsDescription={this.state.colsDescription}
+        //И callback'и на обработку изменения ширины столбца
+        changeColumnWidth={(width, column) =>
+          this.changeColumnWidth(width, column)
+        }
+        //и остановку изменения
+        stopChangeDimensions={() => this.stopChangeDimensions()}
+        //Изменим UUID ячейки, которая изменяла свою ширину
+        changeUUID={uuid => this.changeUUID(uuid)}
+      />
+    );
+  }
+
+  getContent() {
     //Соберем тушку для отрисовки
-    let table = this.state.table.map((row, index) => {
+    let content = this.state.table.map((row, index) => {
+      //Если есть шапка — её рисуем в другом месте
+      if (!this.props.isHeaderless && index === 0) {
+        return null;
+      }
+
       return (
         <Row
           key={index}
           isFixed={this.props.isFixed}
           //Указываем, на наличие шапки. По умолчанию — есть
-          isHeader={!!!this.props.isHeaderless && index === 0 ? true : false}
+          isHeader={false}
           //Задаем возможность изменения размеров ячеек
           isResizeble={this.props.isResizeble}
           //Задаем возможность редактирования ячеек
@@ -217,14 +265,37 @@ class Table extends React.Component {
       );
     });
 
-    return table;
+    //Если ограничений нет — скроллы не нужны
+    if (
+      typeof this.props.maxWidth === "undefined" &&
+      typeof this.props.maxHeight === "undefined"
+    ) {
+      return content;
+    } else {
+      return (
+        <ReactCustomScroll
+          noScroll={this.props.noScroll}
+          //Задаем стиль
+          style={{
+            width: this.props.maxWidth,
+            height: "calc(" + this.props.maxHeight + " - 48px)"
+          }}
+          ref={ref => {
+            this._scrollBarRef = ref;
+          }}
+        >
+          {content}
+        </ReactCustomScroll>
+      );
+    }
   }
 
   render() {
     return (
       <div className="tableWrapper" style={{ maxHeight: this.props.maxHeight }}>
         <div className="table">
-          {this.getRows()}
+          {this.getHeader()}
+          {this.getContent()}
           <SaveMark
             marginLeft={this.getTableWidth()}
             isSaving={this.props.isUpdating}

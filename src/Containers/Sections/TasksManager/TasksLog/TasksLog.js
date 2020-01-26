@@ -177,7 +177,9 @@ class TasksLog extends React.Component {
               />
             </div>
             <Table
-              maxHeight={!!this.state.isMinimized ? "70px" : "50vh"}
+              maxHeight={!!this.state.isMinimized ? "83px" : "50vh"}
+              maxWidth={"1030px"}
+              noScroll={this.state.isMinimized}
               isFixed={true}
               isEditable={true}
               isResizeble={false}

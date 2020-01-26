@@ -102,7 +102,7 @@ class SelectContent extends React.Component {
       option: (styles, { data, isFocused, isSelected }) => ({
         ...styles,
         fontFamily: '"Open Sans", "Source Sans Pro"',
-        fontSize: "15px",
+        fontSize: "14px",
         color: "000000",
         minHeight: "32px",
         paddingLeft: "6px",
@@ -138,7 +138,7 @@ class SelectContent extends React.Component {
       noOptionsMessage: styles => ({
         ...styles,
         fontFamily: '"Open Sans", "Source Sans Pro"',
-        fontSize: "15px"
+        fontSize: "14px"
       })
     };
 

@@ -1,7 +1,6 @@
 import React from "react";
 //Redux
 import { connect } from "react-redux";
-import { fetchUserRoles } from "../../../Store/actions/userRoles";
 import {
   fetchUsers,
   updateUser,
@@ -21,13 +20,11 @@ class Users extends React.Component {
 
   componentDidMount() {
     this.props.fetchUsers();
-    this.props.fetchUserRoles();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.userAuthState && !prevProps.userAuthState) {
       this.props.fetchUsers();
-      this.props.fetchUserRoles();
     }
   }
 
@@ -139,15 +136,13 @@ const mapStateToProps = state => {
   return {
     userRoles: state.userRoles,
     isUpdating: state.usersIsUpdating,
+    userAuthState: state.userAuthState,
     users: state.users
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchUserRoles: () => {
-      dispatch(fetchUserRoles());
-    },
     fetchUsers: () => {
       dispatch(fetchUsers());
     },

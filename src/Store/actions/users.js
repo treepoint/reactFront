@@ -1,6 +1,7 @@
 //Обвязка для API
 import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
+import { fetchUserRoles } from "./userRoles";
 const URL = APIURL + "/users";
 
 export const SET_USERS = "SET_USERS";
@@ -36,7 +37,7 @@ export function fetchUsers() {
     const state = getState();
 
     //Если в сторе уже есть — ничего не делаем
-    if (JSON.stringify(state.taskStatuses) !== "{}") {
+    if (JSON.stringify(state.users) !== "{}") {
       return;
     }
 
@@ -47,7 +48,10 @@ export function fetchUsers() {
     }
 
     Axios.get(URL, headers).then(response => {
+      //Получим пользователей
       dispatch(setUsers(response.data));
+      //А потом их роли
+      dispatch(fetchUserRoles());
     });
   };
 }
