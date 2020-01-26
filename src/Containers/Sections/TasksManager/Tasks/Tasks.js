@@ -7,8 +7,6 @@ import ReactCustomScroll from "react-scrollbars-custom";
 import { connect } from "react-redux";
 import { setScrollTop, setScrollLeft } from "../../../../Store/actions/page";
 import { fetchTasksByDate } from "../../../../Store/actions/tasks";
-//Утилиты
-import { getTimeFromMins } from "../../../../Libs/TimeUtils";
 //CSS
 import "./Tasks.css";
 
@@ -103,12 +101,8 @@ class Tasks extends React.Component {
           name: tasksForChosenDate[t].name,
           name_style: tasksForChosenDate[t].name_style,
           categories: this.getCategoriesByTask(tasksForChosenDate[t]),
-          execution_time_day: getTimeFromMins(
-            tasksForChosenDate[t].execution_time_day
-          ),
-          execution_time_all: getTimeFromMins(
-            tasksForChosenDate[t].execution_time_to_day
-          ),
+          execution_time_day: tasksForChosenDate[t].execution_time_day,
+          execution_time_all: tasksForChosenDate[t].execution_time_to_day,
           in_archive: tasksForChosenDate[t].in_archive
         };
 
@@ -122,12 +116,8 @@ class Tasks extends React.Component {
           name: tasksForChosenDate[t].name,
           name_style: tasksForChosenDate[t].name_style,
           categories: this.getCategoriesByTask(tasksForChosenDate[t]),
-          execution_time_day: getTimeFromMins(
-            tasksForChosenDate[t].execution_time_day
-          ),
-          execution_time_all: getTimeFromMins(
-            tasksForChosenDate[t].execution_time_to_day
-          ),
+          execution_time_day: tasksForChosenDate[t].execution_time_day,
+          execution_time_all: tasksForChosenDate[t].execution_time_to_day,
           in_archive: tasksForChosenDate[t].in_archive
         };
 

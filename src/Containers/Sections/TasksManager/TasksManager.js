@@ -83,11 +83,11 @@ class TasksManager extends React.Component {
         {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было лага*/}
         <div style={{ display: !!this.state.isArchive ? "none" : null }}>
           <Tasks date={this.state.date} />
-          <TasksLog date={this.state.date} />
         </div>
         <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
           <Tasks isArchive={true} date={this.state.date} />
         </div>
+        <TasksLog date={this.state.date} />
       </Page>
     );
   }

@@ -10,7 +10,7 @@ import TimeContent from "../TimeContent/TimeContent";
 import ConfirmModalWindow from "../ConfirmModalWindow/ConfirmModalWindow";
 import Action from "../Action/Action";
 //Утилиты
-import { getCurrentTimeFormat } from "../../Libs/TimeUtils";
+import { getCurrentTimeFormat, getTimeFromMins } from "../../Libs/TimeUtils";
 //Картинки
 import deleteIcon from "../../Images/icon_delete.png";
 import archiveIcon from "../../Images/icon_archive.png";
@@ -75,6 +75,8 @@ class Task extends React.Component {
       name_style: this.state.content.name_style,
       status_id: this.state.content.statuses.current,
       category_id: this.state.content.categories.current,
+      execution_time_day: this.state.content.execution_time_day,
+      execution_time_all: this.state.content.execution_time_all,
       in_archive: this.state.content.in_archive,
       update_date: this.props.date + " " + getCurrentTimeFormat()
     };
@@ -90,6 +92,8 @@ class Task extends React.Component {
       name_style: this.state.content.name_style,
       status_id: this.state.content.statuses.current,
       category_id: this.state.content.categories.current,
+      execution_time_day: this.state.content.execution_time_day,
+      execution_time_all: this.state.content.execution_time_all,
       update_date: this.props.date + " " + getCurrentTimeFormat(),
       in_archive: value
     };
@@ -220,7 +224,7 @@ class Task extends React.Component {
         <TimeContent
           disabled={true}
           isStandalone={true}
-          value={this.state.content.execution_time_day}
+          value={getTimeFromMins(this.state.content.execution_time_day)}
           width={50}
           height={34}
         />
@@ -237,7 +241,7 @@ class Task extends React.Component {
         <TimeContent
           disabled={true}
           isStandalone={true}
-          value={this.state.content.execution_time_all}
+          value={getTimeFromMins(this.state.content.execution_time_all)}
           width={50}
           height={34}
         />

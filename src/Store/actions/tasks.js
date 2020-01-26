@@ -3,6 +3,7 @@ import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
 import { fetchTaskStatuses } from "./taskStatuses";
 import { fetchCategories } from "./categories";
+import { removeTaskLog } from "./tasksLog";
 
 const URL = APIURL + "/tasks";
 
@@ -102,11 +103,16 @@ export function updateTask(task, forDate) {
     Axios.put(URL + "/" + task.id, task, headers)
       .then(response => {
         if (typeof response.data === "object") {
-          let task = response.data;
+          let updatedTask = response.data;
           //Проставим дату за которую считаем таску
-          task[Object.keys(task)[0]].for_date = forDate;
+          updatedTask[Object.keys(updatedTask)[0]].for_date = forDate;
+          //Проставим время исполнения из исходного таска
+          updatedTask[Object.keys(updatedTask)[0]].execution_time_to_day =
+            task.execution_time_all;
+          updatedTask[Object.keys(updatedTask)[0]].execution_time_day =
+            task.execution_time_day;
           //Обновим список
-          dispatch(setTasks(task));
+          dispatch(setTasks(updatedTask));
           dispatch(setIsUpdating(false));
         }
       })
@@ -119,7 +125,7 @@ export function updateTask(task, forDate) {
 
 //Удалить задачу
 export function deleteTask(id) {
-  return dispatch => {
+  return (dispatch, getState) => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -131,6 +137,19 @@ export function deleteTask(id) {
         if (typeof response.data.affectedRows === "number") {
           //Удалим объект и обновим список
           dispatch(removeTask(id));
+
+          //При удалении задачи так же нужно грохнуть и все записи в логе по этой задаче
+          const state = getState();
+
+          let tasksLog = state.tasksLog;
+
+          //Пройдемся по всему логу тасок и удалим все записи, завязанные на эту задачу
+          for (var tl in tasksLog) {
+            if ((tasksLog[tl].task_id = id)) {
+              //Удаляем только из стора. Удалением из базы займется API, так быстрее
+              dispatch(removeTaskLog(tasksLog[tl].id));
+            }
+          }
         }
       })
       .catch(error => {

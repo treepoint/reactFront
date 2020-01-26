@@ -172,6 +172,6 @@ export function deleteTaskLog(id) {
   };
 }
 
-function removeTaskLog(id) {
+export function removeTaskLog(id) {
   return { type: REMOVE_TASK_LOG, id };
 }

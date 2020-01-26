@@ -9,7 +9,7 @@ import CategoriesStatistic from "./CategoriesStatistic/CategoriesStatistic";
 class StatisticRouter extends React.Component {
   render() {
     //Соберем меню страницы
-    let menuLinksArray = [
+    let routerLinksArray = [
       { to: "/statistic", value: "По задачам" },
       { to: "/statistic/categories", value: "По категориям" }
     ];
@@ -17,7 +17,7 @@ class StatisticRouter extends React.Component {
     return (
       <Page
         title="Статистика:"
-        menuLinksArray={menuLinksArray}
+        routerLinksArray={routerLinksArray}
         isPrivate={true}
       >
         <Switch>

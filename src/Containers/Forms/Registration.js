@@ -26,13 +26,16 @@ class Registration extends React.Component {
   }
 
   onChange(event) {
-    let user = {
-      email: this.props.user.email,
-      password: this.props.user.password
+    let currentUser = {
+      email: this.props.currentUser.email,
+      password: this.props.currentUser.password
     };
 
-    user = Object.assign(user, { [event.target.name]: event.target.value });
-    this.props.setCurrentUser(user);
+    currentUser = Object.assign(currentUser, {
+      [event.target.name]: event.target.value
+    });
+
+    this.props.setCurrentUser(currentUser);
   }
 
   createUser(event) {
@@ -41,13 +44,13 @@ class Registration extends React.Component {
     this.setState(
       {
         isTouched: true,
-        validation: getInvalidMessagesAsObj(INPUTS, this.props.user)
+        validation: getInvalidMessagesAsObj(INPUTS, this.props.currentUser)
       },
       () => {
         //Сохраняем только если ошибок нет
         if (Object.keys(this.state.validation).length === 0) {
-          //Создаем пользователя
-          this.props.registration(this.props.user);
+          //Регистрируемся
+          this.props.registration();
         }
       }
     );
@@ -62,7 +65,7 @@ class Registration extends React.Component {
             placeholder={inputs.placeholder}
             name={inputs.name}
             type={inputs.type}
-            value={this.props.user[inputs.name]}
+            value={this.props.currentUser[inputs.name]}
             defaultValue={inputs.defaultValue}
             onChange={event => this.onChange(event)}
             invalidMessage={
@@ -89,7 +92,7 @@ class Registration extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
+    currentUser: state.currentUser,
     registrationError: state.registrationError
   };
 };
@@ -99,8 +102,8 @@ const mapDispatchToProps = dispatch => {
     registration: () => {
       dispatch(registration());
     },
-    setCurrentUser: user => {
-      dispatch(setCurrentUser(user));
+    setCurrentUser: currentUser => {
+      dispatch(setCurrentUser(currentUser));
     }
   };
 };

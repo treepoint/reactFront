@@ -51,7 +51,7 @@ export function registration() {
     const state = getState();
 
     //Роль по умолчанию — пользователь, вторая
-    const newUser = Object.assign({}, state.user, { role_id: 2 });
+    const newUser = Object.assign({}, state.currentUser, { role_id: 2 });
 
     Axios.post(URL + "/registration", newUser, getHeaders())
       .then(response => {
