@@ -21,6 +21,18 @@ class TimeContent extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.value !== this.state.value) {
+      return true;
+    }
+
+    if (nextProps.value !== this.props.value) {
+      return true;
+    }
+
+    return false;
+  }
+
   onFocus() {
     this.setState({ isReadOnly: true });
   }

@@ -19,6 +19,18 @@ class SelectContent extends React.Component {
     this.updateContent();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (JSON.stringify(nextState.value) !== JSON.stringify(this.state.value)) {
+      return true;
+    }
+
+    if (JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
+      return true;
+    }
+
+    return false;
+  }
+
   onFocus() {
     this.setState({ isOpened: true });
   }
@@ -84,6 +96,7 @@ class SelectContent extends React.Component {
         minHeight: "34px",
         transition: "all",
         height: this.props.height + "px",
+        fontSize: "14px",
         boxShadow: "none",
         outline: !!state.isFocused ? "1px solid rgb(96, 191, 255)" : "none",
         outlineOffset: "-1px",

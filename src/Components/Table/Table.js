@@ -216,6 +216,7 @@ class Table extends React.Component {
         stopChangeDimensions={() => this.stopChangeDimensions()}
         //Изменим UUID ячейки, которая изменяла свою ширину
         changeUUID={uuid => this.changeUUID(uuid)}
+        addRow={!!this.props.addRow ? () => this.props.addRow() : null}
       />
     );
   }
@@ -253,7 +254,6 @@ class Table extends React.Component {
           //Изменим UUID ячейки, которая изменяла свою ширину
           changeUUID={uuid => this.changeUUID(uuid)}
           saveRow={rowContent => this.saveRow(rowContent, index)}
-          addRow={!!this.props.addRow ? () => this.props.addRow() : null}
           deleteRow={
             !!this.props.deleteRow
               ? rowContent => this.deleteRow(rowContent)

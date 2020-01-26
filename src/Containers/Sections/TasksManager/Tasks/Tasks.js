@@ -22,6 +22,18 @@ class Tasks extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.date !== this.props.date) {
+      return true;
+    }
+
+    if (JSON.stringify(nextProps.tasks) !== JSON.stringify(this.props.tasks)) {
+      return true;
+    }
+
+    return false;
+  }
+
   //Нужно для правильного позиционирования fixed элементов в тасках
   handleScroll() {
     if (this._scrollBarRef !== null) {

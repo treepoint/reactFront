@@ -52,6 +52,30 @@ class Task extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      JSON.stringify(nextProps.content) !== JSON.stringify(this.state.content)
+    ) {
+      return true;
+    }
+
+    if (
+      JSON.stringify(nextState.content) !== JSON.stringify(this.state.content)
+    ) {
+      return true;
+    }
+
+    if (nextState.isModalWindowHidden !== this.state.isModalWindowHidden) {
+      return true;
+    }
+
+    if (nextState.isMinimized !== this.state.isMinimized) {
+      return true;
+    }
+
+    return false;
+  }
+
   //Изменим вид таска — сделаем большим или маленьким
   changeTaskView() {
     this.setState({ isMinimized: !this.state.isMinimized });
@@ -67,7 +91,7 @@ class Task extends React.Component {
     this.setState({ isModalWindowHidden: false });
   }
 
-  //Сохраним изменяемую строку в ДБ
+  //Сохраним задачу в ДБ
   saveTaskToDatabase() {
     let task = {
       id: this.state.content.id,

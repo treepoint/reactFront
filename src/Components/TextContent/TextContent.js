@@ -33,6 +33,24 @@ class TextContent extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.contextMenuIsHidden !== this.state.contextMenuIsHidden) {
+      return true;
+    }
+
+    if (nextState.wideEditAreaIsHidden !== this.state.wideEditAreaIsHidden) {
+      return true;
+    }
+
+    if (nextState.value !== this.state.value) {
+      return true;
+    }
+
+    if (nextProps.value !== this.props.value) {
+      return true;
+    }
+  }
+
   isChrome() {
     if (navigator.userAgent.indexOf("Chrome") + 1) {
       return true;
