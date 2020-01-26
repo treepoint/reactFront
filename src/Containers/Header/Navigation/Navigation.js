@@ -7,10 +7,11 @@ class Navigation extends React.Component {
   render() {
     return (
       <div className="navigation">
-        <NavigationLink to="/tasks_manager" value="Задачи" />
-        <NavigationLink to="/task_statuses" value="Статусы" />
-        <NavigationLink to="/categories" value="Категории" />
-        <NavigationLink to="/statistic" value="Статистика" />
+        <NavigationLink exact={true} to="/" value="Главная" />
+        <NavigationLink to="/tasks_manager" value="Задачи" isNeedAuth={true} />
+        <NavigationLink to="/task_statuses" value="Статусы" isNeedAuth={true} />
+        <NavigationLink to="/categories" value="Категории" isNeedAuth={true} />
+        <NavigationLink to="/statistic" value="Статистика" isNeedAuth={true} />
         <NavigationLink to="/admin" value="Админ.панель" onlyAdmin={true} />
         <NavigationLink to="/about" value="Справка" />
       </div>

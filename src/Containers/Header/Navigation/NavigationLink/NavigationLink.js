@@ -12,6 +12,11 @@ class NavigationLink extends React.Component {
       return false;
     }
 
+    //Если нужна авторизация, а её нет
+    if (this.props.isNeedAuth && !this.props.userAuthState) {
+      return false;
+    }
+
     //В противном случае все хорошо
     return true;
   }
@@ -25,6 +30,7 @@ class NavigationLink extends React.Component {
             : "navigation link hidden"
         }
         activeClassName="current"
+        exact={this.props.exact}
         to={this.props.to}
       >
         {this.props.value}
@@ -35,7 +41,8 @@ class NavigationLink extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isAdmin: state.currentUserIsAdmin
+    isAdmin: state.currentUserIsAdmin,
+    userAuthState: state.userAuthState
   };
 };
 
