@@ -6,16 +6,31 @@ import "./PageNavigationLink.css";
 class PageNavigationLink extends React.Component {
   render() {
     return (
-      <div className="pageNavigation link">
-        <NavLink
-          className="pageNavigation link"
-          exact
-          to={this.props.to}
-          activeClassName="current"
-        >
-          {this.props.value}
-        </NavLink>
-      </div>
+      <React.Fragment>
+        {!!this.props.isAnchor ? (
+          !!this.props.isCurrent ? (
+            <div
+              className="pageNavigation link current"
+              onClick={this.props.callback}
+            >
+              {this.props.value}
+            </div>
+          ) : (
+            <div className="pageNavigation link" onClick={this.props.callback}>
+              {this.props.value}
+            </div>
+          )
+        ) : (
+          <NavLink
+            className="pageNavigation link"
+            exact
+            to={this.props.to}
+            activeClassName="current"
+          >
+            {this.props.value}
+          </NavLink>
+        )}
+      </React.Fragment>
     );
   }
 }

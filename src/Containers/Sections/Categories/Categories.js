@@ -1,69 +1,33 @@
 import React from "react";
+//Redux
+import { connect } from "react-redux";
+import {
+  fetchCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory
+} from "../../../Store/actions/categories";
+//Компоненты
 import Table from "../../../Components/Table/Table";
 import Page from "../../../Components/Page/Page";
 import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
-import {
-  getUserCategories,
-  updateCategory,
-  createCategory,
-  deleteCategory
-} from "../../../APIController/APIController";
 
 class Categories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoriesList: [],
       deleteModalWindow: { isHidden: true, row: null }
     };
   }
 
   componentDidMount() {
-    this.getUserCategories();
+    this.props.fetchCategories();
   }
 
-  //Получим все категории пользователя
-  getUserCategories(callback) {
-    getUserCategories(result => {
-      if (typeof callback === "function") {
-        this.setState({ categoriesList: result }, () => callback());
-      } else {
-        this.setState({ categoriesList: result });
-      }
-    });
-  }
-
-  //Добавим категорию
-  addCategoryToDataBase() {
-    let category = {
-      name: "",
-      name_style: "{}",
-      description: ""
-    };
-
-    createCategory(category, ok => {
-      if (ok) {
-        this.getUserCategories();
-      }
-    });
-  }
-
-  //Сохраним изменяемую строку в ДБ
-  saveRowToDataBase(category, callback) {
-    updateCategory(category, ok => {
-      if (ok) {
-        this.getUserCategories(callback);
-      }
-    });
-  }
-
-  //Удалим категорию
-  deleteRowFromDataBase() {
-    deleteCategory(this.state.deleteModalWindow.row.id, ok => {
-      if (ok) {
-        this.getUserCategories();
-      }
-    });
+  componentDidUpdate(prevProps) {
+    if (this.props.userAuthState && !prevProps.userAuthState) {
+      this.props.fetchCategories();
+    }
   }
 
   //Закрыть модальное окно
@@ -103,32 +67,34 @@ class Categories extends React.Component {
       ]
     ];
 
-    this.state.categoriesList.forEach(category => {
+    let categories = this.props.categories;
+
+    for (var c in categories) {
       //Если категории не закрыты — отобразим их
-      if (category.close_date === null) {
+      if (categories[c].close_date === null) {
         content.push([
           {
             key: "id",
             type: "hidden",
             disabled: true,
-            value: category.id
+            value: categories[c].id
           },
           {
             key: "name",
             type: "string",
             disabled: false,
-            value: category.name,
-            style: category.name_style
+            value: categories[c].name,
+            style: categories[c].name_style
           },
           {
             key: "description",
             type: "text",
             disabled: false,
-            value: category.description
+            value: categories[c].description
           }
         ]);
       }
-    });
+    }
 
     return content;
   }
@@ -141,16 +107,18 @@ class Categories extends React.Component {
           message="Категория останется назначенной для текущих и выполненных задач, но будет недоступна для новых"
           isHidden={this.state.deleteModalWindow.isHidden}
           onCancel={() => this.closeDeleteModal()}
-          onConfirm={() => this.deleteRowFromDataBase()}
+          onConfirm={() =>
+            this.props.deleteCategory(this.state.deleteModalWindow.row.id)
+          }
         />
         <Table
           isEditable={true}
           isResizeble={true}
           isSingleLineMode={true}
-          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
-          addRow={() => this.addCategoryToDataBase()}
+          saveRow={category => this.props.updateCategory(category)}
+          addRow={() => this.props.createCategory()}
           deleteRow={row => this.showDeleteModal(row)}
-          update={() => this.getUserCategories()}
+          isUpdating={this.props.isUpdating}
         >
           {this.getContent()}
         </Table>
@@ -159,4 +127,32 @@ class Categories extends React.Component {
   }
 }
 
-export default Categories;
+const mapStateToProps = state => {
+  return {
+    categories: state.categories,
+    userAuthState: state.userAuthState,
+    isUpdating: state.categoriesIsUpdating
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchCategories: () => {
+      dispatch(fetchCategories());
+    },
+    createCategory: () => {
+      dispatch(createCategory());
+    },
+    deleteCategory: id => {
+      dispatch(deleteCategory(id));
+    },
+    updateCategory: category => {
+      dispatch(updateCategory(category));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Categories);

@@ -13,13 +13,13 @@ class AdminPanelRouter extends React.Component {
 
   render() {
     //Соберем меню страницы
-    let menuLinksArray = [{ to: "/admin", value: "Пользователи" }];
+    let routerLinksArray = [{ to: "/admin", value: "Пользователи" }];
 
     return (
       <React.Fragment>
         <Page
           title="Административная панель:"
-          menuLinksArray={menuLinksArray}
+          routerLinksArray={routerLinksArray}
           isAdmin={true}
         >
           <Switch>

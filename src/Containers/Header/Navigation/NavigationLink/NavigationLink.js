@@ -7,12 +7,12 @@ import "./NavigationLink.css";
 
 class NavigationLink extends React.Component {
   checkPrivileges() {
-    if (this.props.onlyAdmin) {
-      if (!!this.props.token && this.props.user.role === "admin") {
-        return true;
-      }
+    //Если нужны админские права, а их нет
+    if (this.props.onlyAdmin && !this.props.isAdmin) {
       return false;
     }
+
+    //В противном случае все хорошо
     return true;
   }
 
@@ -35,8 +35,7 @@ class NavigationLink extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.token,
-    user: state.user
+    isAdmin: state.currentUserIsAdmin
   };
 };
 

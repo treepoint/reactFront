@@ -1,6 +1,8 @@
-import { read_cookie } from "../../Libs/Sfcookies";
+import { read_cookie } from "../Libs/Sfcookies";
 
-//Получим заголовки !!Как только все API переедет в redux — это надо будет удалить
+export const APIURL = "http://localhost/api";
+
+//Получим заголовки
 export function getHeaders() {
   let token = read_cookie("token");
 

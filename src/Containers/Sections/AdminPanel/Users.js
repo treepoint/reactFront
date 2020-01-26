@@ -1,66 +1,34 @@
 import React from "react";
-import Table from "../../../Components/Table/Table";
-import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
+//Redux
+import { connect } from "react-redux";
+import { fetchUserRoles } from "../../../Store/actions/userRoles";
 import {
-  getUsers,
-  getRoles,
+  fetchUsers,
   updateUser,
   deleteUser
-} from "../../../APIController/APIController";
+} from "../../../Store/actions/users";
+//Компоненты
+import Table from "../../../Components/Table/Table";
+import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
 
 class Users extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      usersList: [],
-      rolesList: [],
       deleteModalWindow: { isHidden: true, row: null }
     };
   }
 
   componentDidMount() {
-    this.getUsers();
-    this.getRoles();
+    this.props.fetchUsers();
+    this.props.fetchUserRoles();
   }
 
-  //Получаем всех пользователей
-  getUsers(callback) {
-    getUsers(result => {
-      if (typeof callback === "function") {
-        this.setState({ usersList: result }, () => callback());
-      } else {
-        this.setState({ usersList: result });
-      }
-    });
-  }
-
-  //Получаем все возможные роли
-  getRoles(callback) {
-    getRoles(result => {
-      if (typeof callback === "function") {
-        this.setState({ rolesList: result }, () => callback());
-      } else {
-        this.setState({ rolesList: result });
-      }
-    });
-  }
-
-  //Сохраним изменяемую строку в ДБ
-  saveRowToDataBase(user, callback) {
-    updateUser(user, ok => {
-      if (ok) {
-        this.getUsers(callback);
-      }
-    });
-  }
-
-  //Удалим пользователя
-  deleteRowFromDataBase() {
-    deleteUser(this.state.deleteModalWindow.row.id, ok => {
-      if (ok) {
-        this.getUsers();
-      }
-    });
+  componentDidUpdate(prevProps) {
+    if (this.props.userAuthState && !prevProps.userAuthState) {
+      this.props.fetchUsers();
+      this.props.fetchUserRoles();
+    }
   }
 
   //Закрыть модальное окно
@@ -101,27 +69,32 @@ class Users extends React.Component {
       ]
     ];
 
-    this.state.usersList.forEach(user => {
+    const users = this.props.users;
+
+    for (var u in users) {
       //Соберем список ролей
-      let list = this.state.rolesList.map(role => {
-        return { value: role.id, label: role.name };
-      });
+      let userRoles = this.props.userRoles;
+      let list = [];
+
+      for (var ur in userRoles) {
+        list.push({ value: userRoles[ur].id, label: userRoles[ur].name });
+      }
 
       //добавим текущую
-      let roles = { list, current: user.role_id };
+      let roles = { list, current: users[u].role_id };
 
       content.push([
         {
           key: "id",
           type: "string",
           disabled: true,
-          value: user.id
+          value: users[u].id
         },
         {
           key: "email",
           type: "string",
           disabled: false,
-          value: user.email
+          value: users[u].email
         },
         {
           key: "role_id",
@@ -130,7 +103,7 @@ class Users extends React.Component {
           value: roles
         }
       ]);
-    });
+    }
 
     return content;
   }
@@ -143,15 +116,17 @@ class Users extends React.Component {
           message="Вместе с пользователем будут НАВСЕГДА удалены все его задачи, статусы, категории и прочие следы существования этого пользователя. Вы уверены?"
           isHidden={this.state.deleteModalWindow.isHidden}
           onCancel={() => this.closeDeleteModal()}
-          onConfirm={() => this.deleteRowFromDataBase()}
+          onConfirm={() =>
+            this.props.deleteUser(this.state.deleteModalWindow.row.id)
+          }
         />
         <Table
           isEditable={true}
           isResizeble={true}
           isSingleLineMode={true}
-          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+          saveRow={user => this.props.updateUser(user)}
           deleteRow={row => this.showDeleteModal(row)}
-          update={() => this.getUsers()}
+          isUpdating={this.props.isUpdating}
         >
           {this.getContent()}
         </Table>
@@ -160,4 +135,32 @@ class Users extends React.Component {
   }
 }
 
-export default Users;
+const mapStateToProps = state => {
+  return {
+    userRoles: state.userRoles,
+    isUpdating: state.usersIsUpdating,
+    users: state.users
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchUserRoles: () => {
+      dispatch(fetchUserRoles());
+    },
+    fetchUsers: () => {
+      dispatch(fetchUsers());
+    },
+    updateUser: user => {
+      dispatch(updateUser(user));
+    },
+    deleteUser: id => {
+      dispatch(deleteUser(id));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Users);

@@ -1,13 +1,8 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setUser } from "../../Store/actions/user";
-import { setToken } from "../../Store/actions/token";
-import { setModalWindowState } from "../../Store/actions/globalModalWindow";
-//Подключаем API
-import { getToken } from "../../APIController/APIController";
-//Подключаем cookies
-import { bake_cookie } from "../../Libs/Sfcookies";
+import { setCurrentUser } from "../../Store/actions/currentUser";
+import { login } from "../../Store/actions/app";
 //Импортируем компоненты
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
@@ -22,12 +17,17 @@ const INPUTS = [email, password];
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: {} };
+    this.state = { validation: {}, isTouched: false };
   }
 
-  updateUserInState(event) {
-    let user = { [event.target.name]: event.target.value };
-    this.setState({ user: Object.assign(this.state.user, user) });
+  onChange(event) {
+    let user = {
+      email: this.props.currentUser.email,
+      password: this.props.currentUser.password
+    };
+
+    user = Object.assign(user, { [event.target.name]: event.target.value });
+    this.props.setCurrentUser(user);
   }
 
   login(event) {
@@ -36,53 +36,18 @@ class Login extends React.Component {
     this.setState(
       {
         isTouched: true,
-        validation: getInvalidMessagesAsObj(INPUTS, this.state.user)
+        validation: getInvalidMessagesAsObj(INPUTS, this.props.currentUser)
       },
       () => {
         //Переходим к аутентификации если ошибок нет
-        if (Object.keys(this.state.validation).length === 0) {
-          //Создаем токен
-          getToken(this.state.user, result => {
-            //Если есть ошибки
-            if (typeof result.response !== "undefined") {
-              switch (result.response.status) {
-                case 404:
-                  this.setState({
-                    errorMessage:
-                      "Пользователь с таким логином и паролем не найден"
-                  });
-                  break;
-                default:
-                  this.setState({
-                    errorMessage: "Произошла неизвестная ошибка"
-                  });
-              }
-            } else {
-              //Создадим cookies, запишем в стор
-              this.onSuccess(result.user, result.token, result.refreshToken);
-            }
-          });
+        if (
+          Object.keys(getInvalidMessagesAsObj(INPUTS, this.props.currentUser))
+            .length === 0
+        ) {
+          this.props.login();
         }
       }
     );
-  }
-
-  onSuccess(user, token, refreshToken) {
-    //Unixtime в обычное время
-    let tokenExp = new Date(token.exp * 1000);
-
-    //Unixtime в обычное время
-    let refreshTokenExp = new Date(refreshToken.exp * 1000);
-
-    //Пишем куки
-    bake_cookie("token", token.value, tokenExp);
-    bake_cookie("refresh_token", refreshToken.value, refreshTokenExp);
-    bake_cookie("user_id", user.id, tokenExp);
-
-    //Пишем в стор
-    this.props.writeToStore(user, token.value);
-    //Закрываем модалку
-    this.props.closeModalWindow();
   }
 
   render() {
@@ -94,15 +59,15 @@ class Login extends React.Component {
             placeholder={inputs.placeholder}
             name={inputs.name}
             type={inputs.type}
-            value={this.state[inputs.name]}
+            value={this.props.currentUser[inputs.name]}
             defaultValue={inputs.defaultValue}
-            onChange={event => this.updateUserInState(event)}
+            onChange={event => this.onChange(event)}
             invalidMessage={
               !!this.state.isTouched ? this.state.validation[inputs.name] : ""
             }
           />
         ))}
-        <ErrorMessage message={this.state.errorMessage} />
+        <ErrorMessage message={this.props.authError} />
         <Button
           isPrimary={true}
           value="Войти"
@@ -113,19 +78,26 @@ class Login extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser,
+    token: state.token,
+    authError: state.authError
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-    writeToStore: (user, token) => {
-      dispatch(setUser(user));
-      dispatch(setToken(token));
+    setCurrentUser: user => {
+      dispatch(setCurrentUser(user));
     },
-    closeModalWindow: () => {
-      dispatch(setModalWindowState(false));
+    login: () => {
+      dispatch(login());
     }
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);

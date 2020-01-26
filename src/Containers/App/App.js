@@ -3,12 +3,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setToken } from "../../Store/actions/token";
-import { setUser } from "../../Store/actions/user";
-//Подключаем cookies
-import { bake_cookie, read_cookie } from "../../Libs/Sfcookies";
-//Подключаем API
-import { getUserByID, reauth } from "../../APIController/APIController";
+import { restoreFromCookies } from "../../Store/actions/app";
 //Подключаем модальные окна
 import { getGlobalModalWindow } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Подключаем компоненты и контейнеры
@@ -26,63 +21,8 @@ import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {
-    //Попробуем подтянуть часть стора из cookies по обычному токену и ID пользователя
-    this.setStoreFromCookies(isSuccess => {
-      if (!isSuccess) {
-        //Если не получилось — попробуем подтянуть по refresh токену
-        this.setStoreAndCookiesFromAPI();
-      }
-      //Если и здесь не получилось, значит ничего из этого нет — игнорируем ситуацию
-    });
-  }
-
-  //Обновим стор по значениям токена и userID
-  setStoreFromCookies(callback) {
-    let token = read_cookie("token");
-    let userId = read_cookie("user_id");
-
-    if (token.length !== 0 && userId.length !== 0) {
-      //Токен просто запишем
-      this.props.setToken(token);
-
-      //Пользователя получим по ID и запишем в сторе
-      getUserByID(userId, user => {
-        this.props.setUser(user);
-        callback(true);
-      });
-    } else {
-      callback(false);
-    }
-  }
-
-  //Обновим стор и куки из API
-  setStoreAndCookiesFromAPI() {
-    let refreshToken = read_cookie("refresh_token");
-
-    //Нет токена — нет действий
-    if (refreshToken.length === 0) {
-      return;
-    }
-
-    reauth(refreshToken, result => {
-      //Если есть ошибки
-      if (typeof result.response !== "undefined") {
-        return;
-      }
-
-      //Unixtime в обычное время
-      let tokenExp = new Date(result.token.exp * 1000);
-
-      //Unixtime в обычное время
-      let refreshTokenExp = new Date(result.refreshToken.exp * 1000);
-
-      bake_cookie("token", result.token.value, tokenExp);
-      bake_cookie("user_id", result.user.id, tokenExp);
-      bake_cookie("refresh_token", result.refreshToken.value, refreshTokenExp);
-
-      this.props.setToken(result.token.value);
-      this.props.setUser(result.user);
-    });
+    //Пробуем подтянуть состояние приложения основываясь на информации в cookies
+    this.props.restoreFromCookies();
   }
 
   render() {
@@ -110,8 +50,6 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    token: state.token,
     modalWindowState: state.modalWindowState,
     modalWindowName: state.modalWindowName
   };
@@ -119,11 +57,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setToken: token => {
-      dispatch(setToken(token));
-    },
-    setUser: user => {
-      dispatch(setUser(user));
+    restoreFromCookies: () => {
+      dispatch(restoreFromCookies());
     }
   };
 };

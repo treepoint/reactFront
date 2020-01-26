@@ -1,75 +1,41 @@
 import React from "react";
+//Redux
+import { connect } from "react-redux";
+import { fetchTaskStatusesTypes } from "../../../Store/actions/taskStatusesTypes";
+import {
+  fetchTaskStatuses,
+  createTaskStatus,
+  updateTaskStatus,
+  deleteTaskStatus
+} from "../../../Store/actions/taskStatuses";
+//Компоненты
 import Table from "../../../Components/Table/Table";
 import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
-import {
-  getAllTaskStatuses,
-  updateStatus,
-  createStatus,
-  deleteStatus,
-  getAllTaskStatusesTypes
-} from "../../../APIController/APIController";
 import Page from "../../../Components/Page/Page";
 
 class TaskStatuses extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      taskStatusesList: [],
-      taskStatusesTypesList: [],
       deleteModalWindow: { isHidden: true, row: null }
     };
   }
 
   componentDidMount() {
-    this.getAllTaskStatuses();
-    this.getAllTaskStatusesTypes();
+    this.fetchData();
   }
 
-  //Получаем все статусы
-  getAllTaskStatuses(callback) {
-    getAllTaskStatuses(result => {
-      if (typeof callback === "function") {
-        this.setState({ taskStatusesList: result }, () => callback());
-      } else {
-        this.setState({ taskStatusesList: result });
-      }
-    });
+  componentDidUpdate(prevProps) {
+    if (this.props.userAuthState && !prevProps.userAuthState) {
+      this.fetchData();
+    }
   }
 
-  //Получаем все типы статусов
-  getAllTaskStatusesTypes() {
-    getAllTaskStatusesTypes(result => {
-      this.setState({ taskStatusesTypesList: result });
-    });
-  }
-
-  //Добавим новую строку
-  addRowToDataBase() {
-    let status = { name: "", name_style: "{}", type_id: 1 };
-
-    createStatus(status, ok => {
-      if (ok) {
-        this.getAllTaskStatuses();
-      }
-    });
-  }
-
-  //Сохраним изменяемую строку в ДБ
-  saveRowToDataBase(taskStatus, callback) {
-    updateStatus(taskStatus, ok => {
-      if (ok) {
-        this.getAllTaskStatuses(callback);
-      }
-    });
-  }
-
-  //Удалим строку
-  deleteRowFromDataBase() {
-    deleteStatus(this.state.deleteModalWindow.row.id, ok => {
-      if (ok) {
-        this.getAllTaskStatuses();
-      }
-    });
+  fetchData() {
+    //Получаем все статусы
+    this.props.fetchTaskStatuses();
+    //Получаем все типы статусов
+    this.props.fetchTaskStatusesTypes();
   }
 
   //Закрыть модальное окно
@@ -109,20 +75,30 @@ class TaskStatuses extends React.Component {
       ]
     ];
 
-    //Соберем список типов статусов
-    this.state.taskStatusesList.forEach(taskStatus => {
-      //Если статусы не закрыты — отобразим их
-      if (taskStatus.close_date === null) {
-        let taskStatusesTypesList = this.state.taskStatusesTypesList.map(
-          taskStatusType => {
-            return { value: taskStatusType.id, label: taskStatusType.name };
-          }
-        );
+    //Получим список статусов
+    let taskStatuses = this.props.taskStatuses;
 
-        //добавим текущую
-        let taskStatusesTypes = {
+    //Пройдемся по нему и соберем все статусы
+    for (var ts in taskStatuses) {
+      //Если статусы не закрыты — отобразим их
+      if (taskStatuses[ts].close_date === null) {
+        let taskStatusesTypesList = [];
+
+        //Получим список типов статусов
+        let taskStatusesTypes = this.props.taskStatusesTypes;
+
+        //Пройдемся по ним — соберем лист
+        for (var tst in taskStatusesTypes) {
+          taskStatusesTypesList.push({
+            value: taskStatusesTypes[tst].id,
+            label: taskStatusesTypes[tst].name
+          });
+        }
+
+        //Соберем объект для селекта
+        let taskStatusesTypesSelect = {
           list: taskStatusesTypesList,
-          current: taskStatus.type_id
+          current: taskStatuses[ts].type_id
         };
 
         content.push([
@@ -130,24 +106,24 @@ class TaskStatuses extends React.Component {
             key: "id",
             type: "hidden",
             disabled: true,
-            value: taskStatus.id
+            value: taskStatuses[ts].id
           },
           {
             key: "name",
             type: "string",
             disabled: false,
-            value: taskStatus.name,
-            style: taskStatus.name_style
+            value: taskStatuses[ts].name,
+            style: taskStatuses[ts].name_style
           },
           {
             key: "type_id",
             type: "select",
             disabled: false,
-            value: taskStatusesTypes
+            value: taskStatusesTypesSelect
           }
         ]);
       }
-    });
+    }
 
     return content;
   }
@@ -160,15 +136,17 @@ class TaskStatuses extends React.Component {
           message="Статус останется назначенным для текущих и выполненных задач, но будет недоступен для новых"
           isHidden={this.state.deleteModalWindow.isHidden}
           onCancel={() => this.closeDeleteModal()}
-          onConfirm={() => this.deleteRowFromDataBase()}
+          onConfirm={() =>
+            this.props.deleteTaskStatus(this.state.deleteModalWindow.row.id)
+          }
         />
         <Table
           isResizeble={true}
           isEditable={true}
-          addRow={row => this.addRowToDataBase(row)}
-          saveRow={(row, callback) => this.saveRowToDataBase(row, callback)}
+          addRow={() => this.props.createTaskStatus()}
+          saveRow={taskStatus => this.props.updateTaskStatus(taskStatus)}
           deleteRow={row => this.showDeleteModal(row)}
-          update={() => this.getAllTaskStatuses()}
+          isUpdating={this.props.isUpdating}
         >
           {this.getContent()}
         </Table>
@@ -177,4 +155,36 @@ class TaskStatuses extends React.Component {
   }
 }
 
-export default TaskStatuses;
+const mapStateToProps = state => {
+  return {
+    taskStatusesTypes: state.taskStatusesTypes,
+    taskStatuses: state.taskStatuses,
+    userAuthState: state.userAuthState,
+    isUpdating: state.taskStatusIsUpdating
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchTaskStatusesTypes: () => {
+      dispatch(fetchTaskStatusesTypes());
+    },
+    fetchTaskStatuses: () => {
+      dispatch(fetchTaskStatuses());
+    },
+    createTaskStatus: () => {
+      dispatch(createTaskStatus());
+    },
+    deleteTaskStatus: id => {
+      dispatch(deleteTaskStatus(id));
+    },
+    updateTaskStatus: taskStatus => {
+      dispatch(updateTaskStatus(taskStatus));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TaskStatuses);

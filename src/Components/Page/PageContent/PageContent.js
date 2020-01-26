@@ -15,15 +15,16 @@ class PageContent extends React.Component {
     }
 
     //Но если нужны еще и админские права — чекнем их
-    if (this.props.isAdmin && this.props.user.role !== "admin") {
+    if (this.props.isAdmin && !this.props.userIsAdmin) {
       return <OnlyAdminMessage />;
     }
 
-    //Иначе нужен токен и email как минимум
-    if (!!!this.props.token && !!!this.props.user.email) {
+    //Иначе нужна авторизация
+    if (!this.props.userAuthState) {
       return <OnlyRegistredUsersMessage />;
     }
 
+    //Ну и на всякий случай — вернем ничего)
     return this.props.children;
   }
 
@@ -34,8 +35,9 @@ class PageContent extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    token: state.token
+    userAuthState: state.userAuthState,
+    userIsAdmin: state.currentUserIsAdmin,
+    user: state.user
   };
 };
 
