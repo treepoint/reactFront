@@ -49,6 +49,8 @@ class TextContent extends React.Component {
     if (nextProps.value !== this.props.value) {
       return true;
     }
+
+    return false;
   }
 
   isChrome() {
