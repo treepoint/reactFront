@@ -98,16 +98,37 @@ class Row extends React.PureComponent {
   render() {
     //Из пришедшего описания столбцов соберем ячейки
     let cells = this.props.colsDescription.map((column, index) => {
+      //Проверяем стиль, поскольку его может и не быть вовсе
+      let style;
+
+      let isStylable;
+      if (typeof this.props.rowsContent[index].style !== "undefined") {
+        style = this.props.rowsContent[index].style;
+        isStylable = true;
+      } else {
+        style = {};
+        isStylable = false;
+      }
+
       return (
         <Cell
           key={index}
+          //Настройки ячейки
           isFixed={this.props.isFixed}
           isResizeble={this.props.isResizeble}
           isHeader={this.props.isHeader}
+          //UUID
           uuid={this.props.uuid}
+          //Размеры
           width={column.width}
           height={this.state.height}
-          content={this.props.rowsContent[index]}
+          //Контент ячейки и его свойства
+          type={this.props.rowsContent[index].type}
+          style={style}
+          isStylable={isStylable}
+          value={this.props.rowsContent[index].value}
+          disabled={this.props.rowsContent[index].disabled}
+          //Функции на обработку
           changeUUID={uuid => this.changeUUID(uuid)}
           changeWidth={width => this.changeWidth(width, index)}
           changeHeight={height => this.changeHeight(height)}

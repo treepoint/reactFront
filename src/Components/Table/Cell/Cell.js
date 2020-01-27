@@ -10,113 +10,8 @@ class Cell extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      uuid: "",
-      value: " ",
-      //Тип контента
-      type: "",
-      //Стиль оформления контента
-      bold: false,
-      italic: false,
-      backgroundColor: "#f7f7f7",
-      //Активность
-      disabled: true,
-      //Возможность стилизации
-      isStylable: false
+      uuid: uuid()
     };
-  }
-
-  componentDidMount() {
-    //Генерируем UUID для ячейки
-    this.setState({ uuid: uuid() });
-
-    //Задаем тип контента, пока только при инициализации
-    this.updateTypeContent();
-
-    //Задаем редактируемость контента, пока только при инициализации
-    this.updateContentDisabled();
-
-    //Задаем стиль контента
-    this.updateStyleContent();
-
-    //Обновляем значение в ячейке
-    this.updateValue();
-  }
-
-  componentDidUpdate() {
-    //Задаем стиль контента
-    this.updateStyleContent();
-
-    //Обновляем значение в ячейке
-    this.updateValue();
-  }
-
-  //Задаем тип контента
-  updateTypeContent() {
-    if (typeof this.props.content.type !== "undefined") {
-      this.setState({ type: this.props.content.type });
-    }
-  }
-
-  //Задаем редактируемость контента
-  updateContentDisabled() {
-    if (typeof this.props.content.disabled !== "undefined") {
-      this.setState({ disabled: this.props.content.disabled });
-    }
-  }
-
-  //Обновляем значение в ячейке
-  updateValue() {
-    if (typeof this.props.content !== "undefined") {
-      let value = this.props.content.value;
-
-      //Если тип поля — текст, то на всякий случай конвертим в текст
-      if (
-        this.props.content.type === "text" ||
-        this.props.content.type === "string"
-      ) {
-        value = String(value);
-      }
-
-      if (value !== this.state.value) {
-        this.setState({ value });
-      }
-    }
-  }
-
-  //Задаем стиль контента
-  updateStyleContent() {
-    if (typeof this.props.content.style === "undefined") {
-      return null;
-    }
-
-    if (!this.state.isStylable) {
-      this.setState({ isStylable: true });
-    }
-
-    //Обновим жирность
-    let bold = this.props.content.style.bold;
-
-    //Заполняем его параметрами. Если пришел из вне — ставим его, иначе из текущего стиля
-    if (typeof bold !== "undefined" && bold !== this.state.bold) {
-      this.setState({ bold });
-    }
-
-    //Обновим курсив
-    let italic = this.props.content.style.italic;
-
-    if (typeof italic !== "undefined" && italic !== this.state.italic) {
-      this.setState({ italic });
-    }
-
-    //Обновим цвет фона
-    let backgroundColor = this.props.content.style.backgroundColor;
-
-    if (
-      typeof backgroundColor !== "undefined" &&
-      backgroundColor !== this.state.backgroundColor
-    ) {
-      this.setState({ backgroundColor });
-    }
   }
 
   //Задаем возможность изменяться
@@ -181,14 +76,14 @@ class Cell extends React.PureComponent {
   }
 
   getCellContent() {
-    switch (this.state.type) {
+    switch (this.props.type) {
       //Время в формате 00:00
       case "time":
         return (
           <TimeContent
-            value={this.state.value}
+            value={this.props.value}
             isHeader={this.props.isHeader}
-            disabled={this.state.disabled}
+            disabled={this.props.disabled}
             width={this.props.width}
             height={this.props.height}
             onChangeValue={value => this.onChangeValue(value)}
@@ -199,17 +94,17 @@ class Cell extends React.PureComponent {
         return (
           <TextContent
             isFixed={this.props.isFixed}
-            value={this.state.value}
+            value={String(this.props.value)}
             isHeader={this.props.isHeader}
-            disabled={this.state.disabled}
+            disabled={this.props.disabled}
             width={this.props.width}
             height={this.props.height}
-            isStylable={this.state.isStylable}
+            isStylable={this.props.isStylable}
             isSingleLineMode={true}
             //Настройки стиля
-            bold={this.state.bold}
-            italic={this.state.italic}
-            backgroundColor={this.state.backgroundColor}
+            bold={this.props.style.bold}
+            italic={this.props.style.italic}
+            backgroundColor={this.props.style.backgroundColor}
             //Функции
             onChangeStyle={style => {
               this.onChangeStyle(style);
@@ -222,16 +117,16 @@ class Cell extends React.PureComponent {
         return (
           <TextContent
             isFixed={this.props.isFixed}
-            value={this.state.value}
+            value={String(this.props.value)}
             isHeader={this.props.isHeader}
-            disabled={this.state.disabled}
+            disabled={this.props.disabled}
             width={this.props.width}
             height={this.props.height}
-            isStylable={this.state.isStylable}
+            isStylable={this.props.isStylable}
             //Настройки стиля
-            bold={this.state.bold}
-            italic={this.state.italic}
-            backgroundColor={this.state.backgroundColor}
+            bold={this.props.style.bold}
+            italic={this.props.style.italic}
+            backgroundColor={this.props.style.backgroundColor}
             //Функции
             onChangeStyle={style => {
               this.onChangeStyle(style);
@@ -243,8 +138,8 @@ class Cell extends React.PureComponent {
       case "select":
         return (
           <SelectContent
-            value={this.state.value}
-            disabled={this.state.disabled}
+            value={this.props.value}
+            disabled={this.props.disabled}
             width={this.props.width}
             height={this.props.height}
             onChangeValue={value => this.onChangeValue(value)}
@@ -258,7 +153,7 @@ class Cell extends React.PureComponent {
 
   render() {
     //Если тип контента — скрытый, вообще ничего не рисуем
-    if (this.state.type === "hidden") {
+    if (this.props.type === "hidden") {
       return null;
     }
 

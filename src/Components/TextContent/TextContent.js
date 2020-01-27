@@ -23,6 +23,16 @@ class TextContent extends React.Component {
     this.setState({ value: this.props.value });
   }
 
+  componentDidUpdate() {
+    if (this.state.isReadOnly) {
+      return null;
+    }
+
+    if (this.state.value !== this.props.value) {
+      this.setState({ value: this.props.value });
+    }
+  }
+
   isChrome() {
     return navigator.userAgent.indexOf("Chrome") + 1;
   }
@@ -47,19 +57,23 @@ class TextContent extends React.Component {
       event.preventDefault();
       event.stopPropagation();
 
-      this.props.onChangeValue(this.state.value);
-      this.setWideEditAreaHidden();
-      this.setState({ isReadOnly: false });
+      this.onEndEditing();
     }
   }
 
   onBlur() {
     if (this.state.value !== this.props.value) {
-      this.props.onChangeValue(this.state.value);
+      this.onEndEditing();
     }
+  }
+
+  onEndEditing() {
+    this.setState(
+      { isReadOnly: false },
+      this.props.onChangeValue(this.state.value)
+    );
 
     this.setWideEditAreaHidden();
-    this.setState({ isReadOnly: false });
   }
 
   //Обрабатываем изменения стиля контента в ячейке в
@@ -116,46 +130,22 @@ class TextContent extends React.Component {
 
   //Получаем стиль обычной ячейки на основании стиля контента
   getRegularStyle() {
-    if (this.state.isChrome) {
-      return {
-        marginLeft: !!this.state.wideEditAreaIsHidden
-          ? 0 + "px"
-          : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
-        marginTop: !!this.state.wideEditAreaIsHidden
-          ? 0 + "px"
-          : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
-        backgroundColor: !!this.props.disabled
-          ? "rgb(251, 251, 251)"
-          : "#ffffff",
-        borderLeft: "8px solid " + this.props.backgroundColor,
-        fontWeight: !!this.props.bold ? "900" : "200",
-        fontStyle: !!this.props.italic ? "italic" : "normal",
-        color: !!this.props.disabled ? "#444" : "#000",
-        width: this.props.width - !!this.props.isStylable ? 9 : 17 + "px",
-        minWidth: this.props.width - 17 + "px",
-        minHeight: this.props.height - 4 + "px"
-      };
-    } else {
-      return {
-        //Подгоняем размеры внутреннего контента по размеры ячейки, но компенсируем отступы и бордюры
-        marginLeft: !!this.state.wideEditAreaIsHidden
-          ? 0 + "px"
-          : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
-        marginTop: !!this.state.wideEditAreaIsHidden
-          ? 0 + "px"
-          : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
-        backgroundColor: !!this.props.disabled
-          ? "rgb(251, 251, 251)"
-          : "#ffffff",
-        borderLeft: "8px solid " + this.props.backgroundColor,
-        fontWeight: !!this.props.bold ? "900" : "200",
-        fontStyle: !!this.props.italic ? "italic" : "normal",
-        color: !!this.props.disabled ? "#444" : "#000",
-        width: this.props.width - !!this.props.isStylable ? 9 : 17 + "px",
-        minWidth: this.props.width - 16 + "px",
-        minHeight: this.props.height + "px"
-      };
-    }
+    return {
+      marginLeft: !!this.state.wideEditAreaIsHidden
+        ? 0 + "px"
+        : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
+      marginTop: !!this.state.wideEditAreaIsHidden
+        ? 0 + "px"
+        : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
+      backgroundColor: !!this.props.disabled ? "rgb(251, 251, 251)" : "#ffffff",
+      borderLeft: "8px solid " + this.props.backgroundColor,
+      fontWeight: !!this.props.bold ? "900" : "200",
+      fontStyle: !!this.props.italic ? "italic" : "normal",
+      color: !!this.props.disabled ? "#444" : "#000",
+      width: this.props.width - (!!this.props.isStylable ? 17 : 8) + "px",
+      minWidth: this.props.width - (!!this.state.isChrome ? 17 : 16) + "px",
+      minHeight: this.props.height - (!!this.state.isChrome ? 4 : 0) + "px"
+    };
   }
 
   //Срабатывает при двойном клике
