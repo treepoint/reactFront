@@ -28,6 +28,14 @@ class SelectContent extends React.Component {
       return true;
     }
 
+    if (nextProps.isMinimized !== this.props.isMinimized) {
+      return true;
+    }
+
+    if (nextProps.height !== this.props.height) {
+      return true;
+    }
+
     return false;
   }
 

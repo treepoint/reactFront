@@ -30,6 +30,14 @@ class TimeContent extends React.Component {
       return true;
     }
 
+    if (nextProps.height !== this.props.height) {
+      return true;
+    }
+
+    if (nextProps.width !== this.props.width) {
+      return true;
+    }
+    
     return false;
   }
 
