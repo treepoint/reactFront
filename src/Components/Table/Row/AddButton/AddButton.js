@@ -3,7 +3,7 @@ import Action from "../../../Action/Action";
 import addIcon from "../../../../Images/icon_add.png";
 import "./AddButton.css";
 
-class AddButton extends React.Component {
+class AddButton extends React.PureComponent {
   render() {
     let onClick;
 

@@ -19,7 +19,7 @@ import Bottom from "../Bottom/Bottom";
 //CSS
 import "./App.css";
 
-class App extends React.Component {
+class App extends React.PureComponent {
   componentDidMount() {
     //Пробуем подтянуть состояние приложения основываясь на информации в cookies
     this.props.restoreFromCookies();

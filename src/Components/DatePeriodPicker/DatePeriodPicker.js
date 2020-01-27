@@ -3,7 +3,7 @@ import DatePicker from "./DatePicker/DatePicker";
 import calendarIcon from "../../Images/icon_calendar.png";
 import "./DatePeriodPicker.css";
 
-class DatePeriodPicker extends React.Component {
+class DatePeriodPicker extends React.PureComponent {
   //При выборе даты "c"
   onPickDateFrom(dateFrom) {
     this.props.onPickDateFrom(dateFrom);

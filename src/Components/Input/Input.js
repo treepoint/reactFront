@@ -2,7 +2,7 @@ import React from "react";
 import LabelValidation from "../LabelValidation/LabelValidation";
 import "./Input.css";
 
-class Input extends React.Component {
+class Input extends React.PureComponent {
   render() {
     return (
       <React.Fragment>

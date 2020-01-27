@@ -17,7 +17,7 @@ import arrowDownIcon from "../../../../Images/icon_arrow_down.png";
 //CSS
 import "./TaskLog.css";
 
-class TasksLog extends React.Component {
+class TasksLog extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

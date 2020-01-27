@@ -3,7 +3,7 @@ import Action from "../../../Action/Action";
 import deleteIcon from "../../../../Images/icon_delete.png";
 import "./DeleteButton.css";
 
-class DeleteButton extends React.Component {
+class DeleteButton extends React.PureComponent {
   render() {
     let onClick;
 

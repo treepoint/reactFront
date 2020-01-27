@@ -2,7 +2,7 @@ import React from "react";
 //Подключаем CSS
 import "./ModalWindow.css";
 
-class ModalWindow extends React.Component {
+class ModalWindow extends React.PureComponent {
   getHidden() {
     if (this.props.isHidden === true) {
       return " hidden";

@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import "./ConfirmModalWindow.css";
 
-class ConfirmModalWindow extends React.Component {
+class ConfirmModalWindow extends React.PureComponent {
   hideModalWindow(event) {
     event.preventDefault();
     event.stopPropagation();

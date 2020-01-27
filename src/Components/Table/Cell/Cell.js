@@ -6,7 +6,7 @@ import SelectContent from "../../SelectContent/SelectContent";
 import TimeContent from "../../TimeContent/TimeContent";
 import "./Cell.css";
 
-class Cell extends React.Component {
+class Cell extends React.PureComponent {
   constructor() {
     super();
     this.state = {

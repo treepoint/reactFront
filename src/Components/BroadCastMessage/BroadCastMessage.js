@@ -5,7 +5,7 @@ import { setShowBroadcastMessage } from "../../Store/actions/app";
 //CSS
 import "./BroadCastMessage.css";
 
-class BroadCastMessage extends React.Component {
+class BroadCastMessage extends React.PureComponent {
   render() {
     if (this.props.isActive) {
       return (

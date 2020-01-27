@@ -10,36 +10,18 @@ class Table extends React.Component {
     super();
     this.state = {
       colsDescription: [],
-      tableHeader: [],
-      tableBody: [],
-      table: [],
       uuid: ""
     };
   }
 
   componentDidMount() {
-    this.setTable();
+    this.setColsWidth(this.props.children);
   }
 
   componentDidUpdate() {
-    this.setTable();
-
     //Если при обновлении задали без скроллов — проскролим до самого верха
     if (this.props.noScroll === true) {
       this._scrollBarRef.scrollToTop();
-    }
-  }
-
-  setTable() {
-    let table = this.props.children;
-
-    //Если новая таблица отличается от того, что хранится в стейте — обновим её
-    if (JSON.stringify(table) !== JSON.stringify(this.state.table)) {
-      this.setColsWidth(table);
-
-      this.setState({
-        table
-      });
     }
   }
 
@@ -205,7 +187,7 @@ class Table extends React.Component {
         //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
         uuid={this.state.uuid}
         //Передадим содержимое столбцов из шапки
-        rowsContent={this.state.table[0]}
+        rowsContent={this.props.children[0]}
         //Так же передадим описание столбцов — ширину и подобное
         colsDescription={this.state.colsDescription}
         //И callback'и на обработку изменения ширины столбца
@@ -222,8 +204,10 @@ class Table extends React.Component {
   }
 
   getContent() {
+    const table = this.props.children;
+
     //Соберем тушку для отрисовки
-    let content = this.state.table.map((row, index) => {
+    let content = table.map((row, index) => {
       //Если есть шапка — её рисуем в другом месте
       if (!this.props.isHeaderless && index === 0) {
         return null;

@@ -7,7 +7,7 @@ import OnlyRegistredUsersMessage from "../ServiceMessages/OnlyRegistredUsersMess
 //Подключаем CSS
 import "./PageContent.css";
 
-class PageContent extends React.Component {
+class PageContent extends React.PureComponent {
   getContent() {
     //Если страница не приватная и доступна не только админам — cразу отдадим контент
     if (!this.props.isPrivate && !this.props.isAdmin) {

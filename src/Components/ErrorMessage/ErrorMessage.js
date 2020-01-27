@@ -1,7 +1,7 @@
 import React from "react";
 import "./ErrorMessage.css";
 
-class ErrorMessage extends React.Component {
+class ErrorMessage extends React.PureComponent {
   render() {
     return (
       <div

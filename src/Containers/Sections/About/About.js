@@ -1,7 +1,7 @@
 import React from "react";
 import Page from "../../../Components/Page/Page";
 
-class About extends React.Component {
+class About extends React.PureComponent {
   render() {
     return (
       <Page title="Справка">

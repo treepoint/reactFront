@@ -2,7 +2,7 @@ import React from "react";
 import saveIcon from "../../../Images/icon_save.png";
 import "./SaveMark.css";
 
-class SaveMark extends React.Component {
+class SaveMark extends React.PureComponent {
   constructor() {
     super();
     this.state = {

@@ -2,7 +2,7 @@ import React from "react";
 import PageNavigationLink from "./PageNavigationLink/PageNavigationLink";
 import "./PageNavigation.css";
 
-class PageNavigation extends React.Component {
+class PageNavigation extends React.PureComponent {
   render() {
     //Здесь у нас два варианта, либо работаем через роутер, либо через якори.
     //Если роутер

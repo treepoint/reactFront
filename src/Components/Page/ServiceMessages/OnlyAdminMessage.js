@@ -5,7 +5,7 @@ import AnchorModalWindow from "../../AnchorModalWindow/AnchorModalWindow";
 //Импортируем компоненты
 import Anchor from "../../Anchor/Anchor";
 
-class OnlyAdminMessage extends React.Component {
+class OnlyAdminMessage extends React.PureComponent {
   render() {
     return (
       <div>

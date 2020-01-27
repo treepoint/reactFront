@@ -1,7 +1,7 @@
 import React from "react";
 import "./Blur.css";
 
-class Blur extends React.Component {
+class Blur extends React.PureComponent {
   render() {
     return (
       <div

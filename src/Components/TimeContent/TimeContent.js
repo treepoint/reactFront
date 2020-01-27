@@ -2,7 +2,7 @@ import React from "react";
 import TimeField from "react-simple-timefield";
 import "./TimeContent.css";
 
-class TimeContent extends React.Component {
+class TimeContent extends React.PureComponent {
   constructor() {
     super();
     this.state = {
@@ -19,26 +19,6 @@ class TimeContent extends React.Component {
     if (this.state.value !== this.props.value && !this.state.isReadOnly) {
       this.setState({ value: this.props.value });
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.value !== this.state.value) {
-      return true;
-    }
-
-    if (nextProps.value !== this.props.value) {
-      return true;
-    }
-
-    if (nextProps.height !== this.props.height) {
-      return true;
-    }
-
-    if (nextProps.width !== this.props.width) {
-      return true;
-    }
-    
-    return false;
   }
 
   onFocus() {
@@ -71,11 +51,7 @@ class TimeContent extends React.Component {
     //Вот такого делать никогда не нужно. Но если очень хочется — все равно не надо
     //Они держат мою жену в заложниках и сказали сделать быстро, поэтому так
 
-    let isChrome = false;
-
-    if (navigator.userAgent.indexOf("Chrome") + 1) {
-      isChrome = true;
-    }
+    let isChrome = navigator.userAgent.indexOf("Chrome") + 1;
 
     if (!!this.props.isHeader) {
       style = {

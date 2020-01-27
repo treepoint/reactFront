@@ -7,7 +7,7 @@ import addIcon from "../../Images/icon_add_96.png";
 //CSS
 import "./AddTaskButton.css";
 
-class AddTaskButton extends React.Component {
+class AddTaskButton extends React.PureComponent {
   render() {
     return (
       <div className="addTask">

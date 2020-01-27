@@ -11,7 +11,7 @@ import { fetchCategories } from "../../../Store/actions/categories";
 //Утилиты
 import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
 
-class TasksManager extends React.Component {
+class TasksManager extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

@@ -5,7 +5,7 @@ import Logo from "./Logo/Logo";
 import UserMenu from "./UserMenu/UserMenu";
 import "./Header.css";
 
-class Header extends React.Component {
+class Header extends React.PureComponent {
   render() {
     return (
       <div className="header">

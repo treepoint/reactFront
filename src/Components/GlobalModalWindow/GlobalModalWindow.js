@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { setModalWindowState } from "../../Store/actions/globalModalWindow";
 import ModalWindow from "../ModalWindow/ModalWindow";
 
-class GlobalModalWindow extends React.Component {
+class GlobalModalWindow extends React.PureComponent {
   render() {
     return (
       <ModalWindow onClose={event => this.props.hideModalWindow(event)}>

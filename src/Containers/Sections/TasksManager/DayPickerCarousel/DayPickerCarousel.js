@@ -10,7 +10,7 @@ import {
 } from "../../../../Libs/TimeUtils";
 import "./DayPickerCarousel.css";
 
-class DayPickerCarousel extends React.Component {
+class DayPickerCarousel extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { date: null };

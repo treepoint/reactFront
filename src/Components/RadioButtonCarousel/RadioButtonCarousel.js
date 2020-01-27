@@ -1,7 +1,7 @@
 import React from "react";
 import "./RadioButtonCarousel.css";
 
-class RadioButtonCarousel extends React.Component {
+class RadioButtonCarousel extends React.PureComponent {
   onClick(event) {
     this.setState({ currentButtonId: event.target.id });
   }

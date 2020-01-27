@@ -3,40 +3,12 @@ import HtmlToText from "html-to-text";
 import Select from "react-select";
 import "./SelectContent.css";
 
-class SelectContent extends React.Component {
+class SelectContent extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      value: { list: [], isOpened: false }
+      isOpened: false
     };
-  }
-
-  componentDidMount() {
-    this.updateContent();
-  }
-
-  componentDidUpdate() {
-    this.updateContent();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (JSON.stringify(nextState.value) !== JSON.stringify(this.state.value)) {
-      return true;
-    }
-
-    if (JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
-      return true;
-    }
-
-    if (nextProps.isMinimized !== this.props.isMinimized) {
-      return true;
-    }
-
-    if (nextProps.height !== this.props.height) {
-      return true;
-    }
-
-    return false;
   }
 
   onFocus() {
@@ -47,24 +19,18 @@ class SelectContent extends React.Component {
     this.setState({ isOpened: false });
   }
 
-  updateContent() {
-    if (JSON.stringify(this.state.value) !== JSON.stringify(this.props.value)) {
-      this.setState({ value: this.props.value });
-    }
-  }
-
   onChangeValue(option) {
-    let value = this.state.value;
+    let value = Object.assign({}, this.props.value);
     value.current = Number(option.value);
     this.props.onChangeValue(value);
   }
 
   getOptions() {
-    if (this.state.value === null) {
+    if (this.props.value === null) {
       return null;
     }
 
-    let options = this.state.value.list.map((option, index) => {
+    let options = this.props.value.list.map(option => {
       //нам сюда может прийти как html, так и строка. В любом случае конвертим в строку
       let label = HtmlToText.fromString(option.label);
 
@@ -171,7 +137,7 @@ class SelectContent extends React.Component {
     if (options !== null) {
       //Получаем текущую опцию
       currentValue = options.find(option => {
-        return option.value === this.state.value.current;
+        return option.value === this.props.value.current;
       });
     }
 

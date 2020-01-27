@@ -1,7 +1,7 @@
 import React from "react";
 import "./Action.css";
 
-class Action extends React.Component {
+class Action extends React.PureComponent {
   onClick(event) {
     if (typeof this.props.onClick !== "function") {
       return;

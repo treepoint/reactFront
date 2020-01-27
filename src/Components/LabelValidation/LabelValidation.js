@@ -1,7 +1,7 @@
 import React from "react";
 import "./LabelValidation.css";
 
-class LabelValidation extends React.Component {
+class LabelValidation extends React.PureComponent {
   render() {
     let error = !!this.props.value ? " error" : "";
 

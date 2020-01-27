@@ -23,22 +23,8 @@ class TextContent extends React.Component {
     this.setState({ value: this.props.value });
   }
 
-  componentDidUpdate() {
-    if (this.state.isReadOnly) {
-      return null;
-    }
-
-    if (this.state.value !== this.props.value) {
-      this.setState({ value: this.props.value });
-    }
-  }
-
   isChrome() {
-    if (navigator.userAgent.indexOf("Chrome") + 1) {
-      return true;
-    }
-
-    return false;
+    return navigator.userAgent.indexOf("Chrome") + 1;
   }
 
   onFocus() {

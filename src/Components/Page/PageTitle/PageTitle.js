@@ -2,7 +2,7 @@ import React from "react";
 import PageNavigation from "../PageNavigation/PageNavigation";
 import "./PageTitle.css";
 
-class PageTitle extends React.Component {
+class PageTitle extends React.PureComponent {
   render() {
     return (
       <div className="pageTitle">

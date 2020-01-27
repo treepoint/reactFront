@@ -5,7 +5,7 @@ import {
   setModalWindowName
 } from "../../Store/actions/globalModalWindow";
 
-class AnchorModalWindow extends React.Component {
+class AnchorModalWindow extends React.PureComponent {
   render() {
     return (
       <div

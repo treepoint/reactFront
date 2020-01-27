@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import "./NavigationLink.css";
 
-class NavigationLink extends React.Component {
+class NavigationLink extends React.PureComponent {
   checkPrivileges() {
     //Если нужны админские права, а их нет
     if (this.props.onlyAdmin && !this.props.isAdmin) {

@@ -1,7 +1,7 @@
 import React from "react";
 import BroadCastMessage from "../../Components/BroadCastMessage/BroadCastMessage";
 
-class Bottom extends React.Component {
+class Bottom extends React.PureComponent {
   render() {
     return (
       <div className="bottom">

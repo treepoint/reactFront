@@ -1,7 +1,7 @@
 import React from "react";
 import "./Button.css";
 
-class Button extends React.Component {
+class Button extends React.PureComponent {
   render() {
     return (
       <input

@@ -8,7 +8,7 @@ import AnchorModalWindow from "../../AnchorModalWindow/AnchorModalWindow";
 //Импортируем компоненты
 import Anchor from "../../Anchor/Anchor";
 
-class OnlyRegistredUsersMessage extends React.Component {
+class OnlyRegistredUsersMessage extends React.PureComponent {
   render() {
     return (
       <article>

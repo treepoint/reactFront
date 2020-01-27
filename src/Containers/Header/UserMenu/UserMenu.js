@@ -10,7 +10,7 @@ import {
   profile
 } from "../../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 
-class UserMenu extends React.Component {
+class UserMenu extends React.PureComponent {
   render() {
     return (
       <div className="userMenu">

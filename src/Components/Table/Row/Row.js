@@ -4,7 +4,7 @@ import DeleteButton from "./DeleteButton/DeleteButton";
 import AddButton from "./AddButton/AddButton";
 import "./Row.css";
 
-class Row extends React.Component {
+class Row extends React.PureComponent {
   constructor() {
     super();
     this.state = {

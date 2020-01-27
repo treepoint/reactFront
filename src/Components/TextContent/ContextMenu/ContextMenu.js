@@ -14,19 +14,8 @@ class ContextMenu extends React.Component {
   constructor() {
     super();
     this.state = {
-      cellStyle: {},
       isBackgroundColorPickerActive: false
     };
-  }
-
-  componentDidMount() {
-    this.setState({
-      cellStyle: {
-        bold: this.props.bold,
-        italic: this.props.italic,
-        backgroundColor: this.props.backgroundColor
-      }
-    });
   }
 
   onClick(event) {
@@ -36,11 +25,15 @@ class ContextMenu extends React.Component {
 
   //Склеиваем новое свойство стейта ячейки с текущим стейтом
   assignCellStyle(state) {
-    let newState = Object.assign({}, this.state.cellStyle, state);
-
-    this.setState({
-      cellStyle: newState
-    });
+    let newState = Object.assign(
+      {},
+      {
+        bold: this.props.bold,
+        italic: this.props.italic,
+        backgroundColor: this.props.backgroundColor
+      },
+      state
+    );
 
     this.props.onChangeStyle(newState);
   }
@@ -48,10 +41,6 @@ class ContextMenu extends React.Component {
   clearCellStyle(event) {
     event.preventDefault();
     event.stopPropagation();
-
-    this.setState({
-      cellStyle: {}
-    });
 
     this.props.onChangeStyle({
       bold: false,
@@ -66,7 +55,7 @@ class ContextMenu extends React.Component {
     event.stopPropagation();
 
     this.assignCellStyle({
-      bold: !this.state.cellStyle.bold
+      bold: !this.props.bold
     });
   }
 
@@ -76,7 +65,7 @@ class ContextMenu extends React.Component {
     event.stopPropagation();
 
     this.assignCellStyle({
-      italic: !this.state.cellStyle.italic
+      italic: !this.props.italic
     });
   }
 
@@ -164,12 +153,12 @@ class ContextMenu extends React.Component {
         >
           <Action
             icon={iconBold}
-            isPressed={this.state.cellStyle.bold}
+            isPressed={this.props.bold}
             onClick={event => this.setBold(event)}
           />
           <Action
             icon={iconItalic}
-            isPressed={this.state.cellStyle.italic}
+            isPressed={this.props.italic}
             onClick={event => this.setItalic(event)}
           />
           <Action

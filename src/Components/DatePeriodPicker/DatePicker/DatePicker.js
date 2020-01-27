@@ -7,7 +7,7 @@ import "./DatePicker.css";
 
 registerLocale("ru", ru);
 
-class DatePicker extends React.Component {
+class DatePicker extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { date: null };

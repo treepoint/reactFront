@@ -25,55 +25,9 @@ class Task extends React.Component {
   constructor() {
     super();
     this.state = {
-      content: {
-        id: null,
-        name: null,
-        name_style: { backgroundColor: "#fff", bold: false, italic: false },
-        statuses: null,
-        categories: null,
-        execution_time_day: null,
-        execution_time_all: null,
-        in_archive: 1
-      },
       isModalWindowHidden: true,
       isMinimized: true
     };
-  }
-
-  componentDidMount() {
-    this.setState({ content: this.props.content });
-  }
-
-  componentDidUpdate() {
-    if (
-      JSON.stringify(this.props.content) !== JSON.stringify(this.state.content)
-    ) {
-      this.setState({ content: this.props.content });
-    }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      JSON.stringify(nextProps.content) !== JSON.stringify(this.state.content)
-    ) {
-      return true;
-    }
-
-    if (
-      JSON.stringify(nextState.content) !== JSON.stringify(this.state.content)
-    ) {
-      return true;
-    }
-
-    if (nextState.isModalWindowHidden !== this.state.isModalWindowHidden) {
-      return true;
-    }
-
-    if (nextState.isMinimized !== this.state.isMinimized) {
-      return true;
-    }
-
-    return false;
   }
 
   //Изменим вид таска — сделаем большим или маленьким
@@ -94,14 +48,14 @@ class Task extends React.Component {
   //Сохраним задачу в ДБ
   saveTaskToDatabase() {
     let task = {
-      id: this.state.content.id,
-      name: this.state.content.name,
-      name_style: this.state.content.name_style,
-      status_id: this.state.content.statuses.current,
-      category_id: this.state.content.categories.current,
-      execution_time_day: this.state.content.execution_time_day,
-      execution_time_all: this.state.content.execution_time_all,
-      in_archive: this.state.content.in_archive,
+      id: this.props.content.id,
+      name: this.props.content.name,
+      name_style: this.props.content.name_style,
+      status_id: this.props.content.statuses.current,
+      category_id: this.props.content.categories.current,
+      execution_time_day: this.props.content.execution_time_day,
+      execution_time_all: this.props.content.execution_time_all,
+      in_archive: this.props.content.in_archive,
       update_date: this.props.date + " " + getCurrentTimeFormat()
     };
 
@@ -111,13 +65,13 @@ class Task extends React.Component {
   //Если нужно — перенесем в архив или достанем из архива
   moveToAchrive(value) {
     let task = {
-      id: this.state.content.id,
-      name: this.state.content.name,
-      name_style: this.state.content.name_style,
-      status_id: this.state.content.statuses.current,
-      category_id: this.state.content.categories.current,
-      execution_time_day: this.state.content.execution_time_day,
-      execution_time_all: this.state.content.execution_time_all,
+      id: this.props.content.id,
+      name: this.props.content.name,
+      name_style: this.props.content.name_style,
+      status_id: this.props.content.statuses.current,
+      category_id: this.props.content.categories.current,
+      execution_time_day: this.props.content.execution_time_day,
+      execution_time_all: this.props.content.execution_time_all,
       update_date: this.props.date + " " + getCurrentTimeFormat(),
       in_archive: value
     };
@@ -129,7 +83,7 @@ class Task extends React.Component {
   onChangeName(value) {
     this.setState(
       {
-        content: Object.assign(this.state.content, {
+        content: Object.assign(this.props.content, {
           name: value
         })
       },
@@ -141,7 +95,7 @@ class Task extends React.Component {
   onChangeNameStyle(style) {
     this.setState(
       {
-        content: Object.assign(this.state.content, {
+        content: Object.assign(this.props.content, {
           name_style: style
         })
       },
@@ -153,10 +107,10 @@ class Task extends React.Component {
   onChangeStatus(status) {
     this.setState(
       {
-        content: Object.assign(this.state.content, {
+        content: Object.assign(this.props.content, {
           statuses: {
             current: status.current,
-            list: this.state.content.statuses.list
+            list: this.props.content.statuses.list
           }
         })
       },
@@ -168,10 +122,10 @@ class Task extends React.Component {
   onChangeCategory(category) {
     this.setState(
       {
-        content: Object.assign(this.state.content, {
+        content: Object.assign(this.props.content, {
           categories: {
             current: category.current,
-            list: this.state.content.categories.list
+            list: this.props.content.categories.list
           }
         })
       },
@@ -183,14 +137,14 @@ class Task extends React.Component {
     return (
       <div className="textField">
         <TextContent
-          value={this.state.content.name}
+          value={this.props.content.name}
           width={226}
           height={68}
           isStylable={true}
           //Стиль оформления контента
-          bold={this.state.content.name_style.bold}
-          italic={this.state.content.name_style.italic}
-          backgroundColor={this.state.content.name_style.backgroundColor}
+          bold={this.props.content.name_style.bold}
+          italic={this.props.content.name_style.italic}
+          backgroundColor={this.props.content.name_style.backgroundColor}
           //Функции
           onChangeStyle={style => {
             this.onChangeNameStyle(style);
@@ -210,7 +164,7 @@ class Task extends React.Component {
       >
         <SelectContent
           isMinimized={this.state.isMinimized}
-          value={this.state.content.statuses}
+          value={this.props.content.statuses}
           height={34}
           onChangeValue={value => this.onChangeStatus(value)}
         />
@@ -227,7 +181,7 @@ class Task extends React.Component {
       >
         <SelectContent
           isMinimized={this.state.isMinimized}
-          value={this.state.content.categories}
+          value={this.props.content.categories}
           height={34}
           onChangeValue={value => this.onChangeCategory(value)}
         />
@@ -248,7 +202,7 @@ class Task extends React.Component {
         <TimeContent
           disabled={true}
           isStandalone={true}
-          value={getTimeFromMins(this.state.content.execution_time_day)}
+          value={getTimeFromMins(this.props.content.execution_time_day)}
           width={50}
           height={34}
         />
@@ -265,7 +219,7 @@ class Task extends React.Component {
         <TimeContent
           disabled={true}
           isStandalone={true}
-          value={getTimeFromMins(this.state.content.execution_time_all)}
+          value={getTimeFromMins(this.props.content.execution_time_all)}
           width={50}
           height={34}
         />
@@ -276,16 +230,16 @@ class Task extends React.Component {
   getActions() {
     return (
       <div className="taskActions">
-        {!!this.state.content.in_archive ? null : (
+        {!!this.props.content.in_archive ? null : (
           <Action
             icon={timeSpanIcon}
             onClick={() =>
-              this.props.createTaskLog(this.state.content.id, this.props.date)
+              this.props.createTaskLog(this.props.content.id, this.props.date)
             }
           />
         )}
 
-        {!!this.state.content.in_archive ? (
+        {!!this.props.content.in_archive ? (
           <React.Fragment>
             <Action
               icon={dearchiveIcon}
@@ -339,7 +293,7 @@ class Task extends React.Component {
           message="Вместе с задачей будут удалены все записи из лога и статистики. 
 Если вы хотите закрыть задачу — проставьте у неё статус с типом «Окончательный»."
           onCancel={() => this.closeDeleteModal()}
-          onConfirm={() => this.props.deleteTask(this.state.content.id)}
+          onConfirm={() => this.props.deleteTask(this.props.content.id)}
         />
       );
     }

@@ -3,7 +3,7 @@ import NavigationLink from "./NavigationLink/NavigationLink";
 //CSS
 import "./Navigation.css";
 
-class Navigation extends React.Component {
+class Navigation extends React.PureComponent {
   render() {
     return (
       <div className="navigation">

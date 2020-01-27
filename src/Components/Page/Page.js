@@ -9,7 +9,7 @@ import PageTitle from "./PageTitle/PageTitle";
 import PageContent from "./PageContent/PageContent";
 import "./Page.css";
 
-class Page extends React.Component {
+class Page extends React.PureComponent {
   //Обрабатываем скролл контента
   //Нужно для правильного позиционирования fixed элементов
   handleScroll() {

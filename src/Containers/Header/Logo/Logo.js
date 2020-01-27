@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../../../Images/logo.png";
 import "./Logo.css";
 
-class Logo extends React.Component {
+class Logo extends React.PureComponent {
   render() {
     return (
       <NavLink
