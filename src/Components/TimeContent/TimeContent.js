@@ -16,13 +16,9 @@ class TimeContent extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    if (this.state.value !== this.props.value && !this.state.isReadOnly) {
+    if (!this.state.isReadOnly && this.state.value !== this.props.value) {
       this.setState({ value: this.props.value });
     }
-  }
-
-  onFocus() {
-    this.setState({ isReadOnly: true });
   }
 
   onChangeValue(event) {
@@ -32,7 +28,6 @@ class TimeContent extends React.PureComponent {
   onKeyPress(event) {
     if (event.key === "Enter") {
       this.props.onChangeValue(this.state.value);
-      this.setState({ isReadOnly: false });
     }
   }
 
@@ -40,8 +35,6 @@ class TimeContent extends React.PureComponent {
     if (this.state.value !== this.props.value) {
       this.props.onChangeValue(this.state.value);
     }
-
-    this.setState({ isReadOnly: false });
   }
 
   //Получаем стиль ячейки заголовка на основании стиля контента
@@ -49,8 +42,6 @@ class TimeContent extends React.PureComponent {
     let style;
 
     //Вот такого делать никогда не нужно. Но если очень хочется — все равно не надо
-    //Они держат мою жену в заложниках и сказали сделать быстро, поэтому так
-
     let isChrome = navigator.userAgent.indexOf("Chrome") + 1;
 
     if (!!this.props.isHeader) {
@@ -81,7 +72,7 @@ class TimeContent extends React.PureComponent {
           !!this.props.isStandalone ? "timeContent standalone" : "timeContent"
         }
         style={this.getStyle()}
-        onFocus={event => this.onFocus(event)}
+        onFocus={() => this.setState({ isReadOnly: true })}
         onChange={event => this.onChangeValue(event)}
         onBlur={event => this.onBlur(event)}
         onKeyPress={event => this.onKeyPress(event)}
