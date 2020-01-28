@@ -30,23 +30,8 @@ class Task extends React.Component {
     };
   }
 
-  //Изменим вид таска — сделаем большим или маленьким
-  changeTaskView() {
-    this.setState({ isMinimized: !this.state.isMinimized });
-  }
-
-  //Закрыть модальное окно
-  closeDeleteModal() {
-    this.setState({ isModalWindowHidden: true });
-  }
-
-  //Показать модальное окно
-  showDeleteModal() {
-    this.setState({ isModalWindowHidden: false });
-  }
-
   //Сохраним задачу в ДБ
-  saveTaskToDatabase() {
+  saveTaskToDatabase(diff) {
     let task = {
       id: this.props.content.id,
       name: this.props.content.name,
@@ -59,78 +44,10 @@ class Task extends React.Component {
       update_date: this.props.date + " " + getCurrentTimeFormat()
     };
 
-    this.props.updateTask(task, this.props.date);
-  }
-
-  //Если нужно — перенесем в архив или достанем из архива
-  moveToAchrive(value) {
-    let task = {
-      id: this.props.content.id,
-      name: this.props.content.name,
-      name_style: this.props.content.name_style,
-      status_id: this.props.content.statuses.current,
-      category_id: this.props.content.categories.current,
-      execution_time_day: this.props.content.execution_time_day,
-      execution_time_all: this.props.content.execution_time_all,
-      update_date: this.props.date + " " + getCurrentTimeFormat(),
-      in_archive: value
-    };
+    //Склеим объект и разницу
+    Object.assign(task, diff);
 
     this.props.updateTask(task, this.props.date);
-  }
-
-  //Обрабатываем изменение контента
-  onChangeName(value) {
-    this.setState(
-      {
-        content: Object.assign(this.props.content, {
-          name: value
-        })
-      },
-      this.saveTaskToDatabase()
-    );
-  }
-
-  //Обрабатываем изменение контента
-  onChangeNameStyle(style) {
-    this.setState(
-      {
-        content: Object.assign(this.props.content, {
-          name_style: style
-        })
-      },
-      this.saveTaskToDatabase()
-    );
-  }
-
-  //Обрабатываем изменение контента
-  onChangeStatus(status) {
-    this.setState(
-      {
-        content: Object.assign(this.props.content, {
-          statuses: {
-            current: status.current,
-            list: this.props.content.statuses.list
-          }
-        })
-      },
-      this.saveTaskToDatabase()
-    );
-  }
-
-  //Обрабатываем изменение контента
-  onChangeCategory(category) {
-    this.setState(
-      {
-        content: Object.assign(this.props.content, {
-          categories: {
-            current: category.current,
-            list: this.props.content.categories.list
-          }
-        })
-      },
-      this.saveTaskToDatabase()
-    );
   }
 
   getTaskName() {
@@ -147,9 +64,9 @@ class Task extends React.Component {
           backgroundColor={this.props.content.name_style.backgroundColor}
           //Функции
           onChangeStyle={style => {
-            this.onChangeNameStyle(style);
+            this.saveTaskToDatabase({ name_style: style });
           }}
-          onChangeValue={value => this.onChangeName(value)}
+          onChangeValue={value => this.saveTaskToDatabase({ name: value })}
         />
       </div>
     );
@@ -166,7 +83,9 @@ class Task extends React.Component {
           isMinimized={this.state.isMinimized}
           value={this.props.content.statuses}
           height={34}
-          onChangeValue={value => this.onChangeStatus(value)}
+          onChangeValue={status =>
+            this.saveTaskToDatabase({ status_id: status.current })
+          }
         />
       </div>
     );
@@ -183,7 +102,9 @@ class Task extends React.Component {
           isMinimized={this.state.isMinimized}
           value={this.props.content.categories}
           height={34}
-          onChangeValue={value => this.onChangeCategory(value)}
+          onChangeValue={category =>
+            this.saveTaskToDatabase({ category_id: category.current })
+          }
         />
       </div>
     );
@@ -243,16 +164,24 @@ class Task extends React.Component {
           <React.Fragment>
             <Action
               icon={dearchiveIcon}
-              onClick={() => this.moveToAchrive(0)}
+              onClick={() => this.saveTaskToDatabase({ in_archive: 0 })}
             />
-            <Action icon={deleteIcon} onClick={() => this.showDeleteModal()} />
+            <Action
+              icon={deleteIcon}
+              onClick={() => this.setState({ isModalWindowHidden: false })}
+            />
           </React.Fragment>
         ) : (
-          <Action icon={archiveIcon} onClick={() => this.moveToAchrive(1)} />
+          <Action
+            icon={archiveIcon}
+            onClick={() => this.saveTaskToDatabase({ in_archive: 1 })}
+          />
         )}
         <Action
           icon={!!this.state.isMinimized ? maximizedIcon : minimizeIcon}
-          onClick={() => this.changeTaskView()}
+          onClick={() =>
+            this.setState({ isMinimized: !this.state.isMinimized })
+          }
         />
       </div>
     );
@@ -291,8 +220,8 @@ class Task extends React.Component {
         <ConfirmModalWindow
           title="Удалить задачу?"
           message="Вместе с задачей будут удалены все записи из лога и статистики. 
-Если вы хотите закрыть задачу — проставьте у неё статус с типом «Окончательный»."
-          onCancel={() => this.closeDeleteModal()}
+                   Если вы хотите закрыть задачу — проставьте у неё статус с типом «Окончательный»."
+          onCancel={() => this.setState({ isModalWindowHidden: true })}
           onConfirm={() => this.props.deleteTask(this.props.content.id)}
         />
       );

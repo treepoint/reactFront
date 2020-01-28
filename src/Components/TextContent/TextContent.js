@@ -24,11 +24,7 @@ class TextContent extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.isReadOnly) {
-      return null;
-    }
-
-    if (this.state.value !== this.props.value) {
+    if (!this.state.isReadOnly && this.state.value !== this.props.value) {
       this.setState({ value: this.props.value });
     }
   }
@@ -37,14 +33,11 @@ class TextContent extends React.Component {
     return navigator.userAgent.indexOf("Chrome") + 1;
   }
 
-  onFocus() {
-    this.setState({ isReadOnly: true });
-  }
-
   //Изменяем контент по вводу
   onChange(event) {
     let value = event.target.value;
 
+    //Если в режиме одной строки — просто удалим переносы при вводе если они были
     if (this.props.isSingleLineMode) {
       value = value.replace(/\n/g, "");
     }
@@ -61,30 +54,17 @@ class TextContent extends React.Component {
     }
   }
 
-  onBlur() {
-    if (this.state.value !== this.props.value) {
-      this.onEndEditing();
-    }
-  }
-
   onEndEditing() {
-    this.setState(
-      { isReadOnly: false },
-      this.props.onChangeValue(this.state.value)
-    );
+    if (this.state.value !== this.props.value) {
+      this.props.onChangeValue(this.state.value);
+    }
 
     this.setWideEditAreaHidden();
   }
 
-  //Обрабатываем изменения стиля контента в ячейке в
-  //зависимости от того, что было задано в контекстном меню
-  onChangeStyle(style) {
-    this.props.onChangeStyle(style);
-  }
-
   //Срабатывает при вызове контекстного меню
   showContextMenu(event) {
-    //Если не отключена возможно редактировать контент, и не отключена стилизация
+    //Если не отключена возможность редактировать контент, и не отключена стилизация и это не шапка
     if (
       !this.props.disabled &&
       !!this.props.isStylable &&
@@ -117,37 +97,6 @@ class TextContent extends React.Component {
     });
   }
 
-  //Получаем стиль ячейки заголовка на основании стиля контента
-  getHeaderStyle() {
-    return {
-      fontWeight: "900",
-      width: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
-      minWidth: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
-      minHeight: this.props.height - 4 + "px",
-      color: "#000"
-    };
-  }
-
-  //Получаем стиль обычной ячейки на основании стиля контента
-  getRegularStyle() {
-    return {
-      marginLeft: !!this.state.wideEditAreaIsHidden
-        ? 0 + "px"
-        : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
-      marginTop: !!this.state.wideEditAreaIsHidden
-        ? 0 + "px"
-        : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
-      backgroundColor: !!this.props.disabled ? "rgb(251, 251, 251)" : "#ffffff",
-      borderLeft: "8px solid " + this.props.backgroundColor,
-      fontWeight: !!this.props.bold ? "900" : "200",
-      fontStyle: !!this.props.italic ? "italic" : "normal",
-      color: !!this.props.disabled ? "#444" : "#000",
-      width: this.props.width - (!!this.props.isStylable ? 17 : 8) + "px",
-      minWidth: this.props.width - (!!this.state.isChrome ? 17 : 16) + "px",
-      minHeight: this.props.height - (!!this.state.isChrome ? 4 : 0) + "px"
-    };
-  }
-
   //Срабатывает при двойном клике
   showWideEditArea() {
     if (this.props.disabled || this.props.isHeader) {
@@ -168,18 +117,48 @@ class TextContent extends React.Component {
     return "textContent";
   }
 
+  //Получаем стиль ячейки заголовка на основании стиля контента
+  getStyle() {
+    if (this.props.isHeader) {
+      return {
+        fontWeight: "900",
+        width: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
+        minWidth: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
+        minHeight: this.props.height - 4 + "px",
+        color: "#000"
+      };
+    } else {
+      return {
+        marginLeft: !!this.state.wideEditAreaIsHidden
+          ? 0 + "px"
+          : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
+        marginTop: !!this.state.wideEditAreaIsHidden
+          ? 0 + "px"
+          : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
+        backgroundColor: !!this.props.disabled
+          ? "rgb(251, 251, 251)"
+          : "#ffffff",
+        borderLeft: "8px solid " + this.props.backgroundColor,
+        fontWeight: !!this.props.bold ? "900" : "200",
+        fontStyle: !!this.props.italic ? "italic" : "normal",
+        color: !!this.props.disabled ? "#444" : "#000",
+        width: this.props.width - (!!this.props.isStylable ? 17 : 8) + "px",
+        minWidth: this.props.width - (!!this.state.isChrome ? 17 : 16) + "px",
+        minHeight: this.props.height - (!!this.state.isChrome ? 4 : 0) + "px"
+      };
+    }
+  }
+
   //Получаем контент ячейки в зависимости от того шапка таблицы это или обычная ячейка
   getCellContent() {
     return (
       <TextareaAutosize
         spellCheck="false"
         className={this.getClassName()}
-        style={
-          !!this.props.isHeader ? this.getHeaderStyle() : this.getRegularStyle()
-        }
+        style={this.getStyle()}
         //Задаем контент
         value={this.state.value}
-        onFocus={event => this.onFocus(event)}
+        onFocus={() => this.setState({ isReadOnly: true })}
         disabled={!!this.props.disabled ? true : false}
         onChange={event => this.onChange(event)}
         //Обрабатываем двойной клик
@@ -187,7 +166,7 @@ class TextContent extends React.Component {
         //Обрабатываем контекстное меню
         onContextMenu={event => this.showContextMenu(event)}
         //Обрабатываем потерю фокуса
-        onBlur={() => this.onBlur()}
+        onBlur={() => this.onEndEditing()}
         maxRows={1}
         onKeyPress={event => this.onKeyPress(event)}
       />
@@ -207,7 +186,7 @@ class TextContent extends React.Component {
           backgroundColor={this.props.backgroundColor}
           //Функции
           setContextMenuHidden={event => this.setContextMenuHidden(event)}
-          onChangeStyle={style => this.onChangeStyle(style)}
+          onChangeStyle={style => this.props.onChangeStyle(style)}
           onWheel={event => this.setContextMenuHidden(event)}
         />
       );
