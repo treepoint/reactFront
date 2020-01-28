@@ -15,6 +15,7 @@ export const SET_USER_AUTH_STATE = "SET_USER_AUTH_STATE";
 export const SET_AUTH_ERROR = "AUTH_ERROR";
 export const CLEAR_STATE = "CLEAR_STATE";
 export const SET_SHOW_BROADCAST_MESSAGE = "SET_SHOW_BROADCAST_MESSAGE";
+export const SET_SHOW_HEADER_WARNING = "SET_SHOW_HEADER_WARNING";
 
 export function setUserAuthState(boolean) {
   return { type: SET_USER_AUTH_STATE, boolean };
@@ -30,6 +31,10 @@ export function clearState() {
 
 export function setShowBroadcastMessage(boolean) {
   return { type: SET_SHOW_BROADCAST_MESSAGE, boolean };
+}
+
+export function setShowHeaderWarning(boolean) {
+  return { type: SET_SHOW_HEADER_WARNING, boolean };
 }
 
 export function logoff() {

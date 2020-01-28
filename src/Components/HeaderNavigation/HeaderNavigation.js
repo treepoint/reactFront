@@ -1,12 +1,12 @@
 import React from "react";
 import HeaderNavigationLink from "../HeaderNavigationLink/HeaderNavigationLink";
 //CSS
-import "./Navigation.css";
+import "./HeaderNavigation.css";
 
-class Navigation extends React.PureComponent {
+class HeaderNavigation extends React.PureComponent {
   render() {
     return (
-      <div className="navigation">
+      <div className="headerNavigation">
         <HeaderNavigationLink exact={true} to="/" value="Главная" />
         <HeaderNavigationLink
           to="/tasks_manager"
@@ -39,4 +39,4 @@ class Navigation extends React.PureComponent {
   }
 }
 
-export default Navigation;
+export default HeaderNavigation;
