@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationLink from "./NavigationLink/NavigationLink";
+import NavigationLink from "./HeaderNavigationLink/HeaderNavigationLink";
 //CSS
 import "./Navigation.css";
 

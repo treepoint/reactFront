@@ -3,9 +3,9 @@ import React from "react";
 import { connect } from "react-redux";
 //Подключаем роутинг
 import { NavLink } from "react-router-dom";
-import "./NavigationLink.css";
+import "./HeaderNavigationLink.css";
 
-class NavigationLink extends React.PureComponent {
+class HeaderNavigationLink extends React.PureComponent {
   checkPrivileges() {
     //Если нужны админские права, а их нет
     if (this.props.onlyAdmin && !this.props.isAdmin) {
@@ -26,8 +26,8 @@ class NavigationLink extends React.PureComponent {
       <NavLink
         className={
           !!this.checkPrivileges()
-            ? "navigation link"
-            : "navigation link hidden"
+            ? "headerNavigation link"
+            : "headerNavigation link hidden"
         }
         activeClassName="current"
         exact={this.props.exact}
@@ -46,4 +46,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(NavigationLink);
+export default connect(mapStateToProps)(HeaderNavigationLink);

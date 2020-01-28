@@ -1,4 +1,4 @@
-.navigation.link {
+.headerNavigation.link {
   padding: 4px 0px;
   color: rgb(230, 230, 230);
   text-decoration: none;
@@ -7,21 +7,21 @@
   margin-right: 12px;
 }
 
-.navigation.hidden {
+.headerNavigation.hidden {
   display: none;
 }
 
-.navigation.link:hover {
+.headerNavigation.link:hover {
   opacity: 0.8;
 }
 
-.navigation.link:active {
+.headerNavigation.link:active {
   color: rgb(150, 150, 150);
 }
-.navigation.link.current {
+.headerNavigation.link.current {
   border-bottom: 2px solid #e6e6e6;
 }
 
-.navigation.link.current:hover {
+.headerNavigation.link.current:hover {
   border-color: rgb(173, 173, 173);
 }

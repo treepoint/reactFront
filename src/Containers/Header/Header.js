@@ -1,8 +1,8 @@
 import React from "react";
-import Navigation from "./Navigation/Navigation";
+import Navigation from "../../Components/HeaderNavigation/Navigation";
 import Spacer from "../../Components/Spacer/Spacer";
-import Logo from "./Logo/Logo";
-import UserMenu from "./UserMenu/UserMenu";
+import Logo from "../../Components/Logo/Logo";
+import LoginMenu from "../../Components/LoginMenu/LoginMenu";
 import "./Header.css";
 
 class Header extends React.PureComponent {
@@ -12,7 +12,7 @@ class Header extends React.PureComponent {
         <Logo />
         <Navigation />
         <Spacer />
-        <UserMenu />
+        <LoginMenu />
       </div>
     );
   }

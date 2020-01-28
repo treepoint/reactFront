@@ -1,19 +1,19 @@
 import React from "react";
 import HeaderAnchor from "../HeaderAnchor/HeaderAnchor";
-import AnchorModalWindow from "../../../Components/AnchorModalWindow/AnchorModalWindow";
-import UserIcon from "./UserIcon/UserIcon";
+import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
+import UserIcon from "../UserIcon/UserIcon";
 import { connect } from "react-redux";
-import "./UserMenu.css";
+import "./LoginMenu.css";
 import {
   registration,
   login,
   profile
-} from "../../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
+} from "../GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 
-class UserMenu extends React.PureComponent {
+class LoginMenu extends React.PureComponent {
   render() {
     return (
-      <div className="userMenu">
+      <div className="loginMenu">
         {!!this.props.userAuthState ? (
           <HeaderAnchor>
             <AnchorModalWindow
@@ -48,4 +48,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(UserMenu);
+export default connect(mapStateToProps)(LoginMenu);
