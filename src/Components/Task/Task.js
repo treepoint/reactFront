@@ -151,15 +151,6 @@ class Task extends React.Component {
   getActions() {
     return (
       <div className="taskActions">
-        {!!this.props.content.in_archive ? null : (
-          <Action
-            icon={timeSpanIcon}
-            onClick={() =>
-              this.props.createTaskLog(this.props.content.id, this.props.date)
-            }
-          />
-        )}
-
         {!!this.props.content.in_archive ? (
           <React.Fragment>
             <Action
@@ -175,6 +166,14 @@ class Task extends React.Component {
           <Action
             icon={archiveIcon}
             onClick={() => this.saveTaskToDatabase({ in_archive: 1 })}
+          />
+        )}
+        {!!this.props.content.in_archive ? null : (
+          <Action
+            icon={timeSpanIcon}
+            onClick={() =>
+              this.props.createTaskLog(this.props.content.id, this.props.date)
+            }
           />
         )}
         <Action

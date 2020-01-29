@@ -23,14 +23,12 @@ class TextContent extends React.Component {
     this.setState({ value: this.props.value });
   }
 
-  componentDidUpdate() {
-    if (!this.state.isReadOnly && this.state.value !== this.props.value) {
-      this.setState({ value: this.props.value });
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.value) {
+      if (!this.state.isReadOnly && this.state.value !== this.props.value) {
+        this.setState({ value: this.props.value });
+      }
     }
-  }
-
-  isChrome() {
-    return navigator.userAgent.indexOf("Chrome") + 1;
   }
 
   //Изменяем контент по вводу
@@ -43,6 +41,10 @@ class TextContent extends React.Component {
     }
 
     this.setState({ value });
+  }
+
+  isChrome() {
+    return navigator.userAgent.indexOf("Chrome") + 1;
   }
 
   onKeyPress(event) {
@@ -58,6 +60,8 @@ class TextContent extends React.Component {
     if (this.state.value !== this.props.value) {
       this.props.onChangeValue(this.state.value);
     }
+
+    this.setState({ isReadOnly: false });
 
     this.setWideEditAreaHidden();
   }
