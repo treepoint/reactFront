@@ -3,7 +3,10 @@ import Dropzone from "react-dropzone";
 //Подключаем redux
 import { connect } from "react-redux";
 import { setModalWindowState } from "../../Store/actions/globalModalWindow";
-import { setTasksBackgroundImage } from "../../Store/actions/settings";
+import {
+  updateUserSettings,
+  updateTasksWallpapers
+} from "../../Store/actions/userSettings";
 import { setCurrentUser } from "../../Store/actions/currentUser";
 import { login } from "../../Store/actions/app";
 //Импортируем компоненты
@@ -21,16 +24,27 @@ class TaskSettings extends React.Component {
     };
   }
 
+  updateUserSettings(userSettings) {
+    this.props.updateUserSettings(
+      Object.assign({}, this.props.userSettings, userSettings)
+    );
+  }
+
   onDrop(acceptedFiles) {
     acceptedFiles.forEach(file => {
+      console.log(file);
+
       const reader = new FileReader();
 
-      reader.onload = event => {
+      reader.onload = () => {
         this.setState({
           backgroundImageMessage: "Изображение успешно загружено!"
         });
 
-        this.props.setTasksBackgroundImage(reader.result);
+        this.props.updateTasksWallpapers({
+          extension: "png",
+          data: reader.result
+        });
       };
 
       reader.readAsDataURL(file);
@@ -69,7 +83,8 @@ const mapStateToProps = state => {
   return {
     currentUser: state.currentUser,
     token: state.token,
-    authError: state.authError
+    authError: state.authError,
+    userSettings: state.userSettings
   };
 };
 
@@ -84,8 +99,11 @@ const mapDispatchToProps = dispatch => {
     setModalWindowState: boolean => {
       dispatch(setModalWindowState(boolean));
     },
-    setTasksBackgroundImage: string => {
-      dispatch(setTasksBackgroundImage(string));
+    updateUserSettings: object => {
+      dispatch(updateUserSettings(object));
+    },
+    updateTasksWallpapers: object => {
+      dispatch(updateTasksWallpapers(object));
     }
   };
 };

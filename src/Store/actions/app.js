@@ -10,6 +10,7 @@ import {
   setCurrentUserAndAdmin
 } from "./currentUser";
 import { setModalWindowState } from "./globalModalWindow";
+import { fetchUserSettings } from "./userSettings";
 
 export const SET_USER_AUTH_STATE = "SET_USER_AUTH_STATE";
 export const SET_AUTH_ERROR = "AUTH_ERROR";
@@ -66,6 +67,9 @@ export function restoreFromCookies() {
       //Проставим авторизацию
       dispatch(setUserAuthState(true));
 
+      //Проставим пользовательские настройки
+      dispatch(fetchUserSettings());
+
       return;
     }
 
@@ -74,6 +78,8 @@ export function restoreFromCookies() {
       dispatch(reauth(refreshToken));
       //Проставим авторизацию
       dispatch(setUserAuthState(true));
+      //Проставим пользовательские настройки
+      dispatch(fetchUserSettings());
       return;
     }
   };
@@ -162,9 +168,10 @@ export function reauth(refreshToken) {
       dispatch(setToken(response.data.token.value));
       //Пользователя
       dispatch(setCurrentUserAndAdmin(response.data.user));
-
       //Авторизацию
       dispatch(setUserAuthState(true));
+      //Проставим пользовательские настройки
+      dispatch(fetchUserSettings());
     });
   };
 }

@@ -86,7 +86,7 @@ class TasksManager extends React.PureComponent {
       <div
         className="backgroundImage"
         style={{
-          backgroundImage: "url(" + this.props.backgroundImage + ")"
+          backgroundImage: "url(" + this.props.tasksWallpaper + ")"
         }}
       >
         <Page
@@ -115,7 +115,7 @@ const mapStateToProps = state => {
   return {
     taskStatuses: state.taskStatuses,
     categories: state.categories,
-    backgroundImage: state.tasksBackgroundImage
+    tasksWallpaper: state.userSettings.tasks_wallpaper
   };
 };
 
