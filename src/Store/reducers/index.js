@@ -59,6 +59,8 @@ import {
   taskLogDeleteError
 } from "./tasksLog";
 
+import { tasksBackgroundImage } from "./settings";
+
 const appReducer = combineReducers({
   //app
   userAuthState,
@@ -106,7 +108,9 @@ const appReducer = combineReducers({
   tasksLog,
   tasksLogIsUpdating,
   taskLogUpdateError,
-  taskLogDeleteError
+  taskLogDeleteError,
+  //settings
+  tasksBackgroundImage
 });
 
 const rootReducer = (state, action) => {

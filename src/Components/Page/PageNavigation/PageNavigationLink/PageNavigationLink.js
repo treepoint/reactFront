@@ -10,19 +10,19 @@ class PageNavigationLink extends React.Component {
         {!!this.props.isAnchor ? (
           !!this.props.isCurrent ? (
             <div
-              className="pageNavigation link current"
+              className="pageNavigationLink current"
               onClick={this.props.callback}
             >
               {this.props.value}
             </div>
           ) : (
-            <div className="pageNavigation link" onClick={this.props.callback}>
+            <div className="pageNavigationLink" onClick={this.props.callback}>
               {this.props.value}
             </div>
           )
         ) : (
           <NavLink
-            className="pageNavigation link"
+            className="pageNavigationLink"
             exact
             to={this.props.to}
             activeClassName="current"

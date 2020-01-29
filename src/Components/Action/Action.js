@@ -28,7 +28,7 @@ class Action extends React.PureComponent {
         className={this.getClassName()}
         style={{
           background:
-            "url(" + this.props.icon + ") no-repeat scroll 4px 2px transparent"
+            "url(" + this.props.icon + ") no-repeat scroll transparent"
         }}
         onClick={event => this.onClick(event)}
       ></div>

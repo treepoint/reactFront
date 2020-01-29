@@ -56,31 +56,29 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <form onClick={event => event.stopPropagation()}>
-          <h1 className="h1">Профиль</h1>
-          {INPUTS.map(inputs => (
-            <Input
-              placeholder={inputs.placeholder}
-              name={inputs.name}
-              type={inputs.type}
-              value={this.state.user[inputs.name]}
-              defaultValue={this.state.user[inputs.name]}
-              onChange={event => this.onChange(event)}
-              invalidMessage={
-                !!this.state.isTouched ? this.state.validation[inputs.name] : ""
-              }
-            />
-          ))}
-          <ErrorMessage message={this.props.updateProfileError} />
-          <Button
-            isPrimary={true}
-            value="Сохранить"
-            onClick={event => this.updateUser(event)}
+      <form onClick={event => event.stopPropagation()}>
+        <h1 className="h1">Профиль</h1>
+        {INPUTS.map(inputs => (
+          <Input
+            placeholder={inputs.placeholder}
+            name={inputs.name}
+            type={inputs.type}
+            value={this.state.user[inputs.name]}
+            defaultValue={this.state.user[inputs.name]}
+            onChange={event => this.onChange(event)}
+            invalidMessage={
+              !!this.state.isTouched ? this.state.validation[inputs.name] : ""
+            }
           />
-          <Button value="Выйти" onClick={event => this.logoff(event)} />
-        </form>
-      </React.Fragment>
+        ))}
+        <ErrorMessage message={this.props.updateProfileError} />
+        <Button
+          isPrimary={true}
+          value="Сохранить"
+          onClick={event => this.updateUser(event)}
+        />
+        <Button value="Выйти" onClick={event => this.logoff(event)} />
+      </form>
     );
   }
 }
