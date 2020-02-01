@@ -15,25 +15,29 @@ class TimeContent extends React.PureComponent {
     this.setState({ value: this.props.value });
   }
 
-  componentDidUpdate() {
-    if (!this.state.isReadOnly && this.state.value !== this.props.value) {
-      this.setState({ value: this.props.value });
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.value) {
+      if (!this.state.isReadOnly && this.state.value !== this.props.value) {
+        this.setState({ value: this.props.value });
+      }
     }
   }
 
-  onChangeValue(event) {
+  onChange(event) {
     this.setState({ value: event.target.value });
   }
 
   onKeyPress(event) {
     if (event.key === "Enter") {
       this.props.onChangeValue(this.state.value);
+      this.setState({ isReadOnly: false });
     }
   }
 
   onBlur() {
     if (this.state.value !== this.props.value) {
       this.props.onChangeValue(this.state.value);
+      this.setState({ isReadOnly: false });
     }
   }
 
@@ -73,7 +77,7 @@ class TimeContent extends React.PureComponent {
         }
         style={this.getStyle()}
         onFocus={() => this.setState({ isReadOnly: true })}
-        onChange={event => this.onChangeValue(event)}
+        onChange={event => this.onChange(event)}
         onBlur={event => this.onBlur(event)}
         onKeyPress={event => this.onKeyPress(event)}
       />
