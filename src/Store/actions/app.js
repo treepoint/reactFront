@@ -120,6 +120,9 @@ export function login() {
         //Проставим авторизацию
         dispatch(setUserAuthState(true));
 
+        //Запишем пользовательские настройки
+        dispatch(fetchUserSettings());
+
         //Если открыто модальное окно — закроем
         if (state.modalWindowState === true) {
           dispatch(setModalWindowState(false));

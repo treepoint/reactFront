@@ -4,4 +4,7 @@
   border-bottom: 1px solid #c0c0c0;
   flex-direction: column;
   justify-content: center;
+  display: flex;
+  padding-left: 4px;
+  padding-right: 4px;
 }

@@ -3,10 +3,7 @@ import Dropzone from "react-dropzone";
 //Подключаем redux
 import { connect } from "react-redux";
 import { setModalWindowState } from "../../Store/actions/globalModalWindow";
-import {
-  updateUserSettings,
-  updateTasksWallpapers
-} from "../../Store/actions/userSettings";
+import { updateTasksWallpapers } from "../../Store/actions/userSettings";
 import { setCurrentUser } from "../../Store/actions/currentUser";
 import { login } from "../../Store/actions/app";
 //Импортируем компоненты
@@ -20,43 +17,32 @@ class TaskSettings extends React.Component {
     super(props);
     this.state = {
       backgroundImage: [],
-      backgroundImageMessage: "Перетащите изображение или кликните для выбора"
+      backgroundImageMessage:
+        "Перетащите png или jpg файл или кликните для выбора"
     };
   }
 
-  updateUserSettings(userSettings) {
-    this.props.updateUserSettings(
-      Object.assign({}, this.props.userSettings, userSettings)
-    );
-  }
-
   onDrop(acceptedFiles) {
-    acceptedFiles.forEach(file => {
-      console.log(file);
-
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        this.setState({
-          backgroundImageMessage: "Изображение успешно загружено!"
-        });
-
-        this.props.updateTasksWallpapers({
-          extension: "png",
-          data: reader.result
-        });
-      };
-
-      reader.readAsDataURL(file);
-    });
+    if (typeof acceptedFiles[0] === "undefined") {
+      this.setState({
+        backgroundImageMessage:
+          "Файл не поддерживается. Попробуйте другой файл."
+      });
+    } else {
+      this.props.updateTasksWallpapers(acceptedFiles[0]);
+      this.setState({ backgroundImageMessage: "Файл успешно загружен!" });
+    }
   }
 
   render() {
     return (
       <form onClick={event => event.stopPropagation()}>
         <h1 className="h1">Настройки задач</h1>
-        <Lable>Изображение обоев</Lable>
-        <Dropzone onDrop={acceptedFiles => this.onDrop(acceptedFiles)}>
+        <Lable>Изменение обоев</Lable>
+        <Dropzone
+          onDrop={acceptedFiles => this.onDrop(acceptedFiles)}
+          accept="image/png, image/jpeg"
+        >
           {({ getRootProps, getInputProps }) => (
             <section>
               <div {...getRootProps()}>
@@ -68,9 +54,8 @@ class TaskSettings extends React.Component {
             </section>
           )}
         </Dropzone>
-
-        <Button isPrimary={true} value="Сохранить" />
         <Button
+          isPrimary
           value="Закрыть"
           onClick={() => this.props.setModalWindowState(false)}
         />
@@ -99,11 +84,8 @@ const mapDispatchToProps = dispatch => {
     setModalWindowState: boolean => {
       dispatch(setModalWindowState(boolean));
     },
-    updateUserSettings: object => {
-      dispatch(updateUserSettings(object));
-    },
-    updateTasksWallpapers: object => {
-      dispatch(updateTasksWallpapers(object));
+    updateTasksWallpapers: file => {
+      dispatch(updateTasksWallpapers(file));
     }
   };
 };

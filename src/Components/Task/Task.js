@@ -8,7 +8,7 @@ import TextContent from "../TextContent/TextContent";
 import SelectContent from "../SelectContent/SelectContent";
 import TimeContent from "../TimeContent/TimeContent";
 import ConfirmModalWindow from "../ConfirmModalWindow/ConfirmModalWindow";
-import Action from "../Action/Action";
+import TaskAction from "../TaskAction/TaskAction";
 //Утилиты
 import { getCurrentTimeFormat, getTimeFromMins } from "../../Libs/TimeUtils";
 //Картинки
@@ -152,7 +152,7 @@ class Task extends React.Component {
     return (
       <div className="taskActions">
         {!!this.props.content.in_archive ? null : (
-          <Action
+          <TaskAction
             icon={timeSpanIcon}
             onClick={() =>
               this.props.createTaskLog(this.props.content.id, this.props.date)
@@ -162,22 +162,22 @@ class Task extends React.Component {
 
         {!!this.props.content.in_archive ? (
           <React.Fragment>
-            <Action
+            <TaskAction
               icon={dearchiveIcon}
               onClick={() => this.saveTaskToDatabase({ in_archive: 0 })}
             />
-            <Action
+            <TaskAction
               icon={deleteIcon}
               onClick={() => this.setState({ isModalWindowHidden: false })}
             />
           </React.Fragment>
         ) : (
-          <Action
+          <TaskAction
             icon={archiveIcon}
             onClick={() => this.saveTaskToDatabase({ in_archive: 1 })}
           />
         )}
-        <Action
+        <TaskAction
           icon={!!this.state.isMinimized ? maximizedIcon : minimizeIcon}
           onClick={() =>
             this.setState({ isMinimized: !this.state.isMinimized })

@@ -1,5 +1,9 @@
 //Обвязка для API
-import { APIURL, getHeaders } from "../APIConfiguration";
+import {
+  APIURL,
+  getHeaders,
+  uploadedFilesDirectory
+} from "../APIConfiguration";
 import Axios from "axios";
 const URL = APIURL + "/user_settings";
 
@@ -42,43 +46,26 @@ export function fetchUserSettings() {
     }
 
     Axios.get(URL, headers).then(response => {
-      dispatch(setUserSettings(response.data));
+      let userSettings = {};
+
+      if (response.data.tasks_wallpaper !== null) {
+        Object.assign(userSettings, response.data, {
+          tasks_wallpaper:
+            uploadedFilesDirectory + "/" + response.data.tasks_wallpaper
+        });
+      } else {
+        Object.assign(userSettings, response.data, {
+          tasks_wallpaper: ""
+        });
+      }
+
+      dispatch(setUserSettings(userSettings));
     });
   };
 }
 
-//Обновить настройки
-export function updateUserSettings(userSettings) {
-  return dispatch => {
-    dispatch(setIsUpdating(true));
-
-    let headers = getHeaders();
-
-    if (headers === null) {
-      return;
-    }
-
-    Axios.put(URL + "/" + userSettings.id, userSettings, headers)
-      .then(response => {
-        if (typeof response.data === "object") {
-          //Обновим список
-          dispatch(setUserSettings(userSettings));
-          dispatch(setIsUpdating(false));
-        }
-      })
-      .catch(error => {
-        dispatch(
-          setUpdateError("Не удалось обновить пользовательские настройки")
-        );
-        dispatch(setIsUpdating(false));
-      });
-  };
-}
-
 //Обновить обои
-export function updateTasksWallpapers(taskWallpaper) {
-  /* {extension : "png", data : binary} */
-
+export function updateTasksWallpapers(file) {
   return dispatch => {
     let headers = getHeaders();
 
@@ -86,8 +73,18 @@ export function updateTasksWallpapers(taskWallpaper) {
       return;
     }
 
-    Axios.post(URL + "/load_tasks_wallpaper", taskWallpaper, headers)
-      .then(response => {})
+    var formData = new FormData();
+    formData.append("file", file, file.name);
+
+    Axios.post(URL + "/load_tasks_wallpaper", formData, headers)
+      .then(response => {
+        dispatch(
+          setUserSettings({
+            tasks_wallpaper:
+              uploadedFilesDirectory + "/" + response.data.filename
+          })
+        );
+      })
       .catch(error => {});
   };
 }
