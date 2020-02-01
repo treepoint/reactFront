@@ -1,5 +1,7 @@
 import React from "react";
 import PageNavigationLink from "./PageNavigationLink/PageNavigationLink";
+import Action from "../../Action/Action";
+import Spacer from "../../Spacer/Spacer";
 import "./PageNavigation.css";
 
 class PageNavigation extends React.PureComponent {
@@ -30,10 +32,20 @@ class PageNavigation extends React.PureComponent {
       });
     }
 
+    //Если экшены
+    let actionsLinks = [];
+    if (typeof this.props.actionsArray !== "undefined") {
+      actionsLinks = this.props.actionsArray.map((link, index) => {
+        return <Action icon={link.icon} onClick={link.onClick} key={index} />;
+      });
+    }
+
     return (
-      <div className="pageNavigation container">
+      <div className="pageNavigation">
         {routerLinks}
         {achrorLinks}
+        <Spacer />
+        <div className="pageNavigationActions">{actionsLinks}</div>
       </div>
     );
   }

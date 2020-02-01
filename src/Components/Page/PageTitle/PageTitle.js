@@ -7,7 +7,7 @@ class PageTitle extends React.PureComponent {
     return (
       <div className="pageTitle">
         {/*Рисуем основной заголовок*/}
-        {this.props.title}
+        <div className="pageName">{this.props.title}</div>
         {/*Добавляем меню, если есть*/}
         <PageNavigation
           routerLinksArray={
@@ -15,6 +15,9 @@ class PageTitle extends React.PureComponent {
           }
           anchorLinksArray={
             !!this.props.anchorLinksArray ? this.props.anchorLinksArray : []
+          }
+          actionsArray={
+            !!this.props.actionsArray ? this.props.actionsArray : []
           }
         />
       </div>

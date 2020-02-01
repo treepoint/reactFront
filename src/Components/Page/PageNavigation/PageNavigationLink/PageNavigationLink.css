@@ -1,13 +1,18 @@
-.pageNavigation.link:hover {
+.pageNavigationLink {
+  margin-right: 6px;
+  text-decoration: none;
+  color: rgb(20, 20, 20);
+}
+
+.pageNavigationLink:hover {
   color: rgb(65, 65, 65);
 }
 
-.pageNavigation.link:active {
+.pageNavigationLink:active {
   color: rgb(56, 56, 56);
 }
 
-.pageNavigation.link.current {
+.pageNavigationLink.current {
   color: #36266b;
-  text-decoration: none;
   border-bottom: 1px solid #2b2b2b;
 }

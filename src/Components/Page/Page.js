@@ -56,6 +56,7 @@ class Page extends React.PureComponent {
             title={this.props.title}
             routerLinksArray={this.props.routerLinksArray}
             anchorLinksArray={this.props.anchorLinksArray}
+            actionsArray={this.props.actionsArray}
           />
           <div className="page hr" />
         </React.Fragment>

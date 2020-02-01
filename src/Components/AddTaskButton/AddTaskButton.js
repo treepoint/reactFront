@@ -6,11 +6,12 @@ import { createTask } from "../../Store/actions/tasks";
 import addIcon from "../../Images/icon_add_96.png";
 //CSS
 import "./AddTaskButton.css";
+import "../Task/Task.css";
 
 class AddTaskButton extends React.PureComponent {
   render() {
     return (
-      <div className="addTask">
+      <div className="task">
         <div
           className="addTaskButton"
           style={{

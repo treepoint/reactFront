@@ -32,8 +32,8 @@
 
 .modalWindowClose {
   position: absolute;
-  right: 0px;
-  top: 60px;
+  right: -11px;
+  top: 54px;
   width: 47px;
   height: 47px;
   opacity: 0.6;

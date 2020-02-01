@@ -5,6 +5,14 @@
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
   text-decoration: none;
+  width: 100%;
+  height: 26px;
+}
+
+.pageNavigationActions {
+  opacity: 0.4;
+  margin-right: -2px;
 }

@@ -59,6 +59,8 @@ import {
   taskLogDeleteError
 } from "./tasksLog";
 
+import { userSettings } from "./userSettings";
+
 const appReducer = combineReducers({
   //app
   userAuthState,
@@ -106,7 +108,9 @@ const appReducer = combineReducers({
   tasksLog,
   tasksLogIsUpdating,
   taskLogUpdateError,
-  taskLogDeleteError
+  taskLogDeleteError,
+  //settings
+  userSettings
 });
 
 const rootReducer = (state, action) => {

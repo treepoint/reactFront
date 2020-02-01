@@ -137,7 +137,11 @@ class Tasks extends React.Component {
     return (
       <ReactCustomScroll
         //Задаем стиль
-        style={{ width: "100%", height: "calc(-206px + 100vh)" }}
+        style={{
+          width: "100%",
+          height: "calc(-213px + 100vh)",
+          marginTop: "6px"
+        }}
         ref={ref => {
           this._scrollBarRef = ref;
         }}

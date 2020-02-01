@@ -8,8 +8,18 @@ import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
 import { connect } from "react-redux";
 import { fetchTaskStatuses } from "../../../Store/actions/taskStatuses";
 import { fetchCategories } from "../../../Store/actions/categories";
+import {
+  setModalWindowState,
+  setModalWindowName
+} from "../../../Store/actions/globalModalWindow";
+//Подключаем модалки
+import { taskSettings } from "../../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Утилиты
 import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
+//Картинки
+import settingsIcon from "../../../Images/icon_settings.png";
+//CSS
+import "./TasksManager.css";
 
 class TasksManager extends React.PureComponent {
   constructor(props) {
@@ -23,14 +33,6 @@ class TasksManager extends React.PureComponent {
   componentDidMount() {
     this.props.fetchCategories();
     this.props.fetchTaskStatuses();
-  }
-
-  showArchiveTasks() {
-    this.setState({ isArchive: true });
-  }
-
-  showActiveTasks() {
-    this.setState({ isArchive: false });
   }
 
   onPickDate(date) {
@@ -62,33 +64,49 @@ class TasksManager extends React.PureComponent {
     let anchorLinksArray = [
       {
         value: "Текущие",
-        callback: () => this.showActiveTasks(),
+        callback: () => this.setState({ isArchive: false }),
         isCurrent: !this.state.isArchive
       },
       {
         value: "Архив",
-        callback: () => this.showArchiveTasks(),
+        callback: () => this.setState({ isArchive: true }),
         isCurrent: this.state.isArchive
       }
     ];
 
+    //Соберем действия
+    let actionsArray = [
+      {
+        icon: settingsIcon,
+        onClick: () => this.props.setModalWindow(taskSettings)
+      }
+    ];
+
     return (
-      <Page
-        title="Задачи:"
-        anchorLinksArray={anchorLinksArray}
-        isPrivate={true}
-        isNotScrollable={true}
+      <div
+        className="backgroundImage"
+        style={{
+          backgroundImage: "url(" + this.props.tasksWallpaper + ")"
+        }}
       >
-        <DayPickerCarousel onChange={date => this.onPickDate(date)} />
-        {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было лага*/}
-        <div style={{ display: !!this.state.isArchive ? "none" : null }}>
-          <Tasks date={this.state.date} />
-        </div>
-        <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
-          <Tasks isArchive={true} date={this.state.date} />
-        </div>
-        <TasksLog date={this.state.date} />
-      </Page>
+        <Page
+          title="Задачи:"
+          anchorLinksArray={anchorLinksArray}
+          actionsArray={actionsArray}
+          isPrivate={true}
+          isNotScrollable={true}
+        >
+          <DayPickerCarousel onChange={date => this.onPickDate(date)} />
+          {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было лага*/}
+          <div style={{ display: !!this.state.isArchive ? "none" : null }}>
+            <Tasks date={this.state.date} />
+          </div>
+          <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
+            <Tasks isArchive={true} date={this.state.date} />
+          </div>
+          <TasksLog date={this.state.date} />
+        </Page>
+      </div>
     );
   }
 }
@@ -96,7 +114,8 @@ class TasksManager extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     taskStatuses: state.taskStatuses,
-    categories: state.categories
+    categories: state.categories,
+    tasksWallpaper: state.userSettings.tasks_wallpaper
   };
 };
 
@@ -107,6 +126,10 @@ const mapDispatchToProps = dispatch => {
     },
     fetchCategories: () => {
       dispatch(fetchCategories());
+    },
+    setModalWindow: modalWindowName => {
+      dispatch(setModalWindowState(true));
+      dispatch(setModalWindowName(modalWindowName));
     }
   };
 };

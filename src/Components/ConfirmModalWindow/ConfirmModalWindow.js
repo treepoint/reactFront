@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "../Button/Button";
 import ModalWindow from "../ModalWindow/ModalWindow";
-import "./ConfirmModalWindow.css";
 
 class ConfirmModalWindow extends React.PureComponent {
   hideModalWindow(event) {
