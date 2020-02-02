@@ -16,7 +16,7 @@
 }
 
 .action.disabled {
-  opacity: 0.2;
+  opacity: 0;
 }
 
 .action.disabled:hover {

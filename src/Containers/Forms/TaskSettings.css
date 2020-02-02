@@ -1,9 +1,16 @@
-.loadBackgroundArea {
-  border: 1px solid #c0c0c0;
-  padding: 6px;
-  border-radius: 6px;
-  color: #535353;
-  height: 100%;
+.loadWallpapersBox {
+  display: flex;
+  height: 90px;
   width: 300px;
+  border: 1px dashed #c0c0c0;
+  border-radius: 6px;
+  margin-top: 6px;
+  justify-content: center;
+}
+
+.loadBackgroundArea {
+  color: #535353;
   font-size: 14px;
+  margin: auto;
+  text-align: center;
 }

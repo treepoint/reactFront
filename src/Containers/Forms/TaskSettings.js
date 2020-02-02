@@ -18,7 +18,7 @@ class TaskSettings extends React.Component {
     this.state = {
       backgroundImage: [],
       backgroundImageMessage:
-        "Перетащите png или jpg файл или кликните для выбора"
+        "Перетащите png или jpg файл или кликните для выбора. Максимальный размер файла — 2 мегабайта."
     };
   }
 
@@ -42,10 +42,12 @@ class TaskSettings extends React.Component {
         <Dropzone
           onDrop={acceptedFiles => this.onDrop(acceptedFiles)}
           accept="image/png, image/jpeg"
+          minSize={0}
+          maxSize={2097152}
         >
           {({ getRootProps, getInputProps }) => (
             <section>
-              <div {...getRootProps()}>
+              <div className="loadWallpapersBox" {...getRootProps()}>
                 <input {...getInputProps()} />
                 <p className="loadBackgroundArea">
                   {this.state.backgroundImageMessage}
