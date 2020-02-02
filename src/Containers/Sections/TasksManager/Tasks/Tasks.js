@@ -93,37 +93,64 @@ class Tasks extends React.Component {
       }
     }
 
-    for (var t in tasksForChosenDate) {
-      //Отфильтруем в зависимости от того, смотрим мы по архиву или нет
-      if (tasksForChosenDate[t].in_archive === 0 && !this.props.isArchive) {
-        let taskContent = {
-          id: tasksForChosenDate[t].id,
-          statuses: this.getStatusesByTask(tasksForChosenDate[t]),
-          name: tasksForChosenDate[t].name,
-          name_style: tasksForChosenDate[t].name_style,
-          categories: this.getCategoriesByTask(tasksForChosenDate[t]),
-          execution_time_day: tasksForChosenDate[t].execution_time_day,
-          execution_time_all: tasksForChosenDate[t].execution_time_to_day,
-          in_archive: tasksForChosenDate[t].in_archive
-        };
+    //Если задачи еще не загружены — ничего не делаем
+    if (this.props.tasksIsFetching) {
+      return null;
+    }
 
-        content.push(<Task date={this.props.date} content={taskContent} />);
+    //Проверим есть ли задачи
+    if (Object.keys(tasksForChosenDate).length !== 0) {
+      //Если есть — отрисуем
+      for (var t in tasksForChosenDate) {
+        //Отфильтруем в зависимости от того, смотрим мы по архиву или нет
+        if (tasksForChosenDate[t].in_archive === 0 && !this.props.isArchive) {
+          let taskContent = {
+            id: tasksForChosenDate[t].id,
+            statuses: this.getStatusesByTask(tasksForChosenDate[t]),
+            name: tasksForChosenDate[t].name,
+            name_style: tasksForChosenDate[t].name_style,
+            categories: this.getCategoriesByTask(tasksForChosenDate[t]),
+            execution_time_day: tasksForChosenDate[t].execution_time_day,
+            execution_time_all: tasksForChosenDate[t].execution_time_to_day,
+            in_archive: tasksForChosenDate[t].in_archive
+          };
+
+          content.push(
+            <Task
+              date={this.props.date}
+              content={taskContent}
+              isAllMinimize={this.props.isAllMinimize}
+            />
+          );
+        }
+
+        if (tasksForChosenDate[t].in_archive === 1 && this.props.isArchive) {
+          let taskContent = {
+            id: tasksForChosenDate[t].id,
+            statuses: this.getStatusesByTask(tasksForChosenDate[t]),
+            name: tasksForChosenDate[t].name,
+            name_style: tasksForChosenDate[t].name_style,
+            categories: this.getCategoriesByTask(tasksForChosenDate[t]),
+            execution_time_day: tasksForChosenDate[t].execution_time_day,
+            execution_time_all: tasksForChosenDate[t].execution_time_to_day,
+            in_archive: tasksForChosenDate[t].in_archive
+          };
+
+          content.push(<Task date={this.props.date} content={taskContent} />);
+        }
       }
-
-      if (tasksForChosenDate[t].in_archive === 1 && this.props.isArchive) {
-        let taskContent = {
-          id: tasksForChosenDate[t].id,
-          statuses: this.getStatusesByTask(tasksForChosenDate[t]),
-          name: tasksForChosenDate[t].name,
-          name_style: tasksForChosenDate[t].name_style,
-          categories: this.getCategoriesByTask(tasksForChosenDate[t]),
-          execution_time_day: tasksForChosenDate[t].execution_time_day,
-          execution_time_all: tasksForChosenDate[t].execution_time_to_day,
-          in_archive: tasksForChosenDate[t].in_archive
-        };
-
-        content.push(<Task date={this.props.date} content={taskContent} />);
-      }
+    } else {
+      content = (
+        <div className="task">
+          <div className="tasksNotExistsMessage">
+            <p className="tasksNotExistsMessage p">Задачи не найдены.</p>
+            <p className="tasksNotExistsMessage p">
+              {" "}
+              Выберите другую дату или добавьте новую задачу.
+            </p>
+          </div>
+        </div>
+      );
     }
 
     return content;
@@ -164,6 +191,7 @@ class Tasks extends React.Component {
 const mapStateToProps = state => {
   return {
     tasks: state.tasks,
+    tasksIsFetching: state.tasksIsFetching,
     taskStatuses: state.taskStatuses,
     categories: state.categories
   };

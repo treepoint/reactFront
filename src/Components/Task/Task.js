@@ -30,6 +30,19 @@ class Task extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.setState({ isMinimized: this.props.isAllMinimize });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.isAllMinimize !== this.props.isAllMinimize &&
+      this.props.isAllMinimize !== this.state.isMinimized
+    ) {
+      this.setState({ isMinimized: this.props.isAllMinimize });
+    }
+  }
+
   //Сохраним задачу в ДБ
   saveTaskToDatabase(diff) {
     let task = {

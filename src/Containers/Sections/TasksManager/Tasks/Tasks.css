@@ -6,3 +6,17 @@
   flex-wrap: wrap;
   margin-top: 12px;
 }
+
+.tasksNotExistsMessage {
+  display: flex;
+  text-align: center;
+  margin: auto;
+  color: #535353;
+  font-size: 14px;
+  white-space: pre-line;
+  flex-direction: column;
+}
+
+.tasksNotExistsMessage.p {
+  margin: 4px;
+}

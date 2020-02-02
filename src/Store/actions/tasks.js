@@ -8,6 +8,7 @@ import { removeTaskLog } from "./tasksLog";
 const URL = APIURL + "/tasks";
 
 export const SET_TASKS = "SET_TASKS";
+export const IS_TASKS_FETCHING = "IS_TASKS_FETCHING";
 export const IS_TASKS_UPDATING = "IS_TASKS_UPDATING";
 export const REMOVE_TASK = "REMOVE_TASK";
 export const CLEAR_TASKS = "CLEAR_TASKS";
@@ -17,6 +18,10 @@ export const TASK_DELETE_ERROR = "TASK_DELETE_ERROR";
 
 export function setTasks(object) {
   return { type: SET_TASKS, object };
+}
+
+export function setIsFetching(boolean) {
+  return { type: IS_TASKS_FETCHING, boolean };
 }
 
 export function setIsUpdating(boolean) {
@@ -50,6 +55,7 @@ export function fetchTasksByDate(date) {
 
     Axios.get(URL + "/date/" + date, headers).then(response => {
       dispatch(setTasks(response.data));
+      dispatch(setIsFetching(false));
       dispatch(fetchTaskStatuses());
       dispatch(fetchCategories());
     });

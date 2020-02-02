@@ -47,6 +47,7 @@ import { userRoles } from "./userRoles";
 
 import {
   tasks,
+  tasksIsFetching,
   tasksIsUpdating,
   taskUpdateError,
   taskDeleteError
@@ -101,6 +102,7 @@ const appReducer = combineReducers({
   userDeleteError,
   //tasks
   tasks,
+  tasksIsFetching,
   tasksIsUpdating,
   taskUpdateError,
   taskDeleteError,

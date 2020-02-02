@@ -1,7 +1,7 @@
 import React from "react";
 //Подключаем компоненты
 import { TwitterPicker } from "react-color";
-import Action from "../../Action/Action";
+import ContextMenuAction from "./ContextMenuAction/ContextMenuAction";
 import Blur from "../../Blur/Blur";
 //Подключаем изображения иконок и CSS
 import iconBold from "../../../Images/icon_bold.png";
@@ -151,22 +151,22 @@ class ContextMenu extends React.Component {
             this.props.onWheel(event);
           }}
         >
-          <Action
+          <ContextMenuAction
             icon={iconBold}
             isPressed={this.props.bold}
             onClick={event => this.setBold(event)}
           />
-          <Action
+          <ContextMenuAction
             icon={iconItalic}
             isPressed={this.props.italic}
             onClick={event => this.setItalic(event)}
           />
-          <Action
+          <ContextMenuAction
             icon={iconBackgroundColor}
             isPressed={this.state.isBackgroundColorPickerActive}
             onClick={event => this.showBackgroundColorPicker(event)}
           />
-          <Action
+          <ContextMenuAction
             icon={iconBroom}
             onClick={event => this.clearCellStyle(event)}
           />

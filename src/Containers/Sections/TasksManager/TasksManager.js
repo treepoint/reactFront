@@ -18,6 +18,8 @@ import { taskSettings } from "../../../Components/GlobalModalWindow/GLOBAL_MODAL
 import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
 //Картинки
 import settingsIcon from "../../../Images/icon_settings.png";
+import minimizeIcon from "../../../Images/icon_minimize.png";
+import maximizedIcon from "../../../Images/icon_maximized.png";
 //CSS
 import "./TasksManager.css";
 
@@ -26,6 +28,7 @@ class TasksManager extends React.PureComponent {
     super(props);
     this.state = {
       isArchive: false,
+      isAllMinimize: true,
       date: getCurrentFormatDate()
     };
   }
@@ -77,6 +80,11 @@ class TasksManager extends React.PureComponent {
     //Соберем действия
     let actionsArray = [
       {
+        icon: !!this.state.isAllMinimize ? maximizedIcon : minimizeIcon,
+        onClick: () =>
+          this.setState({ isAllMinimize: !this.state.isAllMinimize })
+      },
+      {
         icon: settingsIcon,
         onClick: () => this.props.setModalWindow(taskSettings)
       }
@@ -84,7 +92,7 @@ class TasksManager extends React.PureComponent {
 
     return (
       <div
-        className="backgroundImage"
+        className="tasksWallpaper"
         style={{
           backgroundImage: "url(" + this.props.tasksWallpaper + ")"
         }}
@@ -99,10 +107,17 @@ class TasksManager extends React.PureComponent {
           <DayPickerCarousel onChange={date => this.onPickDate(date)} />
           {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было лага*/}
           <div style={{ display: !!this.state.isArchive ? "none" : null }}>
-            <Tasks date={this.state.date} />
+            <Tasks
+              date={this.state.date}
+              isAllMinimize={this.state.isAllMinimize}
+            />
           </div>
           <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
-            <Tasks isArchive={true} date={this.state.date} />
+            <Tasks
+              isArchive={true}
+              date={this.state.date}
+              isAllMinimize={this.state.isAllMinimize}
+            />
           </div>
           <TasksLog date={this.state.date} />
         </Page>

@@ -4,11 +4,13 @@
   margin-top: -38px;
   background: #f7f7f7;
   padding: 2px;
+  padding-bottom: 0px;
   border: 1px solid #797979;
   min-width: 40px;
   box-shadow: 0px 0px 2px #919191;
   z-index: 1001;
   border-radius: 4px;
+  display: flex;
 }
 
 .contextMenu:before {
