@@ -136,7 +136,13 @@ class Tasks extends React.Component {
             in_archive: tasksForChosenDate[t].in_archive
           };
 
-          content.push(<Task date={this.props.date} content={taskContent} />);
+          content.push(
+            <Task
+              date={this.props.date}
+              content={taskContent}
+              isAllMinimize={this.props.isAllMinimize}
+            />
+          );
         }
       }
     } else {
