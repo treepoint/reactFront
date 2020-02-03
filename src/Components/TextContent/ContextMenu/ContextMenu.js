@@ -143,7 +143,7 @@ class ContextMenu extends React.Component {
           className="contextMenu"
           style={{
             marginLeft: -this.props.scrollLeft + 4 + "px",
-            marginTop: -this.props.scrollTop - 36 + "px"
+            marginTop: -this.props.scrollTop - 37 + "px"
           }}
           tabIndex="1"
           onClick={event => this.onClick(event)}

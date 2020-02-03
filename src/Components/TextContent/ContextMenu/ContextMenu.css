@@ -1,24 +1,24 @@
 .contextMenu {
   position: fixed;
   width: max-content;
-  margin-top: -38px;
+  margin-top: -37px;
   background: #f7f7f7;
   padding: 2px;
   padding-bottom: 0px;
-  border: 1px solid #797979;
+  border: 1px solid #9c9c9c;
   min-width: 40px;
-  box-shadow: 0px 0px 2px #919191;
   z-index: 1001;
   border-radius: 4px;
   display: flex;
+  outline: none;
 }
 
 .contextMenu:before {
-  border: 8px solid transparent;
-  border-top-color: #797979;
+  border: 7px solid transparent;
+  border-top-color: #9c9c9c;
   position: absolute;
   top: 100%;
-  left: 8px;
+  left: 9px;
   content: "";
 }
 .contextMenu:after {
@@ -32,7 +32,7 @@
 
 .twitterPicker {
   background: #f7f7f7 !important;
-  border: 1px solid #797979 !important;
+  border: 1px solid #9c9c9c !important;
 }
 
 .twitterPicker.hidden {
@@ -42,7 +42,7 @@
 .twitterPicker:before {
   border: 11px solid transparent;
   border-bottom-color: transparent;
-  border-bottom-color: #797979;
+  border-bottom-color: #9c9c9c;
   position: absolute;
   bottom: 100%;
   left: 10px;
