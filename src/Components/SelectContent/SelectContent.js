@@ -74,7 +74,7 @@ class SelectContent extends React.PureComponent {
         boxShadow: "none",
         outline: !!state.isFocused ? "1px solid rgb(96, 191, 255)" : "none",
         outlineOffset: "-1px",
-        borderLeft: "8px solid " + state.selectProps.controlColor,
+        borderLeft: "4px solid " + state.selectProps.controlColor,
         fontWeight: !!state.selectProps.isBold ? "900" : "200",
         fontStyle: !!state.selectProps.isItalic ? "italic" : "normal",
         borderColor: state.selectProps.controlColor + " !important"
@@ -94,7 +94,7 @@ class SelectContent extends React.PureComponent {
         minHeight: "32px",
         paddingLeft: "6px",
         borderRight: !!isSelected ? "1px solid #d2d2d2" : "none",
-        borderLeft: "8px solid " + data.style.backgroundColor,
+        borderLeft: "px solid " + data.style.backgroundColor,
         fontWeight: !!data.style.bold ? "900" : "200",
         fontStyle: !!data.style.italic ? "italic" : "normal",
         backgroundColor: !!isSelected

@@ -1,5 +1,5 @@
 .task {
-  width: 226px;
+  width: 240px;
   min-height: 121px;
   height: max-content;
   border: 1px solid #c0c0c0;
@@ -14,7 +14,7 @@
 }
 
 .textField {
-  width: 226px;
+  width: 240px;
   height: 68px;
   margin-bottom: 6px;
   border-bottom: 1px dashed #36266b;
@@ -22,7 +22,7 @@
 }
 
 .selectField.full {
-  width: 226px;
+  width: 240px;
   height: 34px;
   margin-bottom: 6px;
   border-bottom: 1px dashed #d2d2d2;
