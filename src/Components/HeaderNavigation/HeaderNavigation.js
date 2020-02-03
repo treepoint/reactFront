@@ -7,7 +7,12 @@ class HeaderNavigation extends React.PureComponent {
   render() {
     return (
       <div className="headerNavigation">
-        <HeaderNavigationLink exact={true} to="/" value="Главная" />
+        <HeaderNavigationLink
+          exact={true}
+          to="/"
+          value="Главная"
+          isOnlyNotAuth={true}
+        />
         <HeaderNavigationLink
           to="/tasks_manager"
           value="Задачи"

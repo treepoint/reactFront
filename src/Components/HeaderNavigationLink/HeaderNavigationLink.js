@@ -17,6 +17,11 @@ class HeaderNavigationLink extends React.PureComponent {
       return false;
     }
 
+    //Если авторизация не нужна, а она есть
+    if (this.props.isOnlyNotAuth && this.props.userAuthState) {
+      return false;
+    }
+
     //В противном случае все хорошо
     return true;
   }

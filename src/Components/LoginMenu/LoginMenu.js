@@ -1,14 +1,18 @@
 import React from "react";
+//Redux
+import { connect } from "react-redux";
+//Компоненты
 import HeaderAnchor from "../HeaderAnchor/HeaderAnchor";
 import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
 import UserIcon from "../UserIcon/UserIcon";
-import { connect } from "react-redux";
-import "./LoginMenu.css";
+//Модалки
 import {
   registration,
   login,
   profile
 } from "../GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
+//CSS
+import "./LoginMenu.css";
 
 class LoginMenu extends React.PureComponent {
   render() {
