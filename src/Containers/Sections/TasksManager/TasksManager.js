@@ -82,11 +82,13 @@ class TasksManager extends React.PureComponent {
       {
         icon: !!this.state.isAllMinimize ? maximizedIcon : minimizeIcon,
         onClick: () =>
-          this.setState({ isAllMinimize: !this.state.isAllMinimize })
+          this.setState({ isAllMinimize: !this.state.isAllMinimize }),
+        style: { marginLeft: "6px" }
       },
       {
         icon: settingsIcon,
-        onClick: () => this.props.setModalWindow(taskSettings)
+        onClick: () => this.props.setModalWindow(taskSettings),
+        style: { marginLeft: "6px" }
       }
     ];
 

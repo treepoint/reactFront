@@ -26,10 +26,13 @@ class Action extends React.PureComponent {
     return (
       <div
         className={this.getClassName()}
-        style={{
-          background:
-            "url(" + this.props.icon + ") no-repeat scroll transparent"
-        }}
+        style={Object.assign(
+          {
+            background:
+              "url(" + this.props.icon + ") no-repeat scroll transparent"
+          },
+          this.props.style
+        )}
         onClick={event => this.onClick(event)}
       ></div>
     );

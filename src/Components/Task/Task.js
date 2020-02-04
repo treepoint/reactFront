@@ -8,7 +8,7 @@ import TextContent from "../TextContent/TextContent";
 import SelectContent from "../SelectContent/SelectContent";
 import TimeContent from "../TimeContent/TimeContent";
 import ConfirmModalWindow from "../ConfirmModalWindow/ConfirmModalWindow";
-import TaskAction from "../TaskAction/TaskAction";
+import Action from "../Action/Action";
 //Утилиты
 import { getCurrentTimeFormat, getTimeFromMins } from "../../Libs/TimeUtils";
 //Картинки
@@ -18,6 +18,8 @@ import dearchiveIcon from "../../Images/icon_dearchive.png";
 import timeSpanIcon from "../../Images/icon_time_span.png";
 import minimizeIcon from "../../Images/icon_minimize.png";
 import maximizedIcon from "../../Images/icon_maximized.png";
+import iconFire from "../../Images/icon_fire.png";
+import iconFireRed from "../../Images/icon_fire_red.png";
 //CSS
 import "./Task.css";
 
@@ -26,7 +28,8 @@ class Task extends React.Component {
     super();
     this.state = {
       isModalWindowHidden: true,
-      isMinimized: true
+      isMinimized: true,
+      isOnFire: false
     };
   }
 
@@ -70,11 +73,11 @@ class Task extends React.Component {
           value={this.props.content.name}
           width={240}
           height={68}
-          isStylable={true}
+          isStylable={false}
           //Стиль оформления контента
-          bold={this.props.content.name_style.bold}
+          /*     bold={this.props.content.name_style.bold}
           italic={this.props.content.name_style.italic}
-          backgroundColor={this.props.content.name_style.backgroundColor}
+          backgroundColor={this.props.content.name_style.backgroundColor} */
           //Функции
           onChangeStyle={style => {
             this.saveTaskToDatabase({ name_style: style });
@@ -164,8 +167,21 @@ class Task extends React.Component {
   getActions() {
     return (
       <div className="taskActions">
+        <div className={!!this.state.isOnFire ? "flicker" : null}>
+          <Action
+            style={{
+              marginLeft: "6px",
+              paddingTop: "1px",
+              opacity: !!this.state.isOnFire ? 0.8 : 0.3
+            }}
+            icon={!!this.state.isOnFire ? iconFireRed : iconFire}
+            onClick={() => this.setState({ isOnFire: !this.state.isOnFire })}
+          />
+        </div>
+
         {!!this.props.content.in_archive ? null : (
-          <TaskAction
+          <Action
+            style={{ marginLeft: "6px", paddingTop: "1px", opacity: 0.3 }}
             icon={timeSpanIcon}
             onClick={() =>
               this.props.createTaskLog(this.props.content.id, this.props.date)
@@ -175,22 +191,26 @@ class Task extends React.Component {
 
         {!!this.props.content.in_archive ? (
           <React.Fragment>
-            <TaskAction
+            <Action
+              style={{ marginLeft: "6px", paddingTop: "1px", opacity: 0.3 }}
               icon={dearchiveIcon}
               onClick={() => this.saveTaskToDatabase({ in_archive: 0 })}
             />
-            <TaskAction
+            <Action
+              style={{ marginLeft: "6px", paddingTop: "1px", opacity: 0.3 }}
               icon={deleteIcon}
               onClick={() => this.setState({ isModalWindowHidden: false })}
             />
           </React.Fragment>
         ) : (
-          <TaskAction
+          <Action
+            style={{ marginLeft: "6px", paddingTop: "1px", opacity: 0.3 }}
             icon={archiveIcon}
             onClick={() => this.saveTaskToDatabase({ in_archive: 1 })}
           />
         )}
-        <TaskAction
+        <Action
+          style={{ marginLeft: "6px", paddingTop: "1px", opacity: 0.3 }}
           icon={!!this.state.isMinimized ? maximizedIcon : minimizeIcon}
           onClick={() =>
             this.setState({ isMinimized: !this.state.isMinimized })
@@ -243,7 +263,7 @@ class Task extends React.Component {
 
   render() {
     return (
-      <div className="task">
+      <div className={!!this.state.isOnFire ? "task onFire" : "task"}>
         {this.getDeleteModalWindow()}
         {this.getTaskName()}
         {this.getOptionalPart()}
