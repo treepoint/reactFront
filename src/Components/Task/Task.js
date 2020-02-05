@@ -45,7 +45,15 @@ class Task extends React.Component {
     ) {
       this.setState({ isMinimized: this.props.isAllMinimize });
     }
+
+    if (prevProps.content.id !== this.props.content.id) {
+      this.setState({ isMinimized: true, isMenuOpen: false });
+    }
   }
+
+  /*
+   * Обработка и отрисовка данных
+   */
 
   //Сохраним задачу в ДБ
   saveTaskToDatabase(diff) {
@@ -166,47 +174,23 @@ class Task extends React.Component {
     );
   }
 
-  getTaskMenu() {
-    return !!!this.state.isMenuOpen ? null : (
-      <div className="taskMenu">
-        <div className="taskMenuItem">{this.getArchiveActions()}</div>
-        <div className="taskMenuItem">
-          {" "}
-          {!!this.props.content.in_archive
-            ? this.getDeleteTaskAction()
-            : this.getTimeSpanAction()}
-        </div>
-        <div className="taskMenuItem">{this.getOnFireAction()}</div>
-      </div>
-    );
-  }
+  /*
+   * Описания экшенов
+   */
 
-  getShortActions() {
-    return !!!this.props.content.in_archive ? (
-      <div className="taskActions">
-        {!!this.props.content.in_archive
-          ? this.getDeleteTaskAction()
-          : this.getTimeSpanAction()}
-        {this.getOnFireAction()}
-        {this.getTaskMenuAction()}
-      </div>
-    ) : (
-      <div className="taskActions">
-        {this.getArchiveActions()}
-        {this.getTaskMenuAction()}
-      </div>
-    );
-  }
-
-  getAllActions() {
+  getFullTaskAction() {
     return (
-      <div className="taskActions">
-        {this.getArchiveActions()}
-        {!!this.props.content.in_archive
-          ? this.getDeleteTaskAction()
-          : this.getTimeSpanAction()}
-        {this.getOnFireAction()}
-      </div>
+      <Action
+        style={{
+          marginLeft: "215px",
+          height: "6px",
+          paddingTop: "1px",
+          paddingBottom: "2px"
+        }}
+        isVanishing
+        icon={iconMore}
+        onClick={() => this.setState({ isMinimized: !this.state.isMinimized })}
+      />
     );
   }
 
@@ -281,7 +265,7 @@ class Task extends React.Component {
     return (
       <Action
         style={{
-          paddingTop: "1px"
+          paddingTop: "9px"
         }}
         isTransparent
         isPressed={!!this.state.isMenuOpen ? true : false}
@@ -291,22 +275,79 @@ class Task extends React.Component {
     );
   }
 
+  /*
+   * Сборные экшенов
+   */
+
+  getTaskMenu() {
+    return !!!this.state.isMenuOpen ? null : (
+      <div className="taskMenu">{this.getAllTaskActions()}</div>
+    );
+  }
+
+  getShortActions() {
+    return !!!this.props.content.in_archive ? (
+      <div className="taskActions">
+        {!!this.props.content.in_archive
+          ? this.getDeleteTaskAction()
+          : this.getTimeSpanAction()}
+      </div>
+    ) : (
+      <div className="taskActions">{this.getArchiveActions()}</div>
+    );
+  }
+
+  //Все действия внизу таска
+  getAllTaskActions() {
+    return !!this.props.content.in_archive ? (
+      //Для архивной таски
+      <div className="taskActions">
+        {this.getOnFireAction()}
+        {this.getDeleteTaskAction()}
+        {this.getArchiveActions()}
+      </div>
+    ) : (
+      //Для обычной таски
+      <div className="taskActions">
+        {this.getOnFireAction()}
+        {this.getArchiveActions()}
+        {this.getTimeSpanAction()}
+      </div>
+    );
+  }
+
+  /*
+   * Опциональная часть
+   */
+
   getOptionalPart() {
     if (this.state.isMinimized) {
       return (
+        //Минимизированная версия задачи
         <div className="optionalPart">
+          {/*Данные*/}
           {this.getStatusSelect()}
           {this.getCategorySelect()}
           <div className="executionTime">{this.getExecutionTimeAll()}</div>
           <Spacer />
-          {this.getShortActions()}
-          {this.getTaskMenu()}
+          {/*Кнопки*/}
+          {!!this.state.isMenuOpen ? (
+            //Все
+            <div className="taskMenu">{this.getAllTaskActions()}</div>
+          ) : (
+            //Только важные
+            this.getShortActions()
+          )}
+          {/*Кнопка меню*/}
+          {this.getTaskMenuAction()}
         </div>
       );
     } else {
       return (
+        //Раскрытая версия задачи
         <React.Fragment>
           <div className="optionalPart full">
+            {/*Данные*/}
             {this.getStatusSelect()}
             {this.getCategorySelect()}
             <div className="executionTime">
@@ -314,11 +355,16 @@ class Task extends React.Component {
               {this.getExecutionTimeDay()}
             </div>
           </div>
-          {this.getAllActions()}
+          {/*Кнопки*/}
+          {this.getAllTaskActions()}
         </React.Fragment>
       );
     }
   }
+
+  /*
+   * Модалка для удаления
+   */
 
   getDeleteModalWindow() {
     if (!this.state.isModalWindowHidden) {
@@ -334,21 +380,9 @@ class Task extends React.Component {
     }
   }
 
-  getFullTaskAction() {
-    return (
-      <Action
-        style={{
-          marginLeft: "215px",
-          height: "6px",
-          paddingTop: "1px",
-          paddingBottom: "2px"
-        }}
-        isVanishing
-        icon={iconMore}
-        onClick={() => this.setState({ isMinimized: !this.state.isMinimized })}
-      />
-    );
-  }
+  /*
+   * Рендер
+   */
 
   render() {
     return (
