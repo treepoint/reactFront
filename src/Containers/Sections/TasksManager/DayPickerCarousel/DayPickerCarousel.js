@@ -40,9 +40,12 @@ class DayPickerCarousel extends React.PureComponent {
 
   getDaysMenu() {
     let date;
+    let dayId;
+    let dayLable;
     let daysMenu = [];
     let isPrimary = false;
     let isToday = false;
+    let isHoliday = false;
     let today = new Date();
 
     let currentDay = new Date().getDay();
@@ -69,6 +72,7 @@ class DayPickerCarousel extends React.PureComponent {
 
     while (from < to) {
       date = new Date(revokeDays(today, from));
+      dayId = date.getDay();
 
       //Если сегодня — укажем это
       if (getFormatDate(this.state.date) === getFormatDate(date)) {
@@ -84,19 +88,29 @@ class DayPickerCarousel extends React.PureComponent {
         isToday = false;
       }
 
+      //Выделим выходные
+      if (dayId === 6 || dayId === 0) {
+        isHoliday = true;
+      } else {
+        isHoliday = false;
+      }
+
+      dayLable = !!from
+        ? getDDbyDate(date) +
+          "." +
+          getMMbyDate(date) +
+          " " +
+          getShortDayNameByID(dayId)
+        : "Сегодня";
+
       //Добавим кнопки с датами
       daysMenu.unshift({
         name: date,
         key: from,
         isPrimary: isPrimary,
         isToday: isToday,
-        value: !!from
-          ? getDDbyDate(date) +
-            "." +
-            getMMbyDate(date) +
-            " " +
-            getShortDayNameByID(date.getDay())
-          : "Сегодня",
+        isHoliday: isHoliday,
+        value: dayLable,
         onClick: event => this.onClick(event)
       });
 

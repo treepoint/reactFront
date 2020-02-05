@@ -8,7 +8,8 @@ import TextContent from "../TextContent/TextContent";
 import SelectContent from "../SelectContent/SelectContent";
 import TimeContent from "../TimeContent/TimeContent";
 import ConfirmModalWindow from "../ConfirmModalWindow/ConfirmModalWindow";
-import TaskAction from "../TaskAction/TaskAction";
+import Spacer from "../Spacer/Spacer";
+import Action from "../Action/Action";
 //Утилиты
 import { getCurrentTimeFormat, getTimeFromMins } from "../../Libs/TimeUtils";
 //Картинки
@@ -16,8 +17,10 @@ import deleteIcon from "../../Images/icon_delete.png";
 import archiveIcon from "../../Images/icon_archive.png";
 import dearchiveIcon from "../../Images/icon_dearchive.png";
 import timeSpanIcon from "../../Images/icon_time_span.png";
-import minimizeIcon from "../../Images/icon_minimize.png";
-import maximizedIcon from "../../Images/icon_maximized.png";
+import iconFire from "../../Images/icon_fire.png";
+import iconFireRed from "../../Images/icon_fire_red.png";
+import iconMenu from "../../Images/icon_menu.png";
+import iconMore from "../../Images/icon_more.png";
 //CSS
 import "./Task.css";
 
@@ -26,7 +29,8 @@ class Task extends React.Component {
     super();
     this.state = {
       isModalWindowHidden: true,
-      isMinimized: true
+      isMinimized: true,
+      isMenuOpen: false
     };
   }
 
@@ -54,6 +58,7 @@ class Task extends React.Component {
       execution_time_day: this.props.content.execution_time_day,
       execution_time_all: this.props.content.execution_time_all,
       in_archive: this.props.content.in_archive,
+      on_fire: this.props.content.on_fire,
       update_date: this.props.date + " " + getCurrentTimeFormat()
     };
 
@@ -70,11 +75,7 @@ class Task extends React.Component {
           value={this.props.content.name}
           width={240}
           height={68}
-          isStylable={true}
-          //Стиль оформления контента
-          bold={this.props.content.name_style.bold}
-          italic={this.props.content.name_style.italic}
-          backgroundColor={this.props.content.name_style.backgroundColor}
+          isStylable={false}
           //Функции
           onChangeStyle={style => {
             this.saveTaskToDatabase({ name_style: style });
@@ -146,10 +147,14 @@ class Task extends React.Component {
 
   getExecutionTimeAll() {
     return (
-      <div
-        className={!!this.state.isMinimized ? "timeField hidden" : "timeField"}
-      >
-        <div className="timeLabel">Всего: </div>
+      <div className="timeField">
+        <div
+          className={
+            !!this.state.isMinimized ? "timeLabel hidden" : "timeLabel"
+          }
+        >
+          Всего:
+        </div>
         <TimeContent
           disabled={true}
           isStandalone={true}
@@ -161,42 +166,128 @@ class Task extends React.Component {
     );
   }
 
-  getActions() {
+  getTaskMenu() {
+    return !!!this.state.isMenuOpen ? null : (
+      <div className="taskMenu">
+        <div className="taskMenuItem">{this.getArchiveActions()}</div>
+        <div className="taskMenuItem">
+          {" "}
+          {!!this.props.content.in_archive
+            ? this.getDeleteTaskAction()
+            : this.getTimeSpanAction()}
+        </div>
+        <div className="taskMenuItem">{this.getOnFireAction()}</div>
+      </div>
+    );
+  }
+
+  getShortActions() {
+    return !!!this.props.content.in_archive ? (
+      <div className="taskActions">
+        {!!this.props.content.in_archive
+          ? this.getDeleteTaskAction()
+          : this.getTimeSpanAction()}
+        {this.getOnFireAction()}
+        {this.getTaskMenuAction()}
+      </div>
+    ) : (
+      <div className="taskActions">
+        {this.getArchiveActions()}
+        {this.getTaskMenuAction()}
+      </div>
+    );
+  }
+
+  getAllActions() {
     return (
       <div className="taskActions">
-        {!!this.props.content.in_archive ? null : (
-          <TaskAction
-            icon={timeSpanIcon}
-            onClick={() =>
-              this.props.createTaskLog(this.props.content.id, this.props.date)
-            }
-          />
-        )}
+        {this.getArchiveActions()}
+        {!!this.props.content.in_archive
+          ? this.getDeleteTaskAction()
+          : this.getTimeSpanAction()}
+        {this.getOnFireAction()}
+      </div>
+    );
+  }
 
-        {!!this.props.content.in_archive ? (
-          <React.Fragment>
-            <TaskAction
-              icon={dearchiveIcon}
-              onClick={() => this.saveTaskToDatabase({ in_archive: 0 })}
-            />
-            <TaskAction
-              icon={deleteIcon}
-              onClick={() => this.setState({ isModalWindowHidden: false })}
-            />
-          </React.Fragment>
-        ) : (
-          <TaskAction
-            icon={archiveIcon}
-            onClick={() => this.saveTaskToDatabase({ in_archive: 1 })}
-          />
-        )}
-        <TaskAction
-          icon={!!this.state.isMinimized ? maximizedIcon : minimizeIcon}
+  getOnFireAction() {
+    return (
+      <div className={!!this.state.isOnFire ? "flicker" : null}>
+        <Action
+          style={{
+            marginLeft: "6px"
+          }}
+          isTransparent={!!this.props.content.on_fire ? false : true}
+          icon={!!this.props.content.on_fire ? iconFireRed : iconFire}
           onClick={() =>
-            this.setState({ isMinimized: !this.state.isMinimized })
+            this.saveTaskToDatabase({ on_fire: !this.props.content.on_fire })
           }
         />
       </div>
+    );
+  }
+
+  getDeleteTaskAction() {
+    return (
+      <Action
+        style={{ marginLeft: "6px", paddingTop: "1px" }}
+        isTransparent
+        icon={deleteIcon}
+        onClick={() => this.setState({ isModalWindowHidden: false })}
+      />
+    );
+  }
+
+  getTimeSpanAction() {
+    return (
+      <Action
+        style={{ marginLeft: "6px", paddingTop: "1px" }}
+        isTransparent
+        icon={timeSpanIcon}
+        onClick={() =>
+          this.props.createTaskLog(this.props.content.id, this.props.date)
+        }
+      />
+    );
+  }
+
+  getArchiveActions() {
+    return (
+      <React.Fragment>
+        {!!this.props.content.in_archive ? (
+          <div className="taskMenuItem">
+            <Action
+              style={{ marginLeft: "6px", paddingTop: "1px" }}
+              isTransparent
+              icon={dearchiveIcon}
+              onClick={() => this.saveTaskToDatabase({ in_archive: 0 })}
+            />
+          </div>
+        ) : (
+          <div className="taskMenuItem">
+            <Action
+              style={{ marginLeft: "6px", paddingTop: "1px" }}
+              isTransparent
+              icon={archiveIcon}
+              onClick={() => this.saveTaskToDatabase({ in_archive: 1 })}
+            />
+          </div>
+        )}
+      </React.Fragment>
+    );
+  }
+
+  getTaskMenuAction() {
+    return (
+      <Action
+        style={{
+          paddingTop: "1px"
+        }}
+        isTransparent
+        isPressed={!!this.state.isMenuOpen ? true : false}
+        icon={iconMenu}
+        onClick={() => this.setState({ isMenuOpen: !this.state.isMenuOpen })}
+      />
     );
   }
 
@@ -206,8 +297,10 @@ class Task extends React.Component {
         <div className="optionalPart">
           {this.getStatusSelect()}
           {this.getCategorySelect()}
-          <div className="executionTime">{this.getExecutionTimeDay()}</div>
-          {this.getActions()}
+          <div className="executionTime">{this.getExecutionTimeAll()}</div>
+          <Spacer />
+          {this.getShortActions()}
+          {this.getTaskMenu()}
         </div>
       );
     } else {
@@ -217,11 +310,11 @@ class Task extends React.Component {
             {this.getStatusSelect()}
             {this.getCategorySelect()}
             <div className="executionTime">
-              {this.getExecutionTimeDay()}
               {this.getExecutionTimeAll()}
+              {this.getExecutionTimeDay()}
             </div>
           </div>
-          {this.getActions()}
+          {this.getAllActions()}
         </React.Fragment>
       );
     }
@@ -241,10 +334,27 @@ class Task extends React.Component {
     }
   }
 
+  getFullTaskAction() {
+    return (
+      <Action
+        style={{
+          marginLeft: "215px",
+          height: "6px",
+          paddingTop: "1px",
+          paddingBottom: "2px"
+        }}
+        isVanishing
+        icon={iconMore}
+        onClick={() => this.setState({ isMinimized: !this.state.isMinimized })}
+      />
+    );
+  }
+
   render() {
     return (
-      <div className="task">
+      <div className={!!this.props.content.on_fire ? "task onFire" : "task"}>
         {this.getDeleteModalWindow()}
+        {this.getFullTaskAction()}
         {this.getTaskName()}
         {this.getOptionalPart()}
       </div>

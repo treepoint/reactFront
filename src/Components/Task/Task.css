@@ -1,9 +1,10 @@
 .task {
   width: 240px;
-  min-height: 121px;
+  min-height: 125px;
   height: max-content;
-  border: 1px solid #c0c0c0;
+  border: 2px solid #c0c0c0;
   padding: 6px;
+  padding-top: 2px;
   margin-left: 6px;
   margin-right: 6px;
   margin-bottom: 24px;
@@ -11,6 +12,47 @@
   flex-direction: column;
   border-radius: 6px;
   background: #fff;
+  position: relative;
+}
+
+.task.onFire {
+  border-color: #eb6f62;
+  animation: fire 1s alternate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fire {
+  from {
+    border-color: #eb6f62;
+  }
+  to {
+    border-color: #f1a8a0;
+  }
+}
+
+@-o-keyframes fire {
+  from {
+    border-color: #eb6f62;
+  }
+  to {
+    border-color: #f1a8a0;
+  }
+}
+@-moz-keyframes fire {
+  from {
+    border-color: #eb6f62;
+  }
+  to {
+    border-color: #f1a8a0;
+  }
+}
+@-webkit-keyframes fire {
+  from {
+    border-color: #eb6f62;
+  }
+  to {
+    border-color: #f1a8a0;
+  }
 }
 
 .textField {
@@ -57,7 +99,6 @@
 }
 
 .taskActions {
-  opacity: 0.3;
   display: flex;
   padding-top: 4px;
   justify-content: flex-end;
@@ -67,11 +108,24 @@
 .optionalPart {
   display: flex;
   flex-flow: row;
-  justify-content: space-between;
+  justify-content: center;
+  margin-left: 6px;
 }
 
 .optionalPart.full {
   flex-flow: column;
   padding-bottom: 6px;
   border-bottom: 1px dashed #d2d2d2;
+}
+
+.taskMenu {
+  position: absolute;
+  background: #fff;
+  padding: 4px;
+  left: 4px;
+  top: 94px;
+  font-size: 14px;
+  display: flex;
+  width: 212px;
+  justify-content: flex-end;
 }

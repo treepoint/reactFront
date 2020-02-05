@@ -22,6 +22,10 @@
   font-weight: bold;
 }
 
+.radioButton.holiday {
+  color: rgba(138, 138, 138, 0.73);
+}
+
 .radioButton.primary {
   color: #36266b;
   font-weight: bold;

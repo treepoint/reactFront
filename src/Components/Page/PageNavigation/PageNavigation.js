@@ -36,7 +36,15 @@ class PageNavigation extends React.PureComponent {
     let actionsLinks = [];
     if (typeof this.props.actionsArray !== "undefined") {
       actionsLinks = this.props.actionsArray.map((link, index) => {
-        return <Action icon={link.icon} onClick={link.onClick} key={index} />;
+        return (
+          <Action
+            icon={link.icon}
+            onClick={link.onClick}
+            isTransparent
+            key={index}
+            style={link.style}
+          />
+        );
       });
     }
 
