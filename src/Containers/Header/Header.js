@@ -4,6 +4,7 @@ import HeaderNavigation from "../../Components/HeaderNavigation/HeaderNavigation
 import Spacer from "../../Components/Spacer/Spacer";
 import HeaderWarning from "../../Components/HeaderWarning/HeaderWarning";
 import LoginMenu from "../../Components/LoginMenu/LoginMenu";
+import HeaderSumTime from "../../Components/HeaderSumTime/HeaderSumTime";
 import "./Header.css";
 
 class Header extends React.PureComponent {
@@ -13,6 +14,7 @@ class Header extends React.PureComponent {
         <Logo />
         <HeaderNavigation />
         <Spacer />
+        <HeaderSumTime />
         <HeaderWarning
           message={
             <React.Fragment>

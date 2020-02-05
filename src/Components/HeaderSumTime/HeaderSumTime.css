@@ -1,0 +1,10 @@
+.headerSumTime {
+  color: #fff;
+  font-family: "Open Sans", "Source Sans Pro";
+  font-size: 14px;
+  padding-top: 10px;
+  margin-right: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 4px;
+  padding-right: 4px;
+}
