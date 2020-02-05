@@ -4,16 +4,87 @@
   border: 1px solid rgba(255, 255, 255, 0);
   background-size: 24px 24px !important;
   display: inline-block;
+  opacity: 1;
+}
+
+.action.transparent {
+  opacity: 0.3;
+}
+
+.action.vanishing {
+  opacity: 0.1;
 }
 
 .action:hover {
-  opacity: 0.7;
+  opacity: 0.5;
+}
+
+.action:active {
+  opacity: 0.6;
+}
+
+.action.flicker {
+  -webkit-animation: flickerAnimation 2s infinite;
+  -moz-animation: flickerAnimation 2s infinite;
+  -o-animation: flickerAnimation 2s infinite;
+  animation: flickerAnimation 2s infinite;
+}
+
+@keyframes flickerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes flickerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes flickerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes flickerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .action.pressed {
-  border: 1px solid #bdbdbd;
+  border: 1px solid #9c9c9c;
   border-radius: 4px;
-  background-color: #e3e3e3 !important;
+  box-shadow: inset 0px 0px 4px #c2c2c270;
+}
+
+.action.transparent.pressed {
+  opacity: 0.5;
+  border: 1px solid #9c9c9c00;
+  box-shadow: none;
 }
 
 .action.disabled {

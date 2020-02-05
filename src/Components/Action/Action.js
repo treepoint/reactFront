@@ -11,15 +11,29 @@ class Action extends React.PureComponent {
   }
 
   getClassName() {
+    let className = "action";
+
     if (this.props.disabled) {
-      return "action disabled";
+      className += " disabled";
     }
 
     if (!!this.props.isPressed) {
-      return "action pressed";
-    } else {
-      return "action";
+      className += " pressed";
     }
+
+    if (!!this.props.isTransparent) {
+      className += " transparent";
+    }
+
+    if (!!this.props.isVanishing) {
+      className += " vanishing";
+    }
+
+    if (!!this.props.isFlicker) {
+      className += " flicker";
+    }
+
+    return className;
   }
 
   render() {
@@ -29,7 +43,9 @@ class Action extends React.PureComponent {
         style={Object.assign(
           {
             background:
-              "url(" + this.props.icon + ") no-repeat scroll transparent"
+              "url(" +
+              this.props.icon +
+              ") no-repeat scroll 50% 50% transparent"
           },
           this.props.style
         )}

@@ -1,9 +1,10 @@
 .task {
   width: 240px;
-  min-height: 121px;
+  min-height: 125px;
   height: max-content;
-  border: 1px solid #c0c0c0;
+  border: 2px solid #c0c0c0;
   padding: 6px;
+  padding-top: 2px;
   margin-left: 6px;
   margin-right: 6px;
   margin-bottom: 24px;
@@ -11,61 +12,46 @@
   flex-direction: column;
   border-radius: 6px;
   background: #fff;
+  position: relative;
 }
 
 .task.onFire {
-  border: 1px solid #eb6f62;
+  border-color: #eb6f62;
+  animation: fire 1s alternate;
+  animation-iteration-count: infinite;
 }
 
-.flicker {
-  -webkit-animation: flickerAnimation 2s infinite;
-  -moz-animation: flickerAnimation 2s infinite;
-  -o-animation: flickerAnimation 2s infinite;
-  animation: flickerAnimation 2s infinite;
+@keyframes fire {
+  from {
+    border-color: #eb6f62;
+  }
+  to {
+    border-color: #f1a8a0;
+  }
 }
 
-@keyframes flickerAnimation {
-  0% {
-    opacity: 1;
+@-o-keyframes fire {
+  from {
+    border-color: #eb6f62;
   }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 1;
+  to {
+    border-color: #f1a8a0;
   }
 }
-@-o-keyframes flickerAnimation {
-  0% {
-    opacity: 1;
+@-moz-keyframes fire {
+  from {
+    border-color: #eb6f62;
   }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 1;
+  to {
+    border-color: #f1a8a0;
   }
 }
-@-moz-keyframes flickerAnimation {
-  0% {
-    opacity: 1;
+@-webkit-keyframes fire {
+  from {
+    border-color: #eb6f62;
   }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@-webkit-keyframes flickerAnimation {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
-  100% {
-    opacity: 1;
+  to {
+    border-color: #f1a8a0;
   }
 }
 
@@ -122,11 +108,24 @@
 .optionalPart {
   display: flex;
   flex-flow: row;
-  justify-content: space-between;
+  justify-content: center;
+  margin-left: 6px;
 }
 
 .optionalPart.full {
   flex-flow: column;
   padding-bottom: 6px;
   border-bottom: 1px dashed #d2d2d2;
+}
+
+.taskMenu {
+  position: absolute;
+  background: #fff;
+  padding: 4px;
+  left: 4px;
+  top: 94px;
+  font-size: 14px;
+  display: flex;
+  width: 212px;
+  justify-content: flex-end;
 }

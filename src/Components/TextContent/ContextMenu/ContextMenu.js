@@ -1,7 +1,7 @@
 import React from "react";
 //Подключаем компоненты
 import { TwitterPicker } from "react-color";
-import ContextMenuAction from "./ContextMenuAction/ContextMenuAction";
+import Action from "../../Action/Action";
 import Blur from "../../Blur/Blur";
 //Подключаем изображения иконок и CSS
 import iconBold from "../../../Images/icon_bold.png";
@@ -97,8 +97,8 @@ class ContextMenu extends React.Component {
             "#74bce5", //Уверенно голубой
             "#ffd966", //Солнечно желтый
             "#fc9558", //Подгорающе оранжевый
-            "#F78DA7", //Опасно красный
-            "#EB144C", //Конечности в огне
+            "#F78DA7", //Опасно розовый
+            "#EB144C", //Ожоги второй степени
             "#cccccc", //Серый как твоя жизнь
             "#303030", //Темно серый, как это описание
             "#8174e5", //Цвет Донателло
@@ -136,6 +136,12 @@ class ContextMenu extends React.Component {
   }
 
   render() {
+    const actionStyle = {
+      marginLeft: "2px",
+      marginTop: "2px",
+      marginRight: "4px"
+    };
+
     return (
       <React.Fragment>
         {this.getBlur()}
@@ -151,23 +157,27 @@ class ContextMenu extends React.Component {
             this.props.onWheel(event);
           }}
         >
-          <ContextMenuAction
+          <Action
             icon={iconBold}
+            style={actionStyle}
             isPressed={this.props.bold}
             onClick={event => this.setBold(event)}
           />
-          <ContextMenuAction
+          <Action
             icon={iconItalic}
+            style={actionStyle}
             isPressed={this.props.italic}
             onClick={event => this.setItalic(event)}
           />
-          <ContextMenuAction
+          <Action
             icon={iconBackgroundColor}
+            style={actionStyle}
             isPressed={this.state.isBackgroundColorPickerActive}
             onClick={event => this.showBackgroundColorPicker(event)}
           />
-          <ContextMenuAction
+          <Action
             icon={iconBroom}
+            style={actionStyle}
             onClick={event => this.clearCellStyle(event)}
           />
           {this.getBackgroundColorPicker()}

@@ -40,6 +40,7 @@ class PageNavigation extends React.PureComponent {
           <Action
             icon={link.icon}
             onClick={link.onClick}
+            isTransparent
             key={index}
             style={link.style}
           />
