@@ -8,6 +8,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 9999;
 }
 
 .modalWindowBlur.hidden {
@@ -24,6 +25,7 @@
   margin-top: 25vh;
   box-shadow: 0px 4px 8px #00000017;
   background: #ffffff;
+  z-index: 10000;
 }
 
 .confirmModalWindow.hidden {

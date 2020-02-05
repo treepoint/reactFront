@@ -68,7 +68,11 @@ export function createCategory() {
 
     const category = {
       name: "",
-      name_style: "{}",
+      name_style: JSON.stringify({
+        bold: false,
+        italic: false,
+        backgroundColor: "#f7f7f7"
+      }),
       description: ""
     };
 

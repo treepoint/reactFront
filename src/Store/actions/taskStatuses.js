@@ -66,7 +66,15 @@ export function createTaskStatus() {
       return;
     }
 
-    const taskStatus = { name: "", name_style: "{}", type_id: 1 };
+    const taskStatus = {
+      name: "",
+      name_style: JSON.stringify({
+        bold: false,
+        italic: false,
+        backgroundColor: "#f7f7f7"
+      }),
+      type_id: 1
+    };
 
     Axios.post(URL, taskStatus, headers)
       .then(response => {
