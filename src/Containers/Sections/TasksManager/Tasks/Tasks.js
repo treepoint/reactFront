@@ -22,6 +22,28 @@ class Tasks extends React.Component {
     }
   }
 
+  shouldComponentUpdate(prevProps) {
+    //Если задачи не получены — нечего рисовать
+    if (this.props.tasksIsFetching) {
+      return false;
+    } else {
+      //Но если задачи получили, отрисуем только если состояние поменялось
+      if (prevProps.tasks !== this.props.tasks) {
+        return true;
+      } else {
+        //Иначе чекнем, что либо категории либо статусы поменялись
+        if (
+          prevProps.taskStatuses !== this.props.taskStatuses ||
+          prevProps.categories !== this.props.categories
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+  }
+
   //Нужно для правильного позиционирования fixed элементов в тасках
   handleScroll() {
     if (this._scrollBarRef !== null) {
@@ -86,7 +108,7 @@ class Tasks extends React.Component {
     const tasks = this.props.tasks;
     let tasksForChosenDate = {};
 
-    //Отфильтруем за нужную дату
+    //Отфильтруем за нужную дату. Так же проверим, что таск не перенесен
     for (var ts in tasks) {
       if (tasks[ts].for_date === this.props.date) {
         tasksForChosenDate[tasks[ts].id] = tasks[ts];
@@ -98,53 +120,12 @@ class Tasks extends React.Component {
       return null;
     }
 
-    //Проверим есть ли задачи
-    if (Object.keys(tasksForChosenDate).length !== 0) {
-      //Если есть — отрисуем
-      for (var t in tasksForChosenDate) {
-        //Отфильтруем в зависимости от того, смотрим мы по архиву или нет
-        if (tasksForChosenDate[t].in_archive === 0 && !this.props.isArchive) {
-          content.push(
-            <Task
-              date={this.props.date}
-              content={{
-                id: tasksForChosenDate[t].id,
-                statuses: this.getStatusesByTask(tasksForChosenDate[t]),
-                name: tasksForChosenDate[t].name,
-                name_style: tasksForChosenDate[t].name_style,
-                categories: this.getCategoriesByTask(tasksForChosenDate[t]),
-                execution_time_day: tasksForChosenDate[t].execution_time_day,
-                execution_time_all: tasksForChosenDate[t].execution_time_to_day,
-                in_archive: tasksForChosenDate[t].in_archive,
-                on_fire: tasksForChosenDate[t].on_fire
-              }}
-              isAllMinimize={this.props.isAllMinimize}
-            />
-          );
-        }
-
-        if (tasksForChosenDate[t].in_archive === 1 && this.props.isArchive) {
-          content.push(
-            <Task
-              date={this.props.date}
-              content={{
-                id: tasksForChosenDate[t].id,
-                statuses: this.getStatusesByTask(tasksForChosenDate[t]),
-                name: tasksForChosenDate[t].name,
-                name_style: tasksForChosenDate[t].name_style,
-                categories: this.getCategoriesByTask(tasksForChosenDate[t]),
-                execution_time_day: tasksForChosenDate[t].execution_time_day,
-                execution_time_all: tasksForChosenDate[t].execution_time_to_day,
-                in_archive: tasksForChosenDate[t].in_archive,
-                on_fire: tasksForChosenDate[t].on_fire
-              }}
-              isAllMinimize={this.props.isAllMinimize}
-            />
-          );
-        }
-      }
-    } else {
-      content = (
+    //Если же уже загрузили, но задач 0 — отобразим заглушку
+    if (
+      !this.props.tasksIsFetching &&
+      Object.keys(tasksForChosenDate).length === 0
+    ) {
+      return (
         <div className="task">
           <div className="tasksNotExistsMessage">
             <p className="tasksNotExistsMessage p">Задачи не найдены.</p>
@@ -157,6 +138,51 @@ class Tasks extends React.Component {
       );
     }
 
+    //Если задачи есть — соберем их
+    for (var t in tasksForChosenDate) {
+      //Отфильтруем в зависимости от того, смотрим мы по архиву или нет
+      if (tasksForChosenDate[t].in_archive === 0 && !this.props.isArchive) {
+        content.push(
+          <Task
+            date={this.props.date}
+            content={{
+              id: tasksForChosenDate[t].id,
+              statuses: this.getStatusesByTask(tasksForChosenDate[t]),
+              name: tasksForChosenDate[t].name,
+              name_style: tasksForChosenDate[t].name_style,
+              categories: this.getCategoriesByTask(tasksForChosenDate[t]),
+              execution_time_day: tasksForChosenDate[t].execution_time_day,
+              execution_time_all: tasksForChosenDate[t].execution_time_to_day,
+              in_archive: tasksForChosenDate[t].in_archive,
+              on_fire: tasksForChosenDate[t].on_fire
+            }}
+            isAllMinimize={this.props.isAllMinimize}
+          />
+        );
+      }
+
+      if (tasksForChosenDate[t].in_archive === 1 && this.props.isArchive) {
+        content.push(
+          <Task
+            date={this.props.date}
+            content={{
+              id: tasksForChosenDate[t].id,
+              statuses: this.getStatusesByTask(tasksForChosenDate[t]),
+              name: tasksForChosenDate[t].name,
+              name_style: tasksForChosenDate[t].name_style,
+              categories: this.getCategoriesByTask(tasksForChosenDate[t]),
+              execution_time_day: tasksForChosenDate[t].execution_time_day,
+              execution_time_all: tasksForChosenDate[t].execution_time_to_day,
+              in_archive: tasksForChosenDate[t].in_archive,
+              on_fire: tasksForChosenDate[t].on_fire
+            }}
+            isAllMinimize={this.props.isAllMinimize}
+          />
+        );
+      }
+    }
+
+    //И вернем
     return content;
   }
 

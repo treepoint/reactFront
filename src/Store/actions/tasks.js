@@ -55,9 +55,9 @@ export function fetchTasksByDate(date) {
 
     Axios.get(URL + "/date/" + date, headers).then(response => {
       dispatch(setTasks(response.data));
-      dispatch(setIsFetching(false));
       dispatch(fetchTaskStatuses());
       dispatch(fetchCategories());
+      dispatch(setIsFetching(false));
     });
   };
 }
@@ -117,8 +117,15 @@ export function updateTask(task, forDate) {
             task.execution_time_all;
           updatedTask[Object.keys(updatedTask)[0]].execution_time_day =
             task.execution_time_day;
-          //Обновим список
-          dispatch(setTasks(updatedTask));
+
+          //Если таску перенесли на другой день — удалим из текущего набора
+          if (forDate !== task.moved_date) {
+            dispatch(removeTask(task.id));
+          } else {
+            //Иначе обновим задачу в списке
+            dispatch(setTasks(updatedTask));
+          }
+
           dispatch(setIsUpdating(false));
         }
       })

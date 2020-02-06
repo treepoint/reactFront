@@ -24,8 +24,10 @@ class ConfirmModalWindow extends React.PureComponent {
         <form onClick={event => event.stopPropagation()}>
           <h1 className="h1">{this.props.title}</h1>
           <p>{this.props.message}</p>
+          <p>{this.props.children}</p>
           <Button
             isPrimary={true}
+            isDisabled={this.props.isConfirmButtonDisabled}
             value="Да"
             onClick={event => {
               this.hideModalWindow(event);

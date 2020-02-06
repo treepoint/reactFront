@@ -8,7 +8,7 @@
   border: 1px solid rgba(138, 138, 138, 0.73);
   padding-left: 12px;
   display: block !important;
-  width: 126px;
+  width: 100%;
 }
 
 .datePickerButton:hover {
@@ -31,13 +31,11 @@
 
 .datePickerButtonCalendarIcon {
   opacity: 0.3;
-  margin-right: 59px;
   display: block;
   width: 20px;
-  margin-left: 113px;
+  margin-left: calc(100% - 12px);
   margin-top: -26px;
   height: 20px;
-  position: absolute;
 }
 
 .react-datepicker {

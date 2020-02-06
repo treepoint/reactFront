@@ -16,6 +16,12 @@
   border-color: #36266b;
 }
 
+.button.disabled {
+  color: #888;
+  background-color: #f4f4f4;
+  border-color: rgba(145, 145, 145, 0.73);
+}
+
 .button:hover {
   border: 1px solid rgba(68, 68, 68, 0.73);
 }

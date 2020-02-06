@@ -10,8 +10,13 @@ import TimeContent from "../TimeContent/TimeContent";
 import ConfirmModalWindow from "../ConfirmModalWindow/ConfirmModalWindow";
 import Spacer from "../Spacer/Spacer";
 import Action from "../Action/Action";
+import DatePickerButton from "../DatePickerButton/DatePickerButton";
 //Утилиты
-import { getCurrentTimeFormat, getTimeFromMins } from "../../Libs/TimeUtils";
+import {
+  getCurrentTimeFormat,
+  getTimeFromMins,
+  getFormatDate
+} from "../../Libs/TimeUtils";
 //Картинки
 import deleteIcon from "../../Images/icon_delete.png";
 import archiveIcon from "../../Images/icon_archive.png";
@@ -21,6 +26,7 @@ import iconFire from "../../Images/icon_fire.png";
 import iconFireRed from "../../Images/icon_fire_red.png";
 import iconMenu from "../../Images/icon_menu.png";
 import iconMore from "../../Images/icon_more.png";
+import iconNewDate from "../../Images/icon_new_date.png";
 //CSS
 import "./Task.css";
 
@@ -28,9 +34,11 @@ class Task extends React.Component {
   constructor() {
     super();
     this.state = {
-      isModalWindowHidden: true,
+      isDeleteModalWindowHidden: true,
+      isNewDateModalWindowHidden: true,
       isMinimized: true,
-      isMenuOpen: false
+      isMenuOpen: false,
+      movedDate: null
     };
   }
 
@@ -46,8 +54,13 @@ class Task extends React.Component {
       this.setState({ isMinimized: this.props.isAllMinimize });
     }
 
+    //Если при ре рендере здесь оказалась другая задача — сбросим данные
     if (prevProps.content.id !== this.props.content.id) {
-      this.setState({ isMinimized: true, isMenuOpen: false });
+      this.setState({
+        isMinimized: true,
+        isMenuOpen: false,
+        movedDate: null
+      });
     }
   }
 
@@ -67,7 +80,8 @@ class Task extends React.Component {
       execution_time_all: this.props.content.execution_time_all,
       in_archive: this.props.content.in_archive,
       on_fire: this.props.content.on_fire,
-      update_date: this.props.date + " " + getCurrentTimeFormat()
+      update_date: this.props.date + " " + getCurrentTimeFormat(),
+      moved_date: this.props.moved_date
     };
 
     //Склеим объект и разницу
@@ -178,6 +192,17 @@ class Task extends React.Component {
    * Описания экшенов
    */
 
+  getNewDateAction() {
+    return (
+      <Action
+        style={{ marginLeft: "6px", paddingTop: "1px" }}
+        isTransparent
+        icon={iconNewDate}
+        onClick={() => this.setState({ isNewDateModalWindowHidden: false })}
+      />
+    );
+  }
+
   getFullTaskAction() {
     return (
       <Action
@@ -217,7 +242,7 @@ class Task extends React.Component {
         style={{ marginLeft: "6px", paddingTop: "1px" }}
         isTransparent
         icon={deleteIcon}
-        onClick={() => this.setState({ isModalWindowHidden: false })}
+        onClick={() => this.setState({ isDeleteModalWindowHidden: false })}
       />
     );
   }
@@ -311,6 +336,7 @@ class Task extends React.Component {
       <div className="taskActions">
         {this.getOnFireAction()}
         {this.getArchiveActions()}
+        {this.getNewDateAction()}
         {this.getTimeSpanAction()}
       </div>
     );
@@ -367,15 +393,44 @@ class Task extends React.Component {
    */
 
   getDeleteModalWindow() {
-    if (!this.state.isModalWindowHidden) {
+    if (!this.state.isDeleteModalWindowHidden) {
       return (
         <ConfirmModalWindow
           title="Удалить задачу?"
           message="Вместе с задачей будут удалены все записи из лога и статистики. 
                    Если вы хотите закрыть задачу — проставьте у неё статус с типом «Окончательный»."
-          onCancel={() => this.setState({ isModalWindowHidden: true })}
+          onCancel={() => this.setState({ isDeleteModalWindowHidden: true })}
           onConfirm={() => this.props.deleteTask(this.props.content.id)}
         />
+      );
+    }
+  }
+
+  /*
+   * Модалка для переноса задачи на другую дату
+   */
+
+  getNewDateModalWindow() {
+    if (!this.state.isNewDateModalWindowHidden) {
+      return (
+        <ConfirmModalWindow
+          title="Перенести задачу на другую дату?"
+          message="Задача будет перемещена на указанную дату. Отмеченные трудозатраты останутся."
+          onCancel={() => this.setState({ isNewDateModalWindowHidden: true })}
+          onConfirm={() =>
+            this.saveTaskToDatabase({
+              moved_date: getFormatDate(this.state.movedDate)
+            })
+          }
+          isConfirmButtonDisabled={!!this.state.movedDate ? false : true}
+        >
+          <DatePickerButton
+            date={this.state.movedDate}
+            onChange={date => this.setState({ movedDate: date })}
+            placeholderText="Новая дата задачи"
+            width={146}
+          />
+        </ConfirmModalWindow>
       );
     }
   }
@@ -387,6 +442,7 @@ class Task extends React.Component {
   render() {
     return (
       <div className={!!this.props.content.on_fire ? "task onFire" : "task"}>
+        {this.getNewDateModalWindow()}
         {this.getDeleteModalWindow()}
         {this.getFullTaskAction()}
         {this.getTaskName()}

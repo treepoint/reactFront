@@ -27,9 +27,12 @@ class DatePickerButton extends React.PureComponent {
     let className = "datePickerButton";
     let selected = null;
 
-    if (this.props.date === this.state.date) {
-      className += " chosen";
-      selected = this.state.date;
+    //Если передали дату — сравним совпадает ли выбранная с этой. Если да — выделим
+    if (typeof this.props.date !== "undefined" && this.props.date !== null) {
+      if (this.props.date === this.state.date) {
+        className += " chosen";
+        selected = this.state.date;
+      }
     }
 
     return (
