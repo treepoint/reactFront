@@ -154,7 +154,8 @@ class Tasks extends React.Component {
               execution_time_day: tasksForChosenDate[t].execution_time_day,
               execution_time_all: tasksForChosenDate[t].execution_time_to_day,
               in_archive: tasksForChosenDate[t].in_archive,
-              on_fire: tasksForChosenDate[t].on_fire
+              on_fire: tasksForChosenDate[t].on_fire,
+              moved_date: tasksForChosenDate[t].moved_date
             }}
             isAllMinimize={this.props.isAllMinimize}
           />
@@ -174,7 +175,8 @@ class Tasks extends React.Component {
               execution_time_day: tasksForChosenDate[t].execution_time_day,
               execution_time_all: tasksForChosenDate[t].execution_time_to_day,
               in_archive: tasksForChosenDate[t].in_archive,
-              on_fire: tasksForChosenDate[t].on_fire
+              on_fire: tasksForChosenDate[t].on_fire,
+              moved_date: tasksForChosenDate[t].moved_date
             }}
             isAllMinimize={this.props.isAllMinimize}
           />

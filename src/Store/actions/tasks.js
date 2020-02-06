@@ -109,20 +109,21 @@ export function updateTask(task, forDate) {
     Axios.put(URL + "/" + task.id, task, headers)
       .then(response => {
         if (typeof response.data === "object") {
-          let updatedTask = response.data;
-          //Проставим дату за которую считаем таску
-          updatedTask[Object.keys(updatedTask)[0]].for_date = forDate;
-          //Проставим время исполнения из исходного таска
-          updatedTask[Object.keys(updatedTask)[0]].execution_time_to_day =
-            task.execution_time_all;
-          updatedTask[Object.keys(updatedTask)[0]].execution_time_day =
-            task.execution_time_day;
-
           //Если таску перенесли на другой день — удалим из текущего набора
-          if (forDate !== task.moved_date) {
+          if (forDate !== task.moved_date && task.moved_date !== null) {
             dispatch(removeTask(task.id));
           } else {
             //Иначе обновим задачу в списке
+
+            let updatedTask = response.data;
+            //Проставим дату за которую считаем таску
+            updatedTask[Object.keys(updatedTask)[0]].for_date = forDate;
+            //Проставим время исполнения из исходного таска
+            updatedTask[Object.keys(updatedTask)[0]].execution_time_to_day =
+              task.execution_time_all;
+            updatedTask[Object.keys(updatedTask)[0]].execution_time_day =
+              task.execution_time_day;
+
             dispatch(setTasks(updatedTask));
           }
 

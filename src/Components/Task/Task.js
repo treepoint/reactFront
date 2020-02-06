@@ -81,7 +81,7 @@ class Task extends React.Component {
       in_archive: this.props.content.in_archive,
       on_fire: this.props.content.on_fire,
       update_date: this.props.date + " " + getCurrentTimeFormat(),
-      moved_date: this.props.moved_date
+      moved_date: this.props.content.moved_date
     };
 
     //Склеим объект и разницу
