@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { connectRouter } from "connected-react-router";
 
 import { CLEAR_STATE } from "../actions/app";
 
@@ -62,64 +63,66 @@ import {
 
 import { userSettings } from "./userSettings";
 
-const appReducer = combineReducers({
-  //app
-  userAuthState,
-  authError,
-  showBroadcastMessage,
-  showHeaderWarning,
-  //Page
-  scrollTop,
-  scrollLeft,
-  //globalModalWindow
-  modalWindowState,
-  modalWindowName,
-  //token
-  token,
-  //currentUser
-  currentUser,
-  updateProfileError,
-  registrationError,
-  currentUserIsAdmin,
-  //userRoles
-  userRoles,
-  //taskStatusesTypes
-  taskStatusesTypes,
-  //taskStatuses
-  taskStatuses,
-  taskStatusIsUpdating,
-  taskStatusUpdateError,
-  taskStatusCreateError,
-  //categories
-  categories,
-  categoriesIsUpdating,
-  categoryUpdateError,
-  categoryCreateError,
-  //users
-  users,
-  usersIsUpdating,
-  userUpdateError,
-  userDeleteError,
-  //tasks
-  tasks,
-  tasksIsFetching,
-  tasksIsUpdating,
-  taskUpdateError,
-  taskDeleteError,
-  //tasksLog
-  tasksLog,
-  tasksLogIsUpdating,
-  taskLogUpdateError,
-  taskLogDeleteError,
-  //settings
-  userSettings
-});
+const appReducer = history =>
+  combineReducers({
+    router: connectRouter(history),
+    //app
+    userAuthState,
+    authError,
+    showBroadcastMessage,
+    showHeaderWarning,
+    //Page
+    scrollTop,
+    scrollLeft,
+    //globalModalWindow
+    modalWindowState,
+    modalWindowName,
+    //token
+    token,
+    //currentUser
+    currentUser,
+    updateProfileError,
+    registrationError,
+    currentUserIsAdmin,
+    //userRoles
+    userRoles,
+    //taskStatusesTypes
+    taskStatusesTypes,
+    //taskStatuses
+    taskStatuses,
+    taskStatusIsUpdating,
+    taskStatusUpdateError,
+    taskStatusCreateError,
+    //categories
+    categories,
+    categoriesIsUpdating,
+    categoryUpdateError,
+    categoryCreateError,
+    //users
+    users,
+    usersIsUpdating,
+    userUpdateError,
+    userDeleteError,
+    //tasks
+    tasks,
+    tasksIsFetching,
+    tasksIsUpdating,
+    taskUpdateError,
+    taskDeleteError,
+    //tasksLog
+    tasksLog,
+    tasksLogIsUpdating,
+    taskLogUpdateError,
+    taskLogDeleteError,
+    //settings
+    userSettings
+  });
 
-const rootReducer = (state, action) => {
+const rootReducer = history => (state, action) => {
   //Очистим все данные в сторе
   if (action.type === CLEAR_STATE) state = undefined;
 
-  return appReducer(state, action);
+  return appReducer(history)(state, action);
 };
 
 export default rootReducer;

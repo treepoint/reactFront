@@ -1,6 +1,8 @@
 //Обвязка для API
 import { APIURL } from "../APIConfiguration";
 import Axios from "axios";
+//Подключаем роутер
+import { push } from "connected-react-router";
 //Подключаем cookies
 import { read_cookie, bake_cookie, delete_cookie } from "../../Libs/Sfcookies";
 //Другие actions
@@ -47,6 +49,8 @@ export function logoff() {
     delete_cookie("token");
     delete_cookie("user_id");
     delete_cookie("refresh_token");
+
+    dispatch(push("/"));
   };
 }
 
@@ -127,6 +131,8 @@ export function login() {
         if (state.modalWindowState === true) {
           dispatch(setModalWindowState(false));
         }
+
+        dispatch(push("/tasks_manager"));
       })
       .catch(error => {
         let errorMessage = null;

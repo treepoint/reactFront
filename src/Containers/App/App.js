@@ -14,6 +14,7 @@ import TaskStatuses from "../Sections/TaskStatuses/TaskStatuses";
 import Categories from "../Sections/Categories/Categories";
 import StatisticRouter from "../Sections/Statistic/StatisticRouter";
 import About from "../Sections/About/About";
+import Page404 from "../Sections/Page404/Page404";
 import AdminPanelRouter from "../Sections/AdminPanel/AdminPanelRouter";
 import Bottom from "../Bottom/Bottom";
 //CSS
@@ -31,12 +32,20 @@ class App extends React.PureComponent {
         <Header />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/tasks_manager" component={TasksManager} />
-          <Route path="/task_statuses" component={TaskStatuses} />
-          <Route path="/categories" component={Categories} />
-          <Route path="/statistic" component={StatisticRouter} />
-          <Route path="/admin" component={AdminPanelRouter} />
+        </Switch>
+        {/*Если не авторизован — эти пункты вообще не обрабатываем*/}
+        {!!this.props.userAuthState ? (
+          <Switch>
+            <Route path="/tasks_manager" component={TasksManager} />
+            <Route path="/task_statuses" component={TaskStatuses} />
+            <Route path="/categories" component={Categories} />
+            <Route path="/statistic" component={StatisticRouter} />
+            <Route path="/admin" component={AdminPanelRouter} />
+          </Switch>
+        ) : null}
+        <Switch>
           <Route path="/about" component={About} />
+          <Route component={Page404} />
         </Switch>
         {getGlobalModalWindow(
           this.props.modalWindowState,
@@ -51,7 +60,8 @@ class App extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     modalWindowState: state.modalWindowState,
-    modalWindowName: state.modalWindowName
+    modalWindowName: state.modalWindowName,
+    userAuthState: state.userAuthState
   };
 };
 
