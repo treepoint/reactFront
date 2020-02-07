@@ -26,22 +26,28 @@ class Tasks extends React.Component {
     //Если задачи не получены — нечего рисовать
     if (this.props.tasksIsFetching) {
       return false;
+    }
+
+    //Но если задачи получили, отрисуем только если состояние поменялось
+    if (prevProps.tasks !== this.props.tasks) {
+      return true;
     } else {
-      //Но если задачи получили, отрисуем только если состояние поменялось
-      if (prevProps.tasks !== this.props.tasks) {
+      //Иначе чекнем, что либо категории либо статусы поменялись
+      if (
+        prevProps.taskStatuses !== this.props.taskStatuses ||
+        prevProps.categories !== this.props.categories
+      ) {
         return true;
-      } else {
-        //Иначе чекнем, что либо категории либо статусы поменялись
-        if (
-          prevProps.taskStatuses !== this.props.taskStatuses ||
-          prevProps.categories !== this.props.categories
-        ) {
-          return true;
-        } else {
-          return false;
-        }
       }
     }
+
+    //И если глобальные настройки поменялись — тоже перерендерим
+    if (prevProps.isAllMinimize !== this.props.isAllMinimize) {
+      return true;
+    }
+
+    //Иначе — не рендерим
+    return false;
   }
 
   //Нужно для правильного позиционирования fixed элементов в тасках
