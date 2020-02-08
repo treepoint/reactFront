@@ -14,7 +14,6 @@ import TaskStatuses from "../Sections/TaskStatuses/TaskStatuses";
 import Categories from "../Sections/Categories/Categories";
 import StatisticRouter from "../Sections/Statistic/StatisticRouter";
 import About from "../Sections/About/About";
-import Page404 from "../Sections/Page404/Page404";
 import AdminPanelRouter from "../Sections/AdminPanel/AdminPanelRouter";
 import Bottom from "../Bottom/Bottom";
 //CSS
@@ -45,7 +44,7 @@ class App extends React.PureComponent {
         ) : null}
         <Switch>
           <Route path="/about" component={About} />
-          <Route component={Page404} />
+          <Route component={Home} />
         </Switch>
         {getGlobalModalWindow(
           this.props.modalWindowState,
