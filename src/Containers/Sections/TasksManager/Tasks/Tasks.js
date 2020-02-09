@@ -1,13 +1,10 @@
 import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
-import { setScrollTop, setScrollLeft } from "../../../../Store/actions/page";
 import { fetchTasksByDate } from "../../../../Store/actions/tasks";
 //Компоненты
 import Task from "../../../../Components/Task/Task";
 import AddTaskButton from "../../../../Components/AddTaskButton/AddTaskButton";
-//Подключаем красивые скроллы
-import ReactCustomScroll from "react-scrollbars-custom";
 //CSS
 import "./Tasks.css";
 
@@ -48,14 +45,6 @@ class Tasks extends React.Component {
 
     //Иначе — не рендерим
     return false;
-  }
-
-  //Нужно для правильного позиционирования fixed элементов в тасках
-  handleScroll() {
-    if (this._scrollBarRef !== null) {
-      this.props.setScrollTop(this._scrollBarRef.scrollTop);
-      this.props.setScrollLeft(this._scrollBarRef.scrollLeft);
-    }
   }
 
   //Категории по задаче
@@ -147,28 +136,10 @@ class Tasks extends React.Component {
     //Если задачи есть — соберем их
     for (var t in tasksForChosenDate) {
       //Отфильтруем в зависимости от того, смотрим мы по архиву или нет
-      if (tasksForChosenDate[t].in_archive === 0 && !this.props.isArchive) {
-        content.push(
-          <Task
-            date={this.props.date}
-            content={{
-              id: tasksForChosenDate[t].id,
-              statuses: this.getStatusesByTask(tasksForChosenDate[t]),
-              name: tasksForChosenDate[t].name,
-              name_style: tasksForChosenDate[t].name_style,
-              categories: this.getCategoriesByTask(tasksForChosenDate[t]),
-              execution_time_day: tasksForChosenDate[t].execution_time_day,
-              execution_time_all: tasksForChosenDate[t].execution_time_to_day,
-              in_archive: tasksForChosenDate[t].in_archive,
-              on_fire: tasksForChosenDate[t].on_fire,
-              moved_date: tasksForChosenDate[t].moved_date
-            }}
-            isAllMinimize={this.props.isAllMinimize}
-          />
-        );
-      }
-
-      if (tasksForChosenDate[t].in_archive === 1 && this.props.isArchive) {
+      if (
+        (tasksForChosenDate[t].in_archive === 0 && !this.props.isArchive) ||
+        (tasksForChosenDate[t].in_archive === 1 && this.props.isArchive)
+      ) {
         content.push(
           <Task
             date={this.props.date}
@@ -200,28 +171,14 @@ class Tasks extends React.Component {
 
   render() {
     return (
-      <ReactCustomScroll
-        //Задаем стиль
-        style={{
-          width: "100%",
-          height: "calc(-213px + 100vh)",
-          marginTop: "6px"
-        }}
-        ref={ref => {
-          this._scrollBarRef = ref;
-        }}
-        //Обрабатываем скролл
-        onScrollStop={() => this.handleScroll()}
-      >
-        <div className="taskContainer">
-          {this.getTasks()}
+      <div className="taskContainer">
+        {this.getTasks()}
 
-          {/*Если это не архив — покажем кнопку добавления тасков*/ !!!this
-            .props.isArchive
-            ? this.getAddTaskButton()
-            : null}
-        </div>
-      </ReactCustomScroll>
+        {/*Если это не архив — покажем кнопку добавления тасков*/ !!!this.props
+          .isArchive
+          ? this.getAddTaskButton()
+          : null}
+      </div>
     );
   }
 }
@@ -237,12 +194,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setScrollTop: number => {
-      dispatch(setScrollTop(number));
-    },
-    setScrollLeft: number => {
-      dispatch(setScrollLeft(number));
-    },
     fetchTasksByDate: date => {
       dispatch(fetchTasksByDate(date));
     }

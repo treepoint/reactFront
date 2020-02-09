@@ -18,13 +18,6 @@ class Table extends React.Component {
     this.setColsWidth(this.props.children);
   }
 
-  componentDidUpdate() {
-    //Если при обновлении задали без скроллов — проскролим до самого верха
-    if (this.props.noScroll === true) {
-      this._scrollBarRef.scrollToTop();
-    }
-  }
-
   setColsWidth(table) {
     //Соберем массив, описывающий столбцы
     let colsDescription = table[0].map(column => {

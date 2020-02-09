@@ -1,18 +1,18 @@
-.textContent {
+.textareaAutosize {
   padding-left: 6px;
   white-space: pre-line;
   overflow-x: hidden;
   overflow-y: hidden;
   text-overflow: ellipsis;
-  position: absolute !important;
   border: none;
   font-family: "Open Sans", "Source Sans Pro";
   font-size: 14px;
   resize: none;
   line-height: 30px;
+  background: #fff0;
 }
 
-.textContent.chosen {
+.textareaAutosize.widearea {
   display: inline-table;
   background: white;
   z-index: 1000;
@@ -22,13 +22,33 @@
   white-space: pre-line;
   resize: vertical;
   max-height: none !important;
+  outline: 1px solid rgb(96, 191, 255) !important;
 }
 
-.textContent:focus {
+.textareaAutosize:focus {
+  outline: none;
+}
+
+.textareaScrollbar:focus-within {
   outline: 1px solid rgb(96, 191, 255);
-  outline-offset: -1px;
 }
 
-.textContent:disabled {
-  background: rgba(255, 255, 255, 0);
+.Scrollbars-TrackY {
+  width: 6px !important;
+  opacity: 0.5;
+}
+
+.ScrollbarsCustom-Track.ScrollbarsCustom-TrackY {
+  opacity: 0.5;
+}
+
+.ScrollbarsCustom-Content {
+  box-sizing: border-box;
+  padding: 0.05px;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.ScrollbarsCustom-Scroller {
+  height: calc(100% + 4px);
 }
