@@ -8,11 +8,14 @@ import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
 import { connect } from "react-redux";
 import { fetchTaskStatuses } from "../../../Store/actions/taskStatuses";
 import { fetchCategories } from "../../../Store/actions/categories";
+import { setScrollTop, setScrollLeft } from "../../../Store/actions/page";
+//Подключаем красивые скроллы
+import ReactCustomScroll from "react-scrollbars-custom";
+//Подключаем модалки
 import {
   setModalWindowState,
   setModalWindowName
 } from "../../../Store/actions/globalModalWindow";
-//Подключаем модалки
 import { taskSettings } from "../../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Утилиты
 import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
@@ -36,6 +39,14 @@ class TasksManager extends React.PureComponent {
   componentDidMount() {
     this.props.fetchCategories();
     this.props.fetchTaskStatuses();
+  }
+
+  //Нужно для правильного позиционирования fixed элементов в тасках
+  handleScroll() {
+    if (this._scrollBarRef !== null) {
+      this.props.setScrollTop(this._scrollBarRef.scrollTop);
+      this.props.setScrollLeft(this._scrollBarRef.scrollLeft);
+    }
   }
 
   onPickDate(date) {
@@ -62,17 +73,24 @@ class TasksManager extends React.PureComponent {
     return <Tasks isArchive={true} date={this.state.date} />;
   };
 
+  changeArchiveCurrentTasks() {
+    this.setState({ isArchive: !this.state.isArchive });
+    //Нужно, чтобы при переключении архив\задачи правильно позиционировать fixed элементы
+    this.props.setScrollTop(0);
+    this.props.setScrollLeft(0);
+  }
+
   render() {
     //Соберем меню страницы
     let anchorLinksArray = [
       {
         value: "Текущие",
-        callback: () => this.setState({ isArchive: false }),
+        callback: () => this.changeArchiveCurrentTasks(),
         isCurrent: !this.state.isArchive
       },
       {
         value: "Архив",
-        callback: () => this.setState({ isArchive: true }),
+        callback: () => this.changeArchiveCurrentTasks(),
         isCurrent: this.state.isArchive
       }
     ];
@@ -107,20 +125,35 @@ class TasksManager extends React.PureComponent {
           isNotScrollable={true}
         >
           <DayPickerCarousel onChange={date => this.onPickDate(date)} />
-          {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было лага*/}
-          <div style={{ display: !!this.state.isArchive ? "none" : null }}>
-            <Tasks
-              date={this.state.date}
-              isAllMinimize={this.state.isAllMinimize}
-            />
-          </div>
-          <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
-            <Tasks
-              isArchive={true}
-              date={this.state.date}
-              isAllMinimize={this.state.isAllMinimize}
-            />
-          </div>
+          {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было задержки*/}
+
+          <ReactCustomScroll
+            //Задаем стиль
+            style={{
+              width: "100%",
+              height: "calc(-213px + 100vh)",
+              marginTop: "6px"
+            }}
+            ref={ref => {
+              this._scrollBarRef = ref;
+            }}
+            //Обрабатываем скролл
+            onScrollStop={() => this.handleScroll()}
+          >
+            <div style={{ display: !!this.state.isArchive ? "none" : null }}>
+              <Tasks
+                date={this.state.date}
+                isAllMinimize={this.state.isAllMinimize}
+              />
+            </div>
+            <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
+              <Tasks
+                isArchive={true}
+                date={this.state.date}
+                isAllMinimize={this.state.isAllMinimize}
+              />
+            </div>
+          </ReactCustomScroll>
           <TasksLog date={this.state.date} />
         </Page>
       </div>
@@ -147,6 +180,12 @@ const mapDispatchToProps = dispatch => {
     setModalWindow: modalWindowName => {
       dispatch(setModalWindowState(true));
       dispatch(setModalWindowName(modalWindowName));
+    },
+    setScrollTop: number => {
+      dispatch(setScrollTop(number));
+    },
+    setScrollLeft: number => {
+      dispatch(setScrollLeft(number));
     }
   };
 };

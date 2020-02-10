@@ -2,9 +2,9 @@ import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
 //Подключаем компоненты
-import TextareaAutosize from "react-autosize-textarea";
 import ContextMenu from "./ContextMenu/ContextMenu";
-import Blur from "../Blur/Blur";
+import TextareaScrollbar from "../TextareaScrollbar/TextareaScrollbar";
+//Подключаем красивые скроллы
 import "./TextContent.css";
 
 class TextContent extends React.Component {
@@ -12,58 +12,12 @@ class TextContent extends React.Component {
     super();
     this.state = {
       contextMenuIsHidden: true,
-      wideEditAreaIsHidden: true,
-      value: "",
-      isReadOnly: false,
       isChrome: this.isChrome()
     };
   }
 
-  componentDidMount() {
-    this.setState({ value: this.props.value });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.value !== this.props.value) {
-      if (!this.state.isReadOnly && this.state.value !== this.props.value) {
-        this.setState({ value: this.props.value });
-      }
-    }
-  }
-
-  //Изменяем контент по вводу
-  onChange(event) {
-    let value = event.target.value;
-
-    //Если в режиме одной строки — просто удалим переносы при вводе если они были
-    if (this.props.isSingleLineMode) {
-      value = value.replace(/\n/g, "");
-    }
-
-    this.setState({ value });
-  }
-
   isChrome() {
     return navigator.userAgent.indexOf("Chrome") + 1;
-  }
-
-  onKeyPress(event) {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      this.onEndEditing();
-    }
-  }
-
-  onEndEditing() {
-    if (this.state.value !== this.props.value) {
-      this.props.onChangeValue(this.state.value);
-    }
-
-    this.setState({ isReadOnly: false });
-
-    this.setWideEditAreaHidden();
   }
 
   //Срабатывает при вызове контекстного меню
@@ -80,84 +34,23 @@ class TextContent extends React.Component {
     }
   }
 
-  hideAllEditing() {
-    //Скроем контекстное меню
-    this.setContextMenuHidden();
-    //Скроем большую форму редактирования
-    this.setWideEditAreaHidden();
-  }
-
-  //Скроем контекстное меню
-  setContextMenuHidden() {
-    this.setState({
-      contextMenuIsHidden: true
-    });
-  }
-
-  //Скроем большую форму редактирования
-  setWideEditAreaHidden() {
-    this.setState({
-      wideEditAreaIsHidden: true
-    });
-  }
-
-  //Срабатывает при двойном клике
-  showWideEditArea() {
-    if (this.props.disabled || this.props.isHeader) {
-      return;
-    }
-
-    this.setState({
-      wideEditAreaIsHidden: false,
-      contextMenuIsHidden: true
-    });
-  }
-
-  getClassName() {
-    if (!this.state.wideEditAreaIsHidden) {
-      return "textContent chosen";
-    }
-
-    return "textContent";
-  }
-
   //Получаем стиль ячейки заголовка на основании стиля контента
   getStyle() {
     if (this.props.isHeader) {
       return {
         fontWeight: "900",
-        width: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
-        minWidth: this.props.width - (!!this.state.isChrome ? 9 : 8) + "px",
-        minHeight: this.props.height - 4 + "px",
-        color: "#000"
+        color: "#000",
+        marginTop: "0px"
       };
     } else {
       return {
-        marginLeft: !!this.state.wideEditAreaIsHidden
-          ? 0 + "px"
-          : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
-        marginTop: !!this.state.wideEditAreaIsHidden
-          ? 0 + "px"
-          : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
         backgroundColor: !!this.props.disabled
           ? "rgb(251, 251, 251)"
           : "#ffffff",
         borderLeft: "8px solid " + this.props.backgroundColor,
         fontWeight: !!this.props.bold ? "900" : "200",
         fontStyle: !!this.props.italic ? "italic" : "normal",
-        color: !!this.props.disabled ? "#444" : "#000",
-        width:
-          this.props.width -
-          (!!this.props.isStylable
-            ? !!this.state.isChrome
-              ? 17
-              : 16
-            : !!this.state.isChrome
-            ? 9
-            : 8) +
-          "px",
-        minWidth: this.props.width - (!!this.state.isChrome ? 17 : 16) + "px",
-        minHeight: this.props.height - (!!this.state.isChrome ? 4 : 0) + "px"
+        color: !!this.props.disabled ? "#444" : "#000"
       };
     }
   }
@@ -165,23 +58,17 @@ class TextContent extends React.Component {
   //Получаем контент ячейки в зависимости от того шапка таблицы это или обычная ячейка
   getCellContent() {
     return (
-      <TextareaAutosize
-        spellCheck="false"
-        className={this.getClassName()}
+      <TextareaScrollbar
         style={this.getStyle()}
-        //Задаем контент
-        value={this.state.value}
+        height={this.props.height}
+        width={this.props.width - (!!this.state.isChrome ? 2 : 1)}
+        spellCheck="false"
+        value={this.props.value}
         onFocus={() => this.setState({ isReadOnly: true })}
         disabled={!!this.props.disabled ? true : false}
-        onChange={event => this.onChange(event)}
-        //Обрабатываем двойной клик
-        onDoubleClick={() => this.showWideEditArea()}
+        onChange={value => this.props.onChangeValue(value)}
         //Обрабатываем контекстное меню
         onContextMenu={event => this.showContextMenu(event)}
-        //Обрабатываем потерю фокуса
-        onBlur={() => this.onEndEditing()}
-        maxRows={1}
-        onKeyPress={event => this.onKeyPress(event)}
       />
     );
   }
@@ -198,25 +85,13 @@ class TextContent extends React.Component {
           italic={this.props.italic}
           backgroundColor={this.props.backgroundColor}
           //Функции
-          setContextMenuHidden={event => this.setContextMenuHidden(event)}
+          setContextMenuHidden={() =>
+            this.setState({
+              contextMenuIsHidden: true
+            })
+          }
           onChangeStyle={style => this.props.onChangeStyle(style)}
           onWheel={event => this.setContextMenuHidden(event)}
-        />
-      );
-    }
-  }
-
-  //Получим блюр для зоны редактирования
-  getBlur() {
-    if (!this.state.wideEditAreaIsHidden) {
-      return (
-        <Blur
-          onClick={() => {
-            this.hideAllEditing();
-          }}
-          onContextMenu={event => {
-            this.showContextMenu(event);
-          }}
         />
       );
     }
@@ -227,7 +102,6 @@ class TextContent extends React.Component {
       <React.Fragment>
         {this.getContextMenu()}
         {this.getCellContent()}
-        {this.getBlur()}
       </React.Fragment>
     );
   }
