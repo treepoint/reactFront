@@ -1,5 +1,6 @@
 import React from "react";
 import TimeField from "react-simple-timefield";
+
 import "./TimeContent.css";
 
 class TimeContent extends React.PureComponent {
@@ -20,6 +21,7 @@ class TimeContent extends React.PureComponent {
       if (!this.state.isReadOnly && this.state.value !== this.props.value) {
         this.setState({ value: this.props.value });
       }
+      this.setState({ isReadOnly: false });
     }
   }
 
@@ -29,15 +31,17 @@ class TimeContent extends React.PureComponent {
 
   onKeyPress(event) {
     if (event.key === "Enter") {
-      this.props.onChangeValue(this.state.value);
-      this.setState({ isReadOnly: false });
+      this.setState(
+        { isReadOnly: false },
+        this.props.onChangeValue(this.state.value)
+      );
     }
   }
 
-  onBlur() {
+  onBlur(event) {
+    this.setState({ isReadOnly: false });
     if (this.state.value !== this.props.value) {
       this.props.onChangeValue(this.state.value);
-      this.setState({ isReadOnly: false });
     }
   }
 
@@ -69,18 +73,20 @@ class TimeContent extends React.PureComponent {
 
   render() {
     return (
-      <TimeField
-        value={this.state.value}
-        disabled={!!this.props.disabled ? true : false}
-        className={
-          !!this.props.isStandalone ? "timeContent standalone" : "timeContent"
-        }
-        style={this.getStyle()}
-        onFocus={() => this.setState({ isReadOnly: true })}
-        onChange={event => this.onChange(event)}
-        onBlur={event => this.onBlur(event)}
-        onKeyPress={event => this.onKeyPress(event)}
-      />
+      <React.Fragment>
+        <TimeField
+          value={this.state.value}
+          disabled={!!this.props.disabled ? true : false}
+          className={
+            !!this.props.isStandalone ? "timeContent standalone" : "timeContent"
+          }
+          style={this.getStyle()}
+          onFocus={() => this.setState({ isReadOnly: true })}
+          onChange={event => this.onChange(event)}
+          onBlur={event => this.onBlur(event)}
+          onKeyPress={event => this.onKeyPress(event)}
+        />
+      </React.Fragment>
     );
   }
 }
