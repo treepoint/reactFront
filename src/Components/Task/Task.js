@@ -207,7 +207,7 @@ class Task extends React.Component {
     return (
       <Action
         style={{
-          marginLeft: "215px",
+          marginLeft: "221px",
           height: "6px",
           paddingTop: "1px",
           paddingBottom: "2px"

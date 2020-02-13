@@ -110,6 +110,7 @@
   flex-flow: row;
   justify-content: center;
   margin-left: 6px;
+  margin-right: -8px;
 }
 
 .optionalPart.full {
