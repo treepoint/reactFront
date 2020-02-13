@@ -57,6 +57,7 @@ class Login extends React.Component {
         {INPUTS.map(inputs => (
           <Input
             placeholder={inputs.placeholder}
+            label={inputs.label}
             name={inputs.name}
             type={inputs.type}
             value={this.props.currentUser[inputs.name]}

@@ -4,7 +4,8 @@ import { emailReg } from "../../Libs/RegularExpressions";
 export const email = {
   name: "email",
   type: "text",
-  placeholder: "Email",
+  label: "Email",
+  placeholder: "Введите ваш email",
   validationFunctions: [
     {
       getInvalidMessage: value => (!!value ? "" : "Email должен быть заполнен")
@@ -20,7 +21,8 @@ export const email = {
 export const password = {
   name: "password",
   type: "password",
-  placeholder: "Пароль",
+  label: "Пароль",
+  placeholder: "Укажите пароль",
   validationFunctions: [
     {
       getInvalidMessage: value => (!!value ? "" : "Пароль должен быть заполнен")

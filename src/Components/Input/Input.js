@@ -6,7 +6,8 @@ class Input extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
-        <label style={{ display: "flex" }}>
+        <div className="inputContainer">
+          <div className="inputLable">{this.props.label}</div>
           <input
             className={"input" + (this.props.invalidMessage ? " error" : "")}
             type={this.props.type}
@@ -17,7 +18,7 @@ class Input extends React.PureComponent {
               this.props.onChange(event);
             }}
           />
-        </label>
+        </div>
         <LabelValidation value={this.props.invalidMessage} />
       </React.Fragment>
     );
