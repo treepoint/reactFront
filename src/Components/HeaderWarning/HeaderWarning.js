@@ -35,7 +35,7 @@ class HeaderWarning extends React.PureComponent {
 
   render() {
     return (
-      <div>
+      <div className="headerWarning">
         {this.getButton()}
         {this.getMessageBox()}
       </div>

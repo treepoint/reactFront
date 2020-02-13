@@ -1,8 +1,13 @@
+.headerWarning {
+  width: 30px;
+}
+
 .headerWarningButton {
   width: 25px;
   height: 39px;
   margin-right: 6px;
   opacity: 0.7;
+  margin-left: auto;
 }
 
 .headerWarningButton:hover {
