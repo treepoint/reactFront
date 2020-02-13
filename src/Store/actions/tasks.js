@@ -97,7 +97,7 @@ export function createTask(date) {
 
 //Обновить задачу
 export function updateTask(task, forDate) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(setIsUpdating(true));
 
     let headers = getHeaders();
@@ -106,11 +106,15 @@ export function updateTask(task, forDate) {
       return;
     }
 
+    //Получим состояние, нам нужно сравнивать изменения по текущему таску
+    const state = getState();
+    const oldTask = state.tasks[task.id];
+
     Axios.put(URL + "/" + task.id, task, headers)
       .then(response => {
         if (typeof response.data === "object") {
           //Если таску перенесли на другой день — удалим из текущего набора
-          if (forDate !== task.moved_date && task.moved_date !== null) {
+          if (forDate < task.moved_date && task.moved_date !== null && task.moved_date !== oldTask.moved_date) {
             dispatch(removeTask(task.id));
           } else {
             //Иначе обновим задачу в списке
