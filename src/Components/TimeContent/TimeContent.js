@@ -8,7 +8,8 @@ class TimeContent extends React.PureComponent {
     super();
     this.state = {
       value: "00:00",
-      isReadOnly: false
+      isReadOnly: false,
+      isFocused: false
     };
   }
 
@@ -22,6 +23,7 @@ class TimeContent extends React.PureComponent {
         this.setState({ value: this.props.value });
       }
       this.setState({ isReadOnly: false });
+      this.setState({ isFocused: false });
     }
   }
 
@@ -32,14 +34,14 @@ class TimeContent extends React.PureComponent {
   onKeyPress(event) {
     if (event.key === "Enter") {
       this.setState(
-        { isReadOnly: false },
+        { isReadOnly: false, isFocused: false },
         this.props.onChangeValue(this.state.value)
       );
     }
   }
 
   onBlur(event) {
-    this.setState({ isReadOnly: false });
+    this.setState({ isReadOnly: false, isFocused: false });
     if (this.state.value !== this.props.value) {
       this.props.onChangeValue(this.state.value);
     }
@@ -73,7 +75,13 @@ class TimeContent extends React.PureComponent {
 
   render() {
     return (
-      <React.Fragment>
+      <div
+        className={
+          !!this.state.isFocused
+            ? "timeContentContainer focus"
+            : "timeContentContainer"
+        }
+      >
         <TimeField
           value={this.state.value}
           disabled={!!this.props.disabled ? true : false}
@@ -81,12 +89,12 @@ class TimeContent extends React.PureComponent {
             !!this.props.isStandalone ? "timeContent standalone" : "timeContent"
           }
           style={this.getStyle()}
-          onFocus={() => this.setState({ isReadOnly: true })}
+          onFocus={() => this.setState({ isReadOnly: true, isFocused: true })}
           onChange={event => this.onChange(event)}
           onBlur={event => this.onBlur(event)}
           onKeyPress={event => this.onKeyPress(event)}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }

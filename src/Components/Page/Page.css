@@ -6,7 +6,7 @@
 
 .page.hr {
   display: block;
-  width: 100%;
+  width: calc(100% - 4px);
   margin-bottom: 12px;
   padding-top: 0px;
   border-bottom: 1px solid #36266b54;

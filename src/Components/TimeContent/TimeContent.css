@@ -1,3 +1,12 @@
+.timeContentContainer {
+  outline: none;
+}
+
+.timeContentContainer.focus {
+  outline: 1px solid rgb(96, 191, 255);
+  outline-offset: -1px;
+}
+
 .timeContent {
   border: none;
   font-family: "Open Sans", "Source Sans Pro";
@@ -16,6 +25,5 @@
 }
 
 .timeContent:focus {
-  outline: 1px solid rgb(96, 191, 255);
-  outline-offset: -1px;
+  outline: none;
 }

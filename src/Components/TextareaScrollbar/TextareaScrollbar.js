@@ -79,6 +79,7 @@ class TextareaScrollbar extends React.Component {
     }
 
     this.setState({ isReadOnly: false, wideEditAreaIsHidden: true });
+    this.textarea.blur();
   }
 
   //Срабатывает при двойном клике
@@ -132,6 +133,7 @@ class TextareaScrollbar extends React.Component {
           }}
         >
           <TextareaAutosize
+            inputRef={tag => (this.textarea = tag)}
             style={Object.assign(
               {
                 minHeight: !!this.state.isChrome
