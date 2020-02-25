@@ -14,9 +14,6 @@ import { setScrollTop, setScrollLeft } from "../../../Store/actions/page";
 import ReactCustomScroll from "react-scrollbars-custom";
 //Утилиты
 import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
-//Картинки
-import minimizeIcon from "../../../Images/icon_minimize.png";
-import maximizedIcon from "../../../Images/icon_maximized.png";
 
 class TasksManager extends React.PureComponent {
   constructor(props) {
@@ -87,21 +84,10 @@ class TasksManager extends React.PureComponent {
       }
     ];
 
-    //Соберем действия
-    let actionsArray = [
-      {
-        icon: !!this.state.isAllMinimize ? maximizedIcon : minimizeIcon,
-        onClick: () =>
-          this.setState({ isAllMinimize: !this.state.isAllMinimize }),
-        style: {}
-      }
-    ];
-
     return (
       <Page
         title="Задачи:"
         anchorLinksArray={anchorLinksArray}
-        actionsArray={actionsArray}
         additionalTitleBlock={<SumTime />}
         isPrivate={true}
         isNotScrollable={true}
