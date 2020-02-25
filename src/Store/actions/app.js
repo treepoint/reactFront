@@ -11,8 +11,13 @@ import {
   setCurrentUserAndAdminByID,
   setCurrentUserAndAdmin
 } from "./currentUser";
+import { fetchCategories } from "./categories";
+import { fetchTaskStatuses } from "./taskStatuses";
+import { fetchTasksByDate } from "./tasks";
+import { fetchTasksLogByDate } from "./tasksLog";
 import { setModalWindowState } from "./globalModalWindow";
 import { fetchUserSettings } from "./userSettings";
+import { getCurrentFormatDate } from "../../Libs/TimeUtils";
 
 export const SET_USER_AUTH_STATE = "SET_USER_AUTH_STATE";
 export const SET_AUTH_ERROR = "AUTH_ERROR";
@@ -71,8 +76,8 @@ export function restoreFromCookies() {
       //Проставим авторизацию
       dispatch(setUserAuthState(true));
 
-      //Проставим пользовательские настройки
-      dispatch(fetchUserSettings());
+      //Загрузим все данные приложения
+      dispatch(loadAllDate());
 
       return;
     }
@@ -80,12 +85,42 @@ export function restoreFromCookies() {
     //Если есть refreshToken — по нему
     if (refreshToken.length !== 0) {
       dispatch(reauth(refreshToken));
-      //Проставим авторизацию
-      dispatch(setUserAuthState(true));
-      //Проставим пользовательские настройки
-      dispatch(fetchUserSettings());
       return;
     }
+  };
+}
+
+export function reauth(refreshToken) {
+  return dispatch => {
+    //Обновление токена
+    const url = APIURL + "/reauth";
+
+    //Пытаемся обновить данные по нему
+    Axios.post(url, { refreshToken }).then(response => {
+      //Unixtime в обычное время
+      let tokenExp = new Date(response.data.token.exp * 1000);
+
+      //Unixtime в обычное время
+      let refreshTokenExp = new Date(response.data.refreshToken.exp * 1000);
+
+      //Заготовим печеньки
+      bake_cookie("token", response.data.token.value, tokenExp);
+      bake_cookie("user_id", response.data.user.id, tokenExp);
+      bake_cookie(
+        "refresh_token",
+        response.data.refreshToken.value,
+        refreshTokenExp
+      );
+
+      //Проставим токен
+      dispatch(setToken(response.data.token.value));
+      //Пользователя
+      dispatch(setCurrentUserAndAdmin(response.data.user));
+      //Авторизацию
+      dispatch(setUserAuthState(true));
+      //Загрузим все данные приложения
+      dispatch(loadAllDate());
+    });
   };
 }
 
@@ -124,8 +159,8 @@ export function login() {
         //Проставим авторизацию
         dispatch(setUserAuthState(true));
 
-        //Запишем пользовательские настройки
-        dispatch(fetchUserSettings());
+        //Загрузим все данные приложения
+        dispatch(loadAllDate());
 
         //Если открыто модальное окно — закроем
         if (state.modalWindowState === true) {
@@ -151,36 +186,17 @@ export function login() {
   };
 }
 
-export function reauth(refreshToken) {
-  return dispatch => {
-    //Обновление токена
-    const url = APIURL + "/reauth";
-
-    //Пытаемся обновить данные по нему
-    Axios.post(url, { refreshToken }).then(response => {
-      //Unixtime в обычное время
-      let tokenExp = new Date(response.data.token.exp * 1000);
-
-      //Unixtime в обычное время
-      let refreshTokenExp = new Date(response.data.refreshToken.exp * 1000);
-
-      //Заготовим печеньки
-      bake_cookie("token", response.data.token.value, tokenExp);
-      bake_cookie("user_id", response.data.user.id, tokenExp);
-      bake_cookie(
-        "refresh_token",
-        response.data.refreshToken.value,
-        refreshTokenExp
-      );
-
-      //Проставим токен
-      dispatch(setToken(response.data.token.value));
-      //Пользователя
-      dispatch(setCurrentUserAndAdmin(response.data.user));
-      //Авторизацию
-      dispatch(setUserAuthState(true));
-      //Проставим пользовательские настройки
-      dispatch(fetchUserSettings());
-    });
-  };
+export function loadAllDate() {
+  return (dispatch) => {
+    //Проставим пользовательские настройки
+    dispatch(fetchUserSettings());
+    //Загрузим категории
+    dispatch(fetchCategories());
+    //Загрузим статусы
+    dispatch(fetchTaskStatuses());
+    //Загрузим задачи
+    dispatch(fetchTasksByDate(getCurrentFormatDate()));
+    //Загрузим лог задач
+    dispatch(fetchTasksLogByDate(getCurrentFormatDate()));
+  }
 }
