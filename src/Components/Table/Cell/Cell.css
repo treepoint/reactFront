@@ -1,9 +1,7 @@
 .td {
-  vertical-align: middle;
-  border-right: 1px solid #c0c0c0;
-  margin: 0px !important;
-  border-bottom: 1px solid #c0c0c0;
-  background: #fff;
+  border-radius: 4px;
+  margin: 2px 0px;
+  margin-right: 2px;
 }
 
 .td.chosen {
@@ -14,11 +12,9 @@
 .th {
   font-weight: 700;
   vertical-align: middle;
-  border-top: 1px solid #c0c0c0;
-  border-bottom: 1px solid #c0c0c0;
-  border-right: 1px solid #c0c0c0;
-  background: rgb(243, 243, 243);
-  margin: 0px !important;
+  border-radius: 4px;
+  margin: 2px 0px;
+  margin-right: 2px;
 }
 
 .th:focus {

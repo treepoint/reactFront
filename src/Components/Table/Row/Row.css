@@ -1,12 +1,13 @@
 .row {
   display: flex;
+  background: #fbfbfb;
   justify-content: left;
-  border-left: 1px solid #c0c0c0;
+  border-bottom: 1px dashed #c2c2c2;
+  padding-top: 1px;
 }
 
 .row.header {
-  display: flex;
-  justify-content: left;
+  background: #fff;
 }
 
 .row:focus {
