@@ -52,3 +52,9 @@
 .ScrollbarsCustom-Scroller {
   height: calc(100% + 4px);
 }
+
+.ScrollbarsCustom-Wrapper {
+  position: absolute;
+  inset: 0px 6px 0px 0px;
+  overflow: hidden;
+}
