@@ -17,7 +17,7 @@ class Logo extends React.PureComponent {
           className="logo"
           style={{
             background: "url(" + logo + ") no-repeat scroll 100% 0 transparent",
-            backgroundSize: "28px 23px"
+            backgroundSize: "44px 44px"
           }}
         />
       </NavLink>
