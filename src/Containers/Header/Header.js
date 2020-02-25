@@ -1,10 +1,23 @@
 import React from "react";
+//Компоненты
 import Logo from "../../Components/Logo/Logo";
 import HeaderNavigation from "../../Components/HeaderNavigation/HeaderNavigation";
 import Spacer from "../../Components/Spacer/Spacer";
 import HeaderWarning from "../../Components/HeaderWarning/HeaderWarning";
 import LoginMenu from "../../Components/LoginMenu/LoginMenu";
-import HeaderSumTime from "../../Components/HeaderSumTime/HeaderSumTime";
+import Action from "../../Components/Action/Action";
+//Redux
+import { connect } from "react-redux";
+//Подключаем модалки
+import {
+  setModalWindowState,
+  setModalWindowName
+} from "../../Store/actions/globalModalWindow";
+//Настройки
+import { settings } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
+//Картинки
+import iconSettings from "../../Images/icon_settings.png";
+//CSS
 import "./Header.css";
 
 class Header extends React.PureComponent {
@@ -14,7 +27,6 @@ class Header extends React.PureComponent {
         <Logo />
         <HeaderNavigation />
         <Spacer />
-        <HeaderSumTime />
         <HeaderWarning
           message={
             <React.Fragment>
@@ -27,9 +39,26 @@ class Header extends React.PureComponent {
           }
         />
         <LoginMenu />
+        <Action
+          icon={iconSettings}
+          isTransparent={true}
+          onClick={() => this.props.setModalWindow(settings)}
+          style={{ marginRight: "6px", marginTop: "7px" }} />
       </div>
     );
   }
 }
 
-export default Header;
+const mapDispatchToProps = dispatch => {
+  return {
+    setModalWindow: modalWindowName => {
+      dispatch(setModalWindowState(true));
+      dispatch(setModalWindowName(modalWindowName));
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Header);

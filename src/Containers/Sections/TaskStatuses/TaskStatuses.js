@@ -130,7 +130,7 @@ class TaskStatuses extends React.Component {
 
   render() {
     return (
-      <Page title="Управление статусами задач">
+      <Page title="Управление статусами задач" isCustomContent={true}>
         <ConfirmModalWindow
           title="Удалить статус?"
           message="Статус останется назначенным для текущих и выполненных задач, но будет недоступен для новых"

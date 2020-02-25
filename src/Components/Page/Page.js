@@ -24,6 +24,7 @@ class Page extends React.PureComponent {
       <PageContent
         isAdmin={this.props.isAdmin}
         isPrivate={this.props.isPrivate}
+        isCustomContent={this.props.isCustomContent}
       >
         {this.props.children}
       </PageContent>
@@ -57,8 +58,8 @@ class Page extends React.PureComponent {
             routerLinksArray={this.props.routerLinksArray}
             anchorLinksArray={this.props.anchorLinksArray}
             actionsArray={this.props.actionsArray}
+            additionalTitleBlock={this.props.additionalTitleBlock}
           />
-          <div className="page hr" />
         </React.Fragment>
       );
     }

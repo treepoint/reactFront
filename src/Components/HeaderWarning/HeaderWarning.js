@@ -17,7 +17,7 @@ class HeaderWarning extends React.PureComponent {
         style={{
           background: "url(" + iconWarning + ") no-repeat scroll 100% ",
           backgroundSize: "24px 24px",
-          backgroundColor: "rgba(255, 255, 255, 0.1)"
+          backgroundColor: "#ffffff"
         }}
         onClick={() => this.props.setShowHeaderWarning(!this.props.isActive)}
       />

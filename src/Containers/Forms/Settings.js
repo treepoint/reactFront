@@ -3,16 +3,16 @@ import Dropzone from "react-dropzone";
 //Подключаем redux
 import { connect } from "react-redux";
 import { setModalWindowState } from "../../Store/actions/globalModalWindow";
-import { updateTasksWallpapers } from "../../Store/actions/userSettings";
+import { updateWallpapers } from "../../Store/actions/userSettings";
 import { setCurrentUser } from "../../Store/actions/currentUser";
 import { login } from "../../Store/actions/app";
 //Импортируем компоненты
 import Button from "../../Components/Button/Button";
 import Lable from "../../Components/Lable/Lable";
 //CSS
-import "./TaskSettings.css";
+import "./Settings.css";
 
-class TaskSettings extends React.Component {
+class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +29,7 @@ class TaskSettings extends React.Component {
           "Файл не поддерживается. Попробуйте другой файл."
       });
     } else {
-      this.props.updateTasksWallpapers(acceptedFiles[0]);
+      this.props.updateWallpapers(acceptedFiles[0]);
       this.setState({ backgroundImageMessage: "Файл успешно загружен!" });
     }
   }
@@ -37,7 +37,7 @@ class TaskSettings extends React.Component {
   render() {
     return (
       <form onClick={event => event.stopPropagation()}>
-        <h1 className="h1">Настройки задач</h1>
+        <h1 className="h1">Настройки</h1>
         <Lable>Изменение обоев</Lable>
         <Dropzone
           onDrop={acceptedFiles => this.onDrop(acceptedFiles)}
@@ -86,8 +86,8 @@ const mapDispatchToProps = dispatch => {
     setModalWindowState: boolean => {
       dispatch(setModalWindowState(boolean));
     },
-    updateTasksWallpapers: file => {
-      dispatch(updateTasksWallpapers(file));
+    updateWallpapers: file => {
+      dispatch(updateWallpapers(file));
     }
   };
 };
@@ -95,4 +95,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TaskSettings);
+)(Settings);

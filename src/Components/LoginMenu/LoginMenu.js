@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 //Компоненты
 import HeaderAnchor from "../HeaderAnchor/HeaderAnchor";
 import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
-import UserIcon from "../UserIcon/UserIcon";
 //Модалки
 import {
   registration,
@@ -26,20 +25,19 @@ class LoginMenu extends React.PureComponent {
             />
           </HeaderAnchor>
         ) : (
-          <div>
+            <div>
+              <HeaderAnchor>
+                <AnchorModalWindow value="Войти" modalWindowName={login} />
+              </HeaderAnchor>
+              /
             <HeaderAnchor>
-              <AnchorModalWindow value="Войти" modalWindowName={login} />
-            </HeaderAnchor>
-            /
-            <HeaderAnchor>
-              <AnchorModalWindow
-                value="Регистрация"
-                modalWindowName={registration}
-              />
-            </HeaderAnchor>
-          </div>
-        )}
-        <UserIcon />
+                <AnchorModalWindow
+                  value="Регистрация"
+                  modalWindowName={registration}
+                />
+              </HeaderAnchor>
+            </div>
+          )}
       </div>
     );
   }

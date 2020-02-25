@@ -101,7 +101,7 @@ class Categories extends React.Component {
 
   render() {
     return (
-      <Page title="Управление категориями задач">
+      <Page title="Управление категориями задач" isCustomContent={true}>
         <ConfirmModalWindow
           title="Удалить категорию?"
           message="Категория останется назначенной для текущих и выполненных задач, но будет недоступна для новых"

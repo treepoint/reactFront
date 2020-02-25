@@ -1,17 +1,17 @@
 .headerAnchor {
-  color: rgb(230, 230, 230);
-  text-decoration: underline;
+  color: rgb(26, 26, 26);
   margin: 0 3px;
-  -moz-user-select: none;
-  -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
   text-decoration-color: #8e8e8e;
   display: inline-flex;
+  border-bottom: 1px dashed #595959e8;
+  height: 20px;
+  padding-bottom: 1px;
 }
 
 .headerAnchor:hover {
-  color: rgb(173, 173, 173);
+  opacity: 0.8;
 }
 
 .headerAnchor:active {

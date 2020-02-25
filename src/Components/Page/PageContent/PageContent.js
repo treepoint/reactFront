@@ -29,7 +29,7 @@ class PageContent extends React.PureComponent {
   }
 
   render() {
-    return <div className="pageContent">{this.getContent()}</div>;
+    return <div className={!!this.props.isCustomContent ? "pageContainer" : "pageContent"}>{this.getContent()}</div>;
   }
 }
 
