@@ -130,7 +130,7 @@ class TasksLog extends React.PureComponent {
         type: "string",
         disabled: true,
         value: "Задача",
-        width: 480
+        width: 580
       },
       {
         key: "execution_start",
@@ -173,6 +173,7 @@ class TasksLog extends React.PureComponent {
             <div className="taskLogResize">
               <Action
                 icon={!!this.state.isMinimized ? arrowUpIcon : arrowDownIcon}
+                isTransparent={true}
                 onClick={() => this.minimizeTaskLog()}
               />
             </div>
