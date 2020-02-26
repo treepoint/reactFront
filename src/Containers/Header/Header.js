@@ -39,15 +39,23 @@ class Header extends React.PureComponent {
           }
         />
         <LoginMenu />
-        <Action
-          icon={iconSettings}
-          isTransparent={true}
-          onClick={() => this.props.setModalWindow(settings)}
-          style={{ marginRight: "6px", marginTop: "7px" }} />
+        {!!this.props.userAuthState ? (
+          <Action
+            icon={iconSettings}
+            isTransparent={true}
+            onClick={() => this.props.setModalWindow(settings)}
+            style={{ marginRight: "6px", marginTop: "7px" }} />) : null}
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userAuthState: state.userAuthState,
+  };
+};
+
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -59,6 +67,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Header);
