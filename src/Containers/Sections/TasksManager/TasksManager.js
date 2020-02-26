@@ -100,8 +100,7 @@ class TasksManager extends React.PureComponent {
           //Задаем стиль
           style={{
             width: "100%",
-            height: "calc(-213px + 100vh)",
-            marginTop: "6px"
+            height: "calc(-244px + 100vh)"
           }}
           ref={ref => {
             this._scrollBarRef = ref;
