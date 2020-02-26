@@ -8,3 +8,14 @@
 .addTaskButton:hover {
   opacity: 0.5;
 }
+
+.newTaskContainer {
+  padding-top: 10px;
+}
+
+.newTaskButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 10px;
+}

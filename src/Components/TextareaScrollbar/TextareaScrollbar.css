@@ -29,6 +29,10 @@
   outline: none;
 }
 
+.textareaScrollbar.error {
+  outline: 1px solid rgb(245, 59, 99);
+}
+
 .textareaScrollbar:focus-within {
   outline: 1px solid rgb(96, 191, 255);
 }

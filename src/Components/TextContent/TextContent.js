@@ -59,7 +59,10 @@ class TextContent extends React.Component {
   getCellContent() {
     return (
       <TextareaScrollbar
+        isHaveError={this.props.isHaveError}
+        autoFocus={this.props.autoFocus}
         style={this.getStyle()}
+        placeholder={this.props.placeholder}
         height={this.props.height}
         width={this.props.width - (!!this.state.isChrome ? 2 : 1)}
         spellCheck="false"

@@ -88,9 +88,6 @@ class Task extends React.Component {
           height={68}
           isStylable={false}
           //Функции
-          onChangeStyle={style => {
-            this.saveTaskToDatabase({ name_style: style });
-          }}
           onChangeValue={value => this.saveTaskToDatabase({ name: value })}
         />
       </div>

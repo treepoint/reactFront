@@ -125,7 +125,7 @@ class TextareaScrollbar extends React.Component {
               );
             }
           }}
-          className="textareaScrollbar"
+          className={"textareaScrollbar" + (!!this.props.isHaveError ? " error" : "")}
           noScrollX
           style={{
             height: this.props.height,
@@ -133,12 +133,13 @@ class TextareaScrollbar extends React.Component {
           }}
         >
           <TextareaAutosize
+            autoFocus={this.props.autoFocus}
             inputRef={tag => (this.textarea = tag)}
             style={Object.assign(
               {
                 minHeight: !!this.state.isChrome
                   ? this.props.height -
-                    (!!this.state.wideEditAreaIsHidden ? 7 : 1)
+                  (!!this.state.wideEditAreaIsHidden ? 7 : 1)
                   : this.props.height,
                 width:
                   this.props.width -
@@ -154,6 +155,7 @@ class TextareaScrollbar extends React.Component {
             )}
             spellCheck={this.props.spellCheck}
             className={this.getClassName()}
+            placeholder={this.props.placeholder}
             //Задаем контент
             value={this.state.value}
             onFocus={this.props.onFocus}
@@ -170,7 +172,7 @@ class TextareaScrollbar extends React.Component {
             maxRows={this.props.maxRows}
           />
         </ReactCustomScroll>
-      </React.Fragment>
+      </React.Fragment >
     );
   }
 }
