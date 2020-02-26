@@ -3,11 +3,3 @@
   margin: 0 auto 0px auto;
   padding-top: 12px;
 }
-
-.page.hr {
-  display: block;
-  width: calc(100% - 4px);
-  margin-bottom: 12px;
-  padding-top: 0px;
-  border-bottom: 1px solid #36266b54;
-}

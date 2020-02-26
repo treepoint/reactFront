@@ -4,6 +4,7 @@ import Tasks from "./Tasks/Tasks";
 import TasksLog from "./TasksLog/TasksLog";
 import Page from "../../../Components/Page/Page";
 import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
+import SumTime from "../../../Components/SumTime/SumTime";
 //Redux
 import { connect } from "react-redux";
 import { fetchTaskStatuses } from "../../../Store/actions/taskStatuses";
@@ -11,20 +12,8 @@ import { fetchCategories } from "../../../Store/actions/categories";
 import { setScrollTop, setScrollLeft } from "../../../Store/actions/page";
 //Подключаем красивые скроллы
 import ReactCustomScroll from "react-scrollbars-custom";
-//Подключаем модалки
-import {
-  setModalWindowState,
-  setModalWindowName
-} from "../../../Store/actions/globalModalWindow";
-import { taskSettings } from "../../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Утилиты
 import { getCurrentFormatDate } from "../../../Libs/TimeUtils";
-//Картинки
-import settingsIcon from "../../../Images/icon_settings.png";
-import minimizeIcon from "../../../Images/icon_minimize.png";
-import maximizedIcon from "../../../Images/icon_maximized.png";
-//CSS
-import "./TasksManager.css";
 
 class TasksManager extends React.PureComponent {
   constructor(props) {
@@ -95,68 +84,47 @@ class TasksManager extends React.PureComponent {
       }
     ];
 
-    //Соберем действия
-    let actionsArray = [
-      {
-        icon: !!this.state.isAllMinimize ? maximizedIcon : minimizeIcon,
-        onClick: () =>
-          this.setState({ isAllMinimize: !this.state.isAllMinimize }),
-        style: { marginLeft: "6px" }
-      },
-      {
-        icon: settingsIcon,
-        onClick: () => this.props.setModalWindow(taskSettings),
-        style: { marginLeft: "6px" }
-      }
-    ];
-
     return (
-      <div
-        className="tasksWallpaper"
-        style={{
-          backgroundImage: "url(" + this.props.tasksWallpaper + ")"
-        }}
+      <Page
+        title="Задачи:"
+        anchorLinksArray={anchorLinksArray}
+        additionalTitleBlock={<SumTime />}
+        isPrivate={true}
+        isNotScrollable={true}
+        isCustomContent={true}
       >
-        <Page
-          title="Задачи:"
-          anchorLinksArray={anchorLinksArray}
-          actionsArray={actionsArray}
-          isPrivate={true}
-          isNotScrollable={true}
-        >
-          <DayPickerCarousel onChange={date => this.onPickDate(date)} />
-          {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было задержки*/}
+        <DayPickerCarousel onChange={date => this.onPickDate(date)} />
+        {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было задержки*/}
 
-          <ReactCustomScroll
-            //Задаем стиль
-            style={{
-              width: "100%",
-              height: "calc(-213px + 100vh)",
-              marginTop: "6px"
-            }}
-            ref={ref => {
-              this._scrollBarRef = ref;
-            }}
-            //Обрабатываем скролл
-            onScrollStop={() => this.handleScroll()}
-          >
-            <div style={{ display: !!this.state.isArchive ? "none" : null }}>
-              <Tasks
-                date={this.state.date}
-                isAllMinimize={this.state.isAllMinimize}
-              />
-            </div>
-            <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
-              <Tasks
-                isArchive={true}
-                date={this.state.date}
-                isAllMinimize={this.state.isAllMinimize}
-              />
-            </div>
-          </ReactCustomScroll>
-          <TasksLog date={this.state.date} />
-        </Page>
-      </div>
+        <ReactCustomScroll
+          //Задаем стиль
+          style={{
+            width: "100%",
+            height: "calc(-213px + 100vh)",
+            marginTop: "6px"
+          }}
+          ref={ref => {
+            this._scrollBarRef = ref;
+          }}
+          //Обрабатываем скролл
+          onScrollStop={() => this.handleScroll()}
+        >
+          <div style={{ display: !!this.state.isArchive ? "none" : null }}>
+            <Tasks
+              date={this.state.date}
+              isAllMinimize={this.state.isAllMinimize}
+            />
+          </div>
+          <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
+            <Tasks
+              isArchive={true}
+              date={this.state.date}
+              isAllMinimize={this.state.isAllMinimize}
+            />
+          </div>
+        </ReactCustomScroll>
+        <TasksLog date={this.state.date} />
+      </Page>
     );
   }
 }
@@ -164,8 +132,7 @@ class TasksManager extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     taskStatuses: state.taskStatuses,
-    categories: state.categories,
-    tasksWallpaper: state.userSettings.tasks_wallpaper
+    categories: state.categories
   };
 };
 
@@ -176,10 +143,6 @@ const mapDispatchToProps = dispatch => {
     },
     fetchCategories: () => {
       dispatch(fetchCategories());
-    },
-    setModalWindow: modalWindowName => {
-      dispatch(setModalWindowState(true));
-      dispatch(setModalWindowName(modalWindowName));
     },
     setScrollTop: number => {
       dispatch(setScrollTop(number));

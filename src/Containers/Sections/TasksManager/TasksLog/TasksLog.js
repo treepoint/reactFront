@@ -177,7 +177,7 @@ class TasksLog extends React.PureComponent {
               />
             </div>
             <Table
-              maxHeight={!!this.state.isMinimized ? "70px" : "50vh"}
+              maxHeight={!!this.state.isMinimized ? "81px" : "50vh"}
               isFixed={true}
               isEditable={true}
               isResizeble={false}

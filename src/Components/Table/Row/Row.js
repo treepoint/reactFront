@@ -140,7 +140,7 @@ class Row extends React.PureComponent {
     });
 
     return (
-      <div className="row">
+      <div className={"row" + (!!this.props.isHeader ? " header" : "")}>
         {cells} {this.getActionButton()}
       </div>
     );

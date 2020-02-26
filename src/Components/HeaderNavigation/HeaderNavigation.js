@@ -35,7 +35,7 @@ class HeaderNavigation extends React.PureComponent {
         />
         <HeaderNavigationLink
           to="/admin"
-          value="Админ.панель"
+          value="Управление"
           onlyAdmin={true}
         />
         <HeaderNavigationLink to="/about" value="Справка" />

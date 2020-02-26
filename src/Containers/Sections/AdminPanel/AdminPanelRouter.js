@@ -16,6 +16,7 @@ class AdminPanelRouter extends React.Component {
           title="Административная панель:"
           routerLinksArray={routerLinksArray}
           isAdmin={true}
+          isCustomContent={true}
         >
           <Switch>
             <Route exact to path="/admin" component={Users} />

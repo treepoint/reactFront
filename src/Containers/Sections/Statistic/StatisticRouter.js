@@ -18,6 +18,7 @@ class StatisticRouter extends React.Component {
       <Page
         title="Статистика:"
         routerLinksArray={routerLinksArray}
+        isCustomContent={true}
         isPrivate={true}
       >
         <Switch>

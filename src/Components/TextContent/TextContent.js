@@ -46,7 +46,7 @@ class TextContent extends React.Component {
       return {
         backgroundColor: !!this.props.disabled
           ? "rgb(251, 251, 251)"
-          : "#ffffff",
+          : "#fff",
         borderLeft: "8px solid " + this.props.backgroundColor,
         fontWeight: !!this.props.bold ? "900" : "200",
         fontStyle: !!this.props.italic ? "italic" : "normal",

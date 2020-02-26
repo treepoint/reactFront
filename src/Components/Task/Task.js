@@ -42,18 +42,7 @@ class Task extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({ isMinimized: this.props.isAllMinimize });
-  }
-
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.isAllMinimize !== this.props.isAllMinimize &&
-      this.props.isAllMinimize !== this.state.isMinimized
-    ) {
-      this.setState({ isMinimized: this.props.isAllMinimize });
-    }
-
     //Если при ре рендере здесь оказалась другая задача — сбросим данные
     if (prevProps.content.id !== this.props.content.id) {
       this.setState({

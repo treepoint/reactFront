@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 //Утилиты
 import { getCurrentFormatDate, getTimeFromMins } from "../../Libs/TimeUtils";
 //CSS
-import "./HeaderSumTime.css";
+import "./SumTime.css";
 
-class HeaderSumTime extends React.PureComponent {
+class SumTime extends React.PureComponent {
   getTimeForCurrentDay() {
     //После этого пройдемся и соберем все записи таск лога
     const tasksLog = this.props.tasksLog;
@@ -34,7 +34,7 @@ class HeaderSumTime extends React.PureComponent {
   }
 
   render() {
-    return <div className="headerSumTime">{this.getTimeForCurrentDay()}</div>;
+    return <div className="sumTime">{this.getTimeForCurrentDay()}</div>;
   }
 }
 
@@ -44,4 +44,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(HeaderSumTime);
+export default connect(mapStateToProps)(SumTime);

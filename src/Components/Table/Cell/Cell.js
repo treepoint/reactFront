@@ -163,7 +163,7 @@ class Cell extends React.PureComponent {
         //Выставляем размеры ячейки
         size={{
           width: this.props.width + "px",
-          height: this.props.height + 1 + "px"
+          height: this.props.height + 2 + "px"
         }}
         //Задаем минимальную высоту
         minHeight={35}

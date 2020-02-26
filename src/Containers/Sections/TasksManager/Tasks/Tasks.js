@@ -155,7 +155,6 @@ class Tasks extends React.Component {
               on_fire: tasksForChosenDate[t].on_fire,
               moved_date: tasksForChosenDate[t].moved_date
             }}
-            isAllMinimize={this.props.isAllMinimize}
           />
         );
       }

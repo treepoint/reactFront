@@ -65,7 +65,7 @@ export function fetchUserSettings() {
 }
 
 //Обновить обои
-export function updateTasksWallpapers(file) {
+export function updateWallpapers(file) {
   return dispatch => {
     let headers = getHeaders();
 
@@ -85,6 +85,6 @@ export function updateTasksWallpapers(file) {
           })
         );
       })
-      .catch(error => {});
+      .catch(error => { });
   };
 }
