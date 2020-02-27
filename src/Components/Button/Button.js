@@ -21,6 +21,7 @@ class Button extends React.PureComponent {
         name={this.props.name}
         type="submit"
         style={this.props.style}
+        disabled={this.props.isDisabled}
         className={this.getClassName()}
         value={this.props.value}
         onClick={event => {

@@ -1,19 +1,33 @@
 .button {
-  background-color: rgb(255, 255, 255);
   padding: 6px 12px;
-  border: 1px solid rgba(138, 138, 138, 0.73);
+  background: rgba(138, 138, 138, 0.1);
   border-radius: 2px;
-  font-family: "Source Sans Pro";
+  font-family: Source Sans Pro;
   font-size: 16px;
   margin-top: 12px;
+  border: none;
   border-radius: 4px;
-  color: #555555;
+  color: #555;
   margin-right: 12px;
+  outline: none;
+}
+
+.button:hover {
+  background: #f9f9f9;
 }
 
 .button.primary {
-  color: #222;
-  border-color: #36266b;
+  color: #fff;
+  background: #1c9ccee8;
+}
+
+.button.primary:hover {
+  background: #1c9ccecb;
+}
+
+.button.primary:active {
+  border: none;
+  background: #1987b3e8;
 }
 
 .button.disabled {
@@ -22,11 +36,19 @@
   border-color: rgba(145, 145, 145, 0.73);
 }
 
-.button:hover {
-  border: 1px solid rgba(68, 68, 68, 0.73);
+.button.disabled:hover {
+  color: #888;
+  background-color: #f4f4f4;
+  border-color: rgba(145, 145, 145, 0.73);
+}
+
+.button.disabled:active {
+  color: #888;
+  background-color: #f4f4f4;
+  border-color: rgba(145, 145, 145, 0.73);
 }
 
 .button:active {
-  border: 1px solid rgba(68, 68, 68, 0.73);
-  background-color: rgb(240, 240, 240);
+  border: none;
+  background: rgba(138, 138, 138, 0.24);
 }

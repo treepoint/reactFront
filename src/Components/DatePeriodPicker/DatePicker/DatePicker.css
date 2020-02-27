@@ -16,21 +16,21 @@
 }
 
 .datePicker:active {
-  border-color: #36266b;
+  border-color: #1c9ccee8;
   background-color: rgb(240, 240, 240);
 }
 
 .datePicker:focus {
   color: #222;
-  border-color: #36266b;
+  border-color: #1c9ccee8;
 }
 
 .datePicker.left.chosen {
-  border: 1px solid #36266b;
+  border: 1px solid #1c9ccee8;
 }
 
 .datePicker.right.chosen {
-  border: 1px solid #36266b;
+  border: 1px solid #1c9ccee8;
 }
 
 .datePicker.left {
