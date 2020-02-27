@@ -31,9 +31,9 @@ class App extends React.PureComponent {
     return (
       <React.Fragment>
         <div
-          className="tasksWallpaper"
-          style={!!this.props.tasksWallpaper ?
-            { backgroundImage: "url(" + this.props.tasksWallpaper + ")" }
+          className="wallpaper"
+          style={!!this.props.wallpaper ?
+            { backgroundImage: "url(" + this.props.wallpaper + ")" }
             :
             { background: "url(" + defaultWallpaper + ")" }
           }
@@ -70,7 +70,7 @@ const mapStateToProps = state => {
     modalWindowState: state.modalWindowState,
     modalWindowName: state.modalWindowName,
     userAuthState: state.userAuthState,
-    tasksWallpaper: state.userSettings.tasks_wallpaper
+    wallpaper: state.userSettings.wallpaper
   };
 };
 

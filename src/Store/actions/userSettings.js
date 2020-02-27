@@ -48,14 +48,14 @@ export function fetchUserSettings() {
     Axios.get(URL, headers).then(response => {
       let userSettings = {};
 
-      if (response.data.tasks_wallpaper !== null) {
+      if (response.data.wallpaper !== null) {
         Object.assign(userSettings, response.data, {
-          tasks_wallpaper:
-            uploadedFilesDirectory + "/" + response.data.tasks_wallpaper
+          wallpaper:
+            uploadedFilesDirectory + "/" + response.data.wallpaper
         });
       } else {
         Object.assign(userSettings, response.data, {
-          tasks_wallpaper: ""
+          wallpaper: ""
         });
       }
 
@@ -76,11 +76,11 @@ export function updateWallpapers(file) {
     var formData = new FormData();
     formData.append("file", file, file.name);
 
-    Axios.post(URL + "/load_tasks_wallpaper", formData, headers)
+    Axios.post(URL + "/load_wallpaper", formData, headers)
       .then(response => {
         dispatch(
           setUserSettings({
-            tasks_wallpaper:
+            wallpaper:
               uploadedFilesDirectory + "/" + response.data.filename
           })
         );
