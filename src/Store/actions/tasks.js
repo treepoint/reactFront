@@ -77,7 +77,6 @@ export function createTask(date, name) {
       category_id: Object.keys(state.categories)[0],
       status_id: Object.keys(state.taskStatuses)[0],
       name: name,
-      name_style: "{}",
       description: "<br>",
       create_date: date
     };

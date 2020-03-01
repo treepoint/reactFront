@@ -60,7 +60,6 @@ class TasksLog extends React.PureComponent {
       tasksList.push({
         value: tasksForChosenDate[t].id,
         label: tasksForChosenDate[t].name,
-        style: tasksForChosenDate[t].name_style
       });
     }
 

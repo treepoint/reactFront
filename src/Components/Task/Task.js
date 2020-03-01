@@ -62,7 +62,6 @@ class Task extends React.Component {
     let task = {
       id: this.props.content.id,
       name: this.props.content.name,
-      name_style: this.props.content.name_style,
       status_id: this.props.content.statuses.current,
       category_id: this.props.content.categories.current,
       execution_time_day: this.props.content.execution_time_day,

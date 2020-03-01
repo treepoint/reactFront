@@ -147,7 +147,6 @@ class Tasks extends React.Component {
               id: tasksForChosenDate[t].id,
               statuses: this.getStatusesByTask(tasksForChosenDate[t]),
               name: tasksForChosenDate[t].name,
-              name_style: tasksForChosenDate[t].name_style,
               categories: this.getCategoriesByTask(tasksForChosenDate[t]),
               execution_time_day: tasksForChosenDate[t].execution_time_day,
               execution_time_all: tasksForChosenDate[t].execution_time_to_day,
