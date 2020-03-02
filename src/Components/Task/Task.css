@@ -90,14 +90,6 @@
   display: none;
 }
 
-.timeLabel {
-  margin-top: 6px;
-}
-
-.timeLabel.hidden {
-  display: none;
-}
-
 .taskActions {
   display: flex;
   padding-top: 4px;
@@ -111,12 +103,6 @@
   justify-content: center;
   margin-left: 6px;
   margin-right: -2px;
-}
-
-.optionalPart.full {
-  flex-flow: column;
-  padding-bottom: 6px;
-  border-bottom: 1px dashed #d2d2d2;
 }
 
 .taskMenu {

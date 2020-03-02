@@ -22,22 +22,28 @@ class ConfirmModalWindow extends React.PureComponent {
         isHidden={this.props.isHidden}
       >
         <form onClick={event => event.stopPropagation()}>
-          <h1 className="h1">{this.props.title}</h1>
-          <p>{this.props.message}</p>
+          {!!this.props.title ? (
+            <h1 className="h1">{this.props.title}</h1>
+          ) : null}
+          {!!this.props.message ? <p>{this.props.message}</p> : null}
           <p>{this.props.children}</p>
-          <Button
-            isPrimary={true}
-            isDisabled={this.props.isConfirmButtonDisabled}
-            value="Да"
-            onClick={event => {
-              this.hideModalWindow(event);
-              this.props.onConfirm(event);
-            }}
-          />
-          <Button
-            value="Отмена"
-            onClick={event => this.hideModalWindow(event)}
-          />
+          {!!this.props.isButtonless ? null : (
+            <React.Fragment>
+              <Button
+                isPrimary={true}
+                isDisabled={this.props.isConfirmButtonDisabled}
+                value="Да"
+                onClick={event => {
+                  this.hideModalWindow(event);
+                  this.props.onConfirm(event);
+                }}
+              />
+              <Button
+                value="Отмена"
+                onClick={event => this.hideModalWindow(event)}
+              />
+            </React.Fragment>
+          )}
         </form>
       </ModalWindow>
     );

@@ -44,9 +44,7 @@ class TextContent extends React.Component {
       };
     } else {
       return {
-        backgroundColor: !!this.props.disabled
-          ? "rgb(251, 251, 251)"
-          : "#fff",
+        backgroundColor: !!this.props.disabled ? "rgb(251, 251, 251)" : "#fff",
         borderLeft: "8px solid " + this.props.backgroundColor,
         fontWeight: !!this.props.bold ? "900" : "200",
         fontStyle: !!this.props.italic ? "italic" : "normal",
@@ -64,7 +62,11 @@ class TextContent extends React.Component {
         style={this.getStyle()}
         placeholder={this.props.placeholder}
         height={this.props.height}
-        width={this.props.width - (!!this.state.isChrome ? 2 : 1)}
+        width={
+          !!this.props.width
+            ? this.props.width - (!!this.state.isChrome ? 2 : 1)
+            : undefined
+        }
         spellCheck="false"
         value={this.props.value}
         onFocus={() => this.setState({ isReadOnly: true })}

@@ -147,6 +147,7 @@ class Tasks extends React.Component {
               id: tasksForChosenDate[t].id,
               statuses: this.getStatusesByTask(tasksForChosenDate[t]),
               name: tasksForChosenDate[t].name,
+              description: tasksForChosenDate[t].description,
               categories: this.getCategoriesByTask(tasksForChosenDate[t]),
               execution_time_day: tasksForChosenDate[t].execution_time_day,
               execution_time_all: tasksForChosenDate[t].execution_time_to_day,
@@ -198,7 +199,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Tasks);
+export default connect(mapStateToProps, mapDispatchToProps)(Tasks);

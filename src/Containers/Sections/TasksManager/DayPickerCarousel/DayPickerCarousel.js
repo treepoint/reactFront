@@ -127,7 +127,7 @@ class DayPickerCarousel extends React.PureComponent {
         <DatePickerButton
           onChange={date => this.onPickDate(date)}
           date={this.state.date}
-          placeholderText="Указать дату"
+          placeholderText="Выбрать дату"
           width={100}
         />
       </div>

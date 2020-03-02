@@ -77,7 +77,7 @@ export function createTask(date, name) {
       category_id: Object.keys(state.categories)[0],
       status_id: Object.keys(state.taskStatuses)[0],
       name: name,
-      description: "<br>",
+      description: null,
       create_date: date
     };
 
@@ -113,7 +113,11 @@ export function updateTask(task, forDate) {
       .then(response => {
         if (typeof response.data === "object") {
           //Если таску перенесли на другой день — удалим из текущего набора
-          if (forDate < task.moved_date && task.moved_date !== null && task.moved_date !== oldTask.moved_date) {
+          if (
+            forDate < task.moved_date &&
+            task.moved_date !== null &&
+            task.moved_date !== oldTask.moved_date
+          ) {
             dispatch(removeTask(task.id));
           } else {
             //Иначе обновим задачу в списке

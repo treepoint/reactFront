@@ -31,6 +31,10 @@ class TextareaScrollbar extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.onEndEditing();
+  }
+
   isChrome() {
     return navigator.userAgent.indexOf("Chrome") + 1;
   }
@@ -88,6 +92,13 @@ class TextareaScrollbar extends React.Component {
       return;
     }
 
+    if (
+      typeof this.props.height === "undefined" &&
+      typeof this.props.width === "undefined"
+    ) {
+      return;
+    }
+
     this.setState({
       wideEditAreaIsHidden: false
     });
@@ -101,17 +112,17 @@ class TextareaScrollbar extends React.Component {
     return "textareaAutosize";
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        {!!this.state.wideEditAreaIsHidden ? null : (
-          <Blur
-            onWheel={event => this.onBlur(event)}
-            onClick={event => this.onBlur(event)}
-            onContextMenu={event => this.onBlur(event)}
-          />
-        )}
-
+  scrollWrapper(children) {
+    //Хоть у нас тут и со скроллами — но может быть и без ограничений
+    if (
+      typeof this.props.height === "undefined" &&
+      typeof this.props.width === "undefined"
+    ) {
+      //Если так — просто обернем в нужный класс
+      return <div className="textareaScrollbar">{children}</div>;
+    } else {
+      //Если скроллы есть — вернем скроллированное
+      return (
         <ReactCustomScroll
           trackYProps={{
             renderer: props => {
@@ -125,25 +136,48 @@ class TextareaScrollbar extends React.Component {
               );
             }
           }}
-          className={"textareaScrollbar" + (!!this.props.isHaveError ? " error" : "")}
+          className={
+            "textareaScrollbar" + (!!this.props.isHaveError ? " error" : "")
+          }
           noScrollX
           style={{
             height: this.props.height,
             width: this.props.width
           }}
         >
+          {children}
+        </ReactCustomScroll>
+      );
+    }
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        {!!this.state.wideEditAreaIsHidden ? null : (
+          <Blur
+            onWheel={event => this.onBlur(event)}
+            onClick={event => this.onBlur(event)}
+            onContextMenu={event => this.onBlur(event)}
+          />
+        )}
+
+        {this.scrollWrapper(
           <TextareaAutosize
             autoFocus={this.props.autoFocus}
             inputRef={tag => (this.textarea = tag)}
             style={Object.assign(
               {
-                minHeight: !!this.state.isChrome
-                  ? this.props.height -
-                  (!!this.state.wideEditAreaIsHidden ? 7 : 1)
-                  : this.props.height,
-                width:
-                  this.props.width -
-                  (!!this.state.wideEditAreaIsHidden ? 14 : 7),
+                minHeight: !!this.props.height
+                  ? !!this.state.isChrome
+                    ? this.props.height -
+                      (!!this.state.wideEditAreaIsHidden ? 7 : 1)
+                    : this.props.height
+                  : "100%",
+                width: !!this.props.width
+                  ? this.props.width -
+                    (!!this.state.wideEditAreaIsHidden ? 14 : 7)
+                  : "100%",
                 marginLeft: !!this.state.wideEditAreaIsHidden
                   ? 0 + "px"
                   : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
@@ -171,8 +205,8 @@ class TextareaScrollbar extends React.Component {
             minRows={this.props.minRows}
             maxRows={this.props.maxRows}
           />
-        </ReactCustomScroll>
-      </React.Fragment >
+        )}
+      </React.Fragment>
     );
   }
 }

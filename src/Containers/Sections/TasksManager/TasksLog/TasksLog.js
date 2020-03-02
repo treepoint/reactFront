@@ -59,7 +59,7 @@ class TasksLog extends React.PureComponent {
     for (var t in tasksForChosenDate) {
       tasksList.push({
         value: tasksForChosenDate[t].id,
-        label: tasksForChosenDate[t].name,
+        label: tasksForChosenDate[t].name
       });
     }
 
@@ -216,7 +216,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TasksLog);
+export default connect(mapStateToProps, mapDispatchToProps)(TasksLog);
