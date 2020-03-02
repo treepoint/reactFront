@@ -1,0 +1,51 @@
+.taskModalWindow {
+  width: 60vw;
+}
+
+.taskName {
+  margin-bottom: 12px;
+  margin-left: -6px;
+  border-bottom: 1px dashed #c0c0c0;
+  padding-bottom: 4px;
+}
+
+.taskSelect {
+  margin-bottom: 12px;
+  width: 220px;
+  font-weight: bold;
+}
+
+.taskSelectsContainer {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px dashed #c0c0c0;
+}
+
+.taskContentContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.taskTimeContainer {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskSidebar {
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskTime {
+  font-weight: bold;
+  padding: 6px 0px;
+}
+
+.taskActionsContainer {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px dashed #c0c0c0;
+  padding: 6px 0px;
+}

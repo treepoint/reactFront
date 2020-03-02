@@ -10,8 +10,8 @@ class Action extends React.PureComponent {
     this.props.onClick(event);
   }
 
-  getClassName() {
-    let className = "action";
+  getClassName(cl) {
+    let className = cl;
 
     if (this.props.disabled) {
       className += " disabled";
@@ -38,19 +38,25 @@ class Action extends React.PureComponent {
 
   render() {
     return (
-      <div
-        className={this.getClassName()}
-        style={Object.assign(
-          {
-            background:
-              "url(" +
-              this.props.icon +
-              ") no-repeat scroll 50% 50% transparent"
-          },
-          this.props.style
-        )}
-        onClick={event => this.onClick(event)}
-      ></div>
+      <div className="actionContainer" onClick={event => this.onClick(event)}>
+        <div
+          className={this.getClassName("action")}
+          style={Object.assign(
+            {
+              background:
+                "url(" +
+                this.props.icon +
+                ") no-repeat scroll 50% 50% transparent"
+            },
+            this.props.style
+          )}
+        />
+        {!!this.props.lable ? (
+          <div className={this.getClassName("actionLable")}>
+            {this.props.lable}
+          </div>
+        ) : null}
+      </div>
     );
   }
 }

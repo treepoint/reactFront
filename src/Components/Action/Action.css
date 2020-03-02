@@ -1,3 +1,17 @@
+.actionContainer {
+  display: flex;
+  flex-direction: row;
+  cursor: default;
+}
+
+.actionContainer:hover {
+  opacity: 0.5;
+}
+
+.actionContainer:active {
+  opacity: 0.6;
+}
+
 .action {
   width: 24px;
   height: 24px;
@@ -13,14 +27,6 @@
 
 .action.vanishing {
   opacity: 0.1;
-}
-
-.action:hover {
-  opacity: 0.5;
-}
-
-.action:active {
-  opacity: 0.6;
 }
 
 .action.flicker {
@@ -41,6 +47,7 @@
     opacity: 1;
   }
 }
+
 @-o-keyframes flickerAnimation {
   0% {
     opacity: 1;
@@ -52,6 +59,7 @@
     opacity: 1;
   }
 }
+
 @-moz-keyframes flickerAnimation {
   0% {
     opacity: 1;
@@ -63,6 +71,7 @@
     opacity: 1;
   }
 }
+
 @-webkit-keyframes flickerAnimation {
   0% {
     opacity: 1;
@@ -93,4 +102,17 @@
 
 .action.disabled:hover {
   opacity: 0.2;
+}
+
+.actionLable {
+  padding-top: 2px;
+  margin-left: 2px;
+}
+
+.actionLable.transparent {
+  opacity: 0.8;
+}
+
+.actionLable.vanishing {
+  opacity: 0.5;
 }
