@@ -296,8 +296,7 @@ class Task extends React.Component {
           paddingTop: "1px",
           paddingBottom: "2px"
         }}
-        isTransparent={!!this.props.content.description ? true : false}
-        isVanishing={!!this.props.content.description ? false : true}
+        isTransparent={true}
         icon={iconMore}
         onClick={() => this.setState({ isTaskPageHidden: false })}
       />
