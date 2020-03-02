@@ -34,7 +34,7 @@ class Header extends React.PureComponent {
                 Веб-приложение находится в разработке. Рекомендуемый браузер —
                 Firefox.
               </p>
-              <p>Номер сборки: 0.7.7</p>
+              <p>Номер сборки: 0.7.8</p>
             </React.Fragment>
           }
         />
@@ -44,7 +44,9 @@ class Header extends React.PureComponent {
             icon={iconSettings}
             isTransparent={true}
             onClick={() => this.props.setModalWindow(settings)}
-            style={{ marginRight: "6px", marginTop: "7px" }} />) : null}
+            style={{ marginRight: "6px", marginTop: "7px" }}
+          />
+        ) : null}
       </div>
     );
   }
@@ -52,10 +54,9 @@ class Header extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    userAuthState: state.userAuthState,
+    userAuthState: state.userAuthState
   };
 };
-
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -66,7 +67,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
