@@ -56,6 +56,7 @@ class TasksLog extends React.PureComponent {
       }
     }
 
+    //Соберем список задача для выпадающего списка из текущих задача
     for (var t in tasksForChosenDate) {
       tasksList.push({
         value: tasksForChosenDate[t].id,
@@ -76,10 +77,24 @@ class TasksLog extends React.PureComponent {
     }
 
     for (var tlcd in tasksLogForChosenDate) {
+      let task_id = tasksLogForChosenDate[tlcd].task_id;
+
+      //Проверим, доступна ли задача в логе в выпадающем списке. Если нет — добавим
+      if (
+        typeof tasksList.find(task => {
+          return task.value === task_id;
+        }) === "undefined"
+      ) {
+        tasksList.push({
+          value: task_id,
+          label: tasksLogForChosenDate[tlcd].task_name
+        });
+      }
+
       //добавим текущую
       let tasks = {
         list: tasksList,
-        current: tasksLogForChosenDate[tlcd].task_id
+        current: task_id
       };
 
       content.unshift([
