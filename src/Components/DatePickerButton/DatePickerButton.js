@@ -36,7 +36,7 @@ class DatePickerButton extends React.PureComponent {
     }
 
     return (
-      <div style={{ width: this.props.width + 24 + "px", marginRight: "27px" }}>
+      <div style={{ width: this.props.width + 32 + "px", marginRight: "27px" }}>
         <DP
           locale="ru"
           className={className}

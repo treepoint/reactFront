@@ -13,3 +13,11 @@
 .row:focus {
   background: rgb(219, 219, 219);
 }
+
+.rowButton {
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+  padding-left: 4px;
+  padding-right: 4px;
+}

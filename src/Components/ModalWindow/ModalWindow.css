@@ -16,6 +16,8 @@
 }
 
 .modalWindow {
+  display: flex;
+  justify-content: flex-end;
   min-width: 320px;
   width: max-content;
   max-width: 60vw;
@@ -29,17 +31,23 @@
   z-index: 10000;
 }
 
+.modalWindowChildren {
+  width: 100%;
+}
+
 .confirmModalWindow.hidden {
   display: none;
 }
 
 .modalWindowClose {
   position: absolute;
-  right: -11px;
-  top: 54px;
-  width: 47px;
-  height: 47px;
+  height: 24px;
+  width: 24px;
   opacity: 0.6;
+  margin-left: 23px;
+  margin-right: -23px;
+  margin-top: -7px;
+  border-radius: 25px;
 }
 
 .modalWindowClose.hidden {
@@ -50,12 +58,11 @@
   opacity: 1;
 }
 
-.modalWindowClose:before,
-.modalWindowClose:after {
+.modalWindowClose:before, .modalWindowClose:after {
   position: absolute;
-  left: 6px;
+  left: 10px;
   content: " ";
-  height: 33px;
+  height: 20px;
   width: 2px;
   background-color: #000;
 }

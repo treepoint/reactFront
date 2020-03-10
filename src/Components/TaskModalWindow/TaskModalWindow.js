@@ -31,23 +31,6 @@ class TaskModalWindow extends React.PureComponent {
     );
   }
 
-  //Статус
-  getStatusSelect() {
-    return (
-      <div className="taskSelect">
-        Статус:
-        <SelectContent
-          isMinimized={false}
-          value={this.props.content.statuses}
-          height={34}
-          onChangeValue={status =>
-            this.props.saveTaskToDatabase({ status_id: status.current })
-          }
-        />
-      </div>
-    );
-  }
-
   //Категория
   getCategorySelect() {
     return (
@@ -121,8 +104,6 @@ class TaskModalWindow extends React.PureComponent {
             this.getTaskDescription()}
             <div className="taskSidebar">
               <div className="taskSelectsContainer">
-                {//Выбор статуса
-                this.getStatusSelect()}
                 {//Выбор категории
                 this.getCategorySelect()}
               </div>
@@ -134,8 +115,21 @@ class TaskModalWindow extends React.PureComponent {
                       marginBottom: "6px"
                     })
                   : null}
+                {//Выполнить или вернуть для выполнения
+                this.props.getCompleteActions(
+                  !!this.props.content.closed_date ? "доработать" : "выполнить",
+                  {
+                    paddingTop: "1px",
+                    marginBottom: "6px"
+                  }
+                )}
                 {//Огонь
                 this.props.getOnFireAction("все в огне!", {
+                  paddingTop: "1px",
+                  marginBottom: "6px"
+                })}
+                {//Заморозить
+                this.props.getFrozenAction("заморожено", {
                   paddingTop: "1px",
                   marginBottom: "6px"
                 })}
@@ -146,16 +140,6 @@ class TaskModalWindow extends React.PureComponent {
                       marginBottom: "6px"
                     })
                   : null}
-                {//Архив и из архива
-                this.props.getArchiveActions(
-                  !!this.props.content.in_archive
-                    ? "достать из архива"
-                    : "в архив",
-                  {
-                    paddingTop: "1px",
-                    marginBottom: "6px"
-                  }
-                )}
                 {//Удаление задачи
                 !!this.props.content.in_archive
                   ? this.props.getDeleteTaskAction("удалить задачу", {

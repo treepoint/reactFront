@@ -14,16 +14,19 @@ import TaskModalWindow from "../TaskModalWindow/TaskModalWindow";
 import DatePickerButton from "../DatePickerButton/DatePickerButton";
 //Утилиты
 import {
+  getCurrentDateWithTime,
   getCurrentTimeFormat,
   getTimeFromMins,
   getFormatDate
 } from "../../Libs/TimeUtils";
 //Картинки
 import deleteIcon from "../../Images/icon_delete.png";
-import archiveIcon from "../../Images/icon_archive.png";
-import dearchiveIcon from "../../Images/icon_dearchive.png";
+import completeIcon from "../../Images/icon_complete.png";
+import inCompleteIcon from "../../Images/icon_incomplete.png";
 import timeSpanIcon from "../../Images/icon_time_span.png";
 import iconFire from "../../Images/icon_fire.png";
+import iconFrozen from "../../Images/icon_frozen.png";
+import iconFrozenBlue from "../../Images/icon_frozen_blue.png";
 import iconFireRed from "../../Images/icon_fire_red.png";
 import iconMenu from "../../Images/icon_menu.png";
 import iconMore from "../../Images/icon_more.png";
@@ -66,12 +69,12 @@ class Task extends React.Component {
       id: this.props.content.id,
       name: this.props.content.name,
       description: this.props.content.description,
-      status_id: this.props.content.statuses.current,
       category_id: this.props.content.categories.current,
       execution_time_day: this.props.content.execution_time_day,
       execution_time_all: this.props.content.execution_time_all,
-      in_archive: this.props.content.in_archive,
+      frozen: this.props.content.frozen,
       on_fire: this.props.content.on_fire,
+      closed_date: this.props.content.closed_date,
       update_date: this.props.date + " " + getCurrentTimeFormat(),
       moved_date: this.props.content.moved_date
     };
@@ -106,8 +109,14 @@ class Task extends React.Component {
     );
   }
 
-  //Скрыть все модалки и заархивировать таску
-  archiveTask(state) {
+  //Скрыть все модалки и выполнить
+  completeTask(state) {
+    let closed_date = null;
+
+    if (state === 1) {
+      closed_date = getCurrentDateWithTime();
+    }
+
     this.setState(
       {
         isTaskPageHidden: true,
@@ -115,7 +124,7 @@ class Task extends React.Component {
         isNewDateModalWindowHidden: true
       },
       this.saveTaskToDatabase({
-        in_archive: state
+        closed_date: closed_date
       })
     );
   }
@@ -135,22 +144,6 @@ class Task extends React.Component {
           isStylable={false}
           //Функции
           onChangeValue={value => this.saveTaskToDatabase({ name: value })}
-        />
-      </div>
-    );
-  }
-
-  //Статус задачи
-  getStatusSelect() {
-    return (
-      <div className="selectField">
-        <SelectContent
-          isMinimized={true}
-          value={this.props.content.statuses}
-          height={34}
-          onChangeValue={status =>
-            this.saveTaskToDatabase({ status_id: status.current })
-          }
         />
       </div>
     );
@@ -219,6 +212,20 @@ class Task extends React.Component {
     );
   }
 
+  getFrozenAction(lable, style) {
+    return (
+      <Action
+        style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
+        lable={lable}
+        isTransparent={!!this.props.content.frozen ? false : true}
+        icon={!!this.props.content.frozen ? iconFrozenBlue : iconFrozen}
+        onClick={() =>
+          this.saveTaskToDatabase({ frozen: !this.props.content.frozen })
+        }
+      />
+    );
+  }
+
   getDeleteTaskAction(lable, style) {
     return (
       <Action
@@ -245,17 +252,17 @@ class Task extends React.Component {
     );
   }
 
-  getArchiveActions(lable, style) {
+  getCompleteActions(lable, style) {
     return (
       <React.Fragment>
-        {!!this.props.content.in_archive ? (
+        {!!this.props.content.closed_date ? (
           <div className="taskMenuItem">
             <Action
               style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
               lable={lable}
               isTransparent
-              icon={dearchiveIcon}
-              onClick={() => this.archiveTask(0)}
+              icon={inCompleteIcon}
+              onClick={() => this.completeTask(0)}
             />
           </div>
         ) : (
@@ -264,8 +271,8 @@ class Task extends React.Component {
               style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
               lable={lable}
               isTransparent
-              icon={archiveIcon}
-              onClick={() => this.archiveTask(1)}
+              icon={completeIcon}
+              onClick={() => this.completeTask(1)}
             />
           </div>
         )}
@@ -321,7 +328,7 @@ class Task extends React.Component {
           : this.getTimeSpanAction()}
       </div>
     ) : (
-      <div className="taskActions">{this.getArchiveActions()}</div>
+      <div className="taskActions">{this.getCompleteActions()}</div>
     );
   }
 
@@ -331,14 +338,16 @@ class Task extends React.Component {
       //Для архивной таски
       <div className="taskActions">
         {this.getOnFireAction()}
+        {this.getFrozenAction()}
         {this.getDeleteTaskAction()}
-        {this.getArchiveActions()}
+        {this.getCompleteActions()}
       </div>
     ) : (
       //Для обычной таски
       <div className="taskActions">
+        {this.getCompleteActions()}
         {this.getOnFireAction()}
-        {this.getArchiveActions()}
+        {this.getFrozenAction()}
         {this.getNewDateAction()}
         {this.getTimeSpanAction()}
       </div>
@@ -353,7 +362,6 @@ class Task extends React.Component {
     return (
       <div className="optionalPart">
         {/*Данные*/}
-        {this.getStatusSelect()}
         {this.getCategorySelect()}
         <div className="executionTime">{this.getExecutionTimeAll()}</div>
         <Spacer />
@@ -363,10 +371,25 @@ class Task extends React.Component {
           <div className="taskMenu">{this.getAllTaskActions()}</div>
         ) : (
           //Только важные
-          this.getShortActions()
+          <React.Fragment>
+            {this.getTaskMarksAction()}
+            {this.getShortActions()}
+          </React.Fragment>
         )}
         {/*Кнопка меню*/}
         {this.getTaskMenuAction()}
+      </div>
+    );
+  }
+
+  /*
+   * Отметки задачи
+   */
+  getTaskMarksAction() {
+    return (
+      <div className="taskMarks">
+        {!!this.props.content.on_fire ? this.getOnFireAction() : ""}
+        {!!this.props.content.frozen ? this.getFrozenAction() : ""}
       </div>
     );
   }
@@ -407,7 +430,7 @@ class Task extends React.Component {
         createTaskLog={() =>
           this.props.createTaskLog(this.props.content.id, this.props.date)
         }
-        archiveTask={state => this.archiveTask(state)}
+        archiveTask={state => this.completeTask(state)}
         //Для обработки модалок
         showDeleteModalWindow={() =>
           this.setState({ isDeleteModalWindowHidden: false })
@@ -418,14 +441,15 @@ class Task extends React.Component {
         //Экшены
         getNewDateAction={(lable, style) => this.getNewDateAction(lable, style)}
         getOnFireAction={(lable, style) => this.getOnFireAction(lable, style)}
+        getFrozenAction={(lable, style) => this.getFrozenAction(lable, style)}
         getDeleteTaskAction={(lable, style) =>
           this.getDeleteTaskAction(lable, style)
         }
         getTimeSpanAction={(lable, style) =>
           this.getTimeSpanAction(lable, style)
         }
-        getArchiveActions={(lable, style) =>
-          this.getArchiveActions(lable, style)
+        getCompleteActions={(lable, style) =>
+          this.getCompleteActions(lable, style)
         }
       />
     );
@@ -474,12 +498,20 @@ class Task extends React.Component {
 
   render() {
     return (
-      <div className={!!this.props.content.on_fire ? "task onFire" : "task"}>
+      <React.Fragment>
         {this.getCurrentModalWindow()}
-        {this.getFullTaskAction()}
-        {this.getTaskName()}
-        {this.getOptionalPart()}
-      </div>
+        <div
+          className={
+            "task" +
+            (!!this.props.content.on_fire ? " onFire" : "") +
+            (!!this.props.content.frozen ? " frozen" : "")
+          }
+        >
+          {this.getFullTaskAction()}
+          {this.getTaskName()}
+          {this.getOptionalPart()}
+        </div>
+      </React.Fragment>
     );
   }
 }
