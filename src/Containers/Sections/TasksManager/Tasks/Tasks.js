@@ -38,11 +38,6 @@ class Tasks extends React.Component {
       }
     }
 
-    //И если глобальные настройки поменялись — тоже перерендерим
-    if (prevProps.isAllMinimize !== this.props.isAllMinimize) {
-      return true;
-    }
-
     //Иначе — не рендерим
     return false;
   }
@@ -70,31 +65,6 @@ class Tasks extends React.Component {
 
     //Соберем контент для селекта категорий с указанием текущей
     return { list: categoriesList, current: task.category_id };
-  }
-
-  //Статусы по задаче
-  getStatusesByTask(task) {
-    //Соберем список статусов
-    let statusesList = [];
-
-    let taskStatuses = this.props.taskStatuses;
-
-    for (var ts in taskStatuses) {
-      //Добавляем если статус активен, или этот статус проставлен у задачи
-      if (
-        taskStatuses[ts].close_date === null ||
-        taskStatuses[ts].id === task.status_id
-      ) {
-        statusesList.push({
-          value: taskStatuses[ts].id,
-          label: taskStatuses[ts].name,
-          style: taskStatuses[ts].name_style
-        });
-      }
-    }
-
-    //Соберем контент для селекта статусов с указанием текущего
-    return { list: statusesList, current: task.status_id };
   }
 
   //Соберем таблицу для отображения задач
@@ -137,23 +107,27 @@ class Tasks extends React.Component {
     for (var t in tasksForChosenDate) {
       //Отфильтруем в зависимости от того, смотрим мы по архиву или нет
       if (
-        (tasksForChosenDate[t].in_archive === 0 && !this.props.isArchive) ||
-        (tasksForChosenDate[t].in_archive === 1 && this.props.isArchive)
+        //tasksForChosenDate[t].in_archive
+        (tasksForChosenDate[t].closed_date !== null &&
+          this.props.isAccomplished) ||
+        (tasksForChosenDate[t].closed_date === null &&
+          !this.props.isAccomplished)
       ) {
         content.push(
           <Task
             date={this.props.date}
             content={{
               id: tasksForChosenDate[t].id,
-              statuses: this.getStatusesByTask(tasksForChosenDate[t]),
               name: tasksForChosenDate[t].name,
               description: tasksForChosenDate[t].description,
               categories: this.getCategoriesByTask(tasksForChosenDate[t]),
               execution_time_day: tasksForChosenDate[t].execution_time_day,
               execution_time_all: tasksForChosenDate[t].execution_time_to_day,
               in_archive: tasksForChosenDate[t].in_archive,
+              frozen: tasksForChosenDate[t].frozen,
               on_fire: tasksForChosenDate[t].on_fire,
-              moved_date: tasksForChosenDate[t].moved_date
+              moved_date: tasksForChosenDate[t].moved_date,
+              closed_date: tasksForChosenDate[t].closed_date
             }}
           />
         );
@@ -186,7 +160,6 @@ const mapStateToProps = state => {
   return {
     tasks: state.tasks,
     tasksIsFetching: state.tasksIsFetching,
-    taskStatuses: state.taskStatuses,
     categories: state.categories
   };
 };

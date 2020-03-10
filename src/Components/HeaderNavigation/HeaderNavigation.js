@@ -19,11 +19,6 @@ class HeaderNavigation extends React.PureComponent {
           isNeedAuth={true}
         />
         <HeaderNavigationLink
-          to="/task_statuses"
-          value="Статусы"
-          isNeedAuth={true}
-        />
-        <HeaderNavigationLink
           to="/categories"
           value="Категории"
           isNeedAuth={true}
@@ -33,11 +28,7 @@ class HeaderNavigation extends React.PureComponent {
           value="Статистика"
           isNeedAuth={true}
         />
-        <HeaderNavigationLink
-          to="/admin"
-          value="Управление"
-          onlyAdmin={true}
-        />
+        <HeaderNavigationLink to="/admin" value="Управление" onlyAdmin={true} />
         <HeaderNavigationLink to="/about" value="Справка" />
       </div>
     );

@@ -21,6 +21,17 @@
   animation-iteration-count: infinite;
 }
 
+.task.frozen {
+  filter: grayscale(90%) brightness(100%) opacity(76%);
+}
+
+.taskMarks {
+  display: flex;
+  position: absolute;
+  margin-top: 4px;
+  margin-right: 8px;
+}
+
 @keyframes fire {
   from {
     border-color: #eb6f62;
@@ -38,6 +49,7 @@
     border-color: #f1a8a0;
   }
 }
+
 @-moz-keyframes fire {
   from {
     border-color: #eb6f62;
@@ -46,6 +58,7 @@
     border-color: #f1a8a0;
   }
 }
+
 @-webkit-keyframes fire {
   from {
     border-color: #eb6f62;

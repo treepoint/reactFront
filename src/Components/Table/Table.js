@@ -160,6 +160,12 @@ class Table extends React.Component {
     this.props.deleteRow(object);
   }
 
+  archiveRow(rowContent) {
+    let object = this.getObjectFromRowContent(rowContent);
+
+    this.props.archiveRow(object);
+  }
+
   getHeader() {
     //Если шапки нет — вернем ничего
     if (this.props.isHeaderless) {
@@ -234,6 +240,11 @@ class Table extends React.Component {
           deleteRow={
             !!this.props.deleteRow
               ? rowContent => this.deleteRow(rowContent)
+              : null
+          }
+          archiveRow={
+            !!this.props.archiveRow
+              ? rowContent => this.archiveRow(rowContent)
               : null
           }
         />

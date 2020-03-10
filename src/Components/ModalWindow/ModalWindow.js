@@ -15,8 +15,16 @@ class ModalWindow extends React.PureComponent {
         className={"modalWindowBlur" + this.getHidden()}
         onMouseDown={event => this.props.onClose(event)}
       >
-        <div className={"modalWindowClose" + this.getHidden()} />
-        <div className="modalWindow" onMouseDown={event => event.stopPropagation()}>{this.props.children}</div>
+        <div
+          className="modalWindow"
+          onMouseDown={event => event.stopPropagation()}
+        >
+          <div
+            className={"modalWindowClose" + this.getHidden()}
+            onMouseDown={event => this.props.onClose(event)}
+          />
+          <div className="modalWindowChildren">{this.props.children}</div>
+        </div>
       </div>
     );
   }

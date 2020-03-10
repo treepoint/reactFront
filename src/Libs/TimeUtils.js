@@ -46,6 +46,7 @@ export function getRussianFormatDate(date) {
   return dd + "." + mm + "." + yyyy;
 }
 
+//Получить текущее время, форматированное
 export function getCurrentTimeFormat() {
   //Получим сегодняшную дату
   var date = new Date();
@@ -60,6 +61,7 @@ export function getCurrentTimeFormat() {
   return hh + "-" + mm;
 }
 
+//Получить текущую дату и время
 export function getCurrentDateWithTime() {
   return getCurrentFormatDate() + " " + getCurrentTimeFormat();
 }

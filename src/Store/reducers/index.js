@@ -22,15 +22,6 @@ import {
 } from "./currentUser";
 
 import {
-  taskStatuses,
-  taskStatusIsUpdating,
-  taskStatusUpdateError,
-  taskStatusCreateError
-} from "./taskStatuses";
-
-import { taskStatusesTypes } from "./taskStatusesTypes";
-
-import {
   categories,
   categoriesIsUpdating,
   categoryUpdateError,
@@ -86,13 +77,6 @@ const appReducer = history =>
     currentUserIsAdmin,
     //userRoles
     userRoles,
-    //taskStatusesTypes
-    taskStatusesTypes,
-    //taskStatuses
-    taskStatuses,
-    taskStatusIsUpdating,
-    taskStatusUpdateError,
-    taskStatusCreateError,
     //categories
     categories,
     categoriesIsUpdating,

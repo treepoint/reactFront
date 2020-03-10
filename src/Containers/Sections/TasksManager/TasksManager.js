@@ -7,7 +7,6 @@ import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
 import SumTime from "../../../Components/SumTime/SumTime";
 //Redux
 import { connect } from "react-redux";
-import { fetchTaskStatuses } from "../../../Store/actions/taskStatuses";
 import { fetchCategories } from "../../../Store/actions/categories";
 import { setScrollTop, setScrollLeft } from "../../../Store/actions/page";
 //Подключаем красивые скроллы
@@ -19,7 +18,7 @@ class TasksManager extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isArchive: false,
+      isAccomplished: false,
       isAllMinimize: true,
       date: getCurrentFormatDate()
     };
@@ -27,7 +26,6 @@ class TasksManager extends React.PureComponent {
 
   componentDidMount() {
     this.props.fetchCategories();
-    this.props.fetchTaskStatuses();
   }
 
   //Нужно для правильного позиционирования fixed элементов в тасках
@@ -58,12 +56,12 @@ class TasksManager extends React.PureComponent {
     );
   };
 
-  getArchiveTasks = () => {
-    return <Tasks isArchive={true} date={this.state.date} />;
+  getAccomplishedTasks = () => {
+    return <Tasks isAccomplished={true} date={this.state.date} />;
   };
 
-  changeArchiveCurrentTasks() {
-    this.setState({ isArchive: !this.state.isArchive });
+  changeAccomplishedCurrentTasks() {
+    this.setState({ isAccomplished: !this.state.isAccomplished });
     //Нужно, чтобы при переключении архив\задачи правильно позиционировать fixed элементы
     this.props.setScrollTop(0);
     this.props.setScrollLeft(0);
@@ -74,13 +72,13 @@ class TasksManager extends React.PureComponent {
     let anchorLinksArray = [
       {
         value: "Текущие",
-        callback: () => this.changeArchiveCurrentTasks(),
-        isCurrent: !this.state.isArchive
+        callback: () => this.changeAccomplishedCurrentTasks(),
+        isCurrent: !this.state.isAccomplished
       },
       {
-        value: "Архив",
-        callback: () => this.changeArchiveCurrentTasks(),
-        isCurrent: this.state.isArchive
+        value: "Выполненные",
+        callback: () => this.changeAccomplishedCurrentTasks(),
+        isCurrent: this.state.isAccomplished
       }
     ];
 
@@ -108,15 +106,17 @@ class TasksManager extends React.PureComponent {
           //Обрабатываем скролл
           onScrollStop={() => this.handleScroll()}
         >
-          <div style={{ display: !!this.state.isArchive ? "none" : null }}>
+          <div style={{ display: !!this.state.isAccomplished ? "none" : null }}>
             <Tasks
               date={this.state.date}
               isAllMinimize={this.state.isAllMinimize}
             />
           </div>
-          <div style={{ display: !!!this.state.isArchive ? "none" : null }}>
+          <div
+            style={{ display: !!!this.state.isAccomplished ? "none" : null }}
+          >
             <Tasks
-              isArchive={true}
+              isAccomplished={true}
               date={this.state.date}
               isAllMinimize={this.state.isAllMinimize}
             />
@@ -130,16 +130,12 @@ class TasksManager extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    taskStatuses: state.taskStatuses,
     categories: state.categories
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchTaskStatuses: () => {
-      dispatch(fetchTaskStatuses());
-    },
     fetchCategories: () => {
       dispatch(fetchCategories());
     },
@@ -152,7 +148,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TasksManager);
+export default connect(mapStateToProps, mapDispatchToProps)(TasksManager);

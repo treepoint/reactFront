@@ -12,7 +12,6 @@ import {
   setCurrentUserAndAdmin
 } from "./currentUser";
 import { fetchCategories } from "./categories";
-import { fetchTaskStatuses } from "./taskStatuses";
 import { fetchTasksByDate } from "./tasks";
 import { fetchTasksLogByDate } from "./tasksLog";
 import { setModalWindowState } from "./globalModalWindow";
@@ -187,16 +186,14 @@ export function login() {
 }
 
 export function loadAllDate() {
-  return (dispatch) => {
+  return dispatch => {
     //Проставим пользовательские настройки
     dispatch(fetchUserSettings());
     //Загрузим категории
     dispatch(fetchCategories());
-    //Загрузим статусы
-    dispatch(fetchTaskStatuses());
     //Загрузим задачи
     dispatch(fetchTasksByDate(getCurrentFormatDate()));
     //Загрузим лог задач
     dispatch(fetchTasksLogByDate(getCurrentFormatDate()));
-  }
+  };
 }

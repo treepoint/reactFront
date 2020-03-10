@@ -1,7 +1,6 @@
 //Обвязка для API
 import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
-import { fetchTaskStatuses } from "./taskStatuses";
 import { fetchCategories } from "./categories";
 import { removeTaskLog } from "./tasksLog";
 
@@ -55,7 +54,6 @@ export function fetchTasksByDate(date) {
 
     Axios.get(URL + "/date/" + date, headers).then(response => {
       dispatch(setTasks(response.data));
-      dispatch(fetchTaskStatuses());
       dispatch(fetchCategories());
       dispatch(setIsFetching(false));
     });
@@ -75,7 +73,6 @@ export function createTask(date, name) {
 
     let task = {
       category_id: Object.keys(state.categories)[0],
-      status_id: Object.keys(state.taskStatuses)[0],
       name: name,
       description: null,
       create_date: date

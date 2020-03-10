@@ -5,7 +5,7 @@ import {
   fetchCategories,
   createCategory,
   updateCategory,
-  deleteCategory
+  archiveCategory
 } from "../../../Store/actions/categories";
 //Компоненты
 import Table from "../../../Components/Table/Table";
@@ -16,7 +16,7 @@ class Categories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deleteModalWindow: { isHidden: true, row: null }
+      archiveModalWindow: { isHidden: true, row: null }
     };
   }
 
@@ -31,13 +31,13 @@ class Categories extends React.Component {
   }
 
   //Закрыть модальное окно
-  closeDeleteModal() {
-    this.setState({ deleteModalWindow: { isHidden: true, row: null } });
+  closeArchiveModal() {
+    this.setState({ archiveModalWindow: { isHidden: true, row: null } });
   }
 
   //Показать модальное окно
-  showDeleteModal(row) {
-    this.setState({ deleteModalWindow: { isHidden: false, row } });
+  showArchiveModal(row) {
+    this.setState({ archiveModalWindow: { isHidden: false, row } });
   }
 
   //Соберем таблицу для отображения
@@ -103,12 +103,12 @@ class Categories extends React.Component {
     return (
       <Page title="Управление категориями задач" isCustomContent={true}>
         <ConfirmModalWindow
-          title="Удалить категорию?"
+          title="Заархивировать категорию?"
           message="Категория останется назначенной для текущих и выполненных задач, но будет недоступна для новых"
-          isHidden={this.state.deleteModalWindow.isHidden}
-          onCancel={() => this.closeDeleteModal()}
+          isHidden={this.state.archiveModalWindow.isHidden}
+          onCancel={() => this.closeArchiveModal()}
           onConfirm={() =>
-            this.props.deleteCategory(this.state.deleteModalWindow.row.id)
+            this.props.archiveCategory(this.state.archiveModalWindow.row.id)
           }
         />
         <Table
@@ -117,7 +117,7 @@ class Categories extends React.Component {
           isSingleLineMode={true}
           saveRow={category => this.props.updateCategory(category)}
           addRow={() => this.props.createCategory()}
-          deleteRow={row => this.showDeleteModal(row)}
+          archiveRow={row => this.showArchiveModal(row)}
           isUpdating={this.props.isUpdating}
         >
           {this.getContent()}
@@ -143,8 +143,8 @@ const mapDispatchToProps = dispatch => {
     createCategory: () => {
       dispatch(createCategory());
     },
-    deleteCategory: id => {
-      dispatch(deleteCategory(id));
+    archiveCategory: id => {
+      dispatch(archiveCategory(id));
     },
     updateCategory: category => {
       dispatch(updateCategory(category));
@@ -152,7 +152,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Categories);
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

@@ -10,7 +10,6 @@ import { getGlobalModalWindow } from "../../Components/GlobalModalWindow/GLOBAL_
 import Header from "../Header/Header";
 import Home from "../Sections/Home/Home";
 import TasksManager from "../Sections/TasksManager/TasksManager";
-import TaskStatuses from "../Sections/TaskStatuses/TaskStatuses";
 import Categories from "../Sections/Categories/Categories";
 import StatisticRouter from "../Sections/Statistic/StatisticRouter";
 import About from "../Sections/About/About";
@@ -32,10 +31,10 @@ class App extends React.PureComponent {
       <React.Fragment>
         <div
           className="wallpaper"
-          style={!!this.props.wallpaper ?
-            { backgroundImage: "url(" + this.props.wallpaper + ")" }
-            :
-            { background: "url(" + defaultWallpaper + ")" }
+          style={
+            !!this.props.wallpaper
+              ? { backgroundImage: "url(" + this.props.wallpaper + ")" }
+              : { background: "url(" + defaultWallpaper + ")" }
           }
         >
           <Header />
@@ -45,7 +44,6 @@ class App extends React.PureComponent {
             {!!this.props.userAuthState ? (
               <React.Fragment>
                 <Route path="/tasks_manager" component={TasksManager} />
-                <Route path="/task_statuses" component={TaskStatuses} />
                 <Route path="/categories" component={Categories} />
                 <Route path="/statistic" component={StatisticRouter} />
                 <Route path="/admin" component={AdminPanelRouter} />
@@ -82,7 +80,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

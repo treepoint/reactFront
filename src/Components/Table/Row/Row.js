@@ -1,7 +1,9 @@
 import React from "react";
 import Cell from "../Cell/Cell";
-import DeleteButton from "./DeleteButton/DeleteButton";
-import AddButton from "./AddButton/AddButton";
+import Action from "../../Action/Action";
+import deleteIcon from "../../../Images/icon_delete.png";
+import archiveIcon from "../../../Images/icon_archive.png";
+import addIcon from "../../../Images/icon_add.png";
 import "./Row.css";
 
 class Row extends React.PureComponent {
@@ -67,32 +69,48 @@ class Row extends React.PureComponent {
     this.props.saveRow(rowContent);
   }
 
-  deleteRow() {
-    this.props.deleteRow(this.props.rowsContent);
-  }
-
   getActionButton() {
+    let buttons = null;
+
     if (!this.props.isEditable) {
-      return null;
+      return buttons;
     }
 
     if (this.props.isHeader) {
       if (this.props.addRow === null) {
-        return <AddButton disabled={true} />;
+        buttons = <Action disabled={true} icon={addIcon} />;
       } else {
-        return (
-          <AddButton disabled={false} addRow={() => this.props.addRow()} />
+        buttons = (
+          <Action
+            icon={addIcon}
+            disabled={false}
+            onClick={() => this.props.addRow()}
+          />
         );
       }
     } else {
-      if (this.props.deleteRow === null) {
-        return <DeleteButton disabled={true} />;
-      } else {
-        return (
-          <DeleteButton disabled={false} deleteRow={() => this.deleteRow()} />
+      if (this.props.archiveRow !== null) {
+        buttons = (
+          <Action
+            icon={archiveIcon}
+            disabled={false}
+            onClick={() => this.props.archiveRow(this.props.rowsContent)}
+          />
+        );
+      }
+
+      if (this.props.deleteRow !== null) {
+        buttons = (
+          <Action
+            icon={deleteIcon}
+            disabled={false}
+            onClick={() => this.props.deleteRow(this.props.rowsContent)}
+          />
         );
       }
     }
+
+    return <div className="rowButton">{buttons}</div>;
   }
 
   render() {

@@ -9,7 +9,7 @@ export const REMOVE_CATEGORY = "REMOVE_CATEGORY";
 export const CLEAR_CATEGORIES = "CLEAR_CATEGORIES";
 export const CATEGORY_CREATE_ERROR = "CATEGORY_CREATE_ERROR";
 export const CATEGORY_UPDATE_ERROR = "CATEGORY_UPDATE_ERROR";
-export const CATEGORY_DELETE_ERROR = "CATEGORY_DELETE_ERROR";
+export const CATEGORY_ARCHIVE_ERROR = "CATEGORY_DELETE_ERROR";
 
 export function setCategories(object) {
   return { type: SET_CATEGORIES, object };
@@ -31,8 +31,8 @@ export function setUpdateError(text) {
   return { type: CATEGORY_UPDATE_ERROR, text };
 }
 
-export function setDeleteError(text) {
-  return { type: CATEGORY_DELETE_ERROR, text };
+export function setArchiveError(text) {
+  return { type: CATEGORY_ARCHIVE_ERROR, text };
 }
 
 //Получить все категории задач
@@ -115,8 +115,8 @@ export function updateCategory(category) {
   };
 }
 
-//Удалить категорию
-export function deleteCategory(id) {
+//Заархивировать категорию
+export function archiveCategory(id) {
   return dispatch => {
     let headers = getHeaders();
 
@@ -127,12 +127,12 @@ export function deleteCategory(id) {
     Axios.delete(URL + "/" + id, headers)
       .then(response => {
         if (typeof response.data.affectedRows === "number") {
-          //Удалим категорию и обновим список
+          //Удалим категорию из списка и обновим список
           dispatch(removeCategory(id));
         }
       })
       .catch(error => {
-        dispatch(setDeleteError("Не удалось удалить категорию"));
+        dispatch(setArchiveError("Не удалось заархивировать категорию"));
       });
   };
 }
