@@ -109,7 +109,7 @@ class TaskModalWindow extends React.PureComponent {
               </div>
               <div className="taskActionsContainer">
                 {//Таймер
-                !!!this.props.content.in_archive
+                !!!this.props.content.closed_date
                   ? this.props.getTimeSpanAction("включить таймер", {
                       paddingTop: "1px",
                       marginBottom: "6px"
@@ -134,14 +134,14 @@ class TaskModalWindow extends React.PureComponent {
                   marginBottom: "6px"
                 })}
                 {//Перенос
-                !!!this.props.content.in_archive
+                !!!this.props.content.closed_date
                   ? this.props.getNewDateAction("перенести на другую дату", {
                       paddingTop: "1px",
                       marginBottom: "6px"
                     })
                   : null}
                 {//Удаление задачи
-                !!this.props.content.in_archive
+                !!this.props.content.closed_date
                   ? this.props.getDeleteTaskAction("удалить задачу", {
                       paddingTop: "1px",
                       marginBottom: "6px"

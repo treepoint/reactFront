@@ -321,9 +321,9 @@ class Task extends React.Component {
   }
 
   getShortActions() {
-    return !!!this.props.content.in_archive ? (
+    return !!!this.props.content.closed_date ? (
       <div className="taskActions">
-        {!!this.props.content.in_archive
+        {!!this.props.content.closed_date
           ? this.getDeleteTaskAction()
           : this.getTimeSpanAction()}
       </div>
@@ -334,7 +334,7 @@ class Task extends React.Component {
 
   //Все действия внизу таска
   getAllTaskActions() {
-    return !!this.props.content.in_archive ? (
+    return !!this.props.content.closed_date ? (
       //Для архивной таски
       <div className="taskActions">
         {this.getOnFireAction()}
