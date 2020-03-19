@@ -114,14 +114,15 @@
 .ck.ck-link-form {
   padding: var(--ck-spacing-standard);
   position: sticky;
-  z-index:100001;
+  z-index: 100001;
 }
 
 .ck.ck-balloon-panel {
-  z-index:100001;
+  z-index: 100001;
   position: absolute;
 }
 
-.ck.ck-button .ck-tooltip {
-display: none;
+.ck.ck-button .ck-tooltip,
+a.ck.ck-button .ck-tooltip {
+  display: none !important;
 }
