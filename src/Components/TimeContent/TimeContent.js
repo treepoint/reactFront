@@ -1,5 +1,5 @@
 import React from "react";
-import TimeField from "react-simple-timefield";
+import TimeField from "../TimeField/TimeField";
 
 import "./TimeContent.css";
 

@@ -44,7 +44,11 @@ class TextContent extends React.Component {
       };
     } else {
       return {
-        backgroundColor: !!this.props.disabled ? "rgb(251, 251, 251)" : "#fff",
+        backgroundColor: !!this.props.isStandalone
+          ? "fff"
+          : !!this.props.disabled
+          ? "rgb(251, 251, 251)"
+          : "#fff",
         borderLeft: "8px solid " + this.props.backgroundColor,
         fontWeight: !!this.props.bold ? "900" : "200",
         fontStyle: !!this.props.italic ? "italic" : "normal",
