@@ -118,8 +118,8 @@
 }
 
 .ck.ck-balloon-panel {
-  z-index: 100001;
-  position: absolute;
+  z-index: 100001 !important;
+  position: absolute !important;
 }
 
 .ck.ck-button .ck-tooltip,
