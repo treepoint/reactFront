@@ -333,7 +333,7 @@ class Task extends React.Component {
     );
   }
 
-  //Все действия внизу таска
+  //Все действия таска
   getAllTaskActions() {
     return !!this.props.content.closed_date ? (
       //Для архивной таски
@@ -369,7 +369,14 @@ class Task extends React.Component {
         {/*Кнопки*/}
         {!!this.state.isMenuOpen ? (
           //Все
-          <div className="taskMenu">{this.getAllTaskActions()}</div>
+          <div
+            className="taskMenu"
+            onClick={() => {
+              this.setState({ isMenuOpen: false });
+            }}
+          >
+            {this.getAllTaskActions()}
+          </div>
         ) : (
           //Только важные
           <React.Fragment>
