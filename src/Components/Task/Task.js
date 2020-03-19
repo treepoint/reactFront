@@ -30,6 +30,7 @@ import iconFrozenBlue from "../../Images/icon_frozen_blue.png";
 import iconFireRed from "../../Images/icon_fire_red.png";
 import iconMenu from "../../Images/icon_menu.png";
 import iconMore from "../../Images/icon_more.png";
+import iconMoreBlue from "../../Images/icon_more_blue.png";
 import iconNewDate from "../../Images/icon_new_date.png";
 //CSS
 import "./Task.css";
@@ -303,8 +304,8 @@ class Task extends React.Component {
           paddingTop: "1px",
           paddingBottom: "2px"
         }}
-        isTransparent={true}
-        icon={iconMore}
+        isTransparent={!!this.props.content.description ? false : true}
+        icon={!!this.props.content.description ? iconMoreBlue : iconMore}
         onClick={() => this.setState({ isTaskPageHidden: false })}
       />
     );
