@@ -2,26 +2,11 @@ import React from "react";
 //CKEditor
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import "@ckeditor/ckeditor5-build-classic/build/translations/ru";
 //CSS
 import "./RichTextEditor.css";
 
 const editorConfiguration = {
   height: 400,
-  language: "ru",
-  toolbar: [
-    "undo",
-    "redo",
-    "|",
-    "heading",
-    "|",
-    "bold",
-    "italic",
-    "|",
-    "bulletedList",
-    "numberedList",
-    "blockQuote"
-  ]
 };
 
 class RichTextEditor extends React.Component {
