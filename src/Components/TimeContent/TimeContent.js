@@ -1,5 +1,5 @@
 import React from "react";
-import TimeField from "../TimeField/TimeField";
+import ChronoField from "../ChronoField/ChronoField";
 
 import "./TimeContent.css";
 
@@ -82,7 +82,7 @@ class TimeContent extends React.PureComponent {
             : "timeContentContainer"
         }
       >
-        <TimeField
+        <ChronoField
           value={this.state.value}
           disabled={!!this.props.disabled ? true : false}
           className={

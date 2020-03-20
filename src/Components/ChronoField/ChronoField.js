@@ -2,16 +2,20 @@ import React from "react";
 import TimeField from "react-simple-timefield";
 import TextContent from "../TextContent/TextContent";
 
-class TimeFieldd extends React.PureComponent {
+import "./ChronoField.css";
+
+class ChronoField extends React.PureComponent {
   render() {
     return (
-      <div className="TimeField">
+      <React.Fragment>
         {!!this.props.disabled ? (
-          <TextContent
-            value={this.props.value}
-            disabled={this.props.disabled}
-            isStandalone={true}
-          />
+          <div className="ChronoField disabled">
+            <TextContent
+              value={this.props.value}
+              disabled={this.props.disabled}
+              isStandalone={true}
+            />
+          </div>
         ) : (
           <TimeField
             value={this.props.value}
@@ -23,9 +27,9 @@ class TimeFieldd extends React.PureComponent {
             onKeyPress={event => this.props.onKeyPress(event)}
           />
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-export default TimeFieldd;
+export default ChronoField;
