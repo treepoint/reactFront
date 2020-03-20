@@ -97,6 +97,7 @@
 
 .timeField {
   display: flex;
+  margin-top: 2px;
 }
 
 .timeField.hidden {
