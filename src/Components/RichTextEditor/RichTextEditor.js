@@ -7,6 +7,7 @@ import "./RichTextEditor.css";
 
 const editorConfiguration = {
   height: 400,
+  width: 600
 };
 
 class RichTextEditor extends React.Component {
