@@ -21,38 +21,24 @@ import {
   updateProfileError
 } from "./currentUser";
 
-import {
-  categories,
-  categoriesIsUpdating,
-  categoryUpdateError,
-  categoryCreateError
-} from "./categories";
+import { categories, categoriesIsUpdating } from "./categories";
 
-import {
-  users,
-  usersIsUpdating,
-  userUpdateError,
-  userDeleteError
-} from "./users";
+import { users, usersIsUpdating } from "./users";
 
 import { userRoles } from "./userRoles";
 
-import {
-  tasks,
-  tasksIsFetching,
-  tasksIsUpdating,
-  taskUpdateError,
-  taskDeleteError
-} from "./tasks";
+import { tasks, tasksIsFetching, tasksIsUpdating } from "./tasks";
 
-import {
-  tasksLog,
-  tasksLogIsUpdating,
-  taskLogUpdateError,
-  taskLogDeleteError
-} from "./tasksLog";
+import { tasksLog, tasksLogIsUpdating } from "./tasksLog";
 
 import { userSettings } from "./userSettings";
+
+import { notifications } from "./notifications";
+
+import {
+  categoriesStatisticByPeriod,
+  tasksStatisticByPeriod
+} from "./statistics";
 
 const appReducer = history =>
   combineReducers({
@@ -80,26 +66,23 @@ const appReducer = history =>
     //categories
     categories,
     categoriesIsUpdating,
-    categoryUpdateError,
-    categoryCreateError,
     //users
     users,
     usersIsUpdating,
-    userUpdateError,
-    userDeleteError,
     //tasks
     tasks,
     tasksIsFetching,
     tasksIsUpdating,
-    taskUpdateError,
-    taskDeleteError,
     //tasksLog
     tasksLog,
     tasksLogIsUpdating,
-    taskLogUpdateError,
-    taskLogDeleteError,
     //settings
-    userSettings
+    userSettings,
+    //notifications
+    notifications,
+    //statistic
+    categoriesStatisticByPeriod,
+    tasksStatisticByPeriod
   });
 
 const rootReducer = history => (state, action) => {

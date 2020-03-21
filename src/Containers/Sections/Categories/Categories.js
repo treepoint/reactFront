@@ -20,10 +20,6 @@ class Categories extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.fetchCategories();
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.userAuthState && !prevProps.userAuthState) {
       this.props.fetchCategories();

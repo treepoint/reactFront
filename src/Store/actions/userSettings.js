@@ -4,6 +4,7 @@ import {
   getHeaders,
   uploadedFilesDirectory
 } from "../APIConfiguration";
+import { setNotifications } from "./notifications";
 import Axios from "axios";
 const URL = APIURL + "/user_settings";
 
@@ -11,7 +12,6 @@ const URL = APIURL + "/user_settings";
 export const SET_USER_SETTINGS = "SET_USER_SETTINGS";
 export const CLEAR_USER_SETTINGS = "CLEAR_USER_SETTINGS";
 export const IS_USER_SETTINGS_UPDATING = "IS_USER_SETTINGS_UPDATING";
-export const USER_SETTINGS_UPDATE_ERROR = "USER_SETTINGS_UPDATE_ERROR";
 
 export function setUserSettings(object) {
   return { type: SET_USER_SETTINGS, object };
@@ -23,10 +23,6 @@ export function clearUserSettings(object) {
 
 export function setIsUpdating(boolean) {
   return { type: IS_USER_SETTINGS_UPDATING, boolean };
-}
-
-export function setUpdateError(text) {
-  return { type: USER_SETTINGS_UPDATE_ERROR, text };
 }
 
 //Получить все настройки
@@ -50,8 +46,7 @@ export function fetchUserSettings() {
 
       if (response.data.wallpaper !== null) {
         Object.assign(userSettings, response.data, {
-          wallpaper:
-            uploadedFilesDirectory + "/" + response.data.wallpaper
+          wallpaper: uploadedFilesDirectory + "/" + response.data.wallpaper
         });
       } else {
         Object.assign(userSettings, response.data, {
@@ -80,11 +75,14 @@ export function updateWallpapers(file) {
       .then(response => {
         dispatch(
           setUserSettings({
-            wallpaper:
-              uploadedFilesDirectory + "/" + response.data.filename
+            wallpaper: uploadedFilesDirectory + "/" + response.data.filename
           })
         );
       })
-      .catch(error => { });
+      .catch(error => {
+        let message =
+          "Не удалось обновить обои. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
+      });
   };
 }

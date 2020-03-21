@@ -76,7 +76,7 @@ export function restoreFromCookies() {
       dispatch(setUserAuthState(true));
 
       //Загрузим все данные приложения
-      dispatch(loadAllDate());
+      dispatch(loadAllData());
 
       return;
     }
@@ -118,7 +118,7 @@ export function reauth(refreshToken) {
       //Авторизацию
       dispatch(setUserAuthState(true));
       //Загрузим все данные приложения
-      dispatch(loadAllDate());
+      dispatch(loadAllData());
     });
   };
 }
@@ -159,7 +159,7 @@ export function login() {
         dispatch(setUserAuthState(true));
 
         //Загрузим все данные приложения
-        dispatch(loadAllDate());
+        dispatch(loadAllData());
 
         //Если открыто модальное окно — закроем
         if (state.modalWindowState === true) {
@@ -185,7 +185,7 @@ export function login() {
   };
 }
 
-export function loadAllDate() {
+export function loadAllData() {
   return dispatch => {
     //Проставим пользовательские настройки
     dispatch(fetchUserSettings());

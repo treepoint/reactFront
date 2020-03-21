@@ -9,10 +9,6 @@ import AddTaskButton from "../../../../Components/AddTaskButton/AddTaskButton";
 import "./Tasks.css";
 
 class Tasks extends React.Component {
-  componentDidMount() {
-    this.props.fetchTasksByDate(this.props.date);
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.date !== this.props.date) {
       this.props.fetchTasksByDate(this.props.date);
@@ -146,11 +142,8 @@ class Tasks extends React.Component {
     return (
       <div className="taskContainer">
         {this.getTasks()}
-
-        {/*Если это не архив — покажем кнопку добавления тасков*/ !!!this.props
-          .isArchive
-          ? this.getAddTaskButton()
-          : null}
+        {/*Если это не архив — покажем кнопку добавления тасков*/
+        !!!this.props.isArchive ? this.getAddTaskButton() : null}
       </div>
     );
   }

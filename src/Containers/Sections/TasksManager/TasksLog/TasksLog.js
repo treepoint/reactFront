@@ -25,10 +25,6 @@ class TasksLog extends React.PureComponent {
     };
   }
 
-  componentDidMount() {
-    this.props.fetchTasksLogByDate(this.props.date);
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.date !== this.props.date) {
       this.props.fetchTasksLogByDate(this.props.date);

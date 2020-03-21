@@ -1,5 +1,6 @@
 //Обвязка для API
 import { APIURL, getHeaders } from "../APIConfiguration";
+import { setNotifications } from "./notifications";
 import Axios from "axios";
 const URL = APIURL + "/roles";
 
@@ -30,8 +31,14 @@ export function fetchUserRoles() {
       return;
     }
 
-    Axios.get(URL, headers).then(response => {
-      dispatch(setUserRoles(response.data));
-    });
+    Axios.get(URL, headers)
+      .then(response => {
+        dispatch(setUserRoles(response.data));
+      })
+      .catch(error => {
+        let message =
+          "Не удалось получить роли пользователей. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
+      });
   };
 }

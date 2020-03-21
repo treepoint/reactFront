@@ -2,6 +2,7 @@
 import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
 import { fetchTasksByDate, setTasks } from "./tasks";
+import { setNotifications } from "./notifications";
 import { getCurrentTimeFormat } from "../../Libs/TimeUtils";
 
 const URL = APIURL + "/tasks_log";
@@ -10,9 +11,6 @@ export const SET_TASKS_LOG = "SET_TASKS_LOG";
 export const IS_TASKS_LOG_UPDATING = "IS_TASKS_LOG_UPDATING";
 export const REMOVE_TASK_LOG = "REMOVE_TASK_LOG";
 export const CLEAR_TASKS_LOG = "CLEAR_TASKS_LOG";
-export const TASK_LOG_CREATE_ERROR = "TASK_LOG_CREATE_ERROR";
-export const TASK_LOG_UPDATE_ERROR = "TASK_LOG_UPDATE_ERROR";
-export const TASK_LOG_DELETE_ERROR = "TASK_LOG_DELETE_ERROR";
 
 export function setTasksLog(object) {
   return { type: SET_TASKS_LOG, object };
@@ -26,18 +24,6 @@ export function clearTasksLog(object) {
   return { type: CLEAR_TASKS_LOG, object };
 }
 
-export function setCreateError(text) {
-  return { type: TASK_LOG_CREATE_ERROR, text };
-}
-
-export function setUpdateError(text) {
-  return { type: TASK_LOG_UPDATE_ERROR, text };
-}
-
-export function setDeleteError(text) {
-  return { type: TASK_LOG_DELETE_ERROR, text };
-}
-
 //Получить весь лог выполнения за определенный период
 export function fetchTasksLogByDate(date) {
   return dispatch => {
@@ -47,10 +33,16 @@ export function fetchTasksLogByDate(date) {
       return;
     }
 
-    Axios.get(URL + "/date/" + date, headers).then(response => {
-      dispatch(setTasksLog(response.data));
-      dispatch(fetchTasksByDate(date));
-    });
+    Axios.get(URL + "/date/" + date, headers)
+      .then(response => {
+        dispatch(setTasksLog(response.data));
+        dispatch(fetchTasksByDate(date));
+      })
+      .catch(error => {
+        let message =
+          "Не удалось получить лог выполнения задач. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
+      });
   };
 }
 
@@ -78,7 +70,9 @@ export function createTaskLog(taskId, date) {
         }
       })
       .catch(error => {
-        dispatch(setCreateError("Не удалось добавить запись в логе"));
+        let message =
+          "Не удалось добавить запись в лог. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
       });
   };
 }
@@ -128,7 +122,9 @@ export function updateTaskLog(taskLog, forDate) {
         }
       })
       .catch(error => {
-        dispatch(setUpdateError("Не удалось обновить запись в логе"));
+        let message =
+          "Не удалось обновить запись в логе. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
         dispatch(setIsUpdating(false));
       });
   };
@@ -167,7 +163,9 @@ export function deleteTaskLog(id) {
         }
       })
       .catch(error => {
-        dispatch(setDeleteError("Не удалось удалить запись в логе"));
+        let message =
+          "Не удалось удалить запись из лога. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
       });
   };
 }

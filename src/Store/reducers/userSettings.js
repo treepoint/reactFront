@@ -1,8 +1,7 @@
 import {
   SET_USER_SETTINGS,
   CLEAR_USER_SETTINGS,
-  IS_USER_SETTINGS_UPDATING,
-  USER_SETTINGS_UPDATE_ERROR
+  IS_USER_SETTINGS_UPDATING
 } from "../actions/userSettings";
 
 export function userSettings(state = {}, action) {
@@ -20,15 +19,6 @@ export function userSettingsIsUpdating(state = false, action) {
   switch (action.type) {
     case IS_USER_SETTINGS_UPDATING:
       return action.boolean;
-    default:
-      return state;
-  }
-}
-
-export function userSettingsUpdateError(state = null, action) {
-  switch (action.type) {
-    case USER_SETTINGS_UPDATE_ERROR:
-      return action.text;
     default:
       return state;
   }

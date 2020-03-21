@@ -3,6 +3,7 @@ import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
 //Модалки
 import { setModalWindowState, setModalWindowName } from "./globalModalWindow";
+import { setNotifications } from "./notifications";
 import { login } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 
 const URL = APIURL + "/users";
@@ -125,8 +126,14 @@ export function setCurrentUserAndAdminByID(id) {
     if (headers === null) {
       return;
     }
-    Axios.get(URL + "/" + id, headers).then(response => {
-      dispatch(setCurrentUserAndAdmin(response.data[0]));
-    });
+    Axios.get(URL + "/" + id, headers)
+      .then(response => {
+        dispatch(setCurrentUserAndAdmin(response.data[0]));
+      })
+      .catch(error => {
+        let message =
+          "Не удалось получить пользователя. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
+      });
   };
 }

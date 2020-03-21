@@ -2,9 +2,7 @@ import {
   SET_USERS,
   REMOVE_USER,
   CLEAR_USERS,
-  IS_USERS_UPDATING,
-  USER_UPDATE_ERROR,
-  USER_DELETE_ERROR
+  IS_USERS_UPDATING
 } from "../actions/users";
 
 export function users(state = {}, action) {
@@ -26,24 +24,6 @@ export function usersIsUpdating(state = false, action) {
   switch (action.type) {
     case IS_USERS_UPDATING:
       return action.boolean;
-    default:
-      return state;
-  }
-}
-
-export function userUpdateError(state = null, action) {
-  switch (action.type) {
-    case USER_UPDATE_ERROR:
-      return action.text;
-    default:
-      return state;
-  }
-}
-
-export function userDeleteError(state = null, action) {
-  switch (action.type) {
-    case USER_DELETE_ERROR:
-      return action.text;
     default:
       return state;
   }

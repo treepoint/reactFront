@@ -1,27 +1,25 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
+import {
+  fetchTasksStatisticByPeriod,
+  clearTasksStatisticByPeriod
+} from "../../../../Store/actions/statistics";
+//Подключаем компоненты
 import Table from "../../../../Components/Table/Table";
-import { getTaskStatisticByPeriod } from "../../../../APIController/APIController";
 import DatePeriodPickerCarousel from "../../../../Components/DatePeriodPickerCarousel/DatePeriodPickerCarousel";
+//Дополнительные библиотеки
 import { getTimeFromMins } from "../../../../Libs/TimeUtils";
+//CSS
 import "./TasksStatistic.css";
 
 class TasksStatistic extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      taskStatisticList: []
-    };
-  }
+  componentDidMount() {
+    //Сбросим если есть
+    this.props.clearTasksStatisticByPeriod();
 
-  //Получение статистики за нужный период
-  getTaskStatisticByPeriod(dateFrom, dateTo, callback) {
-    getTaskStatisticByPeriod(dateFrom, dateTo, result => {
-      if (typeof callback === "function") {
-        this.setState({ taskStatisticList: result }, () => callback());
-      } else {
-        this.setState({ taskStatisticList: result });
-      }
-    });
+    //По умолчанию тянем статистику за сегодня
+    this.props.fetchTasksStatisticByPeriod();
   }
 
   getContent() {
@@ -51,30 +49,33 @@ class TasksStatistic extends React.Component {
       ]
     ];
 
-    this.state.taskStatisticList.forEach(taskStatistic => {
+    //Получим список уведомлений
+    const statistic = this.props.tasksStatisticByPeriod;
+
+    for (var s in statistic) {
       content.push([
         {
           key: "name",
           type: "string",
           disabled: true,
-          value: taskStatistic.name,
-          style: taskStatistic.name_style
+          value: statistic[s].name,
+          style: statistic[s].name_style
         },
         {
           key: "category_name",
           type: "string",
           disabled: true,
-          value: taskStatistic.category_name,
-          style: taskStatistic.category_name_style
+          value: statistic[s].category_name,
+          style: statistic[s].category_name_style
         },
         {
           key: "type_id",
           type: "time",
           disabled: true,
-          value: getTimeFromMins(taskStatistic.execution_time)
+          value: getTimeFromMins(statistic[s].execution_time)
         }
       ]);
-    });
+    }
 
     return content;
   }
@@ -84,7 +85,7 @@ class TasksStatistic extends React.Component {
       <React.Fragment>
         <DatePeriodPickerCarousel
           onPickDate={(dateFrom, dateTo) =>
-            this.getTaskStatisticByPeriod(dateFrom, dateTo)
+            this.props.fetchTasksStatisticByPeriod(dateFrom, dateTo)
           }
         />
         <Table isResizeble={false} isEditable={false}>
@@ -95,4 +96,21 @@ class TasksStatistic extends React.Component {
   }
 }
 
-export default TasksStatistic;
+const mapStateToProps = state => {
+  return {
+    tasksStatisticByPeriod: state.tasksStatisticByPeriod
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchTasksStatisticByPeriod: (dateFrom, dateTo) => {
+      dispatch(fetchTasksStatisticByPeriod(dateFrom, dateTo));
+    },
+    clearTasksStatisticByPeriod: () => {
+      dispatch(clearTasksStatisticByPeriod());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TasksStatistic);

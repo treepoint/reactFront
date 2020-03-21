@@ -3,7 +3,7 @@ import React from "react";
 import Tasks from "./Tasks/Tasks";
 import TasksLog from "./TasksLog/TasksLog";
 import Page from "../../../Components/Page/Page";
-import DayPickerCarousel from "./DayPickerCarousel/DayPickerCarousel";
+import DayPickerCarousel from "../../../Components/DayPickerCarousel/DayPickerCarousel";
 import SumTime from "../../../Components/SumTime/SumTime";
 //Redux
 import { connect } from "react-redux";
@@ -19,7 +19,6 @@ class TasksManager extends React.PureComponent {
     super(props);
     this.state = {
       isAccomplished: false,
-      isAllMinimize: true,
       date: getCurrentFormatDate()
     };
   }
@@ -107,19 +106,12 @@ class TasksManager extends React.PureComponent {
           onScrollStop={() => this.handleScroll()}
         >
           <div style={{ display: !!this.state.isAccomplished ? "none" : null }}>
-            <Tasks
-              date={this.state.date}
-              isAllMinimize={this.state.isAllMinimize}
-            />
+            <Tasks date={this.state.date} />
           </div>
           <div
             style={{ display: !!!this.state.isAccomplished ? "none" : null }}
           >
-            <Tasks
-              isAccomplished={true}
-              date={this.state.date}
-              isAllMinimize={this.state.isAllMinimize}
-            />
+            <Tasks isAccomplished={true} date={this.state.date} />
           </div>
         </ReactCustomScroll>
         <TasksLog date={this.state.date} />

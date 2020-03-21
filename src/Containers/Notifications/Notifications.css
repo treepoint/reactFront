@@ -1,0 +1,75 @@
+.notificationsContainer {
+  position: fixed;
+  bottom: 2px;
+}
+
+.notification {
+  position: relative;
+  height: 26px;
+  width: calc(50vw);
+  color: rgb(20, 20, 20);
+  -webkit-user-select: none;
+  background-color: #fff;
+  padding: 1px 12px;
+  padding-top: 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(138, 138, 138, 0.73);
+  border-left: 6px solid #acacac;
+  margin-left: 25vw;
+  margin-bottom: 2px;
+  z-index: 1000000;
+}
+
+.notification.error {
+  background-color: #fbdada;
+  border-left: 6px solid #ca6969;
+  color: #711414;
+}
+
+.notification.warning {
+  background-color: #fffae9;
+  border-left: 6px solid #d7c850;
+  color: #552400;
+}
+
+.notification.info {
+  background-color: #e9f8ff;
+  border-left: 6px solid #56afca;
+  color: #004155;
+}
+
+.notificationClose {
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  opacity: 0.6;
+  margin-top: -18px;
+  border-radius: 25px;
+  right: 0px;
+}
+
+.notificationClose.hidden {
+  display: none;
+}
+
+.notificationClose:hover {
+  opacity: 1;
+}
+
+.notificationClose:before,
+.notificationClose:after {
+  position: absolute;
+  left: 10px;
+  content: " ";
+  height: 20px;
+  width: 2px;
+  background-color: #000;
+}
+
+.notificationClose:before {
+  transform: rotate(45deg);
+}
+
+.notificationClose:after {
+  transform: rotate(-45deg);
+}

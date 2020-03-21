@@ -3,6 +3,7 @@ import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
 import { fetchCategories } from "./categories";
 import { removeTaskLog } from "./tasksLog";
+import { setNotifications } from "./notifications";
 
 const URL = APIURL + "/tasks";
 
@@ -11,9 +12,6 @@ export const IS_TASKS_FETCHING = "IS_TASKS_FETCHING";
 export const IS_TASKS_UPDATING = "IS_TASKS_UPDATING";
 export const REMOVE_TASK = "REMOVE_TASK";
 export const CLEAR_TASKS = "CLEAR_TASKS";
-export const TASK_CREATE_ERROR = "TASK_CREATE_ERROR";
-export const TASK_UPDATE_ERROR = "TASK_UPDATE_ERROR";
-export const TASK_DELETE_ERROR = "TASK_DELETE_ERROR";
 
 export function setTasks(object) {
   return { type: SET_TASKS, object };
@@ -31,19 +29,7 @@ export function clearTasks(object) {
   return { type: CLEAR_TASKS, object };
 }
 
-export function setCreateError(text) {
-  return { type: TASK_CREATE_ERROR, text };
-}
-
-export function setUpdateError(text) {
-  return { type: TASK_UPDATE_ERROR, text };
-}
-
-export function setDeleteError(text) {
-  return { type: TASK_DELETE_ERROR, text };
-}
-
-//Получить все статусы задач за определенный период
+//Получить все задачи за определенный период
 export function fetchTasksByDate(date) {
   return dispatch => {
     let headers = getHeaders();
@@ -52,11 +38,17 @@ export function fetchTasksByDate(date) {
       return;
     }
 
-    Axios.get(URL + "/date/" + date, headers).then(response => {
-      dispatch(setTasks(response.data));
-      dispatch(fetchCategories());
-      dispatch(setIsFetching(false));
-    });
+    Axios.get(URL + "/date/" + date, headers)
+      .then(response => {
+        dispatch(setTasks(response.data));
+        dispatch(fetchCategories());
+        dispatch(setIsFetching(false));
+      })
+      .catch(error => {
+        let message =
+          "Не удалось получить список задач. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
+      });
   };
 }
 
@@ -86,7 +78,9 @@ export function createTask(date, name) {
         }
       })
       .catch(error => {
-        dispatch(setCreateError("Не удалось добавить задачу"));
+        let message =
+          "Не удалось добавить задачу. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
       });
   };
 }
@@ -135,7 +129,9 @@ export function updateTask(task, forDate) {
         }
       })
       .catch(error => {
-        dispatch(setUpdateError("Не удалось обновить задачу"));
+        let message =
+          "Не удалось обновить задачу. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
         dispatch(setIsUpdating(false));
       });
   };
@@ -171,7 +167,9 @@ export function deleteTask(id) {
         }
       })
       .catch(error => {
-        dispatch(setDeleteError("Не удалось удалить задачу"));
+        let message =
+          "Не удалось удалить задачу. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
       });
   };
 }

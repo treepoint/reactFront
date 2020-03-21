@@ -1,5 +1,6 @@
 //Обвязка для API
 import { APIURL, getHeaders } from "../APIConfiguration";
+import { setNotifications } from "./notifications";
 import Axios from "axios";
 const URL = APIURL + "/categories";
 
@@ -7,9 +8,6 @@ export const SET_CATEGORIES = "SET_CATEGORIES";
 export const IS_CATEGORIES_UPDATING = "IS_UPDATING";
 export const REMOVE_CATEGORY = "REMOVE_CATEGORY";
 export const CLEAR_CATEGORIES = "CLEAR_CATEGORIES";
-export const CATEGORY_CREATE_ERROR = "CATEGORY_CREATE_ERROR";
-export const CATEGORY_UPDATE_ERROR = "CATEGORY_UPDATE_ERROR";
-export const CATEGORY_ARCHIVE_ERROR = "CATEGORY_DELETE_ERROR";
 
 export function setCategories(object) {
   return { type: SET_CATEGORIES, object };
@@ -21,18 +19,6 @@ export function setIsUpdating(boolean) {
 
 export function clearCategories(object) {
   return { type: CLEAR_CATEGORIES, object };
-}
-
-export function setCreateError(text) {
-  return { type: CATEGORY_CREATE_ERROR, text };
-}
-
-export function setUpdateError(text) {
-  return { type: CATEGORY_UPDATE_ERROR, text };
-}
-
-export function setArchiveError(text) {
-  return { type: CATEGORY_ARCHIVE_ERROR, text };
 }
 
 //Получить все категории задач
@@ -51,9 +37,15 @@ export function fetchCategories() {
       return;
     }
 
-    Axios.get(URL, headers).then(response => {
-      dispatch(setCategories(response.data));
-    });
+    Axios.get(URL, headers)
+      .then(response => {
+        dispatch(setCategories(response.data));
+      })
+      .catch(error => {
+        let message =
+          "Не удалось получить категории. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
+      });
   };
 }
 
@@ -84,7 +76,9 @@ export function createCategory() {
         }
       })
       .catch(error => {
-        dispatch(setCreateError("Не удалось добавить категорию"));
+        let message =
+          "Не удалось добавить категорию. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
       });
   };
 }
@@ -109,7 +103,9 @@ export function updateCategory(category) {
         }
       })
       .catch(error => {
-        dispatch(setUpdateError("Не удалось обновить категорию"));
+        let message =
+          "Не удалось обновить категорию. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
         dispatch(setIsUpdating(false));
       });
   };
@@ -132,7 +128,9 @@ export function archiveCategory(id) {
         }
       })
       .catch(error => {
-        dispatch(setArchiveError("Не удалось заархивировать категорию"));
+        let message =
+          "Не удалось заархивировать категорию. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
       });
   };
 }
