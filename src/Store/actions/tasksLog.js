@@ -94,9 +94,6 @@ export function updateTaskLog(taskLog, forDate) {
     let oldTaskLog = state.tasksLog[taskLog.id];
     let task = state.tasks[taskLog.task_id];
 
-    let executionTimeDay = task.execution_time_day;
-    let executionTimeToDay = task.execution_time_to_day;
-
     Axios.put(URL + "/" + taskLog.id, taskLog, headers)
       .then(response => {
         if (typeof response.data === "object") {
@@ -105,13 +102,17 @@ export function updateTaskLog(taskLog, forDate) {
             response.data[Object.keys(response.data)[0]].execution_time;
           //Получим разницу
           let changeTime = newExecutionTime - oldTaskLog.execution_time;
-          //Обновим показатели
-          task.execution_time_day = executionTimeDay + changeTime;
-          task.execution_time_to_day = executionTimeToDay + changeTime;
-          //Соберем таск в требуемый вид
-          task = { [taskLog.task_id]: task };
-          //Обновим таск
-          dispatch(setTasks(task));
+          //Если есть задача (а может не быть, если перенесена не будущее) — обновим время исполнения
+          if (!!task) {
+            task.execution_time_day = task.execution_time_day + changeTime;
+            task.execution_time_to_day =
+              task.execution_time_to_day + changeTime;
+
+            //Соберем таск в требуемый вид
+            task = { [taskLog.task_id]: task };
+            //Обновим таск
+            dispatch(setTasks(task));
+          }
 
           let newTaskLog = response.data;
           //Проставим дату за которую считаем лог
