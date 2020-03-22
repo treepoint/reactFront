@@ -1,6 +1,6 @@
 {
   "name": "taskFlow",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "github:treepoint/ckeditor5-build-classic#stable",
