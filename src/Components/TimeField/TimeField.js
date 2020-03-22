@@ -1,15 +1,15 @@
 import React from "react";
-import TimeField from "react-simple-timefield";
+import TF from "react-simple-timefield";
 import TextContent from "../TextContent/TextContent";
 
-import "./ChronoField.css";
+import "./TimeField.css";
 
-class ChronoField extends React.PureComponent {
+class TimeField extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
         {!!this.props.disabled ? (
-          <div className="ChronoField disabled">
+          <div className="timefield disabled">
             <TextContent
               value={this.props.value}
               disabled={this.props.disabled}
@@ -17,7 +17,7 @@ class ChronoField extends React.PureComponent {
             />
           </div>
         ) : (
-          <TimeField
+          <TF
             value={this.props.value}
             className={this.props.className}
             style={this.props.style}
@@ -32,4 +32,4 @@ class ChronoField extends React.PureComponent {
   }
 }
 
-export default ChronoField;
+export default TimeField;

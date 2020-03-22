@@ -174,3 +174,9 @@ export function getLastDayOfCurrentWeek() {
     return addDays(currentDate, 7 - currentDate.getDay());
   }
 }
+
+//Получимть сегодня в JS формате, нужно для redux
+export function getToday() {
+  let today = new Date();
+  return today;
+}
