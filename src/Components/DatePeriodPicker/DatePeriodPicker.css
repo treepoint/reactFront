@@ -10,7 +10,12 @@
   display: block;
   width: 20px;
   margin-left: 203px;
-  margin-top: 19px;
+  margin-top: 21px;
   height: 20px;
   position: absolute;
+}
+
+.datepickerSeparator {
+  border-right: 1px dashed #c0c0c0;
+  background: #fff;
 }

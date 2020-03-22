@@ -2,7 +2,6 @@
   width: 240px;
   min-height: 126px;
   height: max-content;
-  border: 2px solid #c0c0c0;
   padding: 6px;
   padding-top: 2px;
   margin-left: 6px;
@@ -16,7 +15,6 @@
 }
 
 .task.onFire {
-  border-color: #eb6f62;
   animation: fire 1s alternate;
   animation-iteration-count: infinite;
 }

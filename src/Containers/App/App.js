@@ -38,27 +38,29 @@ class App extends React.PureComponent {
               : { background: "url(" + defaultWallpaper + ")" }
           }
         >
-          <Header />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            {/*Если не авторизован — эти пункты вообще не обрабатываем*/}
-            {!!this.props.userAuthState ? (
-              <React.Fragment>
-                <Route path="/tasks_manager" component={TasksManager} />
-                <Route path="/categories" component={Categories} />
-                <Route path="/statistic" component={StatisticRouter} />
-                <Route path="/admin" component={AdminPanelRouter} />
-                <Route path="/about" component={About} />
-              </React.Fragment>
-            ) : null}
-            <Route path="/about" component={About} />
-          </Switch>
-          {getGlobalModalWindow(
-            this.props.modalWindowState,
-            this.props.modalWindowName
-          )}
-          <Bottom />
-          <Notifications />
+          <div className="wallpaperBlur">
+            <Header />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              {/*Если не авторизован — эти пункты вообще не обрабатываем*/}
+              {!!this.props.userAuthState ? (
+                <React.Fragment>
+                  <Route path="/tasks_manager" component={TasksManager} />
+                  <Route path="/categories" component={Categories} />
+                  <Route path="/statistic" component={StatisticRouter} />
+                  <Route path="/admin" component={AdminPanelRouter} />
+                  <Route path="/about" component={About} />
+                </React.Fragment>
+              ) : null}
+              <Route path="/about" component={About} />
+            </Switch>
+            {getGlobalModalWindow(
+              this.props.modalWindowState,
+              this.props.modalWindowName
+            )}
+            <Bottom />
+            <Notifications />
+          </div>
         </div>
       </React.Fragment>
     );

@@ -1,6 +1,5 @@
 import React from "react";
 import DP from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale } from "react-datepicker";
 import ru from "date-fns/locale/ru";
 import "./DatePicker.css";
@@ -28,8 +27,9 @@ class DatePicker extends React.PureComponent {
 
     if (this.props.date === this.state.date) {
       className += " chosen";
-      selected = this.state.date;
     }
+
+    selected = this.props.date;
 
     return (
       <div style={{ width: this.props.width + "px", marginRight: "15px" }}>

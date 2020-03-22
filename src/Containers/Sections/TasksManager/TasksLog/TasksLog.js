@@ -183,6 +183,7 @@ class TasksLog extends React.PureComponent {
             <div className="taskLogResize">
               <Action
                 icon={!!this.state.isMinimized ? arrowUpIcon : arrowDownIcon}
+                style={{ marginTop: "-3px" }}
                 isTransparent={true}
                 onClick={() => this.minimizeTaskLog()}
               />

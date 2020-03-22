@@ -34,7 +34,7 @@ class Header extends React.PureComponent {
                 Веб-приложение находится в разработке. Рекомендуемый браузер —
                 Firefox.
               </p>
-              <p>Номер сборки: 0.8.9</p>
+              <p>Номер сборки: 0.9.0</p>
             </React.Fragment>
           }
         />
@@ -42,7 +42,6 @@ class Header extends React.PureComponent {
         {!!this.props.userAuthState ? (
           <Action
             icon={iconSettings}
-            isTransparent={true}
             onClick={() => this.props.setModalWindow(settings)}
             style={{ marginRight: "6px", marginTop: "7px" }}
           />

@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   cursor: default;
+  opacity: 0.7;
 }
 
 .actionContainer:hover {

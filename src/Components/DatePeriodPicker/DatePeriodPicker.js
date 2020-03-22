@@ -24,6 +24,7 @@ class DatePeriodPicker extends React.PureComponent {
           date={this.props.dateFrom}
           onChange={dateFrom => this.onPickDateFrom(dateFrom)}
         />
+        <div className="datepickerSeparator" />
         <DatePicker
           className="datePicker right"
           placeholderText={this.props.placeholderTextDateTo}
