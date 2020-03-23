@@ -24,12 +24,12 @@ class SumTime extends React.PureComponent {
     let allExecutionTime = 0;
 
     for (var tlcd in tasksLogForChosenDate) {
-      allExecutionTime += tasksLogForChosenDate[tlcd].execution_time;
+      //Если время выполнения задачи отрицительное — не считаем его
+      if (tasksLogForChosenDate[tlcd].execution_time > 0) {
+        allExecutionTime += tasksLogForChosenDate[tlcd].execution_time;
+      }
     }
 
-    if (allExecutionTime < 0) {
-      allExecutionTime = 0;
-    }
     return getTimeFromMins(allExecutionTime);
   }
 
