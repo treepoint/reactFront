@@ -1,7 +1,6 @@
 .dayPickerCarousel {
   display: flex;
   flex-flow: row;
-  margin-top: -6px;
   flex-wrap: nowrap;
   justify-content: center;
 }

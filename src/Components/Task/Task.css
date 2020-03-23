@@ -126,3 +126,10 @@
   width: 212px;
   justify-content: flex-end;
 }
+
+.moveDatePicker {
+  border: 1px solid #c6c6c6;
+  padding-bottom: 6px;
+  width: 193px;
+  border-radius: 4px;
+}

@@ -490,12 +490,14 @@ class Task extends React.Component {
         onConfirm={() => this.moveTask()}
         isConfirmButtonDisabled={!!this.state.movedDate ? false : true}
       >
-        <DatePickerButton
-          date={this.state.movedDate}
-          onChange={date => this.setState({ movedDate: date })}
-          placeholderText="Новая дата задачи"
-          width={146}
-        />
+        <div className="moveDatePicker">
+          <DatePickerButton
+            date={this.state.movedDate}
+            onChange={date => this.setState({ movedDate: date })}
+            placeholderText="Новая дата задачи"
+            width={146}
+          />
+        </div>
       </ConfirmModalWindow>
     );
   }
