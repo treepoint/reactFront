@@ -47,13 +47,13 @@ class Users extends React.Component {
           type: "string",
           disabled: true,
           value: "ID",
-          width: 30
+          width: 34
         },
         {
           key: "email",
           type: "string",
           disabled: true,
-          value: "Email",
+          value: "Почтовый адрес",
           width: 300
         },
         {

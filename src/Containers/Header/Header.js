@@ -40,11 +40,13 @@ class Header extends React.PureComponent {
         />
         <LoginMenu />
         {!!this.props.userAuthState ? (
-          <Action
-            icon={iconSettings}
-            onClick={() => this.props.setModalWindow(settings)}
-            style={{ marginRight: "6px", marginTop: "7px" }}
-          />
+          <div className="iconSettingsContainer">
+            <Action
+              icon={iconSettings}
+              hint="Настройки"
+              onClick={() => this.props.setModalWindow(settings)}
+            />
+          </div>
         ) : null}
       </div>
     );

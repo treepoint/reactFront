@@ -3,8 +3,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { createTask } from "../../Store/actions/tasks";
 //Компоненты
-import TextContent from "../../Components/TextContent/TextContent"
-import Button from "../../Components/Button/Button"
+import TextContent from "../../Components/TextContent/TextContent";
+import Button from "../../Components/Button/Button";
 //Картинки
 import addIcon from "../../Images/icon_add_96.png";
 //CSS
@@ -33,13 +33,13 @@ class AddTaskButton extends React.PureComponent {
   showNewTaskForm(event) {
     event.preventDefault();
     event.stopPropagation();
-    this.setState({ isActivate: true })
+    this.setState({ isActivate: true });
   }
 
   render() {
     return (
       <div className="task">
-        {!!this.state.isActivate ?
+        {!!this.state.isActivate ? (
           <div className="newTaskContainer">
             <TextContent
               value={this.state.name}
@@ -53,10 +53,18 @@ class AddTaskButton extends React.PureComponent {
               onChangeValue={value => this.setState({ name: value })}
             />
             <div className="newTaskButtons">
-              <Button isPrimary value="Создать" onClick={() => this.createNewTask()} />
-              <Button value="Отменить" onClick={() => this.setState({ name: "", isActivate: false })} />
+              <Button
+                isPrimary
+                value="Создать"
+                onClick={() => this.createNewTask()}
+              />
+              <Button
+                value="Отменить"
+                onClick={() => this.setState({ name: "", isActivate: false })}
+              />
             </div>
-          </div> :
+          </div>
+        ) : (
           <div
             className="addTaskButton"
             style={{
@@ -64,8 +72,9 @@ class AddTaskButton extends React.PureComponent {
                 "url(" + addIcon + ") no-repeat scroll 4px 2px transparent",
               backgroundSize: "96px 96px"
             }}
-            onClick={(event) => this.showNewTaskForm(event)}
-          ></div>}
+            onClick={event => this.showNewTaskForm(event)}
+          />
+        )}
       </div>
     );
   }
@@ -79,7 +88,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AddTaskButton);
+export default connect(null, mapDispatchToProps)(AddTaskButton);

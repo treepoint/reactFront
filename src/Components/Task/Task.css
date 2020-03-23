@@ -1,7 +1,6 @@
 .task {
   width: 240px;
   min-height: 126px;
-  height: max-content;
   padding: 6px;
   padding-top: 2px;
   margin-left: 6px;
@@ -120,7 +119,6 @@
   position: absolute;
   background: #fff;
   left: 10px;
-  top: 94px;
   font-size: 14px;
   display: flex;
   width: 212px;
@@ -132,4 +130,8 @@
   padding-bottom: 6px;
   width: 193px;
   border-radius: 4px;
+}
+
+.taskMenuActionContainer {
+  padding-top: 4px;
 }

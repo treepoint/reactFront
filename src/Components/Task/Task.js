@@ -192,6 +192,7 @@ class Task extends React.Component {
         lable={lable}
         isTransparent
         icon={iconNewDate}
+        hint="Перенести"
         onClick={() => this.setState({ isNewDateModalWindowHidden: false })}
       />
     );
@@ -205,6 +206,7 @@ class Task extends React.Component {
           lable={lable}
           isTransparent={!!this.props.content.on_fire ? false : true}
           icon={!!this.props.content.on_fire ? iconFireRed : iconFire}
+          hint="В огне!"
           onClick={() =>
             this.saveTaskToDatabase({ on_fire: !this.props.content.on_fire })
           }
@@ -220,6 +222,7 @@ class Task extends React.Component {
         lable={lable}
         isTransparent={!!this.props.content.frozen ? false : true}
         icon={!!this.props.content.frozen ? iconFrozenBlue : iconFrozen}
+        hint="Заморозить"
         onClick={() =>
           this.saveTaskToDatabase({ frozen: !this.props.content.frozen })
         }
@@ -234,6 +237,7 @@ class Task extends React.Component {
         lable={lable}
         isTransparent
         icon={deleteIcon}
+        hint="Удалить задачу"
         onClick={() => this.setState({ isDeleteModalWindowHidden: false })}
       />
     );
@@ -245,6 +249,7 @@ class Task extends React.Component {
         style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
         lable={lable}
         isTransparent
+        hint="Учесть время"
         icon={timeSpanIcon}
         onClick={() =>
           this.props.createTaskLog(this.props.content.id, this.props.date)
@@ -263,6 +268,7 @@ class Task extends React.Component {
               lable={lable}
               isTransparent
               icon={inCompleteIcon}
+              hint="Вернуть задачу"
               onClick={() => this.completeTask(0)}
             />
           </div>
@@ -273,6 +279,7 @@ class Task extends React.Component {
               lable={lable}
               isTransparent
               icon={completeIcon}
+              hint="Выполнить задачу"
               onClick={() => this.completeTask(1)}
             />
           </div>
@@ -283,15 +290,15 @@ class Task extends React.Component {
 
   getTaskMenuAction() {
     return (
-      <Action
-        style={{
-          paddingTop: "9px"
-        }}
-        isTransparent
-        isPressed={!!this.state.isMenuOpen ? true : false}
-        icon={iconMenu}
-        onClick={() => this.setState({ isMenuOpen: !this.state.isMenuOpen })}
-      />
+      <div className="taskMenuActionContainer">
+        <Action
+          isTransparent
+          isPressed={!!this.state.isMenuOpen ? true : false}
+          icon={iconMenu}
+          hint="Все действия"
+          onClick={() => this.setState({ isMenuOpen: !this.state.isMenuOpen })}
+        />
+      </div>
     );
   }
 
@@ -299,12 +306,12 @@ class Task extends React.Component {
     return (
       <Action
         style={{
-          marginLeft: "221px",
           height: "6px",
           paddingTop: "1px",
           paddingBottom: "2px"
         }}
         isTransparent={true}
+        hint="Расширенное описание"
         icon={!!this.props.content.description ? iconMoreFull : iconMore}
         onClick={() => this.setState({ isTaskPageHidden: false })}
       />

@@ -44,10 +44,11 @@
 }
 
 .taskActionsContainer {
-  display: flex;
-  flex-direction: column;
   border-bottom: 1px dashed #c0c0c0;
   padding: 6px 0px;
+  justify-content: flex-start !important;
+  justify-items: flex-start;
+  display: grid;
 }
 
 .ck-editor__editable {
