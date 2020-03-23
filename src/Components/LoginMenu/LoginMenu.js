@@ -5,11 +5,7 @@ import { connect } from "react-redux";
 import HeaderAnchor from "../HeaderAnchor/HeaderAnchor";
 import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
 //Модалки
-import {
-  registration,
-  login,
-  profile
-} from "../GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
+import { registration, login } from "../GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //CSS
 import "./LoginMenu.css";
 
@@ -18,26 +14,21 @@ class LoginMenu extends React.PureComponent {
     return (
       <div className="loginMenu">
         {!!this.props.userAuthState ? (
-          <HeaderAnchor>
-            <AnchorModalWindow
-              value={this.props.currentUser.email}
-              modalWindowName={profile}
-            />
-          </HeaderAnchor>
+          this.props.currentUser.email
         ) : (
-            <div>
-              <HeaderAnchor>
-                <AnchorModalWindow value="Войти" modalWindowName={login} />
-              </HeaderAnchor>
-              /
+          <div>
             <HeaderAnchor>
-                <AnchorModalWindow
-                  value="Регистрация"
-                  modalWindowName={registration}
-                />
-              </HeaderAnchor>
-            </div>
-          )}
+              <AnchorModalWindow value="Войти" modalWindowName={login} />
+            </HeaderAnchor>
+            /
+            <HeaderAnchor>
+              <AnchorModalWindow
+                value="Регистрация"
+                modalWindowName={registration}
+              />
+            </HeaderAnchor>
+          </div>
+        )}
       </div>
     );
   }

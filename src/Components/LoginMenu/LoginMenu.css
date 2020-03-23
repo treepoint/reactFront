@@ -1,6 +1,8 @@
 .loginMenu {
-  color: rgb(230, 230, 230);
+  color: rgb(26, 26, 26);
+  -webkit-user-select: none;
+  user-select: none;
   display: flex;
-  margin-top: 8px;
+  margin-top: 9px;
   margin-right: 6px;
 }

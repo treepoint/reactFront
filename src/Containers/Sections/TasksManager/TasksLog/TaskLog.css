@@ -1,6 +1,9 @@
 .taskLog {
   justify-content: center;
   display: flex;
+  margin-left: -34px;
+  border-top: 1px solid #f4f4f4;
+  border-radius: 5px;
 }
 
 .taskLogResize {
@@ -13,12 +16,14 @@
   z-index: 9000;
   height: 22px;
   left: 1119px;
+  margin-left: -34px;
 }
 
 .taskLogTableContainer {
   width: calc(100% - 131px);
   position: absolute;
   bottom: 0;
+  padding-bottom: 4px;
 }
 
 .taskLogTable {
