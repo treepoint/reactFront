@@ -34,7 +34,7 @@ class Header extends React.PureComponent {
                 Веб-приложение находится в разработке. Рекомендуемый браузер —
                 Firefox.
               </p>
-              <p>Номер сборки: 0.9.0</p>
+              <p>Номер сборки: 0.9.1</p>
             </React.Fragment>
           }
         />
