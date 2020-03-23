@@ -88,7 +88,11 @@ class TasksStatistic extends React.Component {
             this.props.fetchTasksStatisticByPeriod(dateFrom, dateTo)
           }
         />
-        <Table isResizeble={false} isEditable={false}>
+        <Table
+          isResizeble={false}
+          isEditable={false}
+          notFoundMessage="Нет данных для отображения. Выберите другой период или задайте другие даты."
+        >
           {this.getContent()}
         </Table>
       </React.Fragment>

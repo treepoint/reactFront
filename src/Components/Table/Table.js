@@ -106,8 +106,8 @@ class Table extends React.Component {
     this.setState({ colsDescription, uuid: "" });
   }
 
+  //Разберем контент и вернем уже объект, с которым будем работать дальше
   getObjectFromRowContent(rowContent) {
-    //Разберем контент и вернем уже объект, с которым будем работать дальше
     let object = {};
 
     rowContent.forEach(item => {
@@ -202,8 +202,26 @@ class Table extends React.Component {
     );
   }
 
+  getDummyMessage() {
+    return (
+      <div className="tableNotFoundMessage">
+        {!!this.props.notFoundMessage
+          ? this.props.notFoundMessage
+          : "Нет записей для отображения."}
+      </div>
+    );
+  }
+
   getContent() {
     const table = this.props.children;
+
+    //Если контента нет — выведем предварительно подготовленное сообщение
+    if (
+      (this.props.isHeaderless && table.length === 0) ||
+      (!this.props.isHeaderless && table.length === 1)
+    ) {
+      return this.getDummyMessage();
+    }
 
     //Соберем тушку для отрисовки
     let content = table.map((row, index) => {

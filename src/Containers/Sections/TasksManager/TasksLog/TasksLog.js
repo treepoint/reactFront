@@ -197,6 +197,7 @@ class TasksLog extends React.PureComponent {
                 this.props.updateTaskLog(taskLog, this.props.date)
               }
               deleteRow={taskLog => this.props.deleteTaskLog(taskLog.id)}
+              notFoundMessage="Нет лога выполнения. Нажмите на иконку часов у задачи для добавления записи или выберите другой день."
             >
               {this.getContent()}
             </Table>
