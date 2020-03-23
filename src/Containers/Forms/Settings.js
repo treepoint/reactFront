@@ -18,7 +18,7 @@ class Settings extends React.Component {
     this.state = {
       backgroundImage: [],
       backgroundImageMessage:
-        "Перетащите png или jpg файл или кликните для выбора. Максимальный размер файла — 2 мегабайта."
+        "Перетащите png или jpg файл или кликните для выбора. Максимальный размер файла — 3 мегабайта."
     };
   }
 
@@ -43,7 +43,7 @@ class Settings extends React.Component {
           onDrop={acceptedFiles => this.onDrop(acceptedFiles)}
           accept="image/png, image/jpeg"
           minSize={0}
-          maxSize={2097152}
+          maxSize={3145728}
         >
           {({ getRootProps, getInputProps }) => (
             <section>
@@ -92,7 +92,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
