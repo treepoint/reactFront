@@ -45,7 +45,7 @@
   opacity: 0.6;
   margin-top: -18px;
   border-radius: 25px;
-  right: 0px;
+  right: 1px;
 }
 
 .notificationClose.hidden {

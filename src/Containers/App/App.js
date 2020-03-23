@@ -3,7 +3,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 //Подключаем redux
 import { connect } from "react-redux";
-import { restoreFromCookies } from "../../Store/actions/app";
+import { restoreFromCookies, setBrowserWarning } from "../../Store/actions/app";
 //Подключаем модальные окна
 import { getGlobalModalWindow } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Подключаем компоненты и контейнеры
@@ -25,6 +25,18 @@ class App extends React.PureComponent {
   componentDidMount() {
     //Пробуем подтянуть состояние приложения основываясь на информации в cookies
     this.props.restoreFromCookies();
+
+    //Напишем номер версии
+    console.log("Номер сборки: 0.9.2");
+
+    //Чекнем браузер
+    if (!!!this.isFirefox()) {
+      this.props.setBrowserWarning();
+    }
+  }
+
+  isFirefox() {
+    return navigator.userAgent.indexOf("Firefox") + 1;
   }
 
   render() {
@@ -80,6 +92,9 @@ const mapDispatchToProps = dispatch => {
   return {
     restoreFromCookies: () => {
       dispatch(restoreFromCookies());
+    },
+    setBrowserWarning: () => {
+      dispatch(setBrowserWarning());
     }
   };
 };

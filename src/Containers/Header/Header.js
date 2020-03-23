@@ -3,7 +3,6 @@ import React from "react";
 import Logo from "../../Components/Logo/Logo";
 import HeaderNavigation from "../../Components/HeaderNavigation/HeaderNavigation";
 import Spacer from "../../Components/Spacer/Spacer";
-import HeaderWarning from "../../Components/HeaderWarning/HeaderWarning";
 import LoginMenu from "../../Components/LoginMenu/LoginMenu";
 import Action from "../../Components/Action/Action";
 //Redux
@@ -27,17 +26,6 @@ class Header extends React.PureComponent {
         <Logo />
         <HeaderNavigation />
         <Spacer />
-        <HeaderWarning
-          message={
-            <React.Fragment>
-              <p>
-                Веб-приложение находится в разработке. Рекомендуемый браузер —
-                Firefox.
-              </p>
-              <p>Номер сборки: 0.9.1</p>
-            </React.Fragment>
-          }
-        />
         <LoginMenu />
         {!!this.props.userAuthState ? (
           <div className="iconSettingsContainer">
