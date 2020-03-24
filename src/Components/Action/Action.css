@@ -106,10 +106,6 @@
   opacity: 0;
 }
 
-.action.disabled:hover {
-  opacity: 0.2;
-}
-
 .actionLable {
   padding-top: 2px;
   margin-left: 2px;
