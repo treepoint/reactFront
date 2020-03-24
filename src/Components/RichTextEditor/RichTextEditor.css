@@ -96,6 +96,8 @@
 
 .ck-editor__editable {
   min-height: 372px !important;
+  max-height: calc(60vh - 141px);
+  z-index: 101;
 }
 
 .ck.ck-editor {
