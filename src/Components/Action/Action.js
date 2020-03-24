@@ -54,7 +54,7 @@ class Action extends React.PureComponent {
         if (this.state.needHover) {
           this.setState({ isHover: true });
         }
-      }, 600);
+      }, 800);
     });
   }
 

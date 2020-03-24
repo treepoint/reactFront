@@ -194,6 +194,7 @@ class TextareaScrollbar extends React.Component {
             value={this.state.value}
             onFocus={this.props.onFocus}
             disabled={this.props.disabled}
+            onClick={event => event.stopPropagation()}
             onChange={event => this.onChange(event)}
             //Обрабатываем двойной клик
             onDoubleClick={() => this.showWideEditArea()}
