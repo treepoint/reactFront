@@ -135,7 +135,12 @@ class Tasks extends React.Component {
   }
 
   getAddTaskButton() {
-    return <AddTaskButton date={this.props.date} />;
+    return (
+      <AddTaskButton
+        date={this.props.date}
+        categories={this.props.categories}
+      />
+    );
   }
 
   render() {

@@ -24,9 +24,12 @@ class Button extends React.PureComponent {
         disabled={this.props.isDisabled}
         className={this.getClassName()}
         value={this.props.value}
-        onClick={event => {
-          this.props.onClick(event);
-        }}
+        onMouseUp={
+          !!this.props.onMouseUp ? event => this.props.onMouseUp(event) : null
+        }
+        onClick={
+          !!this.props.onClick ? event => this.props.onClick(event) : null
+        }
       />
     );
   }

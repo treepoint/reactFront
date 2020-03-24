@@ -53,7 +53,7 @@ export function fetchTasksByDate(date) {
 }
 
 //Создать задачу
-export function createTask(date, name) {
+export function createTask(date, name, category_id) {
   return (dispatch, getState) => {
     let headers = getHeaders();
 
@@ -63,8 +63,12 @@ export function createTask(date, name) {
 
     const state = getState();
 
+    console.log(category_id);
+
     let task = {
-      category_id: Object.keys(state.categories)[0],
+      category_id: !!!category_id
+        ? Object.keys(state.categories)[0]
+        : category_id,
       name: name,
       description: null,
       create_date: date

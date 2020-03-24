@@ -13,9 +13,19 @@
   padding-top: 10px;
 }
 
+.newTaskItem {
+  height: 69px;
+  margin-left: 1px;
+}
+
 .newTaskButtons {
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-left: 10px;
+}
+
+.newTaskSelectLable {
+  color: rgb(135, 129, 124);
+  padding-bottom: 6px;
 }
