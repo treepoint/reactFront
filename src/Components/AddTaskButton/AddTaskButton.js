@@ -8,6 +8,7 @@ import SelectContent from "../../Components/SelectContent/SelectContent";
 import Button from "../../Components/Button/Button";
 //Картинки
 import addIcon from "../../Images/icon_add_96.png";
+import addWTimeIcon from "../../Images/icon_add_w_time_96.png";
 //CSS
 import "./AddTaskButton.css";
 import "../Task/Task.css";
@@ -20,7 +21,8 @@ class AddTaskButton extends React.PureComponent {
       name: null,
       nameIsValid: true,
       showCategoryPicker: false,
-      category_id: null
+      category_id: null,
+      isNowFinalStep: false
     };
   }
 
@@ -39,25 +41,28 @@ class AddTaskButton extends React.PureComponent {
       name: "",
       showNameField: false,
       showCategoryPicker: false,
-      category_id: null
+      category_id: null,
+      isNowFinalStep: false
     });
   }
 
   //Создаем новую таску
-  createNewTask() {
+  createNewTask(event, executeNow) {
     this.props.createTask(
       this.props.date,
       this.state.name,
-      this.state.category_id
+      this.state.category_id,
+      executeNow
     );
+
     this.resetForm();
   }
 
   //Показать форму создания таски, в первую очередь названия
-  showNewTaskForm(event) {
+  showNewTaskForm(event, isNowFinalStep) {
     event.preventDefault();
     event.stopPropagation();
-    this.setState({ showNameField: true });
+    this.setState({ showNameField: true, isNowFinalStep });
   }
 
   //Показать форму выбора категории
@@ -66,7 +71,7 @@ class AddTaskButton extends React.PureComponent {
     event.stopPropagation();
 
     if (this.isNameNotEmpty()) {
-      this.setState({ showCategoryPicker: true });
+      this.setState({ showCategoryPicker: true, isNowFinalStep: true });
     } else {
       this.setState({ nameIsValid: false });
     }
@@ -77,7 +82,11 @@ class AddTaskButton extends React.PureComponent {
     return (
       <TextContent
         value={this.state.name}
-        placeholder="Введите название задачи"
+        placeholder={
+          !!this.state.isNowFinalStep
+            ? "Введите название задачи, категорию — после создания"
+            : "Введите название задачи"
+        }
         autoFocus={true}
         width={240}
         height={69}
@@ -157,29 +166,47 @@ class AddTaskButton extends React.PureComponent {
             <div className="newTaskButtons">
               <Button
                 isPrimary
-                value={!!!this.state.showCategoryPicker ? "Далее" : "Создать"}
+                value={!!!this.state.isNowFinalStep ? "Далее" : "Создать"}
                 onClick={event => {
                   event.stopPropagation();
                 }}
                 onMouseUp={
-                  !!!this.state.showCategoryPicker
+                  !!!this.state.isNowFinalStep
                     ? event => this.showCategoryPicker(event)
-                    : event => this.createNewTask(event)
+                    : event => this.createNewTask(event, true)
                 }
               />
               <Button value="Отменить" onClick={() => this.resetForm()} />
             </div>
           </div>
         ) : (
-          <div
-            className="addTaskButton"
-            style={{
-              background:
-                "url(" + addIcon + ") no-repeat scroll 4px 2px transparent",
-              backgroundSize: "96px 96px"
-            }}
-            onClick={event => this.showNewTaskForm(event)}
-          />
+          <div className="addTaskButtonsContainer">
+            <div
+              className="addTaskButton"
+              style={{
+                background:
+                  "url(" + addIcon + ") no-repeat scroll 4px 2px transparent",
+                backgroundSize: "96px 96px"
+              }}
+              onClick={event => this.showNewTaskForm(event, false)}
+            >
+              <div className="addTaskButtonLable">Создать </div>
+            </div>
+            <div className="addTaskButtonVhHr" />
+            <div
+              className="addTaskButton"
+              style={{
+                background:
+                  "url(" +
+                  addWTimeIcon +
+                  ") no-repeat scroll 4px 2px transparent",
+                backgroundSize: "96px 96px"
+              }}
+              onClick={event => this.showNewTaskForm(event, true)}
+            >
+              <div className="addTaskButtonLable">Создать и делать сейчас </div>
+            </div>
+          </div>
         )}
       </div>
     );
@@ -188,8 +215,8 @@ class AddTaskButton extends React.PureComponent {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createTask: (date, name, category_id) => {
-      dispatch(createTask(date, name, category_id));
+    createTask: (date, name, category_id, executeNow) => {
+      dispatch(createTask(date, name, category_id, executeNow));
     }
   };
 };

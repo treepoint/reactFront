@@ -2,7 +2,7 @@
 import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
 import { fetchCategories } from "./categories";
-import { removeTaskLog } from "./tasksLog";
+import { removeTaskLog, closeOpenedLogAndOpenNewOneByTaskId } from "./tasksLog";
 import { setNotifications } from "./notifications";
 
 const URL = APIURL + "/tasks";
@@ -53,7 +53,7 @@ export function fetchTasksByDate(date) {
 }
 
 //Создать задачу
-export function createTask(date, name, category_id) {
+export function createTask(date, name, category_id, executeNow) {
   return (dispatch, getState) => {
     let headers = getHeaders();
 
@@ -62,8 +62,6 @@ export function createTask(date, name, category_id) {
     }
 
     const state = getState();
-
-    console.log(category_id);
 
     let task = {
       category_id: !!!category_id
@@ -79,6 +77,13 @@ export function createTask(date, name, category_id) {
         if (typeof response.data === "object") {
           //К нему добавим новый объект и обновим список
           dispatch(setTasks(response.data));
+
+          if (executeNow) {
+            //Получим ID новой задачи
+            let newTaskId = response.data[Object.keys(response.data)].id;
+            //Закроем лог по текущей задаче и откроем по новой
+            dispatch(closeOpenedLogAndOpenNewOneByTaskId(newTaskId, date));
+          }
         }
       })
       .catch(error => {

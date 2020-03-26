@@ -84,6 +84,7 @@ class Row extends React.PureComponent {
           <Action
             icon={addIcon}
             disabled={false}
+            isTransparent={true}
             hint="Добавить"
             onClick={() => this.props.addRow()}
           />
@@ -95,6 +96,7 @@ class Row extends React.PureComponent {
           <Action
             icon={archiveIcon}
             disabled={false}
+            isTransparent={true}
             hint="Архивировать"
             onClick={() => this.props.archiveRow(this.props.rowsContent)}
           />
@@ -106,6 +108,7 @@ class Row extends React.PureComponent {
           <Action
             icon={deleteIcon}
             disabled={false}
+            isTransparent={true}
             hint="Удалить"
             onClick={() => this.props.deleteRow(this.props.rowsContent)}
           />

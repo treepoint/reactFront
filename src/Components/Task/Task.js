@@ -185,12 +185,12 @@ class Task extends React.Component {
    * Описания экшенов
    */
 
-  getNewDateAction(lable, style) {
+  getNewDateAction(lable, style, isNotTransparent) {
     return (
       <Action
         style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
         lable={lable}
-        isTransparent
+        isTransparent={!!isNotTransparent ? false : true}
         icon={iconNewDate}
         hint="Перенести"
         onClick={() => this.setState({ isNewDateModalWindowHidden: false })}
@@ -198,13 +198,19 @@ class Task extends React.Component {
     );
   }
 
-  getOnFireAction(lable, style) {
+  getOnFireAction(lable, style, isNotTransparent) {
     return (
       <div className={!!this.state.isOnFire ? "flicker" : null}>
         <Action
           style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
           lable={lable}
-          isTransparent={!!this.props.content.on_fire ? false : true}
+          isTransparent={
+            !!this.props.content.on_fire
+              ? false
+              : !!isNotTransparent
+              ? false
+              : true
+          }
           icon={!!this.props.content.on_fire ? iconFireRed : iconFire}
           hint="В огне!"
           onClick={() =>
@@ -215,12 +221,18 @@ class Task extends React.Component {
     );
   }
 
-  getFrozenAction(lable, style) {
+  getFrozenAction(lable, style, isNotTransparent) {
     return (
       <Action
         style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
         lable={lable}
-        isTransparent={!!this.props.content.frozen ? false : true}
+        isTransparent={
+          !!this.props.content.frozen
+            ? false
+            : !!isNotTransparent
+            ? false
+            : true
+        }
         icon={!!this.props.content.frozen ? iconFrozenBlue : iconFrozen}
         hint="Заморозить"
         onClick={() =>
@@ -230,12 +242,12 @@ class Task extends React.Component {
     );
   }
 
-  getDeleteTaskAction(lable, style) {
+  getDeleteTaskAction(lable, style, isNotTransparent) {
     return (
       <Action
         style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
         lable={lable}
-        isTransparent
+        isTransparent={!!isNotTransparent ? false : true}
         icon={deleteIcon}
         hint="Удалить задачу"
         onClick={() => this.setState({ isDeleteModalWindowHidden: false })}
@@ -243,12 +255,12 @@ class Task extends React.Component {
     );
   }
 
-  getTimeSpanAction(lable, style) {
+  getTimeSpanAction(lable, style, isNotTransparent) {
     return (
       <Action
         style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
         lable={lable}
-        isTransparent
+        isTransparent={!!isNotTransparent ? false : true}
         hint="Учесть время"
         icon={timeSpanIcon}
         onClick={() =>
@@ -258,7 +270,7 @@ class Task extends React.Component {
     );
   }
 
-  getCompleteActions(lable, style) {
+  getCompleteActions(lable, style, isNotTransparent) {
     return (
       <React.Fragment>
         {!!this.props.content.closed_date ? (
@@ -266,7 +278,7 @@ class Task extends React.Component {
             <Action
               style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
               lable={lable}
-              isTransparent
+              isTransparent={!!isNotTransparent ? false : true}
               icon={inCompleteIcon}
               hint="Вернуть задачу"
               onClick={() => this.completeTask(0)}
@@ -277,7 +289,7 @@ class Task extends React.Component {
             <Action
               style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
               lable={lable}
-              isTransparent
+              isTransparent={!!isNotTransparent ? false : true}
               icon={completeIcon}
               hint="Выполнить задачу"
               onClick={() => this.completeTask(1)}
@@ -454,17 +466,23 @@ class Task extends React.Component {
           this.setState({ isNewDateModalWindowHidden: false })
         }
         //Экшены
-        getNewDateAction={(lable, style) => this.getNewDateAction(lable, style)}
-        getOnFireAction={(lable, style) => this.getOnFireAction(lable, style)}
-        getFrozenAction={(lable, style) => this.getFrozenAction(lable, style)}
-        getDeleteTaskAction={(lable, style) =>
-          this.getDeleteTaskAction(lable, style)
+        getNewDateAction={(lable, style, isNotTransparent) =>
+          this.getNewDateAction(lable, style, isNotTransparent)
         }
-        getTimeSpanAction={(lable, style) =>
-          this.getTimeSpanAction(lable, style)
+        getOnFireAction={(lable, style, isNotTransparent) =>
+          this.getOnFireAction(lable, style, isNotTransparent)
         }
-        getCompleteActions={(lable, style) =>
-          this.getCompleteActions(lable, style)
+        getFrozenAction={(lable, style, isNotTransparent) =>
+          this.getFrozenAction(lable, style, isNotTransparent)
+        }
+        getDeleteTaskAction={(lable, style, isNotTransparent) =>
+          this.getDeleteTaskAction(lable, style, isNotTransparent)
+        }
+        getTimeSpanAction={(lable, style, isNotTransparent) =>
+          this.getTimeSpanAction(lable, style, isNotTransparent)
+        }
+        getCompleteActions={(lable, style, isNotTransparent) =>
+          this.getCompleteActions(lable, style, isNotTransparent)
         }
       />
     );

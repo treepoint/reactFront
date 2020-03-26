@@ -6,16 +6,27 @@
 }
 
 .actionIconContainer {
-  opacity: 0.7;
   display: flex;
 }
 
-.actionIconContainer:hover {
-  opacity: 0.5;
+.actionIconContainer.transparent {
+  opacity: 0.45;
 }
 
-.actionIconContainer:active {
-  opacity: 0.6;
+.actionIconContainer.transparent:hover {
+  opacity: 0.75;
+}
+
+.actionIconContainer.vanishing {
+  opacity: 0.25;
+}
+
+.actionIconContainer.vanishing:hover {
+  opacity: 0.55;
+}
+
+.actionIconContainer.disabled {
+  opacity: 0;
 }
 
 .action {
@@ -24,15 +35,7 @@
   border: 1px solid rgba(255, 255, 255, 0);
   background-size: 24px 24px !important;
   display: inline-block;
-  opacity: 1;
-}
-
-.action.transparent {
-  opacity: 0.3;
-}
-
-.action.vanishing {
-  opacity: 0.1;
+  opacity: 0.6;
 }
 
 .action.flicker {
@@ -102,21 +105,9 @@
   box-shadow: none;
 }
 
-.action.disabled {
-  opacity: 0;
-}
-
 .actionLable {
   padding-top: 2px;
   margin-left: 2px;
-}
-
-.actionLable.transparent {
-  opacity: 1;
-}
-
-.actionLable.vanishing {
-  opacity: 0.7;
 }
 
 .actionHintContainer {

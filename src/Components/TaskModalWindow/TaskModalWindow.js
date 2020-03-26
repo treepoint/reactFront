@@ -110,10 +110,14 @@ class TaskModalWindow extends React.PureComponent {
               <div className="taskActionsContainer">
                 {//Таймер
                 !!!this.props.content.closed_date
-                  ? this.props.getTimeSpanAction("включить таймер", {
-                      paddingTop: "1px",
-                      marginBottom: "6px"
-                    })
+                  ? this.props.getTimeSpanAction(
+                      "включить таймер",
+                      {
+                        paddingTop: "1px",
+                        marginBottom: "6px"
+                      },
+                      true
+                    )
                   : null}
                 {//Выполнить или вернуть для выполнения
                 this.props.getCompleteActions(
@@ -121,31 +125,48 @@ class TaskModalWindow extends React.PureComponent {
                   {
                     paddingTop: "1px",
                     marginBottom: "6px"
-                  }
+                  },
+                  true
                 )}
                 {//Огонь
-                this.props.getOnFireAction("все в огне!", {
-                  paddingTop: "1px",
-                  marginBottom: "6px"
-                })}
+                this.props.getOnFireAction(
+                  "все в огне!",
+                  {
+                    paddingTop: "1px",
+                    marginBottom: "6px"
+                  },
+                  true
+                )}
                 {//Заморозить
-                this.props.getFrozenAction("заморожено", {
-                  paddingTop: "1px",
-                  marginBottom: "6px"
-                })}
+                this.props.getFrozenAction(
+                  "заморожено",
+                  {
+                    paddingTop: "1px",
+                    marginBottom: "6px"
+                  },
+                  true
+                )}
                 {//Перенос
                 !!!this.props.content.closed_date
-                  ? this.props.getNewDateAction("перенести на другую дату", {
-                      paddingTop: "1px",
-                      marginBottom: "6px"
-                    })
+                  ? this.props.getNewDateAction(
+                      "перенести на другую дату",
+                      {
+                        paddingTop: "1px",
+                        marginBottom: "6px"
+                      },
+                      true
+                    )
                   : null}
                 {//Удаление задачи
                 !!this.props.content.closed_date
-                  ? this.props.getDeleteTaskAction("удалить задачу", {
-                      paddingTop: "1px",
-                      marginBottom: "6px"
-                    })
+                  ? this.props.getDeleteTaskAction(
+                      "удалить задачу",
+                      {
+                        paddingTop: "1px",
+                        marginBottom: "6px"
+                      },
+                      true
+                    )
                   : null}
               </div>
               <div className="taskTimeContainer">

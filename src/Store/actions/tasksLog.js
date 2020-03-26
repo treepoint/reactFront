@@ -174,3 +174,32 @@ export function deleteTaskLog(id) {
 export function removeTaskLog(id) {
   return { type: REMOVE_TASK_LOG, id };
 }
+
+//Закрыть текущую открытую запись, открыть новую
+export function closeOpenedLogAndOpenNewOneByTaskId(taskId, date) {
+  return (dispatch, getState) => {
+    let headers = getHeaders();
+
+    if (headers === null) {
+      return;
+    }
+
+    const state = getState();
+
+    //Получим текущий лог
+    let currentTaskLog =
+      state.tasksLog[Object.keys(state.tasksLog).reverse()[0]];
+
+    //Если он есть
+    if (!!currentTaskLog) {
+      //Если дата завершения еще не проставлена — проставим и обновим
+      if (currentTaskLog.execution_end === "00:00") {
+        currentTaskLog.execution_end = getCurrentTimeFormat();
+        dispatch(updateTaskLog(currentTaskLog, date));
+      }
+    }
+
+    //Заведем новый, но уже по новой задаче
+    dispatch(createTaskLog(taskId, date));
+  };
+}

@@ -61,9 +61,9 @@ class Action extends React.PureComponent {
   render() {
     return (
       <div className="actionContainer" onClick={event => this.onClick(event)}>
-        <div className="actionIconContainer">
+        <div className={this.getClassName("actionIconContainer")}>
           <div
-            className={this.getClassName("action")}
+            className="action"
             onMouseOver={() => {
               this.onHover();
             }}
@@ -81,9 +81,7 @@ class Action extends React.PureComponent {
             )}
           />
           {!!this.props.lable ? (
-            <div className={this.getClassName("actionLable")}>
-              {this.props.lable}
-            </div>
+            <div className={"actionLable"}>{this.props.lable}</div>
           ) : null}
         </div>
         {!!this.props.hint ? (
