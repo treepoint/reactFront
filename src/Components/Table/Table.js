@@ -202,7 +202,7 @@ class Table extends React.Component {
     );
   }
 
-  getDummyMessage() {
+  getNoDataMessage() {
     return (
       <div className="tableNotFoundMessage">
         {!!this.props.notFoundMessage
@@ -220,7 +220,7 @@ class Table extends React.Component {
       (this.props.isHeaderless && table.length === 0) ||
       (!this.props.isHeaderless && table.length === 1)
     ) {
-      return this.getDummyMessage();
+      return this.getNoDataMessage();
     }
 
     //Соберем тушку для отрисовки
@@ -234,7 +234,7 @@ class Table extends React.Component {
         <Row
           key={index}
           isFixed={this.props.isFixed}
-          //Указываем, на наличие шапки. По умолчанию — есть
+          //Говорим, что это шапка
           isHeader={false}
           //Задаем возможность изменения размеров ячеек
           isResizeble={this.props.isResizeble}

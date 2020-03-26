@@ -8,18 +8,49 @@ import {
 //Подключаем компоненты
 import Table from "../../../../Components/Table/Table";
 import DatePeriodPickerCarousel from "../../../../Components/DatePeriodPickerCarousel/DatePeriodPickerCarousel";
+import StatisticTotal from "../../../../Components/StatisticTotal/StatisticTotal";
 //Дополнительные библиотеки
 import { getTimeFromMins } from "../../../../Libs/TimeUtils";
 //CSS
 import "./TasksStatistic.css";
 
 class TasksStatistic extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      totalTime: 0
+    };
+  }
+
   componentDidMount() {
     //Сбросим если есть
     this.props.clearTasksStatisticByPeriod();
 
     //По умолчанию тянем статистику за сегодня
     this.props.fetchTasksStatisticByPeriod();
+
+    //посчитаем время итого
+    this.getTotalTime();
+  }
+
+  componentDidUpdate() {
+    //посчитаем время итого
+    this.getTotalTime();
+  }
+
+  getTotalTime() {
+    let totalTime = 0;
+
+    //Получим статистику
+    const statistic = this.props.tasksStatisticByPeriod;
+
+    for (var s in statistic) {
+      totalTime += statistic[s].execution_time;
+    }
+
+    if (this.state.totalTime !== totalTime) {
+      this.setState({ totalTime });
+    }
   }
 
   getContent() {
@@ -43,13 +74,13 @@ class TasksStatistic extends React.Component {
           key: "type",
           type: "string",
           disabled: true,
-          value: "Время, всего",
-          width: 122
+          value: "Время",
+          width: 60
         }
       ]
     ];
 
-    //Получим список уведомлений
+    //Получим статистику
     const statistic = this.props.tasksStatisticByPeriod;
 
     for (var s in statistic) {
@@ -95,6 +126,9 @@ class TasksStatistic extends React.Component {
         >
           {this.getContent()}
         </Table>
+        <div className="statisticTotalContainer">
+          <StatisticTotal totalValue={getTimeFromMins(this.state.totalTime)} />
+        </div>
       </React.Fragment>
     );
   }

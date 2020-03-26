@@ -1,0 +1,17 @@
+.statisticTotal {
+  color: rgb(68, 68, 68);
+  background: #fff;
+  width: max-content;
+  padding: 6px 12px;
+  padding-top: 6px;
+  border-radius: 4px;
+  display: flex;
+  height: 24px;
+  padding-top: 11px;
+}
+
+.statisticTotalLable {
+  font-weight: bold;
+  margin-right: 6px;
+  color: #000;
+}
