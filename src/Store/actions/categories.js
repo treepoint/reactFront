@@ -6,7 +6,7 @@ const URL = APIURL + "/categories";
 
 export const SET_CATEGORIES = "SET_CATEGORIES";
 export const IS_CATEGORIES_UPDATING = "IS_UPDATING";
-export const REMOVE_CATEGORY = "REMOVE_CATEGORY";
+export const CLOSE_CATEGORY = "CLOSE_CATEGORY";
 export const CLEAR_CATEGORIES = "CLEAR_CATEGORIES";
 
 export function setCategories(object) {
@@ -123,8 +123,9 @@ export function archiveCategory(id) {
     Axios.delete(URL + "/" + id, headers)
       .then(response => {
         if (typeof response.data.affectedRows === "number") {
-          //Удалим категорию из списка и обновим список
-          dispatch(removeCategory(id));
+          //Закроем категорию и обновим список
+          //Удалять нельзя, поскольку по ней могут быть задачи, с которыми она связана
+          dispatch(closeCategory(id));
         }
       })
       .catch(error => {
@@ -135,6 +136,6 @@ export function archiveCategory(id) {
   };
 }
 
-function removeCategory(id) {
-  return { type: REMOVE_CATEGORY, id };
+function closeCategory(id) {
+  return { type: CLOSE_CATEGORY, id };
 }

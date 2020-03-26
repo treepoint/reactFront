@@ -85,7 +85,7 @@ class TasksManager extends React.PureComponent {
       <Page
         title="Задачи:"
         anchorLinksArray={anchorLinksArray}
-        additionalTitleBlock={<SumTime />}
+        additionalTitleBlock={<SumTime forDate={this.state.date} />}
         isPrivate={true}
         isNotScrollable={true}
         isCustomContent={true}

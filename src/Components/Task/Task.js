@@ -14,7 +14,7 @@ import TaskModalWindow from "../TaskModalWindow/TaskModalWindow";
 import DatePickerButton from "../DatePickerButton/DatePickerButton";
 //Утилиты
 import {
-  getCurrentDateWithTime,
+  getCurrentDateWithTimeFormat,
   getCurrentTimeFormat,
   getTimeFromMins,
   getFormatDate
@@ -115,7 +115,7 @@ class Task extends React.Component {
     let closed_date = null;
 
     if (state === 1) {
-      closed_date = getCurrentDateWithTime();
+      closed_date = getCurrentDateWithTimeFormat();
     }
 
     this.setState(

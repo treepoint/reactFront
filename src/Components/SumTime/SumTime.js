@@ -2,7 +2,7 @@ import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
 //Утилиты
-import { getCurrentFormatDate, getTimeFromMins } from "../../Libs/TimeUtils";
+import { getTimeFromMins } from "../../Libs/TimeUtils";
 //CSS
 import "./SumTime.css";
 
@@ -15,7 +15,7 @@ class SumTime extends React.PureComponent {
 
     //Отфильтруем за нужную дату
     for (var tl in tasksLog) {
-      if (tasksLog[tl].for_date === getCurrentFormatDate()) {
+      if (tasksLog[tl].for_date === this.props.forDate) {
         tasksLogForChosenDate[tasksLog[tl].id] = tasksLog[tl];
       }
     }

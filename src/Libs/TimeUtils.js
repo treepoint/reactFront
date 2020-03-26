@@ -61,8 +61,8 @@ export function getCurrentTimeFormat() {
   return hh + "-" + mm;
 }
 
-//Получить текущую дату и время
-export function getCurrentDateWithTime() {
+//Получить текущую дату и время, форматированное
+export function getCurrentDateWithTimeFormat() {
   return getCurrentFormatDate() + " " + getCurrentTimeFormat();
 }
 

@@ -184,7 +184,6 @@ class TasksLog extends React.PureComponent {
               <Action
                 icon={!!this.state.isMinimized ? arrowUpIcon : arrowDownIcon}
                 style={{ marginTop: "-3px" }}
-                isTransparent={true}
                 hint={
                   !!this.state.isMinimized ? "Развернуть лог" : "Свернуть лог"
                 }

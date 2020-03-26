@@ -1,17 +1,19 @@
 import {
   SET_CATEGORIES,
   IS_CATEGORIES_UPDATING,
-  REMOVE_CATEGORY,
+  CLOSE_CATEGORY,
   CLEAR_CATEGORIES
 } from "../actions/categories";
+
+import { getCurrentDateWithTimeFormat } from "../../Libs/TimeUtils";
 
 export function categories(state = {}, action) {
   switch (action.type) {
     case SET_CATEGORIES:
       return Object.assign({}, state, action.object);
-    case REMOVE_CATEGORY:
+    case CLOSE_CATEGORY:
       let object = { ...state };
-      delete object[action.id];
+      object[action.id].close_date = getCurrentDateWithTimeFormat();
       return object;
     case CLEAR_CATEGORIES:
       return {};
