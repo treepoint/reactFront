@@ -97,7 +97,7 @@ class TasksManager extends React.PureComponent {
           //Задаем стиль
           style={{
             width: "100%",
-            height: "calc(-239px + 100vh)",
+            height: "calc(-233px + 100vh)",
             marginTop: "1px"
           }}
           ref={ref => {
