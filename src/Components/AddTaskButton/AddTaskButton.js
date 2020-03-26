@@ -185,18 +185,6 @@ class AddTaskButton extends React.PureComponent {
               className="addTaskButton"
               style={{
                 background:
-                  "url(" + addIcon + ") no-repeat scroll 4px 2px transparent",
-                backgroundSize: "96px 96px"
-              }}
-              onClick={event => this.showNewTaskForm(event, false)}
-            >
-              <div className="addTaskButtonLable">Создать </div>
-            </div>
-            <div className="addTaskButtonVhHr" />
-            <div
-              className="addTaskButton"
-              style={{
-                background:
                   "url(" +
                   addWTimeIcon +
                   ") no-repeat scroll 4px 2px transparent",
@@ -205,6 +193,18 @@ class AddTaskButton extends React.PureComponent {
               onClick={event => this.showNewTaskForm(event, true)}
             >
               <div className="addTaskButtonLable">Создать и делать сейчас </div>
+            </div>
+            <div className="addTaskButtonVhHr" />
+            <div
+              className="addTaskButton"
+              style={{
+                background:
+                  "url(" + addIcon + ") no-repeat scroll 4px 2px transparent",
+                backgroundSize: "96px 96px"
+              }}
+              onClick={event => this.showNewTaskForm(event, false)}
+            >
+              <div className="addTaskButtonLable">Создать </div>
             </div>
           </div>
         )}
