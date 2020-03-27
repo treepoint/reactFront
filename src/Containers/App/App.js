@@ -15,7 +15,7 @@ import StatisticRouter from "../Sections/Statistic/StatisticRouter";
 import About from "../Sections/About/About";
 import AdminPanelRouter from "../Sections/AdminPanel/AdminPanelRouter";
 import Bottom from "../Bottom/Bottom";
-import Notifications from "..//Notifications/Notifications";
+import NotificationSystem from "../NotificationSystem/NotificationSystem";
 //Обои по умолчанию
 import defaultWallpaper from "../../Images/default_wallpaper.jpg";
 //CSS
@@ -71,7 +71,7 @@ class App extends React.PureComponent {
               this.props.modalWindowName
             )}
             <Bottom />
-            <Notifications />
+            <NotificationSystem />
           </div>
         </div>
       </React.Fragment>

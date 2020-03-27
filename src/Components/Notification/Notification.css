@@ -1,21 +1,15 @@
-.notificationsContainer {
-  position: fixed;
-  bottom: 2px;
-}
-
 .notification {
   position: relative;
-  height: 26px;
-  width: calc(50vw);
+  width: 260px;
   color: rgb(20, 20, 20);
   -webkit-user-select: none;
   background-color: #fff;
-  padding: 1px 12px;
-  padding-top: 6px;
+  padding: 6px 6px;
+  padding-right: 32px;
   border-radius: 4px;
   border: 1px solid rgba(138, 138, 138, 0.73);
   border-left: 6px solid #acacac;
-  margin-left: 25vw;
+  margin-left: calc(100vw - 318px);
   margin-bottom: 2px;
   z-index: 1000000;
 }
@@ -43,7 +37,7 @@
   height: 24px;
   width: 24px;
   opacity: 0.6;
-  margin-top: -18px;
+  margin-top: -40px;
   border-radius: 25px;
   right: 1px;
 }

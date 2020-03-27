@@ -1,6 +1,6 @@
 import { read_cookie } from "../Libs/Sfcookies";
 
-export const APIURL = "http://localhost/api";
+export const APIURL = "/api";
 export const uploadedFilesDirectory = "/files";
 
 //Получим заголовки

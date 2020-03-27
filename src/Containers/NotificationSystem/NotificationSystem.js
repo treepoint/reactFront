@@ -2,10 +2,12 @@ import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
 import { removeNotification } from "../../Store/actions/notifications";
+//Компоненты
+import Notification from "../../Components/Notification/Notifiaction";
 //CSS
-import "./Notifications.css";
+import "./NotificationSystem.css";
 
-class Notifications extends React.Component {
+class NotificationSystem extends React.Component {
   getNotifications() {
     //Получим список уведомлений
     const notifications = this.props.notifications;
@@ -14,16 +16,12 @@ class Notifications extends React.Component {
     let notificationsStack = [];
 
     for (var n in notifications) {
-      let uuid = notifications[n].uuid;
-
       notificationsStack.push(
-        <div className={"notification " + notifications[n].type}>
-          {notifications[n].message}
-          <div
-            className="notificationClose"
-            onClick={() => this.props.removeNotification(uuid)}
-          />
-        </div>
+        <Notification
+          message={notifications[n].message}
+          type={notifications[n].type}
+          uuid={notifications[n].uuid}
+        />
       );
     }
     return notificationsStack;
@@ -52,4 +50,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationSystem);
