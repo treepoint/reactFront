@@ -22,7 +22,8 @@ class AddTaskButton extends React.PureComponent {
       nameIsValid: true,
       showCategoryPicker: false,
       category_id: null,
-      isNowFinalStep: false
+      isNowFinalStep: false,
+      executeNow: true
     };
   }
 
@@ -47,12 +48,12 @@ class AddTaskButton extends React.PureComponent {
   }
 
   //Создаем новую таску
-  createNewTask(event, executeNow) {
+  createNewTask(event) {
     this.props.createTask(
       this.props.date,
       this.state.name,
       this.state.category_id,
-      executeNow
+      this.state.executeNow
     );
 
     this.resetForm();
@@ -71,7 +72,11 @@ class AddTaskButton extends React.PureComponent {
     event.stopPropagation();
 
     if (this.isNameNotEmpty()) {
-      this.setState({ showCategoryPicker: true, isNowFinalStep: true });
+      this.setState({
+        showCategoryPicker: true,
+        isNowFinalStep: true,
+        executeNow: false
+      });
     } else {
       this.setState({ nameIsValid: false });
     }
@@ -173,7 +178,7 @@ class AddTaskButton extends React.PureComponent {
                 onMouseUp={
                   !!!this.state.isNowFinalStep
                     ? event => this.showCategoryPicker(event)
-                    : event => this.createNewTask(event, true)
+                    : event => this.createNewTask(event)
                 }
               />
               <Button value="Отменить" onClick={() => this.resetForm()} />
