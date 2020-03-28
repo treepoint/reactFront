@@ -22,6 +22,27 @@ export function getTimeFromMins(mins) {
   }
 }
 
+//Получить разницу во времени между двумя отформатированными временами. Типа 23:12 - 22:01
+export function diffBetweenFormateTime(firstTime, secondTime) {
+  let firstHour = Number.parseInt(firstTime.substring(0, 2));
+  let firstMinutes = Number.parseInt(firstTime.substring(3, 5));
+  let secondHour = Number.parseInt(secondTime.substring(0, 2));
+  let secondMinutes = Number.parseInt(secondTime.substring(3, 5));
+
+  let resultHour = Math.abs(firstHour - secondHour);
+  let resultMinutes = Math.abs(firstMinutes - secondMinutes);
+
+  if (resultMinutes <= 9) {
+    resultMinutes = "0" + resultMinutes;
+  }
+
+  if (resultHour <= 9) {
+    resultHour = "0" + resultHour;
+  }
+
+  return resultHour + ":" + resultMinutes;
+}
+
 export function getCurrentFormatDate() {
   let date = new Date();
 

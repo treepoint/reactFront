@@ -2,7 +2,7 @@ import React from "react";
 //Redux
 import { connect } from "react-redux";
 import { updateTask, deleteTask } from "../../Store/actions/tasks";
-import { createTaskLog } from "../../Store/actions/tasksLog";
+import { closeOpenedLogAndOpenNewOneByTaskId } from "../../Store/actions/tasksLog";
 //Компоненты
 import TextContent from "../TextContent/TextContent";
 import SelectContent from "../SelectContent/SelectContent";
@@ -184,7 +184,6 @@ class Task extends React.Component {
   /*
    * Описания экшенов
    */
-
   getNewDateAction(lable, style, isNotTransparent) {
     return (
       <Action
@@ -264,7 +263,10 @@ class Task extends React.Component {
         hint="Учесть время"
         icon={timeSpanIcon}
         onClick={() =>
-          this.props.createTaskLog(this.props.content.id, this.props.date)
+          this.props.closeOpenedLogAndOpenNewOneByTaskId(
+            this.props.content.id,
+            this.props.date
+          )
         }
       />
     );
@@ -559,8 +561,8 @@ const mapDispatchToProps = dispatch => {
     deleteTask: id => {
       dispatch(deleteTask(id));
     },
-    createTaskLog: (taskId, date) => {
-      dispatch(createTaskLog(taskId, date));
+    closeOpenedLogAndOpenNewOneByTaskId: (taskId, date) => {
+      dispatch(closeOpenedLogAndOpenNewOneByTaskId(taskId, date));
     }
   };
 };

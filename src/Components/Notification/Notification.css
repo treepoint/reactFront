@@ -5,30 +5,30 @@
   -webkit-user-select: none;
   background-color: #fff;
   padding: 6px 6px;
+  padding-right: 6px;
   padding-right: 32px;
   border-radius: 4px;
-  border: 1px solid rgba(138, 138, 138, 0.73);
-  border-left: 6px solid #acacac;
   margin-left: calc(100vw - 318px);
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   z-index: 1000000;
+  box-shadow: 0px 0px 3px 1px #00000029;
 }
 
 .notification.error {
   background-color: #fbdada;
-  border-left: 6px solid #ca6969;
+  border: 1px solid #ca6969;
   color: #711414;
 }
 
 .notification.warning {
   background-color: #fffae9;
-  border-left: 6px solid #d7c850;
+  border: 1px solid #d7c850;
   color: #552400;
 }
 
 .notification.info {
   background-color: #e9f8ff;
-  border-left: 6px solid #56afca;
+  border: 1px solid #56afca;
   color: #004155;
 }
 
@@ -37,9 +37,8 @@
   height: 24px;
   width: 24px;
   opacity: 0.6;
-  margin-top: -40px;
-  border-radius: 25px;
   right: 1px;
+  top: 6px;
 }
 
 .notificationClose.hidden {
