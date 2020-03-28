@@ -6,3 +6,31 @@
   margin-top: 9px;
   margin-right: 6px;
 }
+
+.loginMenu:hover {
+  opacity: 0.8;
+}
+
+.iconSettingsContainer {
+  margin-top: -2px;
+  margin-left: 3px;
+}
+
+.currentUserLable {
+  color: #1a1a1a;
+  margin: 0 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-text-decoration-color: #8e8e8e;
+  text-decoration-color: #8e8e8e;
+  display: inline-flex;
+  border-bottom: 1px dashed rgba(89, 89, 89, 0.91);
+  height: 20px;
+  padding-bottom: 1px;
+}
+
+.userMenuAnchor {
+  display: flex;
+}

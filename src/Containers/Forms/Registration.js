@@ -15,6 +15,7 @@ import { getInvalidMessagesAsObj } from "./FormsUtils";
 import { email, password } from "./USER_INPUTS";
 //Подключаем CSS
 import "./Registration.css";
+import "./Form.css";
 
 //Массив инпутов, на основании которого будем отрисовывать форму
 const INPUTS = [email, password];
@@ -61,18 +62,20 @@ class Registration extends React.Component {
       <form onClick={event => event.stopPropagation()}>
         <h1 className="h1">Регистрация</h1>
         {INPUTS.map(inputs => (
-          <Input
-            placeholder={inputs.placeholder}
-            label={inputs.label}
-            name={inputs.name}
-            type={inputs.type}
-            value={this.props.currentUser[inputs.name]}
-            defaultValue={inputs.defaultValue}
-            onChange={event => this.onChange(event)}
-            invalidMessage={
-              !!this.state.isTouched ? this.state.validation[inputs.name] : ""
-            }
-          />
+          <div className="formInput">
+            <Input
+              placeholder={inputs.placeholder}
+              label={inputs.label}
+              name={inputs.name}
+              type={inputs.type}
+              value={this.props.currentUser[inputs.name]}
+              defaultValue={inputs.defaultValue}
+              onChange={event => this.onChange(event)}
+              invalidMessage={
+                !!this.state.isTouched ? this.state.validation[inputs.name] : ""
+              }
+            />
+          </div>
         ))}
         <div className="login">
           Уже есть учетная запись?{" "}
@@ -81,11 +84,13 @@ class Registration extends React.Component {
           </Anchor>
         </div>
         <ErrorMessage message={this.props.registrationError} />
-        <Button
-          isPrimary={true}
-          value="Отправить"
-          onClick={event => this.createUser(event)}
-        />
+        <div className="formButton">
+          <Button
+            isPrimary={true}
+            value="Отправить"
+            onClick={event => this.createUser(event)}
+          />
+        </div>
       </form>
     );
   }
@@ -109,7 +114,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Registration);
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

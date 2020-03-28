@@ -17,6 +17,7 @@ import { email, password } from "./USER_INPUTS";
 import { getInvalidMessagesAsObj } from "./FormsUtils";
 //CSS
 import "./Settings.css";
+import "./Form.css";
 
 //Массив инпутов, на основании которого будем отрисовывать форму
 const INPUTS = [email, password];
@@ -83,18 +84,22 @@ class Settings extends React.Component {
         <Lable>Профиль</Lable>
         <form onClick={event => event.stopPropagation()}>
           {INPUTS.map(inputs => (
-            <Input
-              placeholder={inputs.placeholder}
-              label={inputs.label}
-              name={inputs.name}
-              type={inputs.type}
-              value={this.state.user[inputs.name]}
-              defaultValue={this.state.user[inputs.name]}
-              onChange={event => this.onChange(event)}
-              invalidMessage={
-                !!this.state.isTouched ? this.state.validation[inputs.name] : ""
-              }
-            />
+            <div className="formInput">
+              <Input
+                placeholder={inputs.placeholder}
+                label={inputs.label}
+                name={inputs.name}
+                type={inputs.type}
+                value={this.state.user[inputs.name]}
+                defaultValue={this.state.user[inputs.name]}
+                onChange={event => this.onChange(event)}
+                invalidMessage={
+                  !!this.state.isTouched
+                    ? this.state.validation[inputs.name]
+                    : ""
+                }
+              />
+            </div>
           ))}
           <ErrorMessage message={this.props.updateProfileError} />
           <Lable>Обои</Lable>
@@ -115,12 +120,14 @@ class Settings extends React.Component {
               </section>
             )}
           </Dropzone>
-          <Button
-            isPrimary={true}
-            value="Сохранить"
-            onClick={event => this.updateUser(event)}
-          />
-          <Button value="Выйти" onClick={event => this.logoff(event)} />
+          <div className="formButton">
+            <Button
+              isPrimary={true}
+              value="Сохранить"
+              onClick={event => this.updateUser(event)}
+            />
+            <Button value="Выйти" onClick={event => this.logoff(event)} />
+          </div>
         </form>
       </React.Fragment>
     );

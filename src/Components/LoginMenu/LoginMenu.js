@@ -4,8 +4,20 @@ import { connect } from "react-redux";
 //Компоненты
 import HeaderAnchor from "../HeaderAnchor/HeaderAnchor";
 import AnchorModalWindow from "../AnchorModalWindow/AnchorModalWindow";
+import Action from "../../Components/Action/Action";
 //Модалки
-import { registration, login } from "../GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
+import {
+  setModalWindowState,
+  setModalWindowName
+} from "../../Store/actions/globalModalWindow";
+//Настройки
+import {
+  registration,
+  login,
+  settings
+} from "../GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
+//Картинки
+import iconSettings from "../../Images/icon_settings.png";
 //CSS
 import "./LoginMenu.css";
 
@@ -14,7 +26,19 @@ class LoginMenu extends React.PureComponent {
     return (
       <div className="loginMenu">
         {!!this.props.userAuthState ? (
-          this.props.currentUser.email
+          <div
+            className="userMenuAnchor"
+            onClick={() => this.props.setModalWindow(settings)}
+          >
+            <div className="currentUserLable">
+              {this.props.currentUser.email}
+            </div>
+            {!!this.props.userAuthState ? (
+              <div className="iconSettingsContainer">
+                <Action icon={iconSettings} hint="Настройки" />
+              </div>
+            ) : null}
+          </div>
         ) : (
           <div>
             <HeaderAnchor>
@@ -36,9 +60,18 @@ class LoginMenu extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.currentUser,
-    userAuthState: state.userAuthState
+    userAuthState: state.userAuthState,
+    currentUser: state.currentUser
   };
 };
 
-export default connect(mapStateToProps)(LoginMenu);
+const mapDispatchToProps = dispatch => {
+  return {
+    setModalWindow: modalWindowName => {
+      dispatch(setModalWindowState(true));
+      dispatch(setModalWindowName(modalWindowName));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginMenu);

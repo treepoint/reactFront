@@ -5,15 +5,13 @@
 
 .input {
   width: 100%;
-  border-bottom: 1px solid rgba(138, 138, 138, 0.09);
-  background: #f9f9f9;
+  border-bottom: 1px solid rgba(138, 138, 138, 0.28);
   border-top: none;
   border-left: none;
   border-right: none;
   padding: 6px;
   height: 20px;
   font-size: 15px;
-  margin: 6px 0;
 }
 
 .input.error {
@@ -23,7 +21,7 @@
 /* Убираем обводку при фокусе на поле */
 .input:focus {
   outline: none;
-  border-color:  rgb(96, 191, 255);
+  border-color: rgb(96, 191, 255);
 }
 
 .inputLable {

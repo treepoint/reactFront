@@ -10,6 +10,8 @@ import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 //Подрубаем вспомогательную функциональность
 import { email, password } from "./USER_INPUTS";
 import { getInvalidMessagesAsObj } from "./FormsUtils";
+//CSS
+import "./Form.css";
 
 //Массив инпутов, на основании которого будем отрисовывать форму
 const INPUTS = [email, password];
@@ -55,25 +57,29 @@ class Login extends React.Component {
       <form onClick={event => event.stopPropagation()}>
         <h1 className="h1">Вход</h1>
         {INPUTS.map(inputs => (
-          <Input
-            placeholder={inputs.placeholder}
-            label={inputs.label}
-            name={inputs.name}
-            type={inputs.type}
-            value={this.props.currentUser[inputs.name]}
-            defaultValue={inputs.defaultValue}
-            onChange={event => this.onChange(event)}
-            invalidMessage={
-              !!this.state.isTouched ? this.state.validation[inputs.name] : ""
-            }
-          />
+          <div className="formInput">
+            <Input
+              placeholder={inputs.placeholder}
+              label={inputs.label}
+              name={inputs.name}
+              type={inputs.type}
+              value={this.props.currentUser[inputs.name]}
+              defaultValue={inputs.defaultValue}
+              onChange={event => this.onChange(event)}
+              invalidMessage={
+                !!this.state.isTouched ? this.state.validation[inputs.name] : ""
+              }
+            />
+          </div>
         ))}
         <ErrorMessage message={this.props.authError} />
-        <Button
-          isPrimary={true}
-          value="Войти"
-          onClick={event => this.login(event)}
-        />
+        <div className="formButton">
+          <Button
+            isPrimary={true}
+            value="Войти"
+            onClick={event => this.login(event)}
+          />
+        </div>
       </form>
     );
   }
@@ -98,7 +104,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
