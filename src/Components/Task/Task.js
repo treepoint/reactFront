@@ -187,7 +187,7 @@ class Task extends React.Component {
   getNewDateAction(lable, style, isNotTransparent) {
     return (
       <Action
-        style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
+        style={!!style ? style : { marginLeft: "6px" }}
         lable={lable}
         isTransparent={!!isNotTransparent ? false : true}
         icon={iconNewDate}
@@ -201,7 +201,7 @@ class Task extends React.Component {
     return (
       <div className={!!this.state.isOnFire ? "flicker" : null}>
         <Action
-          style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
+          style={!!style ? style : { marginLeft: "6px" }}
           lable={lable}
           isTransparent={
             !!this.props.content.on_fire
@@ -223,7 +223,7 @@ class Task extends React.Component {
   getFrozenAction(lable, style, isNotTransparent) {
     return (
       <Action
-        style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
+        style={!!style ? style : { marginLeft: "6px" }}
         lable={lable}
         isTransparent={
           !!this.props.content.frozen
@@ -244,7 +244,7 @@ class Task extends React.Component {
   getDeleteTaskAction(lable, style, isNotTransparent) {
     return (
       <Action
-        style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
+        style={!!style ? style : { marginLeft: "6px" }}
         lable={lable}
         isTransparent={!!isNotTransparent ? false : true}
         icon={deleteIcon}
@@ -257,7 +257,7 @@ class Task extends React.Component {
   getTimeSpanAction(lable, style, isNotTransparent) {
     return (
       <Action
-        style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
+        style={!!style ? style : { marginLeft: "6px" }}
         lable={lable}
         isTransparent={!!isNotTransparent ? false : true}
         hint="Учесть время"
@@ -278,7 +278,7 @@ class Task extends React.Component {
         {!!this.props.content.closed_date ? (
           <div className="taskMenuItem">
             <Action
-              style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
+              style={!!style ? style : { marginLeft: "6px" }}
               lable={lable}
               isTransparent={!!isNotTransparent ? false : true}
               icon={inCompleteIcon}
@@ -289,7 +289,7 @@ class Task extends React.Component {
         ) : (
           <div className="taskMenuItem">
             <Action
-              style={!!style ? style : { marginLeft: "6px", paddingTop: "1px" }}
+              style={!!style ? style : { marginLeft: "6px" }}
               lable={lable}
               isTransparent={!!isNotTransparent ? false : true}
               icon={completeIcon}
