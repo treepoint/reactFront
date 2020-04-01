@@ -2,11 +2,9 @@ import React from "react";
 import RadioButtonCarousel from "../RadioButtonCarousel/RadioButtonCarousel";
 import DatePickerButton from "../DatePickerButton/DatePickerButton";
 import {
-  getShortDayNameByID,
-  getDDbyDate,
-  getMMbyDate,
   getFormatDate,
-  revokeDays
+  revokeDays,
+  getDDdotMMandShortDatNameByDate
 } from "../../Libs/TimeUtils";
 import "./DayPickerCarousel.css";
 
@@ -95,13 +93,7 @@ class DayPickerCarousel extends React.PureComponent {
         isHoliday = false;
       }
 
-      dayLable = !!from
-        ? getDDbyDate(date) +
-          "." +
-          getMMbyDate(date) +
-          " " +
-          getShortDayNameByID(dayId)
-        : "Сегодня";
+      dayLable = !!from ? getDDdotMMandShortDatNameByDate(date) : "Сегодня";
 
       //Добавим кнопки с датами
       daysMenu.unshift({

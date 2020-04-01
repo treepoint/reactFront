@@ -22,6 +22,40 @@ export function getTimeFromMins(mins) {
   }
 }
 
+//Преобразуем минуты в целые часы
+export function getHoursFromMins(mins, wayToRound) {
+  if (mins < 0) {
+    return 0;
+  }
+
+  if (mins === null) {
+    return 0;
+  }
+
+  if (wayToRound === "ceil") {
+    return Math.ceil(mins / 60);
+  }
+
+  if (wayToRound === "floor") {
+    return Math.floor(mins / 60);
+  }
+
+  return Math.trunc(mins / 60);
+}
+
+//Преобразуем часы в нормальное отображение
+export function getFormatHours(hours) {
+  if (hours < 0) {
+    return "00:00";
+  }
+
+  if (hours === null) {
+    return "00:00";
+  }
+
+  return hours + ":00";
+}
+
 //Получить разницу во времени между двумя отформатированными временами. Типа 23:12 - 22:01
 export function diffBetweenFormateTime(firstTime, secondTime) {
   let firstHour = Number.parseInt(firstTime.substring(0, 2));
@@ -200,4 +234,14 @@ export function getLastDayOfCurrentWeek() {
 export function getToday() {
   let today = new Date();
   return today;
+}
+
+export function getDDdotMMandShortDatNameByDate(date) {
+  return (
+    getDDbyDate(date) +
+    "." +
+    getMMbyDate(date) +
+    " " +
+    getShortDayNameByID(date.getDay())
+  );
 }

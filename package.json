@@ -28,6 +28,7 @@
     "react-select": "^3.0.8",
     "react-simple-timefield": "^3.0.0",
     "react-textarea-autosize": "^7.1.2",
+    "recharts": "^1.8.5",
     "redux": "^4.0.4",
     "redux-devtools": "^3.5.0",
     "redux-thunk": "^2.3.0",
