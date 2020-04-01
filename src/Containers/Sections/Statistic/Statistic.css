@@ -16,6 +16,7 @@
 .tablesContainer {
   display: flex;
   flex-flow: wrap;
+  padding-bottom: 12px;
 }
 
 .statisticTableContainter {
