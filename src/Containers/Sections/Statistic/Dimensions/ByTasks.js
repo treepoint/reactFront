@@ -7,50 +7,31 @@ import {
 } from "../../../../Store/actions/statistics";
 //Подключаем компоненты
 import Table from "../../../../Components/Table/Table";
-import DatePeriodPickerCarousel from "../../../../Components/DatePeriodPickerCarousel/DatePeriodPickerCarousel";
-import StatisticTotal from "../../../../Components/StatisticTotal/StatisticTotal";
 //Дополнительные библиотеки
 import { getTimeFromMins } from "../../../../Libs/TimeUtils";
-//CSS
-import "./TasksStatistic.css";
 
-class TasksStatistic extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      totalTime: 0
-    };
+class ByTasks extends React.Component {
+  componentDidMount() {
+    this.fetchData();
   }
 
-  componentDidMount() {
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.dateFrom !== this.props.dateFrom ||
+      prevProps.dateTo !== this.props.dateTo
+    ) {
+      this.fetchData();
+    }
+  }
+
+  fetchData() {
     //Сбросим если есть
     this.props.clearTasksStatisticByPeriod();
 
-    //По умолчанию тянем статистику за сегодня
-    this.props.fetchTasksStatisticByPeriod();
-
-    //посчитаем время итого
-    this.getTotalTime();
-  }
-
-  componentDidUpdate() {
-    //посчитаем время итого
-    this.getTotalTime();
-  }
-
-  getTotalTime() {
-    let totalTime = 0;
-
-    //Получим статистику
-    const statistic = this.props.tasksStatisticByPeriod;
-
-    for (var s in statistic) {
-      totalTime += statistic[s].execution_time;
-    }
-
-    if (this.state.totalTime !== totalTime) {
-      this.setState({ totalTime });
-    }
+    this.props.fetchTasksStatisticByPeriod(
+      this.props.dateFrom,
+      this.props.dateTo
+    );
   }
 
   getContent() {
@@ -68,7 +49,7 @@ class TasksStatistic extends React.Component {
           type: "string",
           disabled: true,
           value: "Категория",
-          width: 300
+          width: 250
         },
         {
           key: "type",
@@ -113,23 +94,13 @@ class TasksStatistic extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <DatePeriodPickerCarousel
-          onPickDate={(dateFrom, dateTo) =>
-            this.props.fetchTasksStatisticByPeriod(dateFrom, dateTo)
-          }
-        />
-        <Table
-          isResizeble={false}
-          isEditable={false}
-          notFoundMessage="Нет данных для отображения. Выберите другой период или задайте другие даты."
-        >
-          {this.getContent()}
-        </Table>
-        <div className="statisticTotalContainer">
-          <StatisticTotal totalValue={getTimeFromMins(this.state.totalTime)} />
-        </div>
-      </React.Fragment>
+      <Table
+        isResizeble={false}
+        isEditable={false}
+        notFoundMessage="Нет данных. Выберите другие даты."
+      >
+        {this.getContent()}
+      </Table>
     );
   }
 }
@@ -142,13 +113,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchTasksStatisticByPeriod: (dateFrom, dateTo) => {
-      dispatch(fetchTasksStatisticByPeriod(dateFrom, dateTo));
-    },
     clearTasksStatisticByPeriod: () => {
       dispatch(clearTasksStatisticByPeriod());
+    },
+    fetchTasksStatisticByPeriod: (dateFrom, dateTo) => {
+      dispatch(fetchTasksStatisticByPeriod(dateFrom, dateTo));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TasksStatistic);
+export default connect(mapStateToProps, mapDispatchToProps)(ByTasks);

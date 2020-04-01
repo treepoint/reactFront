@@ -11,7 +11,7 @@ import Header from "../Header/Header";
 import Home from "../Sections/Home/Home";
 import TasksManager from "../Sections/TasksManager/TasksManager";
 import Categories from "../Sections/Categories/Categories";
-import StatisticRouter from "../Sections/Statistic/StatisticRouter";
+import Statistic from "../Sections/Statistic/Statistic";
 import About from "../Sections/About/About";
 import AdminPanelRouter from "../Sections/AdminPanel/AdminPanelRouter";
 import Bottom from "../Bottom/Bottom";
@@ -59,7 +59,7 @@ class App extends React.PureComponent {
                 <React.Fragment>
                   <Route path="/tasks_manager" component={TasksManager} />
                   <Route path="/categories" component={Categories} />
-                  <Route path="/statistic" component={StatisticRouter} />
+                  <Route path="/statistic" component={Statistic} />
                   <Route path="/admin" component={AdminPanelRouter} />
                   <Route path="/about" component={About} />
                 </React.Fragment>

@@ -1,0 +1,24 @@
+.tasksDatePickersContainer {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.statisticTotalContainer {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.categoriesDatePickersContainer {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.tablesContainer {
+  display: flex;
+  flex-flow: wrap;
+}
+
+.statisticTableContainter {
+  margin-right: 12px;
+  margin-bottom: 12px;
+}

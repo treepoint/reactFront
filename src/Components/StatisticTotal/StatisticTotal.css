@@ -4,10 +4,11 @@
   width: max-content;
   padding: 6px 12px;
   padding-top: 6px;
+  padding-top: 6px;
   border-radius: 4px;
   display: flex;
-  height: 24px;
-  padding-top: 11px;
+  height: 25px;
+  padding-top: 13px;
 }
 
 .statisticTotalLable {

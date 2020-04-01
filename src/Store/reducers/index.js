@@ -37,7 +37,9 @@ import { notifications } from "./notifications";
 
 import {
   categoriesStatisticByPeriod,
-  tasksStatisticByPeriod
+  tasksStatisticByPeriod,
+  totalStatisticByPeriod,
+  statisticByDaysForPeriod
 } from "./statistics";
 
 const appReducer = history =>
@@ -82,7 +84,9 @@ const appReducer = history =>
     notifications,
     //statistic
     categoriesStatisticByPeriod,
-    tasksStatisticByPeriod
+    tasksStatisticByPeriod,
+    totalStatisticByPeriod,
+    statisticByDaysForPeriod
   });
 
 const rootReducer = history => (state, action) => {
