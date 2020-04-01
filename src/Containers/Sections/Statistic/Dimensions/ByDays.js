@@ -159,7 +159,7 @@ class ByDays extends React.Component {
   getChartWidth() {
     //Значение ниже определены экпериментальны, исходя из
     // используемой библиотеки recharts и используемого формата данных — «26.03 ЧТ»
-    return this.props.statisticByDaysForPeriod.length * 72 + 300;
+    return this.props.statisticByDaysForPeriod.length * 74 + 300;
   }
 
   getHeight() {
