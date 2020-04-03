@@ -70,13 +70,11 @@ class ByDays extends React.Component {
     let statistic = [];
     let executionTimes = [];
     let maxHour = 0;
-    let minHour = 0;
 
     statistic = this.props.statisticByDaysForPeriod;
 
     //У нас здесь как идет. Есть массив, в нем есть date и execution_time.
-    //Нам, в свою очередь, надо получить минимальный и максимальный execution_time,
-    //потом равномерно темперировать его на некоторые отрезки и их уже вернуть
+    //Нам, в свою очередь, надо получить максимальный execution_time,
 
     statistic.forEach(day => {
       executionTimes.push(day.execution_time);
@@ -84,12 +82,12 @@ class ByDays extends React.Component {
 
     //Получим минимальный и максимальный час исполнения
     maxHour = getHoursFromMins(Math.max.apply(null, executionTimes));
-    minHour = getHoursFromMins(Math.min.apply(null, executionTimes));
 
     //Сохраним
-    if (this.state.maxHour !== maxHour || this.state.minHour !== maxHour) {
-      this.setState({ maxHour, minHour });
-      this.getTicks(maxHour, minHour);
+    if (this.state.maxHour !== maxHour) {
+      this.setState({ maxHour });
+      //Получим т.н тики для графика — деления шкалы
+      this.getTicks(maxHour, 0);
     }
   }
 
