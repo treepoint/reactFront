@@ -1,11 +1,16 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
+//Подключаем компоненты
 import RadioButtonCarousel from "../RadioButtonCarousel/RadioButtonCarousel";
 import DatePickerButton from "../DatePickerButton/DatePickerButton";
+//Утилиты
 import {
   getFormatDate,
   revokeDays,
   getDDdotMMandShortDatNameByDate
 } from "../../Libs/TimeUtils";
+//CSS
 import "./DayPickerCarousel.css";
 
 class DayPickerCarousel extends React.PureComponent {
@@ -68,6 +73,17 @@ class DayPickerCarousel extends React.PureComponent {
       to = 6 + currentDay;
     }
 
+    //В зависимости от ширины экрана покажем нужное количество дней
+    let maxCount = 0;
+
+    //Магически подобранные константы start
+    maxCount = Math.floor((this.props.windowWidth - 155 - 120) / 85);
+
+    let diff = maxCount - Math.abs(from) - Math.abs(to);
+
+    from = from - Math.floor(diff / 2);
+    to = to + Math.floor(diff / 2);
+
     while (from < to) {
       date = new Date(revokeDays(today, from));
       dayId = date.getDay();
@@ -127,4 +143,11 @@ class DayPickerCarousel extends React.PureComponent {
   }
 }
 
-export default DayPickerCarousel;
+const mapStateToProps = state => {
+  return {
+    windowWidth: state.windowWidth,
+    windowHeight: state.windowHeight
+  };
+};
+
+export default connect(mapStateToProps)(DayPickerCarousel);

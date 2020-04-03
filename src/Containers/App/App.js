@@ -3,7 +3,12 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 //Подключаем redux
 import { connect } from "react-redux";
-import { restoreFromCookies, setBrowserWarning } from "../../Store/actions/app";
+import {
+  restoreFromCookies,
+  setBrowserWarning,
+  setWindowHeight,
+  setWindowWidth
+} from "../../Store/actions/app";
 //Подключаем модальные окна
 import { getGlobalModalWindow } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Подключаем компоненты и контейнеры
@@ -16,6 +21,8 @@ import About from "../Sections/About/About";
 import AdminPanelRouter from "../Sections/AdminPanel/AdminPanelRouter";
 import Bottom from "../Bottom/Bottom";
 import NotificationSystem from "../NotificationSystem/NotificationSystem";
+//Детектим изменения размеров окна
+import ReactResizeDetector from "react-resize-detector";
 //Обои по умолчанию
 import defaultWallpaper from "../../Images/default_wallpaper.jpg";
 //CSS
@@ -39,9 +46,20 @@ class App extends React.PureComponent {
     return navigator.userAgent.indexOf("Firefox") + 1;
   }
 
+  //Обрабатываем резайс окна и пишем в сторе
+  onResize(width, height) {
+    this.props.setWindowWidth(width);
+    this.props.setWindowHeight(height);
+  }
+
   render() {
     return (
       <React.Fragment>
+        <ReactResizeDetector
+          handleWidth
+          handleHeight
+          onResize={(width, height) => this.onResize(width, height)}
+        />
         <div
           className="wallpaper"
           style={
@@ -95,6 +113,12 @@ const mapDispatchToProps = dispatch => {
     },
     setBrowserWarning: () => {
       dispatch(setBrowserWarning());
+    },
+    setWindowWidth: width => {
+      dispatch(setWindowWidth(width));
+    },
+    setWindowHeight: height => {
+      dispatch(setWindowHeight(height));
     }
   };
 };

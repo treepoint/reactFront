@@ -11,7 +11,9 @@ import {
   userAuthState,
   authError,
   showBroadcastMessage,
-  showHeaderWarning
+  showHeaderWarning,
+  windowHeight,
+  windowWidth
 } from "./app";
 
 import {
@@ -50,6 +52,8 @@ const appReducer = history =>
     authError,
     showBroadcastMessage,
     showHeaderWarning,
+    windowHeight,
+    windowWidth,
     //Page
     scrollTop,
     scrollLeft,
