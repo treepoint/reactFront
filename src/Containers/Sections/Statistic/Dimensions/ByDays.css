@@ -38,3 +38,8 @@
   margin-left: auto;
   padding-right: 6px;
 }
+
+.ScrollbarsCustom-Scroller {
+  height: calc(100% + 4px);
+  overflow-x: hidden !important;
+}
