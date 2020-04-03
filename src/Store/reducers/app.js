@@ -4,7 +4,8 @@ import {
   SET_SHOW_BROADCAST_MESSAGE,
   SET_SHOW_HEADER_WARNING,
   SET_WINDOW_HEIGHT,
-  SET_WINDOW_WIDTH
+  SET_WINDOW_WIDTH,
+  SET_TITLE
 } from "../actions/app";
 
 export function userAuthState(state = false, action) {
@@ -56,6 +57,15 @@ export function windowWidth(state = 0, action) {
   switch (action.type) {
     case SET_WINDOW_WIDTH:
       return action.number;
+    default:
+      return state;
+  }
+}
+
+export function title(state = "Задачи на сегодня | todayTasks", action) {
+  switch (action.type) {
+    case SET_TITLE:
+      return action.string;
     default:
       return state;
   }

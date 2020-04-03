@@ -2,6 +2,7 @@ import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
 import { fetchTasksByDate } from "../../../../Store/actions/tasks";
+import { setTitle } from "../../../../Store/actions/app";
 //Компоненты
 import Task from "../../../../Components/Task/Task";
 import AddTaskButton from "../../../../Components/AddTaskButton/AddTaskButton";
@@ -36,6 +37,12 @@ class Tasks extends React.Component {
 
     //Иначе — не рендерим
     return false;
+  }
+
+  setTasksCountInTitle(count) {
+    if (!this.props.isAccomplished) {
+      this.props.setTitle("Задачи на сегодня (" + count + ") | todayTasks");
+    }
   }
 
   //Категории по задаче
@@ -103,7 +110,6 @@ class Tasks extends React.Component {
     for (var t in tasksForChosenDate) {
       //Отфильтруем в зависимости от того, смотрим мы по архиву или нет
       if (
-        //tasksForChosenDate[t].in_archive
         (tasksForChosenDate[t].closed_date !== null &&
           this.props.isAccomplished) ||
         (tasksForChosenDate[t].closed_date === null &&
@@ -130,6 +136,8 @@ class Tasks extends React.Component {
       }
     }
 
+    this.setTasksCountInTitle(content.length);
+
     //И вернем
     return content;
   }
@@ -148,7 +156,7 @@ class Tasks extends React.Component {
       <div className="taskContainer">
         {this.getTasks()}
         {/*Если это не архив — покажем кнопку добавления тасков*/
-        !!!this.props.isArchive ? this.getAddTaskButton() : null}
+        !!!this.props.isAccomplished ? this.getAddTaskButton() : null}
       </div>
     );
   }
@@ -166,6 +174,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTasksByDate: date => {
       dispatch(fetchTasksByDate(date));
+    },
+    setTitle: title => {
+      dispatch(setTitle(title));
     }
   };
 };

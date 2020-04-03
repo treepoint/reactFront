@@ -26,6 +26,7 @@ export const SET_SHOW_BROADCAST_MESSAGE = "SET_SHOW_BROADCAST_MESSAGE";
 export const SET_SHOW_HEADER_WARNING = "SET_SHOW_HEADER_WARNING";
 export const SET_WINDOW_HEIGHT = "SET_WINDOW_HEIGHT";
 export const SET_WINDOW_WIDTH = "SET_WINDOW_WIDTH";
+export const SET_TITLE = "SET_TITLE";
 
 export function setUserAuthState(boolean) {
   return { type: SET_USER_AUTH_STATE, boolean };
@@ -53,6 +54,10 @@ export function setWindowHeight(number) {
 
 export function setWindowWidth(number) {
   return { type: SET_WINDOW_WIDTH, number };
+}
+
+export function setTitle(string) {
+  return { type: SET_TITLE, string };
 }
 
 export function logoff() {

@@ -1,6 +1,7 @@
 import React from "react";
 //Подключаем роутинг
 import { Switch, Route } from "react-router-dom";
+import DocumentTitle from "react-document-title";
 //Подключаем redux
 import { connect } from "react-redux";
 import {
@@ -54,45 +55,47 @@ class App extends React.PureComponent {
 
   render() {
     return (
-      <React.Fragment>
-        <ReactResizeDetector
-          handleWidth
-          handleHeight
-          onResize={(width, height) => this.onResize(width, height)}
-        />
-        <div
-          className="wallpaper"
-          style={
-            !!this.props.wallpaper
-              ? { backgroundImage: "url(" + this.props.wallpaper + ")" }
-              : { background: "url(" + defaultWallpaper + ")" }
-          }
-        >
-          <div className="wallpaperBlur">
-            <Header />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              {/*Если не авторизован — эти пункты вообще не обрабатываем*/}
-              {!!this.props.userAuthState ? (
-                <React.Fragment>
-                  <Route path="/tasks_manager" component={TasksManager} />
-                  <Route path="/categories" component={Categories} />
-                  <Route path="/statistic" component={Statistic} />
-                  <Route path="/admin" component={AdminPanelRouter} />
-                  <Route path="/about" component={About} />
-                </React.Fragment>
-              ) : null}
-              <Route path="/about" component={About} />
-            </Switch>
-            {getGlobalModalWindow(
-              this.props.modalWindowState,
-              this.props.modalWindowName
-            )}
-            <Bottom />
-            <NotificationSystem />
+      <DocumentTitle title={this.props.title}>
+        <React.Fragment>
+          <ReactResizeDetector
+            handleWidth
+            handleHeight
+            onResize={(width, height) => this.onResize(width, height)}
+          />
+          <div
+            className="wallpaper"
+            style={
+              !!this.props.wallpaper
+                ? { backgroundImage: "url(" + this.props.wallpaper + ")" }
+                : { background: "url(" + defaultWallpaper + ")" }
+            }
+          >
+            <div className="wallpaperBlur">
+              <Header />
+              <Switch>
+                <Route exact path="/" component={Home} />
+                {/*Если не авторизован — эти пункты вообще не обрабатываем*/}
+                {!!this.props.userAuthState ? (
+                  <React.Fragment>
+                    <Route path="/tasks_manager" component={TasksManager} />
+                    <Route path="/categories" component={Categories} />
+                    <Route path="/statistic" component={Statistic} />
+                    <Route path="/admin" component={AdminPanelRouter} />
+                    <Route path="/about" component={About} />
+                  </React.Fragment>
+                ) : null}
+                <Route path="/about" component={About} />
+              </Switch>
+              {getGlobalModalWindow(
+                this.props.modalWindowState,
+                this.props.modalWindowName
+              )}
+              <Bottom />
+              <NotificationSystem />
+            </div>
           </div>
-        </div>
-      </React.Fragment>
+        </React.Fragment>
+      </DocumentTitle>
     );
   }
 }
@@ -102,7 +105,8 @@ const mapStateToProps = state => {
     modalWindowState: state.modalWindowState,
     modalWindowName: state.modalWindowName,
     userAuthState: state.userAuthState,
-    wallpaper: state.userSettings.wallpaper
+    wallpaper: state.userSettings.wallpaper,
+    title: state.title
   };
 };
 

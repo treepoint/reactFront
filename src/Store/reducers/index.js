@@ -13,7 +13,8 @@ import {
   showBroadcastMessage,
   showHeaderWarning,
   windowHeight,
-  windowWidth
+  windowWidth,
+  title
 } from "./app";
 
 import {
@@ -54,6 +55,7 @@ const appReducer = history =>
     showHeaderWarning,
     windowHeight,
     windowWidth,
+    title,
     //Page
     scrollTop,
     scrollLeft,
