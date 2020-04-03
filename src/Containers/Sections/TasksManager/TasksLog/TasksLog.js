@@ -132,7 +132,6 @@ class TasksLog extends React.PureComponent {
         type: "string",
         disabled: true,
         value: "Задача",
-        minWidth: 200,
         width: 500
       },
       {
