@@ -73,33 +73,18 @@ class TasksLog extends React.PureComponent {
     }
 
     for (var tlcd in tasksLogForChosenDate) {
-      let task_id = tasksLogForChosenDate[tlcd].task_id;
-
-      //Проверим, доступна ли задача в логе в выпадающем списке. Если нет — добавим
-      if (
-        typeof tasksList.find(task => {
-          return task.value === task_id;
-        }) === "undefined"
-      ) {
-        tasksList.push({
-          value: task_id,
-          label: tasksLogForChosenDate[tlcd].task_name
-        });
-      }
-
-      //добавим текущую
-      let tasks = {
-        list: tasksList,
-        current: task_id
-      };
-
       content.unshift([
         { key: "id", type: "hidden", value: tasksLogForChosenDate[tlcd].id },
         {
           key: "task_id",
-          type: "select",
-          disabled: false,
-          value: tasks
+          type: "hidden",
+          value: tasksLogForChosenDate[tlcd].task_id
+        },
+        {
+          key: "task_name",
+          type: "string",
+          disabled: true,
+          value: tasksLogForChosenDate[tlcd].task_name
         },
         {
           key: "execution_start",
@@ -137,6 +122,12 @@ class TasksLog extends React.PureComponent {
       },
       {
         key: "task_id",
+        type: "hidden",
+        disabled: true,
+        value: "Task_id"
+      },
+      {
+        key: "task_name",
         type: "string",
         disabled: true,
         value: "Задача",
