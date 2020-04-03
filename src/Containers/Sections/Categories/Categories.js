@@ -56,6 +56,7 @@ class Categories extends React.Component {
         {
           key: "description",
           type: "string",
+          hidable: true,
           value: "Описание",
           disabled: true,
           width: 400
@@ -86,6 +87,7 @@ class Categories extends React.Component {
             key: "description",
             type: "text",
             disabled: false,
+            hidable: true,
             value: categories[c].description
           }
         ]);

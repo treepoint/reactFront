@@ -82,41 +82,45 @@ class TasksManager extends React.PureComponent {
     ];
 
     return (
-      <Page
-        title="Задачи:"
-        anchorLinksArray={anchorLinksArray}
-        additionalTitleBlock={<SumTime forDate={this.state.date} />}
-        isPrivate={true}
-        isNotScrollable={true}
-        isCustomContent={true}
-      >
-        <DayPickerCarousel onChange={date => this.onPickDate(date)} />
-        {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было задержки*/}
-
-        <ReactCustomScroll
-          //Задаем стиль
-          style={{
-            width: "100%",
-            height: "calc(-233px + 100vh)",
-            marginTop: "1px"
-          }}
-          ref={ref => {
-            this._scrollBarRef = ref;
-          }}
-          //Обрабатываем скролл
-          onScrollStop={() => this.handleScroll()}
+      <React.Fragment>
+        <Page
+          title="Задачи:"
+          anchorLinksArray={anchorLinksArray}
+          additionalTitleBlock={<SumTime forDate={this.state.date} />}
+          isPrivate={true}
+          isNotScrollable={true}
+          isCustomContent={true}
         >
-          <div style={{ display: !!this.state.isAccomplished ? "none" : null }}>
-            <Tasks date={this.state.date} />
-          </div>
-          <div
-            style={{ display: !!!this.state.isAccomplished ? "none" : null }}
+          <DayPickerCarousel onChange={date => this.onPickDate(date)} />
+          {/*Вот эта карусель нужна, чтобы при переключении между архивом и текущими тасками не было задержки*/}
+
+          <ReactCustomScroll
+            //Задаем стиль
+            style={{
+              width: "100%",
+              height: "calc(-233px + 100vh)",
+              marginTop: "1px"
+            }}
+            ref={ref => {
+              this._scrollBarRef = ref;
+            }}
+            //Обрабатываем скролл
+            onScrollStop={() => this.handleScroll()}
           >
-            <Tasks isAccomplished={true} date={this.state.date} />
-          </div>
-        </ReactCustomScroll>
+            <div
+              style={{ display: !!this.state.isAccomplished ? "none" : null }}
+            >
+              <Tasks date={this.state.date} />
+            </div>
+            <div
+              style={{ display: !!!this.state.isAccomplished ? "none" : null }}
+            >
+              <Tasks isAccomplished={true} date={this.state.date} />
+            </div>
+          </ReactCustomScroll>
+        </Page>
         <TasksLog date={this.state.date} />
-      </Page>
+      </React.Fragment>
     );
   }
 }

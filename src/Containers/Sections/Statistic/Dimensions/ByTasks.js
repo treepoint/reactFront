@@ -47,6 +47,7 @@ class ByTasks extends React.Component {
         {
           key: "name",
           type: "string",
+          hidable: true,
           disabled: true,
           value: "Категория",
           width: 250
@@ -76,6 +77,7 @@ class ByTasks extends React.Component {
         {
           key: "category_name",
           type: "string",
+          hidable: true,
           disabled: true,
           value: statistic[s].category_name,
           style: statistic[s].category_name_style

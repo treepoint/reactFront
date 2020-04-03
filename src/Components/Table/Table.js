@@ -176,7 +176,10 @@ class Table extends React.Component {
     return (
       <Row
         key={0}
+        //Закрепляем таблицу
         isFixed={this.props.isFixed}
+        //Ширина таблицы
+        tableWidth={this.getTableWidth()}
         //Указываем, на наличие шапки. По умолчанию — есть
         isHeader={true}
         //Задаем возможность изменения размеров ячеек
@@ -233,7 +236,10 @@ class Table extends React.Component {
       return (
         <Row
           key={index}
+          //Закрепляем таблицу
           isFixed={this.props.isFixed}
+          //Ширина таблицы
+          tableWidth={this.getTableWidth()}
           //Говорим, что это шапка
           isHeader={false}
           //Задаем возможность изменения размеров ячеек

@@ -1,32 +1,25 @@
 .taskLog {
-  justify-content: center;
+  justify-content: flex-end;
   display: flex;
-  margin-left: -34px;
   border-top: 1px solid #f4f4f4;
   border-radius: 5px;
 }
 
 .taskLogResize {
-  padding-left: 4px;
-  padding-right: 4px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  bottom: -12px;
+  margin-top: 10px;
+  padding-right: 8px;
+  position: absolute;
   z-index: 1;
   height: 22px;
-  left: 1119px;
-  margin-left: -34px;
 }
 
 .taskLogTableContainer {
-  width: calc(100% - 131px);
-  position: absolute;
   bottom: 0;
   padding-bottom: 4px;
+  position: sticky;
 }
 
 .taskLogTable {
-  margin: auto;
   width: max-content;
+  margin: auto;
 }

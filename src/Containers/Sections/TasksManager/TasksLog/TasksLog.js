@@ -42,7 +42,7 @@ class TasksLog extends React.PureComponent {
 
     //Соберем список задач. Он одинаковый для каждой записи в логе
     let tasksList = [];
-    const tasks = this.props.tasks;
+    let tasks = this.props.tasks;
     let tasksForChosenDate = {};
 
     //Отфильтруем за нужную дату
@@ -61,7 +61,7 @@ class TasksLog extends React.PureComponent {
     }
 
     //После этого пройдемся и соберем все записи таск лога
-    const tasksLog = this.props.tasksLog;
+    let tasksLog = this.props.tasksLog;
 
     let tasksLogForChosenDate = {};
 
@@ -107,6 +107,7 @@ class TasksLog extends React.PureComponent {
         {
           key: "comment",
           type: "text",
+          hidable: true,
           disabled: false,
           value: tasksLogForChosenDate[tlcd].comment
         }
@@ -131,7 +132,8 @@ class TasksLog extends React.PureComponent {
         type: "string",
         disabled: true,
         value: "Задача",
-        width: 580
+        minWidth: 200,
+        width: 500
       },
       {
         key: "execution_start",
@@ -157,11 +159,14 @@ class TasksLog extends React.PureComponent {
       {
         key: "comment",
         type: "string",
+        hidable: true,
         disabled: true,
         value: "Комментарий",
         width: 250
       }
     ]);
+
+    console.log(content);
 
     return content;
   }
@@ -204,7 +209,8 @@ class TasksLog extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     tasks: state.tasks,
-    tasksLog: state.tasksLog
+    tasksLog: state.tasksLog,
+    windowWidth: state.windowWidth
   };
 };
 

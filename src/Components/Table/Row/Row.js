@@ -1,9 +1,14 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
+//Компоненты
 import Cell from "../Cell/Cell";
 import Action from "../../Action/Action";
+//Иконки
 import deleteIcon from "../../../Images/icon_delete.png";
 import archiveIcon from "../../../Images/icon_archive.png";
 import addIcon from "../../../Images/icon_add.png";
+//CSS
 import "./Row.css";
 
 class Row extends React.PureComponent {
@@ -69,6 +74,7 @@ class Row extends React.PureComponent {
     this.props.saveRow(rowContent);
   }
 
+  //Получим кнопки с действием для этой строки
   getActionButton() {
     let buttons = null;
 
@@ -116,9 +122,16 @@ class Row extends React.PureComponent {
     return <div className="rowButton">{buttons}</div>;
   }
 
-  render() {
+  getCells() {
     //Из пришедшего описания столбцов соберем ячейки
     let cells = this.props.colsDescription.map((column, index) => {
+      //В общем, некоторые поля могут быть скрываемыми, например, если не влазят в размеры экрана
+      if (this.props.tableWidth + 74 > this.props.windowWidth) {
+        if (this.props.rowsContent[index].hidable) {
+          return null;
+        }
+      }
+
       //Проверяем стиль, поскольку его может и не быть вовсе
       let style;
 
@@ -160,12 +173,23 @@ class Row extends React.PureComponent {
       );
     });
 
+    return cells;
+  }
+
+  render() {
     return (
       <div className={"row" + (!!this.props.isHeader ? " header" : "")}>
-        {cells} {this.getActionButton()}
+        {this.getCells()} {this.getActionButton()}
       </div>
     );
   }
 }
 
-export default Row;
+const mapStateToProps = state => {
+  return {
+    windowWidth: state.windowWidth,
+    windowHeight: state.windowHeight
+  };
+};
+
+export default connect(mapStateToProps)(Row);

@@ -65,15 +65,29 @@ class Page extends React.PureComponent {
     }
   }
 
+  getStyle() {
+    if (this.props.windowWidth < 1300) {
+      return { width: "calc(100% - 24px)" };
+    }
+
+    return { width: "calc(100% - 112px)" };
+  }
+
   render() {
     return (
-      <div className="page">
+      <div className="page" style={this.getStyle()}>
         {this.getTitle()}
         {this.getPageContent()}
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    windowWidth: state.windowWidth
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -86,7 +100,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Page);
+export default connect(mapStateToProps, mapDispatchToProps)(Page);
