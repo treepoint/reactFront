@@ -5,7 +5,7 @@ import {
   fetchCategories,
   createCategory,
   updateCategory,
-  archiveCategory
+  archiveCategory,
 } from "../../../Store/actions/categories";
 //Компоненты
 import Table from "../../../Components/Table/Table";
@@ -16,7 +16,7 @@ class Categories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      archiveModalWindow: { isHidden: true, row: null }
+      archiveModalWindow: { isHidden: true, row: null },
     };
   }
 
@@ -44,14 +44,14 @@ class Categories extends React.Component {
           key: "id",
           type: "hidden",
           disabled: true,
-          value: "ID"
+          value: "ID",
         },
         {
           key: "name",
           type: "string",
           disabled: true,
           value: "Название",
-          width: 320
+          width: 320,
         },
         {
           key: "description",
@@ -59,9 +59,9 @@ class Categories extends React.Component {
           hidable: true,
           value: "Описание",
           disabled: true,
-          width: 400
-        }
-      ]
+          width: 400,
+        },
+      ],
     ];
 
     let categories = this.props.categories;
@@ -74,22 +74,22 @@ class Categories extends React.Component {
             key: "id",
             type: "hidden",
             disabled: true,
-            value: categories[c].id
+            value: categories[c].id,
           },
           {
             key: "name",
             type: "string",
             disabled: false,
             value: categories[c].name,
-            style: categories[c].name_style
+            style: categories[c].name_style,
           },
           {
             key: "description",
             type: "text",
             disabled: false,
             hidable: true,
-            value: categories[c].description
-          }
+            value: categories[c].description,
+          },
         ]);
       }
     }
@@ -99,7 +99,7 @@ class Categories extends React.Component {
 
   render() {
     return (
-      <Page title="Управление категориями задач" isCustomContent={true}>
+      <Page title="Категории" isCustomContent={true}>
         <ConfirmModalWindow
           title="Заархивировать категорию?"
           message="Категория останется назначенной для текущих и выполненных задач, но будет недоступна для новых"
@@ -110,12 +110,11 @@ class Categories extends React.Component {
           }
         />
         <Table
-          isEditable={true}
           isResizeble={true}
           isSingleLineMode={true}
-          saveRow={category => this.props.updateCategory(category)}
+          saveRow={(category) => this.props.updateCategory(category)}
           addRow={() => this.props.createCategory()}
-          archiveRow={row => this.showArchiveModal(row)}
+          archiveRow={(row) => this.showArchiveModal(row)}
           isUpdating={this.props.isUpdating}
         >
           {this.getContent()}
@@ -125,15 +124,15 @@ class Categories extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     categories: state.categories,
     userAuthState: state.userAuthState,
-    isUpdating: state.categoriesIsUpdating
+    isUpdating: state.categoriesIsUpdating,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchCategories: () => {
       dispatch(fetchCategories());
@@ -141,12 +140,12 @@ const mapDispatchToProps = dispatch => {
     createCategory: () => {
       dispatch(createCategory());
     },
-    archiveCategory: id => {
+    archiveCategory: (id) => {
       dispatch(archiveCategory(id));
     },
-    updateCategory: category => {
+    updateCategory: (category) => {
       dispatch(updateCategory(category));
-    }
+    },
   };
 };
 

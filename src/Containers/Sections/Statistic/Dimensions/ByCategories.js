@@ -83,7 +83,6 @@ class ByCategories extends React.PureComponent {
     return (
       <Table
         isResizeble={false}
-        isEditable={false}
         notFoundMessage="Нет данных. Выберите другие даты."
       >
         {this.getContent()}

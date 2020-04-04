@@ -167,7 +167,7 @@ class ByDays extends React.Component {
 
   render() {
     return (
-      <div className="chart" style={{ width: this.getChartWidth() }}>
+      <div className="chart" style={{ maxWidth: this.getChartWidth() }}>
         <div className="chartLable">Время выполнения по дням</div>
         <ReactCustomScroll
           noScrollY={true}

@@ -4,8 +4,9 @@
 }
 
 .statisticTotalContainer {
-  margin-top: 12px;
   margin-bottom: 12px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .categoriesDatePickersContainer {
@@ -16,10 +17,17 @@
 .tablesContainer {
   display: flex;
   flex-flow: wrap;
+  justify-content: center;
   padding-bottom: 12px;
 }
 
 .statisticTableContainter {
-  margin-right: 12px;
+  margin-left: 6px;
+  margin-right: 6px;
   margin-bottom: 12px;
+}
+
+.statisticDatePickerContainer {
+  display: flex;
+  justify-content: center;
 }

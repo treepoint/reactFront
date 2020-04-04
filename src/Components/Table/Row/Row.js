@@ -12,44 +12,6 @@ import addIcon from "../../../Images/icon_add.png";
 import "./Row.css";
 
 class Row extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      //Текущая высота строки. Если задано — считается значением по-умолчанию
-      height: 34,
-      //Прошлая ширина и высота. Нужны для вычисления смещения между текущей шириной\высотой и прошлой
-      prevHeight: 0
-    };
-  }
-
-  changeHeight(height) {
-    //Высоту изменяем на уровне строки
-    this.setState({
-      height: this.state.height + height - this.state.prevHeight,
-      prevHeight: height
-    });
-  }
-
-  changeUUID(uuid) {
-    this.props.changeUUID(uuid);
-  }
-
-  changeWidth(width, column) {
-    //А вот длину пробрасываем выше, чтобы обработать на
-    //уровне таблицы и поменять размеры ячеек во всех строках
-    this.props.changeColumnWidth(width, column);
-  }
-
-  //По остановке изменения размеров — сбрасываем прошлые значения
-  stopChangeDimensions() {
-    this.setState(
-      {
-        prevHeight: 0
-      },
-      this.props.stopChangeDimensions()
-    );
-  }
-
   //Обрабатываем изменение контента
   onChangeValue(content, index) {
     //Получим текущий массив, содержащий значения всех ячеек
@@ -77,10 +39,6 @@ class Row extends React.PureComponent {
   //Получим кнопки с действием для этой строки
   getActionButton() {
     let buttons = null;
-
-    if (!this.props.isEditable) {
-      return buttons;
-    }
 
     if (this.props.isHeader) {
       if (this.props.addRow === null) {
@@ -125,8 +83,24 @@ class Row extends React.PureComponent {
   getCells() {
     //Из пришедшего описания столбцов соберем ячейки
     let cells = this.props.colsDescription.map((column, index) => {
+      let width = column.width;
+
       //В общем, некоторые поля могут быть скрываемыми, например, если не влазят в размеры экрана
       if (this.props.tableWidth + 74 > this.props.windowWidth) {
+        if (!!column.minWidth) {
+          width =
+            column.width -
+            (this.props.tableWidth +
+              84 -
+              this.props.windowWidth -
+              this.props.hidableWidth);
+
+          //Но если размер стал меньше, чем допустимый — возьмем минимальный
+          if (width < column.minWidth) {
+            width = column.minWidth;
+          }
+        }
+
         if (this.props.rowsContent[index].hidable) {
           return null;
         }
@@ -149,13 +123,10 @@ class Row extends React.PureComponent {
           key={index}
           //Настройки ячейки
           isFixed={this.props.isFixed}
-          isResizeble={this.props.isResizeble}
           isHeader={this.props.isHeader}
-          //UUID
-          uuid={this.props.uuid}
           //Размеры
-          width={column.width}
-          height={this.state.height}
+          width={width}
+          height={34}
           //Контент ячейки и его свойства
           type={this.props.rowsContent[index].type}
           style={style}
@@ -163,12 +134,8 @@ class Row extends React.PureComponent {
           value={this.props.rowsContent[index].value}
           disabled={this.props.rowsContent[index].disabled}
           //Функции на обработку
-          changeUUID={uuid => this.changeUUID(uuid)}
-          changeWidth={width => this.changeWidth(width, index)}
-          changeHeight={height => this.changeHeight(height)}
-          stopChangeDimensions={() => this.stopChangeDimensions()}
-          onChangeValue={content => this.onChangeValue(content, index)}
-          onChangeStyle={style => this.onChangeStyle(style, index)}
+          onChangeValue={(content) => this.onChangeValue(content, index)}
+          onChangeStyle={(style) => this.onChangeStyle(style, index)}
         />
       );
     });
@@ -185,10 +152,9 @@ class Row extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     windowWidth: state.windowWidth,
-    windowHeight: state.windowHeight
   };
 };
 

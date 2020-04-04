@@ -37,6 +37,9 @@ class HeaderNavigationLink extends React.PureComponent {
         activeClassName="current"
         exact={this.props.exact}
         to={this.props.to}
+        onClick={
+          !!this.props.onClick ? event => this.props.onClick(event) : null
+        }
       >
         {this.props.value}
       </NavLink>

@@ -1,4 +1,13 @@
 .datePeriodPickerCarousel {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.radioButtonCarouselContainer {
+  margin-bottom: 12px;
+}
+
+.datePeriodPickerContainer {
   margin-bottom: 12px;
 }
