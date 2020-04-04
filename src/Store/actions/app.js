@@ -10,7 +10,7 @@ import { setToken } from "./token";
 import { setNotifications } from "./notifications";
 import {
   setCurrentUserAndAdminByID,
-  setCurrentUserAndAdmin
+  setCurrentUserAndAdmin,
 } from "./currentUser";
 import { fetchCategories } from "./categories";
 import { fetchTasksByDate } from "./tasks";
@@ -61,9 +61,17 @@ export function setTitle(string) {
 }
 
 export function logoff() {
-  return dispatch => {
+  return (dispatch, getStore) => {
+    //Сохраним текущую ширину и высоту экрана. Их обнулять не нужно
+    let windowWidth = getStore().windowWidth;
+    let windowHeight = getStore().windowHeight;
+
     //Очистим стор
     dispatch(clearState());
+
+    //Восстановим записи о ширине и высоте
+    dispatch(setWindowWidth(windowWidth));
+    dispatch(setWindowHeight(windowHeight));
 
     //Очистим cookies
     delete_cookie("token");
@@ -75,7 +83,7 @@ export function logoff() {
 }
 
 export function restoreFromCookies() {
-  return dispatch => {
+  return (dispatch) => {
     const token = read_cookie("token");
     const userId = read_cookie("user_id");
     const refreshToken = read_cookie("refresh_token");
@@ -106,12 +114,12 @@ export function restoreFromCookies() {
 }
 
 export function reauth(refreshToken) {
-  return dispatch => {
+  return (dispatch) => {
     //Обновление токена
     const url = APIURL + "/reauth";
 
     //Пытаемся обновить данные по нему
-    Axios.post(url, { refreshToken }).then(response => {
+    Axios.post(url, { refreshToken }).then((response) => {
       //Unixtime в обычное время
       let tokenExp = new Date(response.data.token.exp * 1000);
 
@@ -147,7 +155,7 @@ export function login() {
     const state = getState();
 
     Axios.post(url, state.currentUser)
-      .then(response => {
+      .then((response) => {
         //Unixtime в обычное время
         let tokenExp = new Date(response.data.token.exp * 1000);
 
@@ -184,7 +192,7 @@ export function login() {
 
         dispatch(push("/tasks_manager"));
       })
-      .catch(error => {
+      .catch((error) => {
         let errorMessage = null;
 
         switch (error.response.status) {
@@ -202,7 +210,7 @@ export function login() {
 }
 
 export function loadAllData() {
-  return dispatch => {
+  return (dispatch) => {
     //Проставим пользовательские настройки
     dispatch(fetchUserSettings());
     //Загрузим категории
@@ -215,7 +223,7 @@ export function loadAllData() {
 }
 
 export function setBrowserWarning() {
-  return dispatch => {
+  return (dispatch) => {
     let message =
       "Веб-приложение находится в разработке. Рекомендуемый браузер — Firefox.";
     //Запишем ошибку
