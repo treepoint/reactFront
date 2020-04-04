@@ -102,6 +102,9 @@ export function restoreFromCookies() {
       //Загрузим все данные приложения
       dispatch(loadAllData());
 
+      //Переадресуемся на задачи
+      dispatch(push("/tasks_manager"));
+
       return;
     }
 
@@ -143,6 +146,9 @@ export function reauth(refreshToken) {
       dispatch(setUserAuthState(true));
       //Загрузим все данные приложения
       dispatch(loadAllData());
+
+      //Переадресуемся на задачи
+      dispatch(push("/tasks_manager"));
     });
   };
 }
