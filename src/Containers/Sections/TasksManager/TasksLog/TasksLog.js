@@ -166,8 +166,6 @@ class TasksLog extends React.PureComponent {
       },
     ]);
 
-    console.log(content);
-
     return content;
   }
 
