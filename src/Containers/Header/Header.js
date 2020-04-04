@@ -1,7 +1,10 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
 //Компоненты
 import Logo from "../../Components/Logo/Logo";
-import HeaderNavigation from "../../Components/HeaderNavigation/HeaderNavigation";
+import DesktopHeaderNavigation from "../../Components/DesktopHeaderNavigation/DesktopHeaderNavigation";
+import MobileHeaderNavigation from "../../Components/MobileHeaderNavigation/MobileHeaderNavigation";
 import Spacer from "../../Components/Spacer/Spacer";
 import LoginMenu from "../../Components/LoginMenu/LoginMenu";
 
@@ -9,11 +12,23 @@ import LoginMenu from "../../Components/LoginMenu/LoginMenu";
 import "./Header.css";
 
 class Header extends React.PureComponent {
+  isNeedMobileVersion() {
+    if (this.props.windowWidth < 700) {
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
     return (
       <div className="header">
-        <Logo />
-        <HeaderNavigation />
+        {!!this.isNeedMobileVersion() ? null : <Logo />}
+        {!!this.isNeedMobileVersion() ? (
+          <MobileHeaderNavigation />
+        ) : (
+          <DesktopHeaderNavigation />
+        )}
         <Spacer />
         <LoginMenu />
       </div>
@@ -21,4 +36,10 @@ class Header extends React.PureComponent {
   }
 }
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    windowWidth: state.windowWidth
+  };
+};
+
+export default connect(mapStateToProps)(Header);

@@ -33,11 +33,21 @@
   opacity: 0;
 }
 
+.actionIconContainer.pressed {
+  border-radius: 4px;
+  background: #eee;
+}
+
+.actionIconContainer.transparent.pressed {
+  opacity: 0.5;
+  border-radius: 4px;
+  background: #eee;
+}
+
 .action {
   width: 24px;
   height: 24px;
   border: 1px solid rgba(255, 255, 255, 0);
-  background-size: 24px 24px !important;
   display: inline-block;
   opacity: 0.6;
 }
@@ -95,18 +105,6 @@
   100% {
     opacity: 1;
   }
-}
-
-.action.pressed {
-  border: 1px solid #9c9c9c;
-  border-radius: 4px;
-  box-shadow: inset 0px 0px 4px #c2c2c270;
-}
-
-.action.transparent.pressed {
-  opacity: 0.5;
-  border: 1px solid #9c9c9c00;
-  box-shadow: none;
 }
 
 .actionLable {

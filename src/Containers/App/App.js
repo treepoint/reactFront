@@ -8,7 +8,7 @@ import {
   restoreFromCookies,
   setBrowserWarning,
   setWindowHeight,
-  setWindowWidth
+  setWindowWidth,
 } from "../../Store/actions/app";
 //Подключаем модальные окна
 import { getGlobalModalWindow } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
@@ -35,7 +35,7 @@ class App extends React.PureComponent {
     this.props.restoreFromCookies();
 
     //Напишем номер версии
-    console.log("Номер сборки: 0.9.3");
+    console.log("Номер сборки: 0.9.5");
 
     //Чекнем браузер
     if (!!!this.isFirefox()) {
@@ -100,17 +100,17 @@ class App extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     modalWindowState: state.modalWindowState,
     modalWindowName: state.modalWindowName,
     userAuthState: state.userAuthState,
     wallpaper: state.userSettings.wallpaper,
-    title: state.title
+    title: state.title,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     restoreFromCookies: () => {
       dispatch(restoreFromCookies());
@@ -118,12 +118,12 @@ const mapDispatchToProps = dispatch => {
     setBrowserWarning: () => {
       dispatch(setBrowserWarning());
     },
-    setWindowWidth: width => {
+    setWindowWidth: (width) => {
       dispatch(setWindowWidth(width));
     },
-    setWindowHeight: height => {
+    setWindowHeight: (height) => {
       dispatch(setWindowHeight(height));
-    }
+    },
   };
 };
 

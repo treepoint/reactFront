@@ -1,6 +1,5 @@
 import React from "react";
 //Подключаем компоненты
-import SaveMark from "./SaveMark/SaveMark";
 import Row from "./Row/Row";
 //CSS
 import "./Table.css";
@@ -10,7 +9,7 @@ class Table extends React.Component {
     super();
     this.state = {
       colsDescription: [],
-      uuid: ""
+      hidableWidth: 0,
     };
   }
 
@@ -19,29 +18,37 @@ class Table extends React.Component {
   }
 
   setColsWidth(table) {
+    let width = 0;
+
     //Соберем массив, описывающий столбцы
-    let colsDescription = table[0].map(column => {
+    let colsDescription = table[0].map((column) => {
       //Если есть описание — получим данные оттуда. Иначе — стандартные
       try {
         return {
           //Текущая, ну или начальная ширина
           width: column.width,
-          //И прошлая ширина. По умолчанию всегда 0
-          prevWidth: 0,
-          type: column.type
+          minWidth: column.minWidth,
+          type: column.type,
         };
       } catch {
         return {
           width: 200,
-          prevWidth: 0,
-          type: column.type
+          minWidth: 200,
+          type: column.type,
         };
+      }
+    });
+
+    table[0].forEach((column) => {
+      if (column.hidable) {
+        width += column.width;
       }
     });
 
     //Запишем в стейт описание столбцов
     this.setState({
-      colsDescription
+      colsDescription,
+      hidableWidth: width,
     });
   }
 
@@ -49,7 +56,7 @@ class Table extends React.Component {
   getTableWidth() {
     let tableWidth = 0;
 
-    this.state.colsDescription.forEach(column => {
+    this.state.colsDescription.forEach((column) => {
       if (typeof column.width === "number" && column.type !== "hidden") {
         tableWidth += column.width;
       }
@@ -58,59 +65,11 @@ class Table extends React.Component {
     return tableWidth;
   }
 
-  //Изменяем ширину столбцов
-  changeColumnWidth(width, column) {
-    //Если прилетело это событие, но ширина — ноль. Не отрабатываем. Это бессмысленно и скорее всего меняли высоту
-    if (width === 0) {
-      return;
-    }
-
-    //Скопируем текущий стейт
-    let colsDescription = this.state.colsDescription;
-
-    //Обновим состояние нужного столбца
-    colsDescription[column] = {
-      //Ширину перезапишем
-      width:
-        colsDescription[column].width +
-        width -
-        colsDescription[column].prevWidth,
-      //Заменим прошлую ширину на текущую, которая после этого станет прошлой
-      prevWidth: width
-    };
-
-    //Обновим состояние
-    this.setState({
-      colsDescription
-    });
-  }
-
-  //Изменим UUID ячейки, которая изменяла свою ширину
-  changeUUID(uuid) {
-    this.setState({
-      uuid
-    });
-  }
-
-  //Сбрасываем предыдушие длины как только закончили изменение размеров
-  stopChangeDimensions() {
-    //Скопируем текущий стейт
-    let colsDescription = this.state.colsDescription;
-
-    //Сбросим все изменения размеров
-    colsDescription = colsDescription.map(column => {
-      return Object.assign(column, { prevWidth: 0 });
-    });
-
-    //Обновим стейт
-    this.setState({ colsDescription, uuid: "" });
-  }
-
   //Разберем контент и вернем уже объект, с которым будем работать дальше
   getObjectFromRowContent(rowContent) {
     let object = {};
 
-    rowContent.forEach(item => {
+    rowContent.forEach((item) => {
       switch (item.type) {
         case "hidden":
           object[item.key] = item.value;
@@ -141,7 +100,7 @@ class Table extends React.Component {
     return object;
   }
 
-  saveRow(rowContent, index) {
+  saveRow(rowContent) {
     //Если не функция — ничего делать не будем. Значит её не передали
     if (typeof this.props.saveRow !== "function") {
       return;
@@ -180,26 +139,14 @@ class Table extends React.Component {
         isFixed={this.props.isFixed}
         //Ширина таблицы
         tableWidth={this.getTableWidth()}
+        //Ширина скрываемых столбцов
+        hidableWidth={this.state.hidableWidth}
         //Указываем, на наличие шапки. По умолчанию — есть
         isHeader={true}
-        //Задаем возможность изменения размеров ячеек
-        isResizeble={this.props.isResizeble}
-        //Задаем возможность редактирования ячеек
-        isEditable={this.props.isEditable}
-        //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
-        uuid={this.state.uuid}
         //Передадим содержимое столбцов из шапки
         rowsContent={this.props.children[0]}
         //Так же передадим описание столбцов — ширину и подобное
         colsDescription={this.state.colsDescription}
-        //И callback'и на обработку изменения ширины столбца
-        changeColumnWidth={(width, column) =>
-          this.changeColumnWidth(width, column)
-        }
-        //и остановку изменения
-        stopChangeDimensions={() => this.stopChangeDimensions()}
-        //Изменим UUID ячейки, которая изменяла свою ширину
-        changeUUID={uuid => this.changeUUID(uuid)}
         addRow={!!this.props.addRow ? () => this.props.addRow() : null}
       />
     );
@@ -240,35 +187,24 @@ class Table extends React.Component {
           isFixed={this.props.isFixed}
           //Ширина таблицы
           tableWidth={this.getTableWidth()}
+          //Ширина скрываемых столбцов
+          hidableWidth={this.state.hidableWidth}
           //Говорим, что это шапка
           isHeader={false}
-          //Задаем возможность изменения размеров ячеек
-          isResizeble={this.props.isResizeble}
-          //Задаем возможность редактирования ячеек
-          isEditable={this.props.isEditable}
-          //Прокидывем UUID ячейки, которая сейчас изменяет свои размеры
-          uuid={this.state.uuid}
           //Передадим содержимое столбцов из шапки
           rowsContent={row}
           //Так же передадим описание столбцов — ширину и подобное
           colsDescription={this.state.colsDescription}
-          //И callback'и на обработку изменения ширины столбца
-          changeColumnWidth={(width, column) =>
-            this.changeColumnWidth(width, column)
-          }
-          //и остановку изменения
-          stopChangeDimensions={() => this.stopChangeDimensions()}
-          //Изменим UUID ячейки, которая изменяла свою ширину
-          changeUUID={uuid => this.changeUUID(uuid)}
-          saveRow={rowContent => this.saveRow(rowContent, index)}
+          //Обработчики действий
+          saveRow={(rowContent) => this.saveRow(rowContent, index)}
           deleteRow={
             !!this.props.deleteRow
-              ? rowContent => this.deleteRow(rowContent)
+              ? (rowContent) => this.deleteRow(rowContent)
               : null
           }
           archiveRow={
             !!this.props.archiveRow
-              ? rowContent => this.archiveRow(rowContent)
+              ? (rowContent) => this.archiveRow(rowContent)
               : null
           }
         />
@@ -284,10 +220,6 @@ class Table extends React.Component {
         <div className="table">
           {this.getHeader()}
           {this.getContent()}
-          <SaveMark
-            marginLeft={this.getTableWidth()}
-            isSaving={this.props.isUpdating}
-          />
         </div>
       </div>
     );

@@ -1,0 +1,23 @@
+.mobileHeaderNavigation {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #eee;
+  height: 100%;
+  padding: 6px 12px;
+  position: absolute;
+  margin-top: 40px;
+  z-index: 7;
+  box-shadow: 0px 9px 4px 1px #aeadad;
+  font-size: 18px !important;
+  background: #fffffff2;
+}
+
+.mobileMenuAction {
+  padding-top: 5px;
+  margin-left: 9px;
+}
+
+.menuDivider {
+  margin-top: 6px;
+}

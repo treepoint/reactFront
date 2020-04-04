@@ -42,7 +42,8 @@ class ByTasks extends React.Component {
           type: "string",
           disabled: true,
           value: "Задача",
-          width: 450
+          width: 450,
+          minWidth: 250
         },
         {
           key: "name",
@@ -98,7 +99,6 @@ class ByTasks extends React.Component {
     return (
       <Table
         isResizeble={false}
-        isEditable={false}
         notFoundMessage="Нет данных. Выберите другие даты."
       >
         {this.getContent()}

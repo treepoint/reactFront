@@ -1,12 +1,13 @@
 import React from "react";
+//Компоненты
 import HeaderNavigationLink from "../HeaderNavigationLink/HeaderNavigationLink";
 //CSS
-import "./HeaderNavigation.css";
+import "./DesktopHeaderNavigation.css";
 
-class HeaderNavigation extends React.PureComponent {
-  render() {
+class DesktopHeaderNavigation extends React.PureComponent {
+  getMenu() {
     return (
-      <div className="headerNavigation">
+      <div className="desktopHeaderNavigation">
         <HeaderNavigationLink
           exact={true}
           to="/"
@@ -33,6 +34,10 @@ class HeaderNavigation extends React.PureComponent {
       </div>
     );
   }
+
+  render() {
+    return this.getMenu();
+  }
 }
 
-export default HeaderNavigation;
+export default DesktopHeaderNavigation;

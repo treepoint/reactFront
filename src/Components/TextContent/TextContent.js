@@ -49,7 +49,9 @@ class TextContent extends React.Component {
           : !!this.props.disabled
           ? "rgb(251, 251, 251)"
           : null,
-        borderLeft: "8px solid " + this.props.backgroundColor,
+        borderLeft: !!this.props.isStylable
+          ? "8px solid " + this.props.backgroundColor
+          : "none",
         fontWeight: !!this.props.bold ? "900" : "200",
         fontStyle: !!this.props.italic ? "italic" : "normal",
         color: !!this.props.disabled ? "#444" : "#000"
@@ -73,6 +75,7 @@ class TextContent extends React.Component {
         }
         spellCheck="false"
         value={this.props.value}
+        isStylable={this.props.isStylable}
         onFocus={() => this.setState({ isReadOnly: true })}
         disabled={!!this.props.disabled ? true : false}
         onChange={value => this.props.onChangeValue(value)}

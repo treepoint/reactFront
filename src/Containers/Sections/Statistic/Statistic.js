@@ -23,7 +23,7 @@ class Statistic extends React.Component {
     super(props);
     this.state = {
       dateFrom: getCurrentFormatDate(),
-      dateTo: getCurrentFormatDate()
+      dateTo: getCurrentFormatDate(),
     };
   }
 
@@ -59,19 +59,20 @@ class Statistic extends React.Component {
         isPrivate={true}
         isNotScrollable={true}
       >
-        <DatePeriodPickerCarousel
-          onPickDate={(dateFrom, dateTo) => {
-            this.setState({ dateFrom, dateTo });
-          }}
-        />
+        <div className="statisticDatePickerContainer">
+          <DatePeriodPickerCarousel
+            onPickDate={(dateFrom, dateTo) => {
+              this.setState({ dateFrom, dateTo });
+            }}
+          />
+        </div>
         <ReactCustomScroll
           //Задаем стиль
           style={{
             width: "100%",
             height: "calc(-145px + 100vh)",
-            marginTop: "-5px"
           }}
-          ref={ref => {
+          ref={(ref) => {
             this._scrollBarRef = ref;
           }}
           //Обрабатываем скролл
@@ -82,24 +83,22 @@ class Statistic extends React.Component {
             <ByDays dateFrom={this.state.dateFrom} dateTo={this.state.dateTo} />
             <div className="statisticTableContainter">
               {/*Статистика по задачам в виде таблицы*/}
-              <ByTasks
+              <ByCategories
                 dateFrom={this.state.dateFrom}
                 dateTo={this.state.dateTo}
               />
             </div>
             <div className="statisticTableContainter">
               {/*Статистика по задачам в виде таблицы*/}
-              <ByCategories
+              <ByTasks
                 dateFrom={this.state.dateFrom}
                 dateTo={this.state.dateTo}
               />
-              <div className="statisticTotalContainer">
-                <StatisticTotal
-                  totalValue={getTimeFromMins(
-                    this.props.totalStatisticByPeriod
-                  )}
-                />
-              </div>
+            </div>
+            <div className="statisticTotalContainer">
+              <StatisticTotal
+                totalValue={getTimeFromMins(this.props.totalStatisticByPeriod)}
+              />
             </div>
           </div>
         </ReactCustomScroll>
@@ -108,23 +107,23 @@ class Statistic extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    totalStatisticByPeriod: state.totalStatisticByPeriod
+    totalStatisticByPeriod: state.totalStatisticByPeriod,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchTotalStatisticByPeriod: (dateFrom, dateTo) => {
       dispatch(fetchTotalStatisticByPeriod(dateFrom, dateTo));
     },
-    setScrollTop: number => {
+    setScrollTop: (number) => {
       dispatch(setScrollTop(number));
     },
-    setScrollLeft: number => {
+    setScrollLeft: (number) => {
       dispatch(setScrollLeft(number));
-    }
+    },
   };
 };
 

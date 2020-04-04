@@ -72,10 +72,15 @@ class Action extends React.PureComponent {
             }}
             style={Object.assign(
               {
-                background:
-                  "url(" +
-                  this.props.icon +
-                  ") no-repeat scroll 50% 50% transparent"
+                backgroundImage: "url(" + this.props.icon + ") ",
+                backgroundRepeat: "no-repeat",
+                backgroundSize:
+                  (!!this.props.height ? this.props.height : 24) +
+                  "px " +
+                  (!!this.props.width ? this.props.width : 24) +
+                  "px",
+                height: !!this.props.height ? this.props.height : 24,
+                width: !!this.props.width ? this.props.width : 24
               },
               this.props.style
             )}

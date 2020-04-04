@@ -67,7 +67,7 @@ class Page extends React.PureComponent {
 
   getStyle() {
     if (this.props.windowWidth < 1300) {
-      return { width: "calc(100% - 24px)" };
+      return { width: "calc(100% - 20px)" };
     }
 
     return { width: "calc(100% - 112px)" };

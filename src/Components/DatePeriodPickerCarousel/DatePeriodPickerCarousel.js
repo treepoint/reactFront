@@ -1,6 +1,10 @@
 import React from "react";
+//Подключаем redux
+import { connect } from "react-redux";
+//Компоненты
 import RadioButtonCarousel from "../RadioButtonCarousel/RadioButtonCarousel";
 import DatePeriodPicker from "../DatePeriodPicker/DatePeriodPicker";
+//Утилиты
 import {
   getRussianFormatDate,
   getFirstDayOfCurrentMonth,
@@ -8,8 +12,9 @@ import {
   getFirstDayOfPreviousMonth,
   getLastDayOfPreviousMonth,
   getFirstDayOfCurrentWeek,
-  getLastDayOfCurrentWeek
+  getLastDayOfCurrentWeek,
 } from "../../Libs/TimeUtils";
+//CSS
 import "./DatePeriodPickerCarousel.css";
 
 class DatePeriodPickerCarousel extends React.Component {
@@ -18,7 +23,7 @@ class DatePeriodPickerCarousel extends React.Component {
     this.state = {
       dateFrom: null,
       dateTo: null,
-      currentPeriod: {}
+      currentPeriod: {},
     };
   }
 
@@ -90,48 +95,62 @@ class DatePeriodPickerCarousel extends React.Component {
       key: 1,
       isPrimary: !!this.state.currentPeriod.today ? true : false,
       value: "Сегодня",
-      onClick: event => this.setTodayDates(event)
+      onClick: (event) => this.setTodayDates(event),
     });
 
     radioButtonItems.push({
       key: 1,
       isPrimary: !!this.state.currentPeriod.currentWeak ? true : false,
       value: "Текущая неделя",
-      onClick: event => this.setCurrentWeekDates(event)
+      onClick: (event) => this.setCurrentWeekDates(event),
     });
 
     radioButtonItems.push({
       key: 2,
       isPrimary: !!this.state.currentPeriod.currentMonth ? true : false,
       value: "Текущий месяц",
-      onClick: event => this.setCurrentMonthDates(event)
+      onClick: (event) => this.setCurrentMonthDates(event),
     });
 
-    radioButtonItems.push({
-      key: 3,
-      isPrimary: !!this.state.currentPeriod.previousMonth ? true : false,
-      value: "Прошлый месяц",
-      onClick: event => this.setPreviousMonthDates(event)
-    });
+    //Прошлый месяц — опционально в зависимости от размера
+    if (this.props.windowWidth > 500) {
+      radioButtonItems.push({
+        key: 3,
+        isPrimary: !!this.state.currentPeriod.previousMonth ? true : false,
+        value: "Прошлый месяц",
+        onClick: (event) => this.setPreviousMonthDates(event),
+      });
+    }
+
     return radioButtonItems;
   }
 
   render() {
     return (
       <div className="datePeriodPickerCarousel">
-        <RadioButtonCarousel items={this.getPeriodCarousel()} />
-        <DatePeriodPicker
-          width={90}
-          placeholderTextDateFrom={getRussianFormatDate(this.state.dateFrom)}
-          dateFrom={this.state.dateFrom}
-          onPickDateFrom={dateFrom => this.onPickDateFrom(dateFrom)}
-          placeholderTextDateTo={getRussianFormatDate(this.state.dateTo)}
-          dateTo={this.state.dateTo}
-          onPickDateTo={dateTo => this.onPickDateTo(dateTo)}
-        />
+        <div className="radioButtonCarouselContainer">
+          <RadioButtonCarousel items={this.getPeriodCarousel()} />
+        </div>
+        <div className="datePeriodPickerContainer">
+          <DatePeriodPicker
+            width={90}
+            placeholderTextDateFrom={getRussianFormatDate(this.state.dateFrom)}
+            dateFrom={this.state.dateFrom}
+            onPickDateFrom={(dateFrom) => this.onPickDateFrom(dateFrom)}
+            placeholderTextDateTo={getRussianFormatDate(this.state.dateTo)}
+            dateTo={this.state.dateTo}
+            onPickDateTo={(dateTo) => this.onPickDateTo(dateTo)}
+          />
+        </div>
       </div>
     );
   }
 }
 
-export default DatePeriodPickerCarousel;
+const mapStateToProps = (state) => {
+  return {
+    windowWidth: state.windowWidth,
+  };
+};
+
+export default connect(mapStateToProps)(DatePeriodPickerCarousel);

@@ -54,7 +54,8 @@ class Users extends React.Component {
           type: "string",
           disabled: true,
           value: "Почтовый адрес",
-          width: 300
+          width: 300,
+          minWidth: 200
         },
         {
           key: "role",
@@ -118,8 +119,6 @@ class Users extends React.Component {
           }
         />
         <Table
-          isEditable={true}
-          isResizeble={true}
           isSingleLineMode={true}
           saveRow={user => this.props.updateUser(user)}
           deleteRow={row => this.showDeleteModal(row)}

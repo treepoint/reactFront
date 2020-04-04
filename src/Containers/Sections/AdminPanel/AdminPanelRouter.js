@@ -8,12 +8,12 @@ import Users from "./Users";
 class AdminPanelRouter extends React.Component {
   render() {
     //Соберем меню страницы
-    let routerLinksArray = [{ to: "/admin", value: "Пользователи" }];
+    let routerLinksArray = [{ to: "/admin", value: "Пользователями" }];
 
     return (
       <React.Fragment>
         <Page
-          title="Административная панель:"
+          title="Управление:"
           routerLinksArray={routerLinksArray}
           isAdmin={true}
           isCustomContent={true}
