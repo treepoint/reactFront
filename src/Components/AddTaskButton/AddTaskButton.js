@@ -69,7 +69,12 @@ class AddTaskButton extends React.PureComponent {
   //Блюр
   getBlur() {
     if (this.state.stepName !== "") {
-      return <Blur onClick={(event) => this.setState({ isBlurred: true })} />;
+      return (
+        <Blur
+          style={{ background: "rgba(0, 0, 0, 0.2)" }}
+          onClick={(event) => this.setState({ isBlurred: true })}
+        />
+      );
     }
   }
 
@@ -78,7 +83,8 @@ class AddTaskButton extends React.PureComponent {
       <React.Fragment>
         {this.getBlur()}
         <div
-          className="task"
+          className="newTask"
+          style={!!this.state.stepName ? { zIndex: "6" } : null}
           onClick={(event) => {
             event.stopPropagation();
             event.preventDefault();

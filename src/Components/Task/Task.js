@@ -2,7 +2,10 @@ import React from "react";
 //Redux
 import { connect } from "react-redux";
 import { updateTask, deleteTask } from "../../Store/actions/tasks";
-import { closeOpenedLogAndOpenNewOneByTaskId } from "../../Store/actions/tasksLog";
+import {
+  closeOpenedLogByTaskId,
+  closeOpenedLogAndOpenNewOneByTaskId,
+} from "../../Store/actions/tasksLog";
 //Компоненты
 import TextContent from "../TextContent/TextContent";
 import SelectContent from "../SelectContent/SelectContent";
@@ -83,7 +86,13 @@ class Task extends React.Component {
     //Склеим объект и разницу
     Object.assign(task, diff);
 
+    //Обновим задачу
     this.props.updateTask(task, this.props.date);
+
+    //Закроем лог выполнения при закрытии задачи
+    if (!!diff.closed_date) {
+      this.props.closeOpenedLogByTaskId(this.props.content.id, this.props.date);
+    }
   }
 
   /*
@@ -560,6 +569,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteTask: (id) => {
       dispatch(deleteTask(id));
+    },
+    closeOpenedLogByTaskId: (taskId, date) => {
+      dispatch(closeOpenedLogByTaskId(taskId, date));
     },
     closeOpenedLogAndOpenNewOneByTaskId: (taskId, date) => {
       dispatch(closeOpenedLogAndOpenNewOneByTaskId(taskId, date));

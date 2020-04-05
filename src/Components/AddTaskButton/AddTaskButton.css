@@ -19,3 +19,18 @@
   color: rgb(135, 129, 124);
   padding-bottom: 6px;
 }
+
+.newTask {
+  width: 240px;
+  min-height: 126px;
+  padding: 6px;
+  padding-top: 2px;
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  background: #fff;
+  position: relative;
+}

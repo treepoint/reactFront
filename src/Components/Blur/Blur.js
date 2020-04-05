@@ -6,6 +6,7 @@ class Blur extends React.PureComponent {
     return (
       <div
         className="blur"
+        style={this.props.style}
         onClick={
           !!this.props.onClick
             ? (event) => {

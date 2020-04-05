@@ -26,7 +26,7 @@ export function clearTasksLog(object) {
 
 //Получить весь лог выполнения за определенный период
 export function fetchTasksLogByDate(date) {
-  return dispatch => {
+  return (dispatch) => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -34,11 +34,11 @@ export function fetchTasksLogByDate(date) {
     }
 
     Axios.get(URL + "/date/" + date, headers)
-      .then(response => {
+      .then((response) => {
         dispatch(setTasksLog(response.data));
         dispatch(fetchTasksByDate(date));
       })
-      .catch(error => {
+      .catch((error) => {
         let message =
           "Не удалось получить лог выполнения задач. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -48,7 +48,7 @@ export function fetchTasksLogByDate(date) {
 
 //Создать лог
 export function createTaskLog(taskId, date) {
-  return dispatch => {
+  return (dispatch) => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -59,17 +59,17 @@ export function createTaskLog(taskId, date) {
       task_id: taskId,
       comment: "",
       execution_start: date + " " + getCurrentTimeFormat(),
-      execution_end: date
+      execution_end: date,
     };
 
     Axios.post(URL, taskLog, headers)
-      .then(response => {
+      .then((response) => {
         if (typeof response.data === "object") {
           //К нему добавим новый объект и обновим список
           dispatch(setTasksLog(response.data));
         }
       })
-      .catch(error => {
+      .catch((error) => {
         let message =
           "Не удалось добавить запись в лог. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -95,7 +95,7 @@ export function updateTaskLog(taskLog, forDate) {
     let task = state.tasks[taskLog.task_id];
 
     Axios.put(URL + "/" + taskLog.id, taskLog, headers)
-      .then(response => {
+      .then((response) => {
         if (typeof response.data === "object") {
           //Новое время исполнения за день
           let newExecutionTime =
@@ -122,7 +122,7 @@ export function updateTaskLog(taskLog, forDate) {
           dispatch(setIsUpdating(false));
         }
       })
-      .catch(error => {
+      .catch((error) => {
         let message =
           "Не удалось обновить запись в логе. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -155,7 +155,7 @@ export function deleteTaskLog(id) {
     task = { [taskLog.task_id]: task };
 
     Axios.delete(URL + "/" + id, headers)
-      .then(response => {
+      .then((response) => {
         if (typeof response.data.affectedRows === "number") {
           //Обновим таск
           dispatch(setTasks(task));
@@ -163,7 +163,7 @@ export function deleteTaskLog(id) {
           dispatch(removeTaskLog(id));
         }
       })
-      .catch(error => {
+      .catch((error) => {
         let message =
           "Не удалось удалить запись из лога. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -177,6 +177,16 @@ export function removeTaskLog(id) {
 
 //Закрыть текущую открытую запись, открыть новую
 export function closeOpenedLogAndOpenNewOneByTaskId(taskId, date) {
+  return (dispatch) => {
+    //Закроем текущий
+    dispatch(closeOpenedLogByTaskId(taskId, date));
+    //Заведем новый, но уже по новой задаче
+    dispatch(createTaskLog(taskId, date));
+  };
+}
+
+//Закрыть текущую открытую запись
+export function closeOpenedLogByTaskId(taskId, date) {
   return (dispatch, getState) => {
     let headers = getHeaders();
 
@@ -192,14 +202,14 @@ export function closeOpenedLogAndOpenNewOneByTaskId(taskId, date) {
 
     //Если он есть
     if (!!currentTaskLog) {
-      //Если дата завершения еще не проставлена — проставим и обновим
-      if (currentTaskLog.execution_end === "00:00") {
-        currentTaskLog.execution_end = getCurrentTimeFormat();
-        dispatch(updateTaskLog(currentTaskLog, date));
+      //И он по текущей задаче
+      if ((currentTaskLog.task_id = taskId)) {
+        //Если дата завершения еще не проставлена — проставим и обновим
+        if (currentTaskLog.execution_end === "00:00") {
+          currentTaskLog.execution_end = getCurrentTimeFormat();
+          dispatch(updateTaskLog(currentTaskLog, date));
+        }
       }
     }
-
-    //Заведем новый, но уже по новой задаче
-    dispatch(createTaskLog(taskId, date));
   };
 }
