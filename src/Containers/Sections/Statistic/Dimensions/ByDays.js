@@ -12,7 +12,7 @@ import {
   getDDdotMMandShortDatNameByDate,
   getFormatHours,
   addDays,
-  revokeDays
+  revokeDays,
 } from "../../../../Libs/TimeUtils";
 //CSS
 import "./ByDays.css";
@@ -23,7 +23,7 @@ class ByDays extends React.Component {
     this.state = {
       maxHour: 0,
       minHour: 0,
-      ticks: []
+      ticks: [],
     };
   }
 
@@ -52,7 +52,6 @@ class ByDays extends React.Component {
     //Получим сами данные, но здесь какая фишка. За один день — никогда не
     // интересно. Получаем минимум за указанный день +\- 1.
     if (this.props.dateFrom === this.props.dateTo) {
-      console.log(this.props.dateFrom);
       this.props.fetchStatisticByDaysForPeriod(
         revokeDays(this.props.dateFrom, 1),
         addDays(this.props.dateTo, 1)
@@ -76,7 +75,7 @@ class ByDays extends React.Component {
     //У нас здесь как идет. Есть массив, в нем есть date и execution_time.
     //Нам, в свою очередь, надо получить максимальный execution_time,
 
-    statistic.forEach(day => {
+    statistic.forEach((day) => {
       executionTimes.push(day.execution_time);
     });
 
@@ -100,19 +99,19 @@ class ByDays extends React.Component {
 
     statistic = this.props.statisticByDaysForPeriod;
 
-    statistic.forEach(day => {
+    statistic.forEach((day) => {
       let date = new Date(day.date);
       date = getDDdotMMandShortDatNameByDate(date);
 
       if (today === date) {
         data.push({
           name: "Сегодня",
-          uv: day.execution_time
+          uv: day.execution_time,
         });
       } else {
         data.push({
           name: date,
-          uv: day.execution_time
+          uv: day.execution_time,
         });
       }
     });
@@ -175,11 +174,11 @@ class ByDays extends React.Component {
           style={{
             width: "calc(100vw - 160px)",
             height: this.getHeight() + 26,
-            marginRight: "12px"
+            marginRight: "12px",
           }}
         >
           <div className="chartOverLable" style={{ height: this.getHeight() }}>
-            {this.getWorkingHours().map(getWorkingHour => {
+            {this.getWorkingHours().map((getWorkingHour) => {
               return <div className="chartOverLableText">{getWorkingHour}</div>;
             })}
           </div>
@@ -203,17 +202,17 @@ class ByDays extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    statisticByDaysForPeriod: state.statisticByDaysForPeriod
+    statisticByDaysForPeriod: state.statisticByDaysForPeriod,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchStatisticByDaysForPeriod: (dateFrom, dateTo) => {
       dispatch(fetchStatisticByDaysForPeriod(dateFrom, dateTo));
-    }
+    },
   };
 };
 
