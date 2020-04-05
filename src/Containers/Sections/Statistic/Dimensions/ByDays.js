@@ -179,7 +179,11 @@ class ByDays extends React.Component {
         >
           <div className="chartOverLable" style={{ height: this.getHeight() }}>
             {this.getWorkingHours().map((getWorkingHour) => {
-              return <div className="chartOverLableText">{getWorkingHour}</div>;
+              return (
+                <div key={getWorkingHour} className="chartOverLableText">
+                  {getWorkingHour}
+                </div>
+              );
             })}
           </div>
           <LineChart

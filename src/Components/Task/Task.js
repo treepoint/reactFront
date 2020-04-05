@@ -547,6 +547,7 @@ class Task extends React.Component {
       <React.Fragment>
         {this.getCurrentModalWindow()}
         <div
+          key={this.props.key}
           className={
             "task" +
             (!!this.props.content.on_fire ? " onFire" : "") +

@@ -61,7 +61,7 @@ class Tasks extends React.Component {
         categoriesList.push({
           value: categories[c].id,
           label: categories[c].name,
-          style: categories[c].name_style
+          style: categories[c].name_style,
         });
       }
     }
@@ -117,6 +117,7 @@ class Tasks extends React.Component {
       ) {
         content.push(
           <Task
+            key={tasksForChosenDate[t].id}
             date={this.props.date}
             content={{
               id: tasksForChosenDate[t].id,
@@ -129,7 +130,7 @@ class Tasks extends React.Component {
               frozen: tasksForChosenDate[t].frozen,
               on_fire: tasksForChosenDate[t].on_fire,
               moved_date: tasksForChosenDate[t].moved_date,
-              closed_date: tasksForChosenDate[t].closed_date
+              closed_date: tasksForChosenDate[t].closed_date,
             }}
           />
         );
@@ -162,22 +163,22 @@ class Tasks extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     tasks: state.tasks,
     tasksIsFetching: state.tasksIsFetching,
-    categories: state.categories
+    categories: state.categories,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    fetchTasksByDate: date => {
+    fetchTasksByDate: (date) => {
       dispatch(fetchTasksByDate(date));
     },
-    setTitle: title => {
+    setTitle: (title) => {
       dispatch(setTitle(title));
-    }
+    },
   };
 };
 

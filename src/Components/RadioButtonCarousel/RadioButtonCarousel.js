@@ -1,4 +1,5 @@
 import React from "react";
+import uuid from "uuid/v4";
 import "./RadioButtonCarousel.css";
 
 class RadioButtonCarousel extends React.PureComponent {
@@ -38,12 +39,13 @@ class RadioButtonCarousel extends React.PureComponent {
 
       return (
         <input
+          key={uuid()}
           id={item.key}
           name={item.name}
           type="submit"
           className={className}
           value={item.value}
-          onClick={event => {
+          onClick={(event) => {
             item.onClick(event);
             this.onClick(event);
           }}
