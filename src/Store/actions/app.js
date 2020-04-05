@@ -83,7 +83,7 @@ export function logoff() {
 }
 
 export function restoreFromCookies() {
-  return (dispatch) => {
+  return (dispatch, getStore) => {
     const token = read_cookie("token");
     const userId = read_cookie("user_id");
     const refreshToken = read_cookie("refresh_token");
@@ -102,8 +102,12 @@ export function restoreFromCookies() {
       //Загрузим все данные приложения
       dispatch(loadAllData());
 
-      //Переадресуемся на задачи
-      dispatch(push("/tasks_manager"));
+      //Если текущая локация — главная страница — переадресуемся на задачи
+      let currentPath = getStore().router.location.pathname;
+
+      if (currentPath === "/") {
+        dispatch(push("/tasks_manager"));
+      }
 
       return;
     }
@@ -117,7 +121,7 @@ export function restoreFromCookies() {
 }
 
 export function reauth(refreshToken) {
-  return (dispatch) => {
+  return (dispatch, getStore) => {
     //Обновление токена
     const url = APIURL + "/reauth";
 
@@ -147,8 +151,12 @@ export function reauth(refreshToken) {
       //Загрузим все данные приложения
       dispatch(loadAllData());
 
-      //Переадресуемся на задачи
-      dispatch(push("/tasks_manager"));
+      //Если текущая локация — главная страница — переадресуемся на задачи
+      let currentPath = getStore().router.location.pathname;
+
+      if (currentPath === "/") {
+        dispatch(push("/tasks_manager"));
+      }
     });
   };
 }

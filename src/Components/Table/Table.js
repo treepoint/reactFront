@@ -125,6 +125,12 @@ class Table extends React.Component {
     this.props.archiveRow(object);
   }
 
+  dearchiveRow(rowContent) {
+    let object = this.getObjectFromRowContent(rowContent);
+
+    this.props.dearchiveRow(object.id);
+  }
+
   getHeader() {
     //Если шапки нет — вернем ничего
     if (this.props.isHeaderless) {
@@ -205,6 +211,11 @@ class Table extends React.Component {
           archiveRow={
             !!this.props.archiveRow
               ? (rowContent) => this.archiveRow(rowContent)
+              : null
+          }
+          dearchiveRow={
+            !!this.props.dearchiveRow
+              ? (rowContent) => this.dearchiveRow(rowContent)
               : null
           }
         />

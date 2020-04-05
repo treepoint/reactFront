@@ -7,6 +7,7 @@ import Action from "../../Action/Action";
 //Иконки
 import deleteIcon from "../../../Images/icon_delete.png";
 import archiveIcon from "../../../Images/icon_archive.png";
+import incompleteIcon from "../../../Images/icon_incomplete.png";
 import addIcon from "../../../Images/icon_add.png";
 //CSS
 import "./Row.css";
@@ -61,6 +62,17 @@ class Row extends React.PureComponent {
             disabled={false}
             hint="Архивировать"
             onClick={() => this.props.archiveRow(this.props.rowsContent)}
+          />
+        );
+      }
+
+      if (this.props.dearchiveRow !== null) {
+        buttons = (
+          <Action
+            icon={incompleteIcon}
+            disabled={false}
+            hint="Разархивировать"
+            onClick={() => this.props.dearchiveRow(this.props.rowsContent)}
           />
         );
       }

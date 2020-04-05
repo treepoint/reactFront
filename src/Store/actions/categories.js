@@ -2,23 +2,28 @@
 import { APIURL, getHeaders } from "../APIConfiguration";
 import { setNotifications } from "./notifications";
 import Axios from "axios";
+//Утилиты
+import { getCurrentDateWithTimeFormat } from "../../Libs/TimeUtils";
+
 const URL = APIURL + "/categories";
 
 export const SET_CATEGORIES = "SET_CATEGORIES";
-export const IS_CATEGORIES_UPDATING = "IS_UPDATING";
-export const CLOSE_CATEGORY = "CLOSE_CATEGORY";
 export const CLEAR_CATEGORIES = "CLEAR_CATEGORIES";
+export const CLOSE_CATEGORY = "CLOSE_CATEGORY";
+export const OPEN_CATEGORY = "OPEN_CATEGORY";
+
+export const IS_CATEGORIES_UPDATING = "IS_UPDATING";
 
 export function setCategories(object) {
   return { type: SET_CATEGORIES, object };
 }
 
-export function setIsUpdating(boolean) {
-  return { type: IS_CATEGORIES_UPDATING, boolean };
-}
-
 export function clearCategories(object) {
   return { type: CLEAR_CATEGORIES, object };
+}
+
+export function setIsUpdating(boolean) {
+  return { type: IS_CATEGORIES_UPDATING, boolean };
 }
 
 //Получить все категории задач
@@ -38,10 +43,10 @@ export function fetchCategories() {
     }
 
     Axios.get(URL, headers)
-      .then(response => {
+      .then((response) => {
         dispatch(setCategories(response.data));
       })
-      .catch(error => {
+      .catch((error) => {
         let message =
           "Не удалось получить категории. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -51,7 +56,7 @@ export function fetchCategories() {
 
 //Создать категорию
 export function createCategory() {
-  return dispatch => {
+  return (dispatch) => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -63,19 +68,19 @@ export function createCategory() {
       name_style: JSON.stringify({
         bold: false,
         italic: false,
-        backgroundColor: "#f7f7f7"
+        backgroundColor: "#f7f7f7",
       }),
-      description: ""
+      description: "",
     };
 
     Axios.post(URL, category, headers)
-      .then(response => {
+      .then((response) => {
         if (typeof response.data === "object") {
           //Добавим новый объект и обновим список
           dispatch(setCategories(response.data));
         }
       })
-      .catch(error => {
+      .catch((error) => {
         let message =
           "Не удалось добавить категорию. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -85,7 +90,7 @@ export function createCategory() {
 
 //Обновить категорию
 export function updateCategory(category) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(setIsUpdating(true));
 
     let headers = getHeaders();
@@ -95,14 +100,14 @@ export function updateCategory(category) {
     }
 
     Axios.put(URL + "/" + category.id, category, headers)
-      .then(response => {
+      .then((response) => {
         if (typeof response.data === "object") {
           //Обновим список
           dispatch(setCategories(response.data));
           dispatch(setIsUpdating(false));
         }
       })
-      .catch(error => {
+      .catch((error) => {
         let message =
           "Не удалось обновить категорию. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -113,29 +118,22 @@ export function updateCategory(category) {
 
 //Заархивировать категорию
 export function archiveCategory(id) {
-  return dispatch => {
-    let headers = getHeaders();
+  return (dispatch, getStore) => {
+    let category = getStore().categories[id];
 
-    if (headers === null) {
-      return;
-    }
+    category.close_date = getCurrentDateWithTimeFormat();
 
-    Axios.delete(URL + "/" + id, headers)
-      .then(response => {
-        if (typeof response.data.affectedRows === "number") {
-          //Закроем категорию и обновим список
-          //Удалять нельзя, поскольку по ней могут быть задачи, с которыми она связана
-          dispatch(closeCategory(id));
-        }
-      })
-      .catch(error => {
-        let message =
-          "Не удалось заархивировать категорию. Перезагрузите страницу и попробуйте снова.";
-        dispatch(setNotifications({ message, type: "error" }));
-      });
+    dispatch(updateCategory(category));
   };
 }
 
-function closeCategory(id) {
-  return { type: CLOSE_CATEGORY, id };
+//Открыть категорию
+export function openCategory(id) {
+  return (dispatch, getStore) => {
+    let category = getStore().categories[id];
+
+    category.close_date = null;
+
+    dispatch(updateCategory(category));
+  };
 }

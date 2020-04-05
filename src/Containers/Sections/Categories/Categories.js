@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import {
   fetchCategories,
   createCategory,
-  updateCategory,
   archiveCategory,
+  openCategory,
+  updateCategory,
 } from "../../../Store/actions/categories";
 //Компоненты
 import Table from "../../../Components/Table/Table";
@@ -17,6 +18,7 @@ class Categories extends React.Component {
     super(props);
     this.state = {
       archiveModalWindow: { isHidden: true, row: null },
+      isArchived: false,
     };
   }
 
@@ -68,7 +70,10 @@ class Categories extends React.Component {
 
     for (var c in categories) {
       //Если категории не закрыты — отобразим их
-      if (categories[c].close_date === null) {
+      if (
+        (categories[c].close_date === null && !this.state.isArchived) ||
+        (categories[c].close_date !== null && this.state.isArchived)
+      ) {
         content.push([
           {
             key: "id",
@@ -98,11 +103,30 @@ class Categories extends React.Component {
   }
 
   render() {
+    //Соберем меню страницы
+    let anchorLinksArray = [
+      {
+        value: "Текущие",
+        callback: () => this.setState({ isArchived: false }),
+        isCurrent: !this.state.isArchived,
+      },
+      {
+        value: "Архив",
+        callback: () => this.setState({ isArchived: true }),
+        isCurrent: this.state.isArchived,
+      },
+    ];
+
     return (
-      <Page title="Категории" isCustomContent={true}>
+      <Page
+        title="Категории"
+        isCustomContent={true}
+        anchorLinksArray={anchorLinksArray}
+      >
         <ConfirmModalWindow
           title="Заархивировать категорию?"
-          message="Категория останется назначенной для текущих и выполненных задач, но будет недоступна для новых"
+          message="Категория останется назначенной для текущих и выполненных задач, но будет недоступна для новых. 
+          Категории по которым были задачи будут доступны в архиве."
           isHidden={this.state.archiveModalWindow.isHidden}
           onCancel={() => this.closeArchiveModal()}
           onConfirm={() =>
@@ -113,9 +137,25 @@ class Categories extends React.Component {
           isResizeble={true}
           isSingleLineMode={true}
           saveRow={(category) => this.props.updateCategory(category)}
-          addRow={() => this.props.createCategory()}
-          archiveRow={(row) => this.showArchiveModal(row)}
+          addRow={
+            !!!this.state.isArchived ? () => this.props.createCategory() : null
+          }
+          archiveRow={
+            !!!this.state.isArchived
+              ? (row) => this.showArchiveModal(row)
+              : null
+          }
+          dearchiveRow={
+            !!!this.state.isArchived
+              ? null
+              : (id) => this.props.openCategory(id)
+          }
           isUpdating={this.props.isUpdating}
+          notFoundMessage={
+            !!!this.state.isArchived
+              ? "Нет активных категорий. Добавьте новую с помощью кнопки «+»."
+              : "Нет архивных категорий."
+          }
         >
           {this.getContent()}
         </Table>
@@ -142,6 +182,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     archiveCategory: (id) => {
       dispatch(archiveCategory(id));
+    },
+    openCategory: (id) => {
+      dispatch(openCategory(id));
     },
     updateCategory: (category) => {
       dispatch(updateCategory(category));
