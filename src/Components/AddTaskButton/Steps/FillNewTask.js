@@ -80,9 +80,7 @@ class FillNewTask extends React.PureComponent {
           isStylable={false}
           isHaveError={!this.state.nameIsValid}
           //Функции
-          onChangeValue={(value) =>
-            this.setState({ name: value }, () => this.createNewTask())
-          }
+          onChangeValue={(value) => this.setState({ name: value })}
         />
       </div>
     );
