@@ -16,7 +16,7 @@ class StartStep extends React.PureComponent {
             "url(" + addWTimeIcon + ") no-repeat scroll 4px 2px transparent",
           backgroundSize: "96px 96px",
         }}
-        onClick={() => this.props.setCurrentStep("createAndExecute")}
+        onClick={() => this.props.setCurrentStep("executeNow")}
       >
         <div className="startStepButtonLable">Создать и делать сейчас </div>
       </div>
@@ -33,7 +33,7 @@ class StartStep extends React.PureComponent {
             "url(" + addIcon + ") no-repeat scroll 4px 2px transparent",
           backgroundSize: "96px 96px",
         }}
-        onClick={() => this.props.setCurrentStep("onlyCreate")}
+        onClick={() => this.props.setCurrentStep("executeNotNow")}
       >
         <div className="startStepButtonLable">Создать </div>
       </div>

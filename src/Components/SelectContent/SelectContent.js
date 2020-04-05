@@ -7,7 +7,7 @@ class SelectContent extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      isOpened: false
+      isOpened: false,
     };
   }
 
@@ -22,6 +22,7 @@ class SelectContent extends React.PureComponent {
   onChangeValue(option) {
     let value = Object.assign({}, this.props.value);
     value.current = Number(option.value);
+    this.select.blur();
     this.props.onChangeValue(value);
   }
 
@@ -30,7 +31,7 @@ class SelectContent extends React.PureComponent {
       return null;
     }
 
-    let options = this.props.value.list.map(option => {
+    let options = this.props.value.list.map((option) => {
       //нам сюда может прийти как html, так и строка. В любом случае конвертим в строку
       let label = HtmlToText.fromString(option.label);
 
@@ -52,7 +53,7 @@ class SelectContent extends React.PureComponent {
       return {
         value: option.value,
         label: label,
-        style: style
+        style: style,
       };
     });
 
@@ -77,15 +78,15 @@ class SelectContent extends React.PureComponent {
         borderLeft: "8px solid " + state.selectProps.controlColor,
         fontWeight: !!state.selectProps.isBold ? "900" : "200",
         fontStyle: !!state.selectProps.isItalic ? "italic" : "normal",
-        borderColor: state.selectProps.controlColor + " !important"
+        borderColor: state.selectProps.controlColor + " !important",
       }),
-      dropdownIndicator: styles => ({
+      dropdownIndicator: (styles) => ({
         ...styles,
         height: "34px",
         paddingLeft: 0,
-        paddingRight: !!this.props.isMinimized ? 0 : 6
+        paddingRight: !!this.props.isMinimized ? 0 : 6,
       }),
-      indicatorSeparator: styles => ({}),
+      indicatorSeparator: (styles) => ({}),
       option: (styles, { data, isFocused, isSelected }) => ({
         ...styles,
         fontFamily: '"Open Sans", "Source Sans Pro"',
@@ -101,9 +102,9 @@ class SelectContent extends React.PureComponent {
           ? "rgb(240, 240, 240)"
           : isFocused
           ? "rgba(96, 191, 255, 0.17)"
-          : "none"
+          : "none",
       }),
-      menu: styles => ({
+      menu: (styles) => ({
         ...styles,
         borderRadius: 0,
         border: "none",
@@ -111,22 +112,22 @@ class SelectContent extends React.PureComponent {
         outline: "1px solid #d2d2d2",
         outlineTop: "none",
         outlineOffset: "-1px",
-        width: !!this.props.isMinimized ? "max-content" : "inherit"
+        width: !!this.props.isMinimized ? "max-content" : "inherit",
       }),
-      valueContainer: styles => ({
+      valueContainer: (styles) => ({
         ...styles,
-        padding: !!this.props.isMinimized ? "0" : "2px 4px"
+        padding: !!this.props.isMinimized ? "0" : "2px 4px",
       }),
-      singleValue: styles => ({
+      singleValue: (styles) => ({
         ...styles,
         maxWidth: "calc(100% - 5px)",
-        paddingRight: "2px"
+        paddingRight: "2px",
       }),
-      noOptionsMessage: styles => ({
+      noOptionsMessage: (styles) => ({
         ...styles,
         fontFamily: '"Open Sans", "Source Sans Pro"',
-        fontSize: "14px"
-      })
+        fontSize: "14px",
+      }),
     };
 
     //Получаем список опций
@@ -136,7 +137,7 @@ class SelectContent extends React.PureComponent {
 
     if (options !== null) {
       //Получаем текущую опцию
-      currentValue = options.find(option => {
+      currentValue = options.find((option) => {
         return option.value === this.props.value.current;
       });
     }
@@ -152,6 +153,7 @@ class SelectContent extends React.PureComponent {
       <React.Fragment>
         <Select
           options={options}
+          ref={(node) => (this.select = node)}
           classNamePrefix="selectContent"
           controlColor={style.backgroundColor}
           isBold={style.bold}
@@ -159,7 +161,7 @@ class SelectContent extends React.PureComponent {
           isSearchable={!this.props.isMinimized}
           value={currentValue}
           menuPlacement="auto"
-          closeMenuOnScroll={event => {
+          closeMenuOnScroll={(event) => {
             return (
               !!!(event.target.classList.value.indexOf("selectContent") + 1) &&
               this.state.isOpened
@@ -172,7 +174,7 @@ class SelectContent extends React.PureComponent {
           menuPosition="fixed"
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
-          onChange={option => this.onChangeValue(option)}
+          onChange={(option) => this.onChangeValue(option)}
           styles={colourStyles}
         />
       </React.Fragment>

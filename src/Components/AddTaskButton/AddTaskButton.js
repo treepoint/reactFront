@@ -2,10 +2,11 @@ import React from "react";
 //Redux
 import { connect } from "react-redux";
 import { createTask } from "../../Store/actions/tasks";
+//Компоненты
+import Blur from "../../Components/Blur/Blur";
 //Шаги
-import StartStep from "./Forms/StartStep";
-import CreateAndExecuteStep from "./Forms/CreateAndExecuteStep";
-import OnlyCreate from "./Forms/OnlyCreate";
+import StartStep from "./Steps/StartStep";
+import FillNewTask from "./Steps/FillNewTask";
 //CSS
 import "../Task/Task.css";
 
@@ -14,6 +15,7 @@ class AddTaskButton extends React.PureComponent {
     super();
     this.state = {
       stepName: "",
+      isBlurred: false,
     };
   }
 
@@ -25,22 +27,27 @@ class AddTaskButton extends React.PureComponent {
   //Получаем текущий шаг
   getStep() {
     switch (this.state.stepName) {
-      case "onlyCreate":
+      case "executeNow":
         return (
-          <OnlyCreate
+          <FillNewTask
             setCurrentStep={(stepName) => this.setCurrentStep(stepName)}
             createNewTask={(task) => this.createNewTask(task)}
             categories={this.props.categories}
+            isBlurred={this.state.isBlurred}
+            executeNow
           />
         );
-      case "createAndExecute":
+      case "executeNotNow":
         return (
-          <CreateAndExecuteStep
+          <FillNewTask
             setCurrentStep={(stepName) => this.setCurrentStep(stepName)}
             createNewTask={(task) => this.createNewTask(task)}
+            categories={this.props.categories}
+            isBlurred={this.state.isBlurred}
           />
         );
       default:
+        this.setState({ isBlurred: false });
         return (
           <StartStep
             setCurrentStep={(stepName) => this.setCurrentStep(stepName)}
@@ -59,8 +66,28 @@ class AddTaskButton extends React.PureComponent {
     );
   }
 
+  //Блюр
+  getBlur() {
+    if (this.state.stepName !== "") {
+      return <Blur onClick={(event) => this.setState({ isBlurred: true })} />;
+    }
+  }
+
   render() {
-    return <div className="task">{this.getStep()}</div>;
+    return (
+      <React.Fragment>
+        {this.getBlur()}
+        <div
+          className="task"
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
+          }}
+        >
+          {this.getStep()}
+        </div>
+      </React.Fragment>
+    );
   }
 }
 

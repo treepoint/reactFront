@@ -6,15 +6,27 @@ class Blur extends React.PureComponent {
     return (
       <div
         className="blur"
-        onClick={event => {
-          this.props.onClick(event);
-        }}
-        onContextMenu={event => {
-          this.props.onContextMenu(event);
-        }}
-        onWheel={event => {
-          this.props.onClick(event);
-        }}
+        onClick={
+          !!this.props.onClick
+            ? (event) => {
+                this.props.onClick(event);
+              }
+            : null
+        }
+        onContextMenu={
+          !!this.props.onContextMenu
+            ? (event) => {
+                this.props.onContextMenu(event);
+              }
+            : null
+        }
+        onWheel={
+          !!this.props.onClick
+            ? (event) => {
+                this.props.onClick(event);
+              }
+            : null
+        }
       />
     );
   }

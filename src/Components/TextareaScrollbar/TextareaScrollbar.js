@@ -18,10 +18,12 @@ class TextareaScrollbar extends React.Component {
     };
   }
 
+  //При создании компонента
   componentDidMount() {
     this.setState({ value: this.props.value });
   }
 
+  //При обновлении компонента
   componentDidUpdate(prevProps) {
     if (prevProps.value !== this.props.value) {
       if (!this.state.isReadOnly && this.state.value !== this.props.value) {
@@ -31,10 +33,12 @@ class TextareaScrollbar extends React.Component {
     }
   }
 
+  //При разрушении компонента
   componentWillUnmount(event) {
     this.onEndEditing(event);
   }
 
+  //Определяем хром это или нет. От этого немного зависит верстка
   isChrome() {
     return navigator.userAgent.indexOf("Chrome") + 1;
   }
@@ -51,7 +55,9 @@ class TextareaScrollbar extends React.Component {
     this.setState({ value });
   }
 
+  //Ловим обработку клавиш
   onKeyPress(event) {
+    //Если просто enter — завершаем редактирование
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       event.stopPropagation();
@@ -64,6 +70,7 @@ class TextareaScrollbar extends React.Component {
     }
   }
 
+  //При потере фокуса
   onBlur(event) {
     this.setState({ wideEditAreaIsHidden: true });
 
@@ -74,16 +81,18 @@ class TextareaScrollbar extends React.Component {
     }
   }
 
+  //По завершению редактирования
   onEndEditing() {
     if (this.state.value !== this.props.value) {
       this.setState(
         { isReadOnly: false, wideEditAreaIsHidden: true },
         this.props.onChange(this.state.value)
       );
+    } else {
+      this.setState({ isReadOnly: false, wideEditAreaIsHidden: true }, () =>
+        this.textarea.blur()
+      );
     }
-
-    this.setState({ isReadOnly: false, wideEditAreaIsHidden: true });
-    this.textarea.blur();
   }
 
   //Срабатывает при двойном клике

@@ -1,12 +1,14 @@
 import React from "react";
 //Компоненты
-import TextContent from "../../../Components/TextContent/TextContent";
-import SelectContent from "../../../Components/SelectContent/SelectContent";
-import Button from "../../../Components/Button/Button";
+import TextContent from "../../TextContent/TextContent";
+import SelectContent from "../../SelectContent/SelectContent";
+import HeaderAnchor from "../../HeaderAnchor/HeaderAnchor";
 //CSS
 import "../AddTaskButton.css";
+import "../../Task/Task.css";
+import "./FillNewTask.css";
 
-class AddTaskButton extends React.PureComponent {
+class FillNewTask extends React.PureComponent {
   constructor() {
     super();
     this.state = {
@@ -23,12 +25,25 @@ class AddTaskButton extends React.PureComponent {
     };
   }
 
+  componentDidUpdate() {
+    if (this.props.isBlurred) {
+      this.createNewTask();
+    }
+  }
+
   //Создаем новую таску
   createNewTask(event) {
+    //Если сейчас имя — сначала нужно проверочку прогнать
+    if (!this.isNameNotEmpty()) {
+      this.setState({ nameIsValid: false });
+
+      return;
+    }
+
     this.props.createNewTask({
       name: this.state.name,
       category_id: this.state.category_id,
-      executeNow: false,
+      executeNow: this.props.executeNow,
     });
 
     this.onCancel(event);
@@ -43,6 +58,7 @@ class AddTaskButton extends React.PureComponent {
     return true;
   }
 
+  //Выполняется при отмене создания
   onCancel(event) {
     if (!!event) {
       event.stopPropagation();
@@ -53,20 +69,22 @@ class AddTaskButton extends React.PureComponent {
 
   //Название
   getNameField() {
-    this.setState({ nextBody: "category" });
-
     return (
-      <TextContent
-        value={this.state.name}
-        placeholder="Введите название задачи, категорию — после создания"
-        autoFocus={true}
-        width={240}
-        height={69}
-        isStylable={false}
-        isHaveError={!this.state.nameIsValid}
-        //Функции
-        onChangeValue={(value) => this.setState({ name: value })}
-      />
+      <div className="newTaskNameContainer">
+        <TextContent
+          value={this.state.name}
+          placeholder="Укажите название и категорию"
+          autoFocus={true}
+          width={249}
+          height={69}
+          isStylable={false}
+          isHaveError={!this.state.nameIsValid}
+          //Функции
+          onChangeValue={(value) =>
+            this.setState({ name: value }, () => this.createNewTask())
+          }
+        />
+      </div>
     );
   }
 
@@ -108,8 +126,7 @@ class AddTaskButton extends React.PureComponent {
     this.setState({ isFinalBody: true });
 
     return (
-      <div>
-        <div className="newTaskSelectLable">Категория: </div>
+      <div className="categoryNewTask">
         <SelectContent
           isMinimized={false}
           value={this.getCategoriesByTask()}
@@ -122,69 +139,19 @@ class AddTaskButton extends React.PureComponent {
     );
   }
 
-  //Получим текущую тушку шага
-  getCurrentTaskBody() {
-    switch (this.state.currentBody) {
-      case "name":
-        return this.getNameField();
-      case "category":
-        return this.getCategorySelect();
-      default:
-        break;
-    }
-  }
-
-  //Получим нужную текущую основную кнопку
-  getPrimaryButton() {
-    if (this.state.isFinalBody) {
-      return (
-        <Button
-          isPrimary
-          value="Создать"
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
-          onMouseUp={(event) => this.createNewTask(event)}
-        />
-      );
-    } else {
-      return (
-        <Button
-          isPrimary
-          value="Далее"
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
-          onMouseUp={(event) => this.setNextBody(event)}
-        />
-      );
-    }
-  }
-
-  //Выставлем новое тело
-  setNextBody() {
-    //Если сейчас имя — сначала нужно проверочку прогнать
-    if (this.state.currentBody === "name" && this.isNameNotEmpty()) {
-      this.setState(
-        { nameIsValid: true },
-        this.setState({ currentBody: "category" })
-      );
-    } else {
-      this.setState({ nameIsValid: false });
-    }
-  }
-
   render() {
     return (
-      <div className="stepContainer">
-        <div className="stepBody">{this.getCurrentTaskBody()}</div>
-        <div className="newTaskButtons">
-          {this.getPrimaryButton()}
-          <Button value="Отменить" onClick={(event) => this.onCancel(event)} />
+      <React.Fragment>
+        {this.getNameField()}
+        <div className="optionalPart">
+          {this.getCategorySelect()}
+          <HeaderAnchor style={{ marginTop: "6px" }}>
+            <div onClick={(event) => this.onCancel(event)}>отмена</div>
+          </HeaderAnchor>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-export default AddTaskButton;
+export default FillNewTask;

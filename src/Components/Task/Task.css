@@ -11,6 +11,7 @@
   border-radius: 6px;
   background: #fff;
   position: relative;
+  z-index: 6;
 }
 
 .task.onFire {
