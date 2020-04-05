@@ -1,0 +1,32 @@
+.startStepButtonContainer {
+  width: 107px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  opacity: 0.3;
+}
+
+.startStepButtonContainer:hover {
+  opacity: 0.5;
+}
+
+.startStepButtonLable {
+  margin: auto;
+  margin-top: auto;
+  bottom: 12px;
+  margin-top: 80px;
+  text-align: center;
+  cursor: default;
+}
+
+.startStepVhHr {
+  height: 115px;
+  border-left: 1px dashed #c0c0c0;
+  margin: auto;
+}
+
+.startStepContainer {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}

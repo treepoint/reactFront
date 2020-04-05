@@ -14,7 +14,7 @@ class TextareaScrollbar extends React.Component {
       wideEditAreaIsHidden: true,
       value: "",
       isReadOnly: false,
-      isChrome: this.isChrome()
+      isChrome: this.isChrome(),
     };
   }
 
@@ -31,8 +31,8 @@ class TextareaScrollbar extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.onEndEditing();
+  componentWillUnmount(event) {
+    this.onEndEditing(event);
   }
 
   isChrome() {
@@ -100,7 +100,7 @@ class TextareaScrollbar extends React.Component {
     }
 
     this.setState({
-      wideEditAreaIsHidden: false
+      wideEditAreaIsHidden: false,
     });
   }
 
@@ -125,7 +125,7 @@ class TextareaScrollbar extends React.Component {
       return (
         <ReactCustomScroll
           trackYProps={{
-            renderer: props => {
+            renderer: (props) => {
               const { elementRef, ...restProps } = props;
               return (
                 <span
@@ -134,7 +134,7 @@ class TextareaScrollbar extends React.Component {
                   className="Scrollbars-TrackY"
                 />
               );
-            }
+            },
           }}
           className={
             "textareaScrollbar" + (!!this.props.isHaveError ? " error" : "")
@@ -142,7 +142,7 @@ class TextareaScrollbar extends React.Component {
           noScrollX
           style={{
             height: this.props.height,
-            width: this.props.width - (!!this.props.isStylable ? 0 : 8)
+            width: this.props.width - (!!this.props.isStylable ? 0 : 8),
           }}
         >
           {children}
@@ -156,16 +156,16 @@ class TextareaScrollbar extends React.Component {
       <React.Fragment>
         {!!this.state.wideEditAreaIsHidden ? null : (
           <Blur
-            onWheel={event => this.onBlur(event)}
-            onClick={event => this.onBlur(event)}
-            onContextMenu={event => this.onBlur(event)}
+            onWheel={(event) => this.onBlur(event)}
+            onClick={(event) => this.onBlur(event)}
+            onContextMenu={(event) => this.onBlur(event)}
           />
         )}
 
         {this.scrollWrapper(
           <TextareaAutosize
             autoFocus={this.props.autoFocus}
-            inputRef={tag => (this.textarea = tag)}
+            inputRef={(tag) => (this.textarea = tag)}
             style={Object.assign(
               {
                 minHeight: !!this.props.height
@@ -183,7 +183,7 @@ class TextareaScrollbar extends React.Component {
                   : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
                 marginTop: !!this.state.wideEditAreaIsHidden
                   ? 0 + "px"
-                  : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px"
+                  : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
               },
               this.props.style
             )}
@@ -194,15 +194,15 @@ class TextareaScrollbar extends React.Component {
             value={this.state.value}
             onFocus={this.props.onFocus}
             disabled={this.props.disabled}
-            onClick={event => event.stopPropagation()}
-            onChange={event => this.onChange(event)}
+            onClick={(event) => event.stopPropagation()}
+            onChange={(event) => this.onChange(event)}
             //Обрабатываем двойной клик
             onDoubleClick={() => this.showWideEditArea()}
             //Обрабатываем контекстное меню
             onContextMenu={this.props.onContextMenu}
             //Обрабатываем потерю фокуса
-            onBlur={event => this.onBlur(event)}
-            onKeyPress={event => this.onKeyPress(event)}
+            onBlur={(event) => this.onBlur(event)}
+            onKeyPress={(event) => this.onKeyPress(event)}
             minRows={this.props.minRows}
             maxRows={this.props.maxRows}
           />
@@ -212,10 +212,10 @@ class TextareaScrollbar extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     scrollTop: state.scrollTop,
-    scrollLeft: state.scrollLeft
+    scrollLeft: state.scrollLeft,
   };
 };
 

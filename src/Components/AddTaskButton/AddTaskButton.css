@@ -1,41 +1,8 @@
-.addTaskButton {
-  width: 107px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  opacity: 0.3;
-}
-
-.addTaskButton:hover {
-  opacity: 0.5;
-}
-
-.addTaskButtonLable {
-  margin: auto;
-  margin-top: auto;
-  bottom: 12px;
-  margin-top: 80px;
-  text-align: center;
-  cursor: default;
-}
-
-.addTaskButtonVhHr {
-  height: 115px;
-  border-left: 1px dashed #c0c0c0;
-  margin: auto;
-}
-
-.addTaskButtonsContainer {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-}
-
-.newTaskContainer {
+.stepContainer {
   padding-top: 10px;
 }
 
-.newTaskItem {
+.stepBody {
   height: 69px;
   margin-left: 1px;
 }
