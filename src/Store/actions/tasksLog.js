@@ -203,7 +203,7 @@ export function closeOpenedLogByTaskId(taskId, date) {
     //Если он есть
     if (!!currentTaskLog) {
       //И он по текущей задаче
-      if ((currentTaskLog.task_id = taskId)) {
+      if (currentTaskLog.task_id === taskId) {
         //Если дата завершения еще не проставлена — проставим и обновим
         if (currentTaskLog.execution_end === "00:00") {
           currentTaskLog.execution_end = getCurrentTimeFormat();
