@@ -2,10 +2,7 @@ import React from "react";
 //Redux
 import { connect } from "react-redux";
 import { updateTask, deleteTask } from "../../Store/actions/tasks";
-import {
-  closeOpenedLogByTaskId,
-  closeOpenedLogAndOpenNewOneByTaskId,
-} from "../../Store/actions/tasksLog";
+import { createTaskLog } from "../../Store/actions/tasksLog";
 //Компоненты
 import TextContent from "../TextContent/TextContent";
 import SelectContent from "../SelectContent/SelectContent";
@@ -88,11 +85,6 @@ class Task extends React.Component {
 
     //Обновим задачу
     this.props.updateTask(task, this.props.date);
-
-    //Закроем лог выполнения при закрытии задачи
-    if (!!diff.closed_date) {
-      this.props.closeOpenedLogByTaskId(this.props.content.id, this.props.date);
-    }
   }
 
   /*
@@ -272,10 +264,7 @@ class Task extends React.Component {
         hint="Учесть время"
         icon={timeSpanIcon}
         onClick={() =>
-          this.props.closeOpenedLogAndOpenNewOneByTaskId(
-            this.props.content.id,
-            this.props.date
-          )
+          this.props.createTaskLog(this.props.content.id, this.props.date)
         }
       />
     );
@@ -571,11 +560,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteTask: (id) => {
       dispatch(deleteTask(id));
     },
-    closeOpenedLogByTaskId: (taskId, date) => {
-      dispatch(closeOpenedLogByTaskId(taskId, date));
-    },
-    closeOpenedLogAndOpenNewOneByTaskId: (taskId, date) => {
-      dispatch(closeOpenedLogAndOpenNewOneByTaskId(taskId, date));
+    createTaskLog: (taskId, date) => {
+      dispatch(createTaskLog(taskId, date));
     },
   };
 };
