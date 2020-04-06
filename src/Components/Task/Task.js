@@ -141,7 +141,7 @@ class Task extends React.Component {
       <div className="textField">
         <TextContent
           value={this.props.content.name}
-          width={249}
+          width={263}
           height={68}
           isStylable={false}
           //Функции

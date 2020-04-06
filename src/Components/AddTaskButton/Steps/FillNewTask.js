@@ -75,7 +75,7 @@ class FillNewTask extends React.PureComponent {
           value={this.state.name}
           placeholder="Укажите название и категорию"
           autoFocus={true}
-          width={249}
+          width={263}
           height={69}
           isStylable={false}
           isHaveError={!this.state.nameIsValid}
@@ -143,7 +143,9 @@ class FillNewTask extends React.PureComponent {
         {this.getNameField()}
         <div className="optionalPart">
           {this.getCategorySelect()}
-          <HeaderAnchor style={{ marginTop: "6px" }}>
+          <HeaderAnchor
+            style={{ marginTop: "6px", marginLeft: "12px", marginRight: "6px" }}
+          >
             <div onClick={(event) => this.onCancel(event)}>отмена</div>
           </HeaderAnchor>
         </div>
