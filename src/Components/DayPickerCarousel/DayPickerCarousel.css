@@ -3,4 +3,9 @@
   flex-flow: row;
   flex-wrap: nowrap;
   justify-content: center;
+  margin-left: 12px;
+}
+
+.dayPickerCarouselContainer {
+  margin-right: 12px;
 }

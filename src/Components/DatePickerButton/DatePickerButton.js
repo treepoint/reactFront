@@ -23,26 +23,44 @@ class DatePickerButton extends React.PureComponent {
     this.props.onChange(date);
   }
 
-  render() {
+  //Имя класса
+  getClassName() {
     let className = "datePickerButton";
-    let selected = null;
 
     //Если передали дату — сравним совпадает ли выбранная с этой. Если да — выделим
     if (typeof this.props.date !== "undefined" && this.props.date !== null) {
       if (this.props.date === this.state.date) {
         className += " chosen";
-        selected = this.state.date;
       }
     }
 
+    if (this.props.isBorderless) {
+      className += " borderless";
+    }
+
+    return className;
+  }
+
+  //Состояние
+  getSelected() {
+    let selected = null;
+
+    if (this.props.date === this.state.date) {
+      selected = this.state.date;
+    }
+
+    return selected;
+  }
+
+  render() {
     return (
       <div style={{ width: this.props.width + 32 + "px", marginRight: "27px" }}>
         <DP
           locale="ru"
-          className={className}
+          className={this.getClassName()}
           placeholderText={this.props.placeholderText}
-          selected={selected}
-          onChange={date => this.onChange(date)}
+          selected={this.getSelected()}
+          onChange={(date) => this.onChange(date)}
           dateFormat="dd.MM.yyyy"
         />
         <div
@@ -50,7 +68,7 @@ class DatePickerButton extends React.PureComponent {
           style={{
             background:
               "url(" + calendarIcon + ") no-repeat scroll 100% 0 transparent",
-            backgroundSize: "20px 20px"
+            backgroundSize: "20px 20px",
           }}
         />
       </div>

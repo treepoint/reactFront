@@ -2,10 +2,12 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-left: 8px;
 }
 
 .radioButtonCarouselContainer {
   margin-bottom: 12px;
+  margin-right: 12px;
 }
 
 .datePeriodPickerContainer {

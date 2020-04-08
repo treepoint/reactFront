@@ -18,10 +18,10 @@ class ConfirmModalWindow extends React.PureComponent {
   render() {
     return (
       <ModalWindow
-        onClose={event => this.props.onCancel(event)}
+        onClose={(event) => this.props.onCancel(event)}
         isHidden={this.props.isHidden}
       >
-        <form onClick={event => event.stopPropagation()}>
+        <form onClick={(event) => event.stopPropagation()}>
           {!!this.props.title ? (
             <h1 className="h1">{this.props.title}</h1>
           ) : null}
@@ -32,15 +32,19 @@ class ConfirmModalWindow extends React.PureComponent {
               <Button
                 isPrimary={true}
                 isDisabled={this.props.isConfirmButtonDisabled}
-                value="Да"
-                onClick={event => {
+                value={
+                  !!this.props.confirmButtonLable
+                    ? this.props.confirmButtonLable
+                    : "Да"
+                }
+                onClick={(event) => {
                   this.hideModalWindow(event);
                   this.props.onConfirm(event);
                 }}
               />
               <Button
                 value="Отмена"
-                onClick={event => this.hideModalWindow(event)}
+                onClick={(event) => this.hideModalWindow(event)}
               />
             </React.Fragment>
           )}

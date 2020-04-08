@@ -178,6 +178,16 @@ export function getFirstDayOfCurrentMonth() {
   return date;
 }
 
+export function getFirstDayOfNextMonth() {
+  var date = new Date();
+  var yyyy = date.getFullYear();
+  var mm = String(date.getMonth() + 1).padStart(2, "0");
+
+  date = new Date(yyyy, mm, 1);
+
+  return date;
+}
+
 export function getLastDayOfCurrentMonth() {
   var date = new Date();
   var yyyy = date.getFullYear();
@@ -206,6 +216,17 @@ export function getLastDayOfPreviousMonth() {
   date = new Date(yyyy, mm - 1, 0);
 
   return date;
+}
+
+export function getFirstDayOfNextWeek() {
+  //Получим текущую дату
+  let currentDate = new Date();
+
+  if (currentDate.getDay() === 0) {
+    return revokeDays(currentDate, 6);
+  } else {
+    return addDays(revokeDays(currentDate, currentDate.getDay() - 1), 7);
+  }
 }
 
 export function getFirstDayOfCurrentWeek() {

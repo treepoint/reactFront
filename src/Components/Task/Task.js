@@ -7,11 +7,12 @@ import { createTaskLog } from "../../Store/actions/tasksLog";
 import TextContent from "../TextContent/TextContent";
 import SelectContent from "../SelectContent/SelectContent";
 import TimeContent from "../TimeContent/TimeContent";
-import ConfirmModalWindow from "../ConfirmModalWindow/ConfirmModalWindow";
 import Spacer from "../Spacer/Spacer";
 import Action from "../Action/Action";
 import TaskModalWindow from "../TaskModalWindow/TaskModalWindow";
-import DatePickerButton from "../DatePickerButton/DatePickerButton";
+//Модалки
+import NewDateModalWindow from "./ModalWindows/NewDateModalWindow";
+import DeleteModalWindow from "./ModalWindows/DeleteModalWindow";
 //Утилиты
 import {
   getCurrentDateWithTimeFormat,
@@ -96,7 +97,11 @@ class Task extends React.Component {
   //Скрыть все модалки и удалить таску
   deleteTask() {
     this.setState(
-      { isTaskPageHidden: true, isNewDateModalWindowHidden: true },
+      {
+        isTaskPageHidden: true,
+        isNewDateModalWindowHidden: true,
+        isDeleteModalWindowHidden: true,
+      },
       this.props.deleteTask(this.props.content.id)
     );
   }
@@ -493,12 +498,9 @@ class Task extends React.Component {
    */
   getDeleteModalWindow() {
     return (
-      <ConfirmModalWindow
-        title="Удалить задачу?"
-        message="Вместе с задачей будут удалены все записи из лога и статистики. 
-                   Если вы хотите закрыть задачу — проставьте у неё статус с типом «Окончательный»."
-        onCancel={() => this.setState({ isDeleteModalWindowHidden: true })}
-        onConfirm={() => this.deleteTask()}
+      <DeleteModalWindow
+        setState={(state) => this.setState(state)}
+        deleteTask={this.deleteTask()}
       />
     );
   }
@@ -508,22 +510,11 @@ class Task extends React.Component {
    */
   getNewDateModalWindow() {
     return (
-      <ConfirmModalWindow
-        title="Перенести задачу на другую дату?"
-        message="Задача будет перемещена на указанную дату. Отмеченные трудозатраты останутся."
-        onCancel={() => this.setState({ isNewDateModalWindowHidden: true })}
-        onConfirm={() => this.moveTask()}
-        isConfirmButtonDisabled={!!this.state.movedDate ? false : true}
-      >
-        <div className="moveDatePicker">
-          <DatePickerButton
-            date={this.state.movedDate}
-            onChange={(date) => this.setState({ movedDate: date })}
-            placeholderText="Новая дата задачи"
-            width={146}
-          />
-        </div>
-      </ConfirmModalWindow>
+      <NewDateModalWindow
+        movedDate={this.state.movedDate}
+        setState={(state) => this.setState(state)}
+        moveTask={() => this.moveTask()}
+      />
     );
   }
 

@@ -8,7 +8,7 @@ import DatePickerButton from "../DatePickerButton/DatePickerButton";
 import {
   getFormatDate,
   revokeDays,
-  getDDdotMMandShortDatNameByDate
+  getDDdotMMandShortDatNameByDate,
 } from "../../Libs/TimeUtils";
 //CSS
 import "./DayPickerCarousel.css";
@@ -47,7 +47,6 @@ class DayPickerCarousel extends React.PureComponent {
     let dayLable;
     let daysMenu = [];
     let isPrimary = false;
-    let isToday = false;
     let isHoliday = false;
     let today = new Date();
 
@@ -95,13 +94,6 @@ class DayPickerCarousel extends React.PureComponent {
         isPrimary = false;
       }
 
-      //Выделим выбранный день
-      if (getFormatDate(today) === getFormatDate(date)) {
-        isToday = true;
-      } else {
-        isToday = false;
-      }
-
       //Выделим выходные
       if (dayId === 6 || dayId === 0) {
         isHoliday = true;
@@ -116,10 +108,9 @@ class DayPickerCarousel extends React.PureComponent {
         name: date,
         key: from,
         isPrimary: isPrimary,
-        isToday: isToday,
         isHoliday: isHoliday,
         value: dayLable,
-        onClick: event => this.onClick(event)
+        onClick: (event) => this.onClick(event),
       });
 
       from++;
@@ -131,9 +122,12 @@ class DayPickerCarousel extends React.PureComponent {
   render() {
     return (
       <div className="dayPickerCarousel">
-        <RadioButtonCarousel items={this.getDaysMenu()} />
+        <div className="dayPickerCarouselContainer">
+          <RadioButtonCarousel items={this.getDaysMenu()} isBorderless />
+        </div>
         <DatePickerButton
-          onChange={date => this.onPickDate(date)}
+          isBorderless={true}
+          onChange={(date) => this.onPickDate(date)}
           date={this.state.date}
           placeholderText="Выбрать дату"
           width={100}
@@ -143,10 +137,10 @@ class DayPickerCarousel extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     windowWidth: state.windowWidth,
-    windowHeight: state.windowHeight
+    windowHeight: state.windowHeight,
   };
 };
 

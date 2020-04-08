@@ -29,12 +29,12 @@ class RadioButtonCarousel extends React.PureComponent {
         className += " primary";
       }
 
-      if (item.isToday) {
-        className += " today";
-      }
-
       if (item.isHoliday) {
         className += " holiday";
+      }
+
+      if (this.props.isBorderless) {
+        className += " borderless";
       }
 
       return (

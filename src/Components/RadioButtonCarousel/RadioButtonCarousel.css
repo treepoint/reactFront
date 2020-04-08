@@ -1,11 +1,10 @@
 .radioButtonCarousel {
   display: flex;
   flex-direction: row;
-  margin-right: 12px;
 }
 
 .radioButton {
-  background-color: rgb(255, 255, 255);
+  background-color: #fff;
   padding: 6px 12px;
   border: 1px solid rgba(138, 138, 138, 0);
   border-left: 0;
@@ -15,14 +14,17 @@
   border-radius: 0;
   color: #555555;
   border-width: thin;
-}
-
-.radioButton.today {
-  font-weight: bold;
+  border-bottom: 1px solid #c2c2c2;
+  border-top: 1px solid #c2c2c2;
 }
 
 .radioButton.holiday {
   color: rgba(138, 138, 138, 0.73);
+}
+
+.radioButton.borderless {
+  border-bottom: 1px solid #f4f4f400;
+  border-top: 1px solid #f4f4f400;
 }
 
 .radioButton.primary {
@@ -40,9 +42,19 @@
 
 .radioButton.first {
   border-radius: 4px 0px 0px 4px;
+  border-left: 1px solid #c2c2c2;
+}
+
+.radioButton.first.borderless {
+  border-left: 0px solid #f4f4f400;
 }
 
 .radioButton.last {
   border-radius: 0px 4px 4px 0px;
   border-right: none;
+  border-right: 1px solid #c2c2c2;
+}
+
+.radioButton.last.borderless {
+  border-right: 0px solid #f4f4f400;
 }

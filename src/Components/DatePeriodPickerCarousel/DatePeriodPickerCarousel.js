@@ -129,7 +129,7 @@ class DatePeriodPickerCarousel extends React.Component {
     return (
       <div className="datePeriodPickerCarousel">
         <div className="radioButtonCarouselContainer">
-          <RadioButtonCarousel items={this.getPeriodCarousel()} />
+          <RadioButtonCarousel items={this.getPeriodCarousel()} isBorderless />
         </div>
         <div className="datePeriodPickerContainer">
           <DatePeriodPicker
