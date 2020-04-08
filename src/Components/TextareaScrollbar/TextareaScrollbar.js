@@ -20,7 +20,22 @@ class TextareaScrollbar extends React.Component {
 
   //При создании компонента
   componentDidMount() {
-    this.setState({ value: this.props.value });
+    /* Вот смотри какая дичь. Если нет ни ширины не высоты, то
+       иногда высота TextareaAutosize расхерачивается, но приходит в норму после ререндеринга
+       Я не понимаю, почему так. Так ведет себя не одна TextareaAutosize, а все блин. 
+       В общем если не задана ни высота ни ширина — выставим задержку на иницилизацию значения. 
+       Так работает, но я душе не чаю почему. Anyway — нас тут MVP, а не курсы хорошего тона. */
+
+    if (
+      typeof this.props.height === "undefined" &&
+      typeof this.props.width === "undefined"
+    ) {
+      setTimeout(() => {
+        this.setState({ value: this.props.value });
+      }, 10);
+    } else {
+      this.setState({ value: this.props.value });
+    }
   }
 
   //При обновлении компонента
