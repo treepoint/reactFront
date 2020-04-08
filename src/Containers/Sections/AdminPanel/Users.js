@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   fetchUsers,
   updateUser,
-  deleteUser
+  deleteUser,
 } from "../../../Store/actions/users";
 //Компоненты
 import Table from "../../../Components/Table/Table";
@@ -14,7 +14,7 @@ class Users extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deleteModalWindow: { isHidden: true, row: null }
+      deleteModalWindow: { isHidden: true, row: null },
     };
   }
 
@@ -47,7 +47,7 @@ class Users extends React.Component {
           type: "string",
           disabled: true,
           value: "ID",
-          width: 34
+          width: 36,
         },
         {
           key: "email",
@@ -55,16 +55,16 @@ class Users extends React.Component {
           disabled: true,
           value: "Почтовый адрес",
           width: 300,
-          minWidth: 200
+          minWidth: 200,
         },
         {
           key: "role",
           type: "string",
           disabled: true,
           value: "Роль",
-          width: 120
-        }
-      ]
+          width: 120,
+        },
+      ],
     ];
 
     const users = this.props.users;
@@ -86,20 +86,20 @@ class Users extends React.Component {
           key: "id",
           type: "string",
           disabled: true,
-          value: users[u].id
+          value: users[u].id,
         },
         {
           key: "email",
           type: "string",
           disabled: false,
-          value: users[u].email
+          value: users[u].email,
         },
         {
           key: "role_id",
           type: "select",
           disabled: false,
-          value: roles
-        }
+          value: roles,
+        },
       ]);
     }
 
@@ -120,8 +120,8 @@ class Users extends React.Component {
         />
         <Table
           isSingleLineMode={true}
-          saveRow={user => this.props.updateUser(user)}
-          deleteRow={row => this.showDeleteModal(row)}
+          saveRow={(user) => this.props.updateUser(user)}
+          deleteRow={(row) => this.showDeleteModal(row)}
           isUpdating={this.props.isUpdating}
         >
           {this.getContent()}
@@ -131,26 +131,26 @@ class Users extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userRoles: state.userRoles,
     isUpdating: state.usersIsUpdating,
     userAuthState: state.userAuthState,
-    users: state.users
+    users: state.users,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchUsers: () => {
       dispatch(fetchUsers());
     },
-    updateUser: user => {
+    updateUser: (user) => {
       dispatch(updateUser(user));
     },
-    deleteUser: id => {
+    deleteUser: (id) => {
       dispatch(deleteUser(id));
-    }
+    },
   };
 };
 

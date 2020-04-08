@@ -77,7 +77,7 @@ class TextContent extends React.Component {
         value={this.props.value}
         isStylable={this.props.isStylable}
         onFocus={() => this.setState({ isReadOnly: true })}
-        disabled={!!this.props.disabled ? true : false}
+        disabled={this.props.disabled}
         onChange={(value) => this.props.onChangeValue(value)}
         //Обрабатываем контекстное меню
         onContextMenu={(event) => this.showContextMenu(event)}

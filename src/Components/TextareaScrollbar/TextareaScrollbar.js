@@ -128,7 +128,17 @@ class TextareaScrollbar extends React.Component {
       typeof this.props.width === "undefined"
     ) {
       //Если так — просто обернем в нужный класс
-      return <div className="textareaScrollbar">{children}</div>;
+      return (
+        <div
+          className={
+            "textareaScrollbar" +
+            (!!this.props.isHaveError ? " error" : "") +
+            (!!this.props.disabled ? " disabled" : "")
+          }
+        >
+          {children}
+        </div>
+      );
     } else {
       //Если скроллы есть — вернем скроллированное
       return (
@@ -146,7 +156,9 @@ class TextareaScrollbar extends React.Component {
             },
           }}
           className={
-            "textareaScrollbar" + (!!this.props.isHaveError ? " error" : "")
+            "textareaScrollbar" +
+            (!!this.props.isHaveError ? " error" : "") +
+            (!!this.props.disabled ? " disabled" : "")
           }
           noScrollX
           style={{
@@ -185,7 +197,7 @@ class TextareaScrollbar extends React.Component {
                   : "100%",
                 width: !!this.props.width
                   ? this.props.width -
-                    (!!this.state.wideEditAreaIsHidden ? 14 : 7)
+                    (!!this.state.wideEditAreaIsHidden ? 20 : 13)
                   : "100%",
                 marginLeft: !!this.state.wideEditAreaIsHidden
                   ? 0 + "px"

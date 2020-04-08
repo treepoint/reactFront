@@ -35,7 +35,7 @@ class App extends React.PureComponent {
     this.props.restoreFromCookies();
 
     //Напишем номер версии
-    console.log("Номер сборки: 0.9.5");
+    console.log("Номер сборки: 0.9.6");
 
     //Чекнем браузер
     if (!!!this.isFirefox()) {
