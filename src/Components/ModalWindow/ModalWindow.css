@@ -24,7 +24,6 @@
   border-radius: 6px;
   padding: 12px 24px;
   margin-top: 20vh;
-  box-shadow: 0px 4px 8px #00000017;
   background: #ffffff;
   z-index: 10000;
   max-height: 60vh;
@@ -32,7 +31,7 @@
 
 .modalWindowChildren {
   width: 100%;
-  max-width: 80vw;
+  max-width: 90vw;
 }
 
 .confirmModalWindow.hidden {
@@ -58,8 +57,7 @@
   opacity: 1;
 }
 
-.modalWindowClose:before,
-.modalWindowClose:after {
+.modalWindowClose:before, .modalWindowClose:after {
   position: absolute;
   left: 10px;
   content: " ";

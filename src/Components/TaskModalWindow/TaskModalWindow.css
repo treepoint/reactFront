@@ -2,6 +2,17 @@
   width: 100%;
 }
 
+.taskSidebar {
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.taskDescriptionContainer {
+  width: calc(100% - 210px);
+}
+
 .taskName {
   margin-bottom: 12px;
   margin-left: -6px;
@@ -28,12 +39,6 @@
 
 .taskTimeContainer {
   margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-}
-
-.taskSidebar {
-  margin-left: 12px;
   display: flex;
   flex-direction: column;
 }

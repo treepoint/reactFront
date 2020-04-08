@@ -23,7 +23,7 @@ class TaskModalWindow extends React.PureComponent {
           value={this.props.content.name}
           isStylable={false}
           //Функции
-          onChangeValue={value =>
+          onChangeValue={(value) =>
             this.props.saveTaskToDatabase({ name: value })
           }
         />
@@ -40,7 +40,7 @@ class TaskModalWindow extends React.PureComponent {
           isMinimized={false}
           value={this.props.content.categories}
           height={34}
-          onChangeValue={category =>
+          onChangeValue={(category) =>
             this.props.saveTaskToDatabase({ category_id: category.current })
           }
         />
@@ -53,7 +53,9 @@ class TaskModalWindow extends React.PureComponent {
     return (
       <RichTextEditor
         data={this.props.content.description}
-        onChange={description => this.props.saveTaskToDatabase({ description })}
+        onChange={(description) =>
+          this.props.saveTaskToDatabase({ description })
+        }
       />
     );
   }
@@ -100,8 +102,10 @@ class TaskModalWindow extends React.PureComponent {
           {//Название задачи
           this.getTaskName()}
           <div className="taskContentContainer">
-            {//Описание задачи
-            this.getTaskDescription()}
+            {/*Описание задачи*/}
+            <div className="taskDescriptionContainer">
+              {this.getTaskDescription()}
+            </div>
             <div className="taskSidebar">
               <div className="taskSelectsContainer">
                 {//Выбор категории
@@ -114,7 +118,7 @@ class TaskModalWindow extends React.PureComponent {
                       "включить таймер",
                       {
                         paddingTop: "1px",
-                        marginBottom: "6px"
+                        marginBottom: "6px",
                       },
                       true
                     )
@@ -124,7 +128,7 @@ class TaskModalWindow extends React.PureComponent {
                   !!this.props.content.closed_date ? "доработать" : "выполнить",
                   {
                     paddingTop: "1px",
-                    marginBottom: "6px"
+                    marginBottom: "6px",
                   },
                   true
                 )}
@@ -133,7 +137,7 @@ class TaskModalWindow extends React.PureComponent {
                   "все в огне!",
                   {
                     paddingTop: "1px",
-                    marginBottom: "6px"
+                    marginBottom: "6px",
                   },
                   true
                 )}
@@ -142,7 +146,7 @@ class TaskModalWindow extends React.PureComponent {
                   "заморожено",
                   {
                     paddingTop: "1px",
-                    marginBottom: "6px"
+                    marginBottom: "6px",
                   },
                   true
                 )}
@@ -152,7 +156,7 @@ class TaskModalWindow extends React.PureComponent {
                       "перенести на другую дату",
                       {
                         paddingTop: "1px",
-                        marginBottom: "6px"
+                        marginBottom: "6px",
                       },
                       true
                     )
@@ -163,7 +167,7 @@ class TaskModalWindow extends React.PureComponent {
                       "удалить задачу",
                       {
                         paddingTop: "1px",
-                        marginBottom: "6px"
+                        marginBottom: "6px",
                       },
                       true
                     )
