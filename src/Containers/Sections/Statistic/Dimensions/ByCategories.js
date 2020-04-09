@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   fetchCategoriesStatisticByPeriod,
-  clearCategoriesStatisticByPeriod
+  clearCategoriesStatisticByPeriod,
 } from "../../../../Store/actions/statistics";
 //Подключаем компоненты
 import Table from "../../../../Components/Table/Table";
@@ -43,16 +43,16 @@ class ByCategories extends React.PureComponent {
           type: "string",
           disabled: true,
           value: "Категория",
-          width: 250
+          width: 250,
         },
         {
           key: "type",
           type: "string",
           disabled: true,
           value: "Время",
-          width: 60
-        }
-      ]
+          width: 68,
+        },
+      ],
     ];
 
     //Получим статистику
@@ -65,14 +65,14 @@ class ByCategories extends React.PureComponent {
           type: "string",
           disabled: true,
           value: statistic[s].name,
-          style: statistic[s].name_style
+          style: statistic[s].name_style,
         },
         {
           key: "type_id",
           type: "time",
           disabled: true,
-          value: getTimeFromMins(statistic[s].execution_time)
-        }
+          value: getTimeFromMins(statistic[s].execution_time),
+        },
       ]);
     }
 
@@ -91,20 +91,20 @@ class ByCategories extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    categoriesStatisticByPeriod: state.categoriesStatisticByPeriod
+    categoriesStatisticByPeriod: state.categoriesStatisticByPeriod,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     clearCategoriesStatisticByPeriod: () => {
       dispatch(clearCategoriesStatisticByPeriod());
     },
     fetchCategoriesStatisticByPeriod: (dateFrom, dateTo) => {
       dispatch(fetchCategoriesStatisticByPeriod(dateFrom, dateTo));
-    }
+    },
   };
 };
 

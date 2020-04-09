@@ -42,9 +42,7 @@ class Row extends React.PureComponent {
     let buttons = null;
 
     if (this.props.isHeader) {
-      if (this.props.addRow === null) {
-        buttons = <Action disabled={true} icon={addIcon} />;
-      } else {
+      if (!this.props.addRow === null) {
         buttons = (
           <Action
             icon={addIcon}
@@ -87,6 +85,10 @@ class Row extends React.PureComponent {
           />
         );
       }
+    }
+
+    if (buttons === null) {
+      return null;
     }
 
     return <div className="rowButton">{buttons}</div>;
