@@ -51,6 +51,14 @@ class Statistic extends React.Component {
     );
   }
 
+  getOffsetForScroll() {
+    if (this.props.windowWidth > 920) {
+      return "calc(-145px + 100vh)";
+    } else {
+      return "calc(-188px + 100vh)";
+    }
+  }
+
   render() {
     return (
       <Page
@@ -70,7 +78,7 @@ class Statistic extends React.Component {
           //Задаем стиль
           style={{
             width: "100%",
-            height: "calc(-145px + 100vh)",
+            height: this.getOffsetForScroll(),
           }}
           ref={(ref) => {
             this._scrollBarRef = ref;
@@ -110,6 +118,7 @@ class Statistic extends React.Component {
 const mapStateToProps = (state) => {
   return {
     totalStatisticByPeriod: state.totalStatisticByPeriod,
+    windowWidth: state.windowWidth,
   };
 };
 

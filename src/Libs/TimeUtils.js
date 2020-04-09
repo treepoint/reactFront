@@ -251,6 +251,28 @@ export function getLastDayOfCurrentWeek() {
   }
 }
 
+export function getFirstDayOfPreviousWeek() {
+  //Получим текущую дату
+  let currentDate = new Date();
+
+  if (currentDate.getDay() === 0) {
+    return revokeDays(currentDate, 14);
+  } else {
+    return revokeDays(revokeDays(currentDate, currentDate.getDay() - 1), 7);
+  }
+}
+
+export function getLastDayOfPreviousWeek() {
+  //Получим текущую дату
+  let currentDate = new Date();
+
+  if (currentDate.getDay() === 0) {
+    return revokeDays(currentDate, 8);
+  } else {
+    return revokeDays(currentDate, currentDate.getDay());
+  }
+}
+
 //Получимть сегодня в JS формате, нужно для redux
 export function getToday() {
   let today = new Date();

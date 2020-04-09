@@ -13,6 +13,8 @@ import {
   getLastDayOfPreviousMonth,
   getFirstDayOfCurrentWeek,
   getLastDayOfCurrentWeek,
+  getFirstDayOfPreviousWeek,
+  getLastDayOfPreviousWeek,
 } from "../../Libs/TimeUtils";
 //CSS
 import "./DatePeriodPickerCarousel.css";
@@ -66,6 +68,17 @@ class DatePeriodPickerCarousel extends React.Component {
     this.props.onPickDate(dateFrom, dateTo);
   }
 
+  setPreviousWeekDates() {
+    //Получим начало недели — понедельник
+    let dateFrom = getFirstDayOfPreviousWeek();
+    //Получим конец недели — воскресенье
+    let dateTo = getLastDayOfPreviousWeek();
+
+    //Запишем в стейт
+    this.setState({ dateFrom, dateTo, currentPeriod: { previousWeak: true } });
+    this.props.onPickDate(dateFrom, dateTo);
+  }
+
   setCurrentMonthDates() {
     //Получим начало текущего месяца
     let dateFrom = getFirstDayOfCurrentMonth();
@@ -106,14 +119,24 @@ class DatePeriodPickerCarousel extends React.Component {
     });
 
     radioButtonItems.push({
-      key: 2,
-      isPrimary: !!this.state.currentPeriod.currentMonth ? true : false,
-      value: "Текущий месяц",
-      onClick: (event) => this.setCurrentMonthDates(event),
+      key: 1,
+      isPrimary: !!this.state.currentPeriod.previousWeak ? true : false,
+      value: "Прошлая неделя",
+      onClick: (event) => this.setPreviousWeekDates(event),
     });
 
+    //Текущий месяц — опционально в зависимости от размера
+    if (this.props.windowWidth > 520) {
+      radioButtonItems.push({
+        key: 2,
+        isPrimary: !!this.state.currentPeriod.currentMonth ? true : false,
+        value: "Текущий месяц",
+        onClick: (event) => this.setCurrentMonthDates(event),
+      });
+    }
+
     //Прошлый месяц — опционально в зависимости от размера
-    if (this.props.windowWidth > 500) {
+    if (this.props.windowWidth > 670) {
       radioButtonItems.push({
         key: 3,
         isPrimary: !!this.state.currentPeriod.previousMonth ? true : false,
