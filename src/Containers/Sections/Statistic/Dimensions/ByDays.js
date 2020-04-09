@@ -164,10 +164,19 @@ class ByDays extends React.Component {
     return hoursCount * 20 + 120;
   }
 
-  render() {
+  getChart() {
+    let data = this.getData();
+
+    if (data.length === 0) {
+      return (
+        <div className="chartNoDataFound">
+          Нет данных. Выберите другие даты.
+        </div>
+      );
+    }
+
     return (
-      <div className="chart" style={{ maxWidth: this.getChartWidth() }}>
-        <div className="chartLable">Время выполнения по дням</div>
+      <div className="chart">
         <ReactCustomScroll
           noScrollY={true}
           //Задаем стиль
@@ -189,7 +198,7 @@ class ByDays extends React.Component {
           <LineChart
             width={this.getChartWidth()}
             height={this.getHeight() + 24}
-            data={this.getData()}
+            data={data}
           >
             <Line type="monotone" dataKey="uv" stroke="#8884d8" />
             <CartesianGrid stroke="#ccc" />
@@ -201,6 +210,18 @@ class ByDays extends React.Component {
             />
           </LineChart>
         </ReactCustomScroll>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div
+        className="chartContainer"
+        style={{ maxWidth: this.getChartWidth() }}
+      >
+        <div className="chartLable">Время выполнения по дням</div>
+        {this.getChart()}
       </div>
     );
   }

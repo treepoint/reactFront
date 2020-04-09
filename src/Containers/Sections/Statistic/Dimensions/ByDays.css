@@ -1,15 +1,12 @@
-.chart {
+.chartContainer {
   color: rgb(20, 20, 20);
   margin-bottom: 0px;
   font-size: 14px;
   background-color: #fff;
-  padding: 6px 12px;
-  padding-left: 12px;
+  padding: 6px 0px;
   border-radius: 4px 4px 4px 4px;
   height: max-content;
   width: max-content;
-  padding-left: 0px;
-  padding-right: 12px;
   margin-right: 6px;
   margin-bottom: 12px;
 }
@@ -24,14 +21,13 @@
   flex-direction: column;
   display: flex;
   margin-top: -5px;
-  margin-left: 23px;
+  margin-left: 9px;
 }
 
 .chartLable {
   width: max-content;
   font-weight: 900;
   margin: 6px auto;
-  padding-left: 60px;
   padding-bottom: 3px;
 }
 
@@ -40,7 +36,26 @@
   padding-right: 6px;
 }
 
+.chart {
+  padding-right: 12px;
+}
+
 .ScrollbarsCustom-Scroller {
   height: calc(100% + 4px);
   overflow-x: hidden !important;
+}
+
+.chartNoDataFound {
+  display: flex;
+  justify-content: center;
+  padding: 10px 12px;
+  color: rgb(135, 129, 124);
+  cursor: default;
+  border-top: 1px dashed #c2c2c2;
+  margin-top: 11px;
+  height: 17px;
+}
+
+.recharts-wrapper {
+  margin-left: -14px;
 }
