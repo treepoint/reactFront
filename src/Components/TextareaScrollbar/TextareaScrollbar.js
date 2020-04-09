@@ -212,7 +212,7 @@ class TextareaScrollbar extends React.Component {
                   : "100%",
                 width: !!this.props.width
                   ? this.props.width -
-                    (!!this.state.wideEditAreaIsHidden ? 20 : 13)
+                    (!!this.state.wideEditAreaIsHidden ? 22 : 15)
                   : "100%",
                 marginLeft: !!this.state.wideEditAreaIsHidden
                   ? 0 + "px"
