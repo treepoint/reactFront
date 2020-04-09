@@ -47,7 +47,7 @@ class Users extends React.Component {
           type: "string",
           disabled: true,
           value: "ID",
-          width: 36,
+          width: 38,
         },
         {
           key: "email",
