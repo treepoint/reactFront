@@ -19,6 +19,7 @@ import TasksManager from "../Sections/TasksManager/TasksManager";
 import Categories from "../Sections/Categories/Categories";
 import Statistic from "../Sections/Statistic/Statistic";
 import About from "../Sections/About/About";
+import Page404 from "../Sections/Page404/Page404";
 import AdminPanelRouter from "../Sections/AdminPanel/AdminPanelRouter";
 import Bottom from "../Bottom/Bottom";
 import NotificationSystem from "../NotificationSystem/NotificationSystem";
@@ -82,9 +83,11 @@ class App extends React.PureComponent {
                     <Route path="/statistic" component={Statistic} />
                     <Route path="/admin" component={AdminPanelRouter} />
                     <Route path="/about" component={About} />
+                    <Route path="/" component={Page404} />
                   </React.Fragment>
                 ) : null}
                 <Route path="/about" component={About} />
+                <Route path="/" component={Page404} />
               </Switch>
               {getGlobalModalWindow(
                 this.props.modalWindowState,

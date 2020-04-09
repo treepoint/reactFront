@@ -2,7 +2,7 @@ import React from "react";
 //Подключаем модалки
 import {
   login,
-  registration
+  registration,
 } from "../../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 import AnchorModalWindow from "../../../Components/AnchorModalWindow/AnchorModalWindow";
 //Импортируем компоненты
@@ -13,21 +13,22 @@ class Page404 extends React.PureComponent {
   render() {
     return (
       <Page title="Ничего не найдено. 404">
-        Возможно вы попытались зайти на страницу, недоступную для
-        неавторизованного пользователя или данной страницы не существует.
         <p>
-          Пожалуйста,{" "}
-          <Anchor>
-            <AnchorModalWindow value="войдите" modalWindowName={login} />
-          </Anchor>{" "}
-          или{" "}
-          <Anchor>
-            <AnchorModalWindow
-              value="зарегистрируйтесь"
-              modalWindowName={registration}
-            />
-          </Anchor>
-          .
+          Возможно вы попытались зайти на страницу, недоступную для
+          неавторизованного пользователя или данной страницы не существует.
+          <p>
+            Пожалуйста,
+            <Anchor>
+              <AnchorModalWindow value="войдите" modalWindowName={login} />
+            </Anchor>
+            или
+            <Anchor>
+              <AnchorModalWindow
+                value="зарегистрируйтесь."
+                modalWindowName={registration}
+              />
+            </Anchor>
+          </p>
         </p>
       </Page>
     );
