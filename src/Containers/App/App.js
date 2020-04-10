@@ -8,7 +8,7 @@ import {
   restoreFromCookies,
   setBrowserWarning,
   setWindowHeight,
-  setWindowWidth,
+  setWindowWidth
 } from "../../Store/actions/app";
 //Подключаем модальные окна
 import { getGlobalModalWindow } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
@@ -54,6 +54,30 @@ class App extends React.PureComponent {
     this.props.setWindowHeight(height);
   }
 
+  getRouter() {
+    if (!!this.props.userAuthState) {
+      return (
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/tasks_manager" component={TasksManager} />
+          <Route path="/categories" component={Categories} />
+          <Route path="/statistic" component={Statistic} />
+          <Route path="/admin" component={AdminPanelRouter} />
+          <Route path="/about" component={About} />
+          <Route component={Page404} />
+        </Switch>
+      );
+    } else {
+      return (
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route component={Page404} />
+        </Switch>
+      );
+    }
+  }
+
   render() {
     return (
       <DocumentTitle title={this.props.title}>
@@ -73,22 +97,7 @@ class App extends React.PureComponent {
           >
             <div className="wallpaperBlur">
               <Header />
-              <Switch>
-                <Route exact path="/" component={Home} />
-                {/*Если не авторизован — эти пункты вообще не обрабатываем*/}
-                {!!this.props.userAuthState ? (
-                  <React.Fragment>
-                    <Route path="/tasks_manager" component={TasksManager} />
-                    <Route path="/categories" component={Categories} />
-                    <Route path="/statistic" component={Statistic} />
-                    <Route path="/admin" component={AdminPanelRouter} />
-                    <Route path="/about" component={About} />
-                    <Route path="/" component={Page404} />
-                  </React.Fragment>
-                ) : null}
-                <Route path="/about" component={About} />
-                <Route path="/" component={Page404} />
-              </Switch>
+              {this.getRouter()}
               {getGlobalModalWindow(
                 this.props.modalWindowState,
                 this.props.modalWindowName
@@ -103,17 +112,17 @@ class App extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     modalWindowState: state.modalWindowState,
     modalWindowName: state.modalWindowName,
     userAuthState: state.userAuthState,
     wallpaper: state.userSettings.wallpaper,
-    title: state.title,
+    title: state.title
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     restoreFromCookies: () => {
       dispatch(restoreFromCookies());
@@ -121,12 +130,12 @@ const mapDispatchToProps = (dispatch) => {
     setBrowserWarning: () => {
       dispatch(setBrowserWarning());
     },
-    setWindowWidth: (width) => {
+    setWindowWidth: width => {
       dispatch(setWindowWidth(width));
     },
-    setWindowHeight: (height) => {
+    setWindowHeight: height => {
       dispatch(setWindowHeight(height));
-    },
+    }
   };
 };
 

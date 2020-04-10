@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   fetchTasksStatisticByPeriod,
-  clearTasksStatisticByPeriod,
+  clearTasksStatisticByPeriod
 } from "../../../../Store/actions/statistics";
 //Подключаем компоненты
 import Table from "../../../../Components/Table/Table";
@@ -43,7 +43,7 @@ class ByTasks extends React.Component {
           disabled: true,
           value: "Задача",
           width: 450,
-          minWidth: 250,
+          minWidth: 250
         },
         {
           key: "name",
@@ -51,16 +51,16 @@ class ByTasks extends React.Component {
           hidable: true,
           disabled: true,
           value: "Категория",
-          width: 250,
+          width: 250
         },
         {
           key: "type",
           type: "string",
           disabled: true,
           value: "Время",
-          width: 68,
-        },
-      ],
+          width: 70
+        }
+      ]
     ];
 
     //Получим статистику
@@ -73,7 +73,7 @@ class ByTasks extends React.Component {
           type: "string",
           disabled: true,
           value: statistic[s].name,
-          style: statistic[s].name_style,
+          style: statistic[s].name_style
         },
         {
           key: "category_name",
@@ -81,14 +81,14 @@ class ByTasks extends React.Component {
           hidable: true,
           disabled: true,
           value: statistic[s].category_name,
-          style: statistic[s].category_name_style,
+          style: statistic[s].category_name_style
         },
         {
           key: "type_id",
           type: "time",
           disabled: true,
-          value: getTimeFromMins(statistic[s].execution_time),
-        },
+          value: getTimeFromMins(statistic[s].execution_time)
+        }
       ]);
     }
 
@@ -107,20 +107,20 @@ class ByTasks extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    tasksStatisticByPeriod: state.tasksStatisticByPeriod,
+    tasksStatisticByPeriod: state.tasksStatisticByPeriod
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     clearTasksStatisticByPeriod: () => {
       dispatch(clearTasksStatisticByPeriod());
     },
     fetchTasksStatisticByPeriod: (dateFrom, dateTo) => {
       dispatch(fetchTasksStatisticByPeriod(dateFrom, dateTo));
-    },
+    }
   };
 };
 
