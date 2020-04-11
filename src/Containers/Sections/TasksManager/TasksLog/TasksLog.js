@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   fetchTasksLogByDate,
   updateTaskLog,
-  deleteTaskLog,
+  deleteTaskLog
 } from "../../../../Store/actions/tasksLog";
 //Компоненты
 import Table from "../../../../Components/Table/Table";
@@ -21,7 +21,7 @@ class TasksLog extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isMinimized: true,
+      isMinimized: true
     };
   }
 
@@ -56,7 +56,7 @@ class TasksLog extends React.PureComponent {
     for (var t in tasksForChosenDate) {
       tasksList.push({
         value: tasksForChosenDate[t].id,
-        label: tasksForChosenDate[t].name,
+        label: tasksForChosenDate[t].name
       });
     }
 
@@ -78,39 +78,39 @@ class TasksLog extends React.PureComponent {
         {
           key: "task_id",
           type: "hidden",
-          value: tasksLogForChosenDate[tlcd].task_id,
+          value: tasksLogForChosenDate[tlcd].task_id
         },
         {
           key: "task_name",
           type: "string",
           disabled: true,
-          value: tasksLogForChosenDate[tlcd].task_name,
+          value: tasksLogForChosenDate[tlcd].task_name
         },
         {
           key: "execution_start",
           type: "time",
           disabled: false,
-          value: tasksLogForChosenDate[tlcd].execution_start,
+          value: tasksLogForChosenDate[tlcd].execution_start
         },
         {
           key: "execution_end",
           type: "time",
           disabled: false,
-          value: tasksLogForChosenDate[tlcd].execution_end,
+          value: tasksLogForChosenDate[tlcd].execution_end
         },
         {
           key: "execution_time",
           type: "time",
           disabled: true,
-          value: getTimeFromMins(tasksLogForChosenDate[tlcd].execution_time),
+          value: getTimeFromMins(tasksLogForChosenDate[tlcd].execution_time)
         },
         {
           key: "comment",
           type: "text",
           hidable: true,
           disabled: false,
-          value: tasksLogForChosenDate[tlcd].comment,
-        },
+          value: tasksLogForChosenDate[tlcd].comment
+        }
       ]);
     }
 
@@ -119,13 +119,13 @@ class TasksLog extends React.PureComponent {
         key: "id",
         type: "hidden",
         disabled: true,
-        value: "ID",
+        value: "ID"
       },
       {
         key: "task_id",
         type: "hidden",
         disabled: true,
-        value: "Task_id",
+        value: "Task_id"
       },
       {
         key: "task_name",
@@ -133,28 +133,28 @@ class TasksLog extends React.PureComponent {
         disabled: true,
         value: "Задача",
         width: 500,
-        minWidth: 150,
+        minWidth: 150
       },
       {
         key: "execution_start",
         type: "string",
         disabled: true,
         value: "Старт",
-        width: 80,
+        width: 80
       },
       {
         key: "execution_end",
         type: "string",
         disabled: true,
         value: "Стоп",
-        width: 80,
+        width: 80
       },
       {
         key: "execution_time",
         type: "string",
         disabled: true,
         value: "Время",
-        width: 80,
+        width: 86
       },
       {
         key: "comment",
@@ -162,8 +162,8 @@ class TasksLog extends React.PureComponent {
         hidable: true,
         disabled: true,
         value: "Комментарий",
-        width: 250,
-      },
+        width: 250
+      }
     ]);
 
     return content;
@@ -188,10 +188,10 @@ class TasksLog extends React.PureComponent {
               maxHeight={!!this.state.isMinimized ? "81px" : "375px"}
               isFixed={true}
               isResizeble={false}
-              saveRow={(taskLog) =>
+              saveRow={taskLog =>
                 this.props.updateTaskLog(taskLog, this.props.date)
               }
-              deleteRow={(taskLog) => this.props.deleteTaskLog(taskLog.id)}
+              deleteRow={taskLog => this.props.deleteTaskLog(taskLog.id)}
               notFoundMessage="Нет данных. Нажмите на «часы» у задачи или выберите другой день."
             >
               {this.getContent()}
@@ -203,25 +203,25 @@ class TasksLog extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     tasks: state.tasks,
     tasksLog: state.tasksLog,
-    windowWidth: state.windowWidth,
+    windowWidth: state.windowWidth
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchTasksLogByDate: (date) => {
+    fetchTasksLogByDate: date => {
       dispatch(fetchTasksLogByDate(date));
     },
     updateTaskLog: (taskLog, date) => {
       dispatch(updateTaskLog(taskLog, date));
     },
-    deleteTaskLog: (id) => {
+    deleteTaskLog: id => {
       dispatch(deleteTaskLog(id));
-    },
+    }
   };
 };
 

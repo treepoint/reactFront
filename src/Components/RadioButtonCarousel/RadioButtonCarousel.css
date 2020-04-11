@@ -18,6 +18,16 @@
   border-top: 1px solid #c2c2c2;
 }
 
+.radioButton:hover {
+  background: #f2f2f2;
+}
+
+.radioButton:active {
+  outline: none;
+  border: none;
+  border-right: 1px dashed #c0c0c0;
+}
+
 .radioButton.holiday {
   color: rgba(138, 138, 138, 0.73);
 }
@@ -30,14 +40,6 @@
 .radioButton.primary {
   color: #000000;
   border-bottom: 2px solid #1c9ccee8;
-}
-
-.radioButton:hover {
-  background: #f2f2f2;
-}
-
-.radioButton:active {
-  color: #000000;
 }
 
 .radioButton.first {

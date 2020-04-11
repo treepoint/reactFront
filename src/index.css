@@ -25,3 +25,7 @@ li {
   margin-bottom: 8px;
   font-weight: 500;
 }
+
+input {
+  outline: none !important;
+}

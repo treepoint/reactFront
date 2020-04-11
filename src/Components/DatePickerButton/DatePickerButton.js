@@ -54,13 +54,18 @@ class DatePickerButton extends React.PureComponent {
 
   render() {
     return (
-      <div style={{ width: this.props.width + 32 + "px", marginRight: "27px" }}>
+      <div
+        style={{
+          width: this.props.width + 32 + "px",
+          marginRight: "27px"
+        }}
+      >
         <DP
           locale="ru"
           className={this.getClassName()}
           placeholderText={this.props.placeholderText}
           selected={this.getSelected()}
-          onChange={(date) => this.onChange(date)}
+          onChange={date => this.onChange(date)}
           dateFormat="dd.MM.yyyy"
         />
         <div
@@ -68,7 +73,7 @@ class DatePickerButton extends React.PureComponent {
           style={{
             background:
               "url(" + calendarIcon + ") no-repeat scroll 100% 0 transparent",
-            backgroundSize: "20px 20px",
+            backgroundSize: "20px 20px"
           }}
         />
       </div>
