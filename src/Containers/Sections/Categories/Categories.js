@@ -53,7 +53,14 @@ class Categories extends React.Component {
           type: "string",
           disabled: true,
           value: "Название",
-          width: 320
+          width: 300
+        },
+        {
+          key: "active_tasks_count",
+          type: "string",
+          value: "Активных задач",
+          disabled: true,
+          width: 138
         },
         {
           key: "description",
@@ -87,6 +94,13 @@ class Categories extends React.Component {
             disabled: false,
             value: categories[c].name,
             style: categories[c].name_style
+          },
+          {
+            key: "active_tasks_count",
+            type: "string",
+            disabled: true,
+            textAlign: "center",
+            value: categories[c].active_tasks_count
           },
           {
             key: "description",

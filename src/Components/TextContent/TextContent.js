@@ -12,7 +12,7 @@ class TextContent extends React.Component {
     super();
     this.state = {
       contextMenuIsHidden: true,
-      isChrome: this.isChrome(),
+      isChrome: this.isChrome()
     };
   }
 
@@ -40,7 +40,7 @@ class TextContent extends React.Component {
       return {
         fontWeight: "900",
         color: "#000",
-        marginTop: "0px",
+        marginTop: "0px"
       };
     } else {
       return {
@@ -54,7 +54,7 @@ class TextContent extends React.Component {
           : "none",
         fontWeight: !!this.props.bold ? "900" : "200",
         fontStyle: !!this.props.italic ? "italic" : "normal",
-        color: !!this.props.disabled ? "#444" : "#000",
+        color: !!this.props.disabled ? "#444" : "#000"
       };
     }
   }
@@ -73,14 +73,15 @@ class TextContent extends React.Component {
             ? this.props.width - (!!this.state.isChrome ? 2 : 1)
             : undefined
         }
+        textAlign={this.props.textAlign}
         spellCheck="false"
         value={this.props.value}
         isStylable={this.props.isStylable}
         onFocus={() => this.setState({ isReadOnly: true })}
         disabled={this.props.disabled}
-        onChange={(value) => this.props.onChangeValue(value)}
+        onChange={value => this.props.onChangeValue(value)}
         //Обрабатываем контекстное меню
-        onContextMenu={(event) => this.showContextMenu(event)}
+        onContextMenu={event => this.showContextMenu(event)}
       />
     );
   }
@@ -99,11 +100,11 @@ class TextContent extends React.Component {
           //Функции
           setContextMenuHidden={() =>
             this.setState({
-              contextMenuIsHidden: true,
+              contextMenuIsHidden: true
             })
           }
-          onChangeStyle={(style) => this.props.onChangeStyle(style)}
-          onWheel={(event) => this.setContextMenuHidden(event)}
+          onChangeStyle={style => this.props.onChangeStyle(style)}
+          onWheel={event => this.setContextMenuHidden(event)}
         />
       );
     }
@@ -119,10 +120,10 @@ class TextContent extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     scrollTop: state.scrollTop,
-    scrollLeft: state.scrollLeft,
+    scrollLeft: state.scrollLeft
   };
 };
 

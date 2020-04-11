@@ -146,6 +146,7 @@ class Row extends React.PureComponent {
           style={style}
           isStylable={isStylable}
           value={this.props.rowsContent[index].value}
+          textAlign={this.props.rowsContent[index].textAlign}
           disabled={this.props.rowsContent[index].disabled}
           //Функции на обработку
           onChangeValue={content => this.onChangeValue(content, index)}

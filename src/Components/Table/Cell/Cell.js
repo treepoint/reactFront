@@ -45,6 +45,7 @@ class Cell extends React.PureComponent {
             bold={this.props.style.bold}
             italic={this.props.style.italic}
             backgroundColor={this.props.style.backgroundColor}
+            textAlign={this.props.textAlign}
             //Функции
             onChangeStyle={style => {
               this.onChangeStyle(style);
@@ -67,6 +68,7 @@ class Cell extends React.PureComponent {
             bold={this.props.style.bold}
             italic={this.props.style.italic}
             backgroundColor={this.props.style.backgroundColor}
+            textAlign={this.props.textAlign}
             //Функции
             onChangeStyle={style => {
               this.onChangeStyle(style);
