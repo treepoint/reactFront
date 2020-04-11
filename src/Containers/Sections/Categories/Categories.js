@@ -6,7 +6,7 @@ import {
   createCategory,
   archiveCategory,
   openCategory,
-  updateCategory,
+  updateCategory
 } from "../../../Store/actions/categories";
 //Компоненты
 import Table from "../../../Components/Table/Table";
@@ -18,7 +18,7 @@ class Categories extends React.Component {
     super(props);
     this.state = {
       archiveModalWindow: { isHidden: true, row: null },
-      isArchived: false,
+      isArchived: false
     };
   }
 
@@ -46,14 +46,14 @@ class Categories extends React.Component {
           key: "id",
           type: "hidden",
           disabled: true,
-          value: "ID",
+          value: "ID"
         },
         {
           key: "name",
           type: "string",
           disabled: true,
           value: "Название",
-          width: 320,
+          width: 320
         },
         {
           key: "description",
@@ -61,9 +61,9 @@ class Categories extends React.Component {
           hidable: true,
           value: "Описание",
           disabled: true,
-          width: 400,
-        },
-      ],
+          width: 400
+        }
+      ]
     ];
 
     let categories = this.props.categories;
@@ -79,22 +79,22 @@ class Categories extends React.Component {
             key: "id",
             type: "hidden",
             disabled: true,
-            value: categories[c].id,
+            value: categories[c].id
           },
           {
             key: "name",
             type: "string",
             disabled: false,
             value: categories[c].name,
-            style: categories[c].name_style,
+            style: categories[c].name_style
           },
           {
             key: "description",
             type: "text",
             disabled: false,
             hidable: true,
-            value: categories[c].description,
-          },
+            value: categories[c].description
+          }
         ]);
       }
     }
@@ -108,13 +108,13 @@ class Categories extends React.Component {
       {
         value: "Текущие",
         callback: () => this.setState({ isArchived: false }),
-        isCurrent: !this.state.isArchived,
+        isCurrent: !this.state.isArchived
       },
       {
         value: "Архив",
         callback: () => this.setState({ isArchived: true }),
-        isCurrent: this.state.isArchived,
-      },
+        isCurrent: this.state.isArchived
+      }
     ];
 
     return (
@@ -136,19 +136,15 @@ class Categories extends React.Component {
         <Table
           isResizeble={true}
           isSingleLineMode={true}
-          saveRow={(category) => this.props.updateCategory(category)}
+          saveRow={category => this.props.updateCategory(category)}
           addRow={
             !!!this.state.isArchived ? () => this.props.createCategory() : null
           }
           archiveRow={
-            !!!this.state.isArchived
-              ? (row) => this.showArchiveModal(row)
-              : null
+            !!!this.state.isArchived ? row => this.showArchiveModal(row) : null
           }
           dearchiveRow={
-            !!!this.state.isArchived
-              ? null
-              : (id) => this.props.openCategory(id)
+            !!!this.state.isArchived ? null : id => this.props.openCategory(id)
           }
           isUpdating={this.props.isUpdating}
           notFoundMessage={
@@ -164,15 +160,15 @@ class Categories extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.categories,
     userAuthState: state.userAuthState,
-    isUpdating: state.categoriesIsUpdating,
+    isUpdating: state.categoriesIsUpdating
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     fetchCategories: () => {
       dispatch(fetchCategories());
@@ -180,15 +176,15 @@ const mapDispatchToProps = (dispatch) => {
     createCategory: () => {
       dispatch(createCategory());
     },
-    archiveCategory: (id) => {
+    archiveCategory: id => {
       dispatch(archiveCategory(id));
     },
-    openCategory: (id) => {
+    openCategory: id => {
       dispatch(openCategory(id));
     },
-    updateCategory: (category) => {
+    updateCategory: category => {
       dispatch(updateCategory(category));
-    },
+    }
   };
 };
 

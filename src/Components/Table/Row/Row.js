@@ -42,7 +42,7 @@ class Row extends React.PureComponent {
     let buttons = null;
 
     if (this.props.isHeader) {
-      if (!this.props.addRow === null) {
+      if (this.props.addRow !== null) {
         buttons = (
           <Action
             icon={addIcon}
@@ -148,8 +148,8 @@ class Row extends React.PureComponent {
           value={this.props.rowsContent[index].value}
           disabled={this.props.rowsContent[index].disabled}
           //Функции на обработку
-          onChangeValue={(content) => this.onChangeValue(content, index)}
-          onChangeStyle={(style) => this.onChangeStyle(style, index)}
+          onChangeValue={content => this.onChangeValue(content, index)}
+          onChangeStyle={style => this.onChangeStyle(style, index)}
         />
       );
     });
@@ -166,9 +166,9 @@ class Row extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    windowWidth: state.windowWidth,
+    windowWidth: state.windowWidth
   };
 };
 
