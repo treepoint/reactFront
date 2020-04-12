@@ -4,6 +4,7 @@ import Axios from "axios";
 import { fetchCategories } from "./categories";
 import { removeTaskLog, createTaskLog } from "./tasksLog";
 import { setNotifications } from "./notifications";
+import { fetchActiveTasksCountByCategories } from "./statistics";
 
 const URL = APIURL + "/tasks";
 
@@ -31,7 +32,7 @@ export function clearTasks(object) {
 
 //Получить все задачи за определенный период
 export function fetchTasksByDate(date) {
-  return (dispatch) => {
+  return dispatch => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -39,12 +40,12 @@ export function fetchTasksByDate(date) {
     }
 
     Axios.get(URL + "/date/" + date, headers)
-      .then((response) => {
+      .then(response => {
         dispatch(setTasks(response.data));
         dispatch(fetchCategories());
         dispatch(setIsFetching(false));
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось получить список задач. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -69,11 +70,11 @@ export function createTask(date, name, category_id, executeNow) {
         : category_id,
       name: name,
       description: null,
-      create_date: date,
+      create_date: date
     };
 
     Axios.post(URL, task, headers)
-      .then((response) => {
+      .then(response => {
         if (typeof response.data === "object") {
           //К нему добавим новый объект и обновим список
           dispatch(setTasks(response.data));
@@ -86,7 +87,7 @@ export function createTask(date, name, category_id, executeNow) {
           }
         }
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось добавить задачу. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -110,7 +111,7 @@ export function updateTask(task, forDate) {
     const oldTask = state.tasks[task.id];
 
     Axios.put(URL + "/" + task.id, task, headers)
-      .then((response) => {
+      .then(response => {
         if (typeof response.data === "object") {
           //Если таску перенесли на другой день — удалим из текущего набора
           if (
@@ -121,7 +122,6 @@ export function updateTask(task, forDate) {
             dispatch(removeTask(task.id));
           } else {
             //Иначе обновим задачу в списке
-
             let updatedTask = response.data;
             //Проставим дату за которую считаем таску
             updatedTask[Object.keys(updatedTask)[0]].for_date = forDate;
@@ -136,8 +136,10 @@ export function updateTask(task, forDate) {
 
           dispatch(setIsUpdating(false));
         }
+
+        dispatch(fetchActiveTasksCountByCategories());
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось обновить задачу. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -156,7 +158,7 @@ export function deleteTask(id) {
     }
 
     Axios.delete(URL + "/" + id, headers)
-      .then((response) => {
+      .then(response => {
         if (typeof response.data.affectedRows === "number") {
           //Удалим объект и обновим список
           dispatch(removeTask(id));
@@ -175,7 +177,7 @@ export function deleteTask(id) {
           }
         }
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось удалить задачу. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));

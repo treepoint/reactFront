@@ -74,6 +74,7 @@ class Categories extends React.Component {
     ];
 
     let categories = this.props.categories;
+    let activeTasksCount = this.props.activeTasksCountByCategories;
 
     for (var c in categories) {
       //Если категории не закрыты — отобразим их
@@ -81,6 +82,12 @@ class Categories extends React.Component {
         (categories[c].close_date === null && !this.state.isArchived) ||
         (categories[c].close_date !== null && this.state.isArchived)
       ) {
+        let count = 0;
+
+        if (typeof activeTasksCount[categories[c].id] !== "undefined") {
+          count = activeTasksCount[categories[c].id].count;
+        }
+
         content.push([
           {
             key: "id",
@@ -100,7 +107,7 @@ class Categories extends React.Component {
             type: "string",
             disabled: true,
             textAlign: "center",
-            value: categories[c].active_tasks_count
+            value: count
           },
           {
             key: "description",
@@ -177,6 +184,7 @@ class Categories extends React.Component {
 const mapStateToProps = state => {
   return {
     categories: state.categories,
+    activeTasksCountByCategories: state.activeTasksCountByCategories,
     userAuthState: state.userAuthState,
     isUpdating: state.categoriesIsUpdating
   };

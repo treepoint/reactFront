@@ -17,6 +17,9 @@ export const SET_TOTAL_STATISTIC_BY_PERIOD = "SET_TOTAL_STATISTIC_BY_PERIOD";
 export const SET_STATISTIC_BY_DAYS_FOR_PERIOD =
   "SET_STATISTIC_BY_DAYS_FOR_PERIOD";
 
+export const SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES =
+  "SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES";
+
 export function setCategoriesStatisticByPeriod(object) {
   return { type: SET_CATEGORIES_STATISTIC_BY_PERIOD, object };
 }
@@ -39,6 +42,10 @@ export function setTotalStatisticByPeriod(number) {
 
 export function setStatisticByDaysForPeriod(array) {
   return { type: SET_STATISTIC_BY_DAYS_FOR_PERIOD, array };
+}
+
+export function setActiveTasksCountByCategories(object) {
+  return { type: SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES, object };
 }
 
 //Получить статистику по категориям за определенный период
@@ -148,6 +155,29 @@ export function fetchStatisticByDaysForPeriod(dateFrom, dateTo) {
       .catch(error => {
         let message =
           "Не удалось получить статистику. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
+      });
+  };
+}
+
+//Получить количество активных задач в разрезе категорий
+export function fetchActiveTasksCountByCategories() {
+  return dispatch => {
+    let headers = getHeaders();
+
+    if (headers === null) {
+      return;
+    }
+
+    let URL = APIURL + "/statistic/active_tasks/by_categories";
+
+    Axios.get(URL, headers)
+      .then(response => {
+        dispatch(setActiveTasksCountByCategories(response.data));
+      })
+      .catch(error => {
+        let message =
+          "Не удалось получить количество активных задач в разрезе категорий. Перезагрузите страницу.";
         dispatch(setNotifications({ message, type: "error" }));
       });
   };

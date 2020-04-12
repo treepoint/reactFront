@@ -42,7 +42,8 @@ import {
   categoriesStatisticByPeriod,
   tasksStatisticByPeriod,
   totalStatisticByPeriod,
-  statisticByDaysForPeriod
+  statisticByDaysForPeriod,
+  activeTasksCountByCategories
 } from "./statistics";
 
 const appReducer = history =>
@@ -92,7 +93,8 @@ const appReducer = history =>
     categoriesStatisticByPeriod,
     tasksStatisticByPeriod,
     totalStatisticByPeriod,
-    statisticByDaysForPeriod
+    statisticByDaysForPeriod,
+    activeTasksCountByCategories
   });
 
 const rootReducer = history => (state, action) => {

@@ -1,6 +1,7 @@
 //Обвязка для API
 import { APIURL, getHeaders } from "../APIConfiguration";
 import { setNotifications } from "./notifications";
+import { fetchActiveTasksCountByCategories } from "./statistics";
 import Axios from "axios";
 //Утилиты
 import { getCurrentDateWithTimeFormat } from "../../Libs/TimeUtils";
@@ -42,11 +43,14 @@ export function fetchCategories() {
       return;
     }
 
+    //Получим количество активных задач в разрезе категорий
+    dispatch(fetchActiveTasksCountByCategories());
+
     Axios.get(URL, headers)
-      .then((response) => {
+      .then(response => {
         dispatch(setCategories(response.data));
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось получить категории. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -56,7 +60,7 @@ export function fetchCategories() {
 
 //Создать категорию
 export function createCategory() {
-  return (dispatch) => {
+  return dispatch => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -68,19 +72,19 @@ export function createCategory() {
       name_style: JSON.stringify({
         bold: false,
         italic: false,
-        backgroundColor: "#f7f7f7",
+        backgroundColor: "#f7f7f7"
       }),
-      description: "",
+      description: ""
     };
 
     Axios.post(URL, category, headers)
-      .then((response) => {
+      .then(response => {
         if (typeof response.data === "object") {
           //Добавим новый объект и обновим список
           dispatch(setCategories(response.data));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось добавить категорию. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -90,7 +94,7 @@ export function createCategory() {
 
 //Обновить категорию
 export function updateCategory(category) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(setIsUpdating(true));
 
     let headers = getHeaders();
@@ -100,14 +104,14 @@ export function updateCategory(category) {
     }
 
     Axios.put(URL + "/" + category.id, category, headers)
-      .then((response) => {
+      .then(response => {
         if (typeof response.data === "object") {
           //Обновим список
           dispatch(setCategories(response.data));
           dispatch(setIsUpdating(false));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось обновить категорию. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
