@@ -26,7 +26,7 @@ export function clearTasksLog(object) {
 
 //Получить весь лог выполнения за определенный период
 export function fetchTasksLogByDate(date) {
-  return (dispatch) => {
+  return dispatch => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -34,11 +34,11 @@ export function fetchTasksLogByDate(date) {
     }
 
     Axios.get(URL + "/date/" + date, headers)
-      .then((response) => {
+      .then(response => {
         dispatch(setTasksLog(response.data));
         dispatch(fetchTasksByDate(date));
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось получить лог выполнения задач. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -48,7 +48,7 @@ export function fetchTasksLogByDate(date) {
 
 //Создать лог
 export function createTaskLog(taskId, date) {
-  return (dispatch) => {
+  return dispatch => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -59,17 +59,17 @@ export function createTaskLog(taskId, date) {
       task_id: taskId,
       comment: "",
       execution_start: date + " " + getCurrentTimeFormat(),
-      execution_end: date,
+      execution_end: date
     };
 
     Axios.post(URL, taskLog, headers)
-      .then((response) => {
+      .then(response => {
         if (typeof response.data === "object") {
           //К нему добавим новый объект и обновим список
           dispatch(setTasksLog(response.data));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось добавить запись в лог. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
@@ -95,7 +95,7 @@ export function updateTaskLog(taskLog, forDate) {
     let task = state.tasks[taskLog.task_id];
 
     Axios.put(URL + "/" + taskLog.id, taskLog, headers)
-      .then((response) => {
+      .then(response => {
         if (typeof response.data === "object") {
           //Новое время исполнения за день
           let newExecutionTime =
@@ -122,12 +122,42 @@ export function updateTaskLog(taskLog, forDate) {
           dispatch(setIsUpdating(false));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось обновить запись в логе. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
         dispatch(setIsUpdating(false));
       });
+  };
+}
+
+//Обновить название задачи в логе задач
+//Нужно, если задача переименовывается, но при этом она есть в логе
+export function updateTaskNameInLog(taskId) {
+  return (dispatch, getState) => {
+    //Получим текущее состояние
+    const state = getState();
+
+    //Вытащим оттуда лог
+    let taskLog = state.tasksLog;
+    //Вытащим оттуда задачу с таким названием
+    let task = state.tasks[taskId];
+
+    //Пройдемся по всем записям в логе
+    for (var tl in taskLog) {
+      //Найдем записи по этой задача
+      if (taskLog[tl].task_id === task.id) {
+        //Получим этот лог полностью
+        let newTaskLog = null;
+        newTaskLog = taskLog[tl];
+
+        //Обновим там имя задачи
+        newTaskLog.task_name = task.name;
+
+        //Обновим лог
+        dispatch(setTasksLog(newTaskLog));
+      }
+    }
   };
 }
 
@@ -155,7 +185,7 @@ export function deleteTaskLog(id) {
     task = { [taskLog.task_id]: task };
 
     Axios.delete(URL + "/" + id, headers)
-      .then((response) => {
+      .then(response => {
         if (typeof response.data.affectedRows === "number") {
           //Обновим таск
           dispatch(setTasks(task));
@@ -163,7 +193,7 @@ export function deleteTaskLog(id) {
           dispatch(removeTaskLog(id));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         let message =
           "Не удалось удалить запись из лога. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));

@@ -2,7 +2,7 @@
 import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
 import { fetchCategories } from "./categories";
-import { removeTaskLog, createTaskLog } from "./tasksLog";
+import { removeTaskLog, createTaskLog, updateTaskNameInLog } from "./tasksLog";
 import { setNotifications } from "./notifications";
 import { fetchActiveTasksCountByCategories } from "./statistics";
 
@@ -132,6 +132,11 @@ export function updateTask(task, forDate) {
               task.execution_time_day;
 
             dispatch(setTasks(updatedTask));
+
+            //Если имя задачи поменялось — обновим записи в логе по этой задаче
+            if (oldTask.name !== task.name) {
+              dispatch(updateTaskNameInLog(task.id));
+            }
           }
 
           dispatch(setIsUpdating(false));
