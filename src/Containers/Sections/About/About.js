@@ -11,20 +11,20 @@ class About extends React.PureComponent {
           <ul>
             <li>
               Фронт —{" "}
-              <a href="https://github.com/treepoint/haveDone">
-                https://github.com/treepoint/haveDone
+              <a href="https://github.com/treepoint/todayTasksFront">
+              https://github.com/treepoint/todayTasksFront
               </a>
             </li>
             <li>
               API —{" "}
-              <a href="https://github.com/treepoint/haveDoneAPI">
-                https://github.com/treepoint/haveDoneAPI
+              <a href="https://github.com/treepoint/todayTasksAPI">
+              https://github.com/treepoint/todayTasksAPI
               </a>
             </li>
             <li>
               Скрипты MySQL —{" "}
-              <a href="https://github.com/treepoint/haveDoneMySQL">
-                https://github.com/treepoint/haveDoneMySQL
+              <a href="https://github.com/treepoint/todayTasksDB">
+              https://github.com/treepoint/todayTasksDB
               </a>
             </li>
           </ul>
@@ -32,7 +32,7 @@ class About extends React.PureComponent {
         <p>
           После каждого коммита происходит сборка через jenkins. Последняя
           собранная версия автоматически размещается здесь →{" "}
-          <a href="https://serveria.ru:3000"> https://serveria.ru:3000</a>
+          <a href="https://todaytasks.ru"> https://todaytasks.ru</a>
         </p>
         <p>Спасибо за интерес!</p>
       </Page>
