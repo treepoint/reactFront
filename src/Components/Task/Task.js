@@ -18,7 +18,7 @@ import {
   getCurrentDateWithTimeFormat,
   getCurrentTimeFormat,
   getTimeFromMins,
-  getFormatDate,
+  getFormatDate
 } from "../../Libs/TimeUtils";
 //Картинки
 import deleteIcon from "../../Images/icon_delete.png";
@@ -44,7 +44,7 @@ class Task extends React.Component {
       isNewDateModalWindowHidden: true,
       isTaskPageHidden: true,
       isMenuOpen: false,
-      movedDate: null,
+      movedDate: null
     };
   }
 
@@ -56,7 +56,7 @@ class Task extends React.Component {
         isDeleteModalWindowHidden: true,
         isNewDateModalWindowHidden: true,
         isMenuOpen: false,
-        movedDate: null,
+        movedDate: null
       });
     }
   }
@@ -78,7 +78,7 @@ class Task extends React.Component {
       on_fire: this.props.content.on_fire,
       closed_date: this.props.content.closed_date,
       update_date: this.props.date + " " + getCurrentTimeFormat(),
-      moved_date: this.props.content.moved_date,
+      moved_date: this.props.content.moved_date
     };
 
     //Склеим объект и разницу
@@ -100,7 +100,7 @@ class Task extends React.Component {
       {
         isTaskPageHidden: true,
         isNewDateModalWindowHidden: true,
-        isDeleteModalWindowHidden: true,
+        isDeleteModalWindowHidden: true
       },
       this.props.deleteTask(this.props.content.id)
     );
@@ -111,7 +111,7 @@ class Task extends React.Component {
     this.setState(
       { isTaskPageHidden: true, isDeleteModalWindowHidden: true },
       this.saveTaskToDatabase({
-        moved_date: getFormatDate(this.state.movedDate),
+        moved_date: getFormatDate(this.state.movedDate)
       })
     );
   }
@@ -128,10 +128,10 @@ class Task extends React.Component {
       {
         isTaskPageHidden: true,
         isDeleteModalWindowHidden: true,
-        isNewDateModalWindowHidden: true,
+        isNewDateModalWindowHidden: true
       },
       this.saveTaskToDatabase({
-        closed_date: closed_date,
+        closed_date: closed_date
       })
     );
   }
@@ -150,7 +150,7 @@ class Task extends React.Component {
           height={68}
           isStylable={false}
           //Функции
-          onChangeValue={(value) => this.saveTaskToDatabase({ name: value })}
+          onChangeValue={value => this.saveTaskToDatabase({ name: value })}
         />
       </div>
     );
@@ -164,7 +164,7 @@ class Task extends React.Component {
           isMinimized={true}
           value={this.props.content.categories}
           height={34}
-          onChangeValue={(category) =>
+          onChangeValue={category =>
             this.saveTaskToDatabase({ category_id: category.current })
           }
         />
@@ -325,7 +325,7 @@ class Task extends React.Component {
           height: "10px",
           paddingBottom: "9px",
           marginTop: "-7px",
-          marginRight: "-4px",
+          marginRight: "-4px"
         }}
         isTransparent={true}
         hint="Расширенное описание"
@@ -456,13 +456,13 @@ class Task extends React.Component {
         //Основные функции
         onCancel={() => this.setState({ isTaskPageHidden: true })}
         //Для обратки изменений
-        saveTaskToDatabase={(diff) => this.saveTaskToDatabase(diff)}
-        updateTask={(task) => this.props.updateTask(task, this.props.date)}
+        saveTaskToDatabase={diff => this.saveTaskToDatabase(diff)}
+        updateTask={task => this.props.updateTask(task, this.props.date)}
         deleteTask={() => this.props.deleteTask(this.props.content.id)}
         createTaskLog={() =>
           this.props.createTaskLog(this.props.content.id, this.props.date)
         }
-        archiveTask={(state) => this.completeTask(state)}
+        archiveTask={state => this.completeTask(state)}
         //Для обработки модалок
         showDeleteModalWindow={() =>
           this.setState({ isDeleteModalWindowHidden: false })
@@ -499,7 +499,7 @@ class Task extends React.Component {
   getDeleteModalWindow() {
     return (
       <DeleteModalWindow
-        setState={(state) => this.setState(state)}
+        setState={state => this.setState(state)}
         deleteTask={this.deleteTask()}
       />
     );
@@ -511,8 +511,13 @@ class Task extends React.Component {
   getNewDateModalWindow() {
     return (
       <NewDateModalWindow
+        currentTaskDate={
+          !!!this.props.content.moved_date
+            ? this.props.content.moved_date
+            : this.props.content.for_date
+        }
         movedDate={this.state.movedDate}
-        setState={(state) => this.setState(state)}
+        setState={state => this.setState(state)}
         moveTask={() => this.moveTask()}
       />
     );
@@ -543,17 +548,17 @@ class Task extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateTask: (task, forDate) => {
       dispatch(updateTask(task, forDate));
     },
-    deleteTask: (id) => {
+    deleteTask: id => {
       dispatch(deleteTask(id));
     },
     createTaskLog: (taskId, date) => {
       dispatch(createTaskLog(taskId, date));
-    },
+    }
   };
 };
 
