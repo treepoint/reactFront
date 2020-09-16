@@ -512,7 +512,7 @@ class Task extends React.Component {
     return (
       <NewDateModalWindow
         currentTaskDate={
-          !!!this.props.content.moved_date
+          !!this.props.content.moved_date
             ? this.props.content.moved_date
             : this.props.content.for_date
         }
