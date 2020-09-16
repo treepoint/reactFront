@@ -6,7 +6,6 @@ import DocumentTitle from "react-document-title";
 import { connect } from "react-redux";
 import {
   restoreFromCookies,
-  setBrowserWarning,
   setWindowHeight,
   setWindowWidth
 } from "../../Store/actions/app";
@@ -37,11 +36,6 @@ class App extends React.PureComponent {
 
     //Напишем номер версии
     console.log("Номер сборки: 0.9.6");
-
-    //Чекнем браузер
-    if (!!!this.isFirefox()) {
-      this.props.setBrowserWarning();
-    }
   }
 
   isFirefox() {
@@ -126,9 +120,6 @@ const mapDispatchToProps = dispatch => {
   return {
     restoreFromCookies: () => {
       dispatch(restoreFromCookies());
-    },
-    setBrowserWarning: () => {
-      dispatch(setBrowserWarning());
     },
     setWindowWidth: width => {
       dispatch(setWindowWidth(width));

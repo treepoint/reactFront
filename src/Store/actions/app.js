@@ -7,7 +7,7 @@ import { push } from "connected-react-router";
 import { read_cookie, bake_cookie, delete_cookie } from "../../Libs/Sfcookies";
 //Другие actions
 import { setToken } from "./token";
-import { setNotifications } from "./notifications";
+//import { setNotifications } from "./notifications";
 import {
   setCurrentUserAndAdminByID,
   setCurrentUserAndAdmin,
@@ -236,11 +236,3 @@ export function loadAllData() {
   };
 }
 
-export function setBrowserWarning() {
-  return (dispatch) => {
-    let message =
-      "Веб-приложение находится в разработке. Рекомендуемый браузер — Firefox.";
-    //Запишем ошибку
-    dispatch(setNotifications({ message, type: "warning" }));
-  };
-}
