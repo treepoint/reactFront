@@ -1,11 +1,14 @@
 .loadWallpapersBox {
   display: flex;
   height: 90px;
-  width: 300px;
+  width: 384px;
   border: 1px dashed #c0c0c0;
   border-radius: 6px;
   margin-top: 6px;
+  margin-bottom: 6px;
   justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .loadBackgroundArea {
@@ -13,4 +16,5 @@
   font-size: 14px;
   margin: auto;
   text-align: center;
+  padding: 6px;
 }

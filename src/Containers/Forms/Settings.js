@@ -27,12 +27,27 @@ class Settings extends React.Component {
     super(props);
     this.state = {
       backgroundImage: [],
-      backgroundImageMessage:
-        "Перетащите png или jpg файл или кликните для выбора. Максимальный размер файла — 3 мегабайта.",
+      backgroundImageSizeByte: null,
+      backgroundImageMessage: null,
       user: this.props.currentUser,
       validation: {},
       isTouched: false
     };
+  }
+
+  componentDidMount() {
+    //Задаем максимальный размер файла обоев
+    let backgroundImageSizeByte = 3145728;
+    this.setState({ backgroundImageSizeByte });
+
+    //Собираем начальное сообщение исходя из заданного размера файла
+    let backgroundImageMessage =
+      "Перетащите PNG или JPG файл или кликните для выбора. Максимальный размер файла — " +
+      Math.floor((backgroundImageSizeByte / 1024 / 1024) * 100) / 100 +
+      " МБ.";
+
+    //Задаем начальное сообщение
+    this.setState({ backgroundImageMessage });
   }
 
   onChange(event) {
@@ -81,8 +96,26 @@ class Settings extends React.Component {
     return (
       <React.Fragment>
         <h1 className="h1">Настройки</h1>
-        <Lable>Профиль</Lable>
         <form onClick={event => event.stopPropagation()}>
+          <Lable>Обои</Lable>
+          <Dropzone
+            onDrop={acceptedFiles => this.onDrop(acceptedFiles)}
+            accept="image/png, image/jpeg"
+            minSize={0}
+            maxSize={this.state.backgroundImageSizeByte}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <section>
+                <div className="loadWallpapersBox" {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <p className="loadBackgroundArea">
+                    {this.state.backgroundImageMessage}
+                  </p>
+                </div>
+              </section>
+            )}
+          </Dropzone>
+          <Lable>Профиль</Lable>
           {INPUTS.map(inputs => (
             <div className="formInput">
               <Input
@@ -102,31 +135,16 @@ class Settings extends React.Component {
             </div>
           ))}
           <ErrorMessage message={this.props.updateProfileError} />
-          <Lable>Обои</Lable>
-          <Dropzone
-            onDrop={acceptedFiles => this.onDrop(acceptedFiles)}
-            accept="image/png, image/jpeg"
-            minSize={0}
-            maxSize={3145728}
-          >
-            {({ getRootProps, getInputProps }) => (
-              <section>
-                <div className="loadWallpapersBox" {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <p className="loadBackgroundArea">
-                    {this.state.backgroundImageMessage}
-                  </p>
-                </div>
-              </section>
-            )}
-          </Dropzone>
           <div className="formButton">
             <Button
               isPrimary={true}
-              value="Сохранить"
+              value="Обновить профиль"
               onClick={event => this.updateUser(event)}
             />
-            <Button value="Выйти" onClick={event => this.logoff(event)} />
+            <Button
+              value="Выйти из учетной записи"
+              onClick={event => this.logoff(event)}
+            />
           </div>
         </form>
       </React.Fragment>
