@@ -1,10 +1,14 @@
 //Обвязка для API
 import { APIURL, getHeaders } from "../APIConfiguration";
 import Axios from "axios";
+import { setNextDayAlreadyComesMessageShowDate } from "./app";
 import { fetchCategories } from "./categories";
 import { removeTaskLog, createTaskLog, updateTaskNameInLog } from "./tasksLog";
 import { setNotifications } from "./notifications";
 import { fetchActiveTasksCountByCategories } from "./statistics";
+
+//Подключаем библиотеку для работы со временем
+import { getCurrentFormatDate, getFormatDate } from "../../Libs/TimeUtils";
 
 const URL = APIURL + "/tasks";
 
@@ -41,9 +45,20 @@ export function fetchTasksByDate(date) {
 
     Axios.get(URL + "/date/" + date, headers)
       .then(response => {
+        //Записываем ответ
         dispatch(setTasks(response.data));
+        //Получаем категории
         dispatch(fetchCategories());
+        //Проставляем, что загрузку прекратили
         dispatch(setIsFetching(false));
+        /*Если таски загружаем за сегодня — проставим обозначение, что
+          предупреждающее сообщение о «вчерашнем дне» показывать не нужно. Если точнее, то мы ставим дату когда оно показывалось, 
+          считаем, что сегодня */
+        if (getFormatDate(date) === getCurrentFormatDate()) {
+          dispatch(
+            setNextDayAlreadyComesMessageShowDate(getCurrentFormatDate())
+          );
+        }
       })
       .catch(error => {
         let message =

@@ -7,8 +7,9 @@ import { connect } from "react-redux";
 import {
   restoreFromCookies,
   setWindowHeight,
-  setWindowWidth
-} from "../../Store/actions/app";
+  setWindowWidth,
+  checkNextDayAlreadyComes
+} from "../../Store/actions/app.js";
 //Подключаем модальные окна
 import { getGlobalModalWindow } from "../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 //Подключаем компоненты и контейнеры
@@ -36,6 +37,9 @@ class App extends React.PureComponent {
 
     //Напишем номер версии
     console.log("Номер сборки: 0.9.8");
+
+    //Проверяем не наступил ли следующий день, возможно стоит выдать аллерт об этом
+    setInterval(this.props.checkNextDayAlreadyComes, 5000);
   }
 
   isFirefox() {
@@ -126,6 +130,9 @@ const mapDispatchToProps = dispatch => {
     },
     setWindowHeight: height => {
       dispatch(setWindowHeight(height));
+    },
+    checkNextDayAlreadyComes: () => {
+      dispatch(checkNextDayAlreadyComes());
     }
   };
 };

@@ -7,9 +7,12 @@ import "./Notification.css";
 
 class Notification extends React.Component {
   removeNotification() {
-    setTimeout(() => {
-      this.props.removeNotification(this.props.uuid);
-    }, 5000);
+    //Если нужно автоскрыть — выставим таймер
+    if (this.props.autohide) {
+      setTimeout(() => {
+        this.props.removeNotification(this.props.uuid);
+      }, 5000);
+    }
   }
 
   render() {

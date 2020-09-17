@@ -21,6 +21,7 @@ class NotificationSystem extends React.Component {
           message={notifications[n].message}
           type={notifications[n].type}
           uuid={notifications[n].uuid}
+          autohide={notifications[n].autohide}
         />
       );
     }

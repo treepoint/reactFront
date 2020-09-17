@@ -139,17 +139,17 @@ export function updateTaskNameInLog(taskId) {
     const state = getState();
 
     //Вытащим оттуда лог
-    let taskLog = state.tasksLog;
+    let tasksLog = state.tasksLog;
     //Вытащим оттуда задачу с таким названием
     let task = state.tasks[taskId];
 
     //Пройдемся по всем записям в логе
-    for (var tl in taskLog) {
+    for (var tl in tasksLog) {
       //Найдем записи по этой задача
-      if (taskLog[tl].task_id === task.id) {
+      if (tasksLog[tl].task_id === task.id) {
         //Получим этот лог полностью
         let newTaskLog = null;
-        newTaskLog = taskLog[tl];
+        newTaskLog = tasksLog[tl];
 
         //Обновим там имя задачи
         newTaskLog.task_name = task.name;

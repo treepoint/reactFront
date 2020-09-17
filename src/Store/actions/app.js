@@ -5,19 +5,20 @@ import Axios from "axios";
 import { push } from "connected-react-router";
 //Подключаем cookies
 import { read_cookie, bake_cookie, delete_cookie } from "../../Libs/Sfcookies";
+//Подключаем библиотеку для работы со временем
+import { getCurrentFormatDate, getFormatDate } from "../../Libs/TimeUtils";
 //Другие actions
 import { setToken } from "./token";
-//import { setNotifications } from "./notifications";
+import { setNotifications } from "./notifications";
 import {
   setCurrentUserAndAdminByID,
-  setCurrentUserAndAdmin,
+  setCurrentUserAndAdmin
 } from "./currentUser";
 import { fetchCategories } from "./categories";
 import { fetchTasksByDate } from "./tasks";
 import { fetchTasksLogByDate } from "./tasksLog";
 import { setModalWindowState } from "./globalModalWindow";
 import { fetchUserSettings } from "./userSettings";
-import { getCurrentFormatDate } from "../../Libs/TimeUtils";
 
 export const SET_USER_AUTH_STATE = "SET_USER_AUTH_STATE";
 export const SET_AUTH_ERROR = "AUTH_ERROR";
@@ -27,6 +28,8 @@ export const SET_SHOW_HEADER_WARNING = "SET_SHOW_HEADER_WARNING";
 export const SET_WINDOW_HEIGHT = "SET_WINDOW_HEIGHT";
 export const SET_WINDOW_WIDTH = "SET_WINDOW_WIDTH";
 export const SET_TITLE = "SET_TITLE";
+export const SET_NEXT_DAY_ALREADY_COMES_MESSAGE_SHOW_DATE =
+  "SET_NEXT_DAY_ALREADY_COMES_MESSAGE_SHOW_DATE";
 
 export function setUserAuthState(boolean) {
   return { type: SET_USER_AUTH_STATE, boolean };
@@ -58,6 +61,10 @@ export function setWindowWidth(number) {
 
 export function setTitle(string) {
   return { type: SET_TITLE, string };
+}
+
+export function setNextDayAlreadyComesMessageShowDate(date) {
+  return { type: SET_NEXT_DAY_ALREADY_COMES_MESSAGE_SHOW_DATE, date };
 }
 
 export function logoff() {
@@ -126,7 +133,7 @@ export function reauth(refreshToken) {
     const url = APIURL + "/reauth";
 
     //Пытаемся обновить данные по нему
-    Axios.post(url, { refreshToken }).then((response) => {
+    Axios.post(url, { refreshToken }).then(response => {
       //Unixtime в обычное время
       let tokenExp = new Date(response.data.token.exp * 1000);
 
@@ -169,7 +176,7 @@ export function login() {
     const state = getState();
 
     Axios.post(url, state.currentUser)
-      .then((response) => {
+      .then(response => {
         //Unixtime в обычное время
         let tokenExp = new Date(response.data.token.exp * 1000);
 
@@ -206,7 +213,7 @@ export function login() {
 
         dispatch(push("/tasks_manager"));
       })
-      .catch((error) => {
+      .catch(error => {
         let errorMessage = null;
 
         switch (error.response.status) {
@@ -224,7 +231,7 @@ export function login() {
 }
 
 export function loadAllData() {
-  return (dispatch) => {
+  return dispatch => {
     //Проставим пользовательские настройки
     dispatch(fetchUserSettings());
     //Загрузим категории
@@ -236,3 +243,51 @@ export function loadAllData() {
   };
 }
 
+//Функциональность для отображения оповещения, что наступил новый день и может быть нужно перейти в задачах к следующему дню
+export function checkNextDayAlreadyComes() {
+  return (dispatch, getState) => {
+    /*Вот здесь надо проверить, что:
+        1. Уведомление еще не показывали сегодня
+        2. Таски за сегодня еще не смотрели (это проверяется косвенно — 
+           при получении тасок проставляется дата nextDayAlreadyComesMessageShowDate, как будто бы сообщение уже показывали)
+        3. Последняя запись в логе была вчера (по времени браузера)
+      И если все-так — отображаем сообщение */
+
+    //Получим текущее состояние
+    const state = getState();
+
+    //Если уже сообщение показывали сегодня — просто выйдем
+    if (state.nextDayAlreadyComesMessageShowDate === getCurrentFormatDate()) {
+      return null;
+    }
+
+    //Вытащим лог выполнения задач
+    let tasksLog = state.tasksLog;
+
+    //Пройдемся по логу, найдем самую новую запись
+    let maxTaskLogId = 0;
+
+    for (var tl in tasksLog) {
+      if (tasksLog[tl].id > maxTaskLogId) {
+        maxTaskLogId = tasksLog[tl].id;
+      }
+    }
+
+    //Проверим, что лог нашелся
+    if (maxTaskLogId === 0) {
+      return;
+    }
+
+    //Если день этой записи меньше чем сегодня — покажем сообщение
+    if (
+      getFormatDate(tasksLog[maxTaskLogId].for_date) < getCurrentFormatDate()
+    ) {
+      let message =
+        "Сервис открыт со вчерашнего дня. Возможно вам требуется переключить день на следующий для продолжения работы.";
+      //Запишем ошибку
+      dispatch(setNotifications({ message, type: "warning", autohide: false }));
+      //Проставим, что сегодня уже показывали
+      dispatch(setNextDayAlreadyComesMessageShowDate(getCurrentFormatDate()));
+    }
+  };
+}

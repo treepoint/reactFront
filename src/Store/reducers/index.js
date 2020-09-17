@@ -14,7 +14,8 @@ import {
   showHeaderWarning,
   windowHeight,
   windowWidth,
-  title
+  title,
+  nextDayAlreadyComesMessageShowDate
 } from "./app";
 
 import {
@@ -57,6 +58,7 @@ const appReducer = history =>
     windowHeight,
     windowWidth,
     title,
+    nextDayAlreadyComesMessageShowDate,
     //Page
     scrollTop,
     scrollLeft,
