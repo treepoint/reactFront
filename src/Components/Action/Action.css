@@ -53,10 +53,10 @@
 }
 
 .action.flicker {
-  -webkit-animation: flickerAnimation 2s infinite;
-  -moz-animation: flickerAnimation 2s infinite;
-  -o-animation: flickerAnimation 2s infinite;
-  animation: flickerAnimation 2s infinite;
+  -webkit-animation: flickerAnimation 1.4s infinite;
+  -moz-animation: flickerAnimation 1.4s infinite;
+  -o-animation: flickerAnimation 1.4s infinite;
+  animation: flickerAnimation 1.4s infinite;
 }
 
 @keyframes flickerAnimation {
@@ -114,7 +114,7 @@
 
 .actionHintContainer {
   position: absolute;
-  z-index: 99;
+  z-index: 999;
   margin-left: -28px;
   display: flex;
   justify-content: flex-end;

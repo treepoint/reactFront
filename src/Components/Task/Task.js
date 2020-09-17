@@ -9,7 +9,7 @@ import SelectContent from "../SelectContent/SelectContent";
 import TimeContent from "../TimeContent/TimeContent";
 import Spacer from "../Spacer/Spacer";
 import Action from "../Action/Action";
-import TaskModalWindow from "../TaskModalWindow/TaskModalWindow";
+import ExtendTaskWindow from "../ExtendTaskWindow/ExtendTaskWindow";
 //Модалки
 import NewDateModalWindow from "./ModalWindows/NewDateModalWindow";
 import DeleteModalWindow from "./ModalWindows/DeleteModalWindow";
@@ -450,7 +450,7 @@ class Task extends React.Component {
   //Само модальное окно с подробностями
   getTaskPageModalWindow() {
     return (
-      <TaskModalWindow
+      <ExtendTaskWindow
         //Контент
         content={this.props.content}
         //Основные функции

@@ -1,5 +1,6 @@
-.taskModalWindow {
+.extendTaskWindow {
   width: 100%;
+  margin-top: -10px;
 }
 
 .taskSidebar {
@@ -15,14 +16,14 @@
 
 .taskName {
   margin-bottom: 12px;
-  margin-left: -6px;
+  margin-left: 0px;
   border-bottom: 1px dashed #c0c0c0;
-  padding-bottom: 4px;
+  padding-right: 6px;
 }
 
 .taskSelect {
-  margin-bottom: 12px;
-  width: 220px;
+  margin-bottom: 4px;
+  width: 204px;
   font-weight: bold;
 }
 
@@ -38,25 +39,34 @@
 }
 
 .taskTimeContainer {
-  margin-top: 12px;
+  margin-top: 6px;
   display: flex;
   flex-direction: column;
 }
 
 .taskTime {
-  font-weight: bold;
-  padding: 6px 0px;
+  display: flex;
+  margin-left: -3px;
 }
 
 .taskActionsContainer {
   border-bottom: 1px dashed #c0c0c0;
   padding: 6px 0px;
-  justify-content: flex-start !important;
-  justify-items: flex-start;
-  display: grid;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
 }
 
 .ck-editor__editable {
   min-height: 372px !important;
   width: 60vw;
+}
+
+.timeContentExtendWindowWrapper {
+  width: 60px;
+}
+.taskTimeLabel {
+  padding-top: 9px;
+  width: 100%;
+  color: #a9a9a9;
 }
