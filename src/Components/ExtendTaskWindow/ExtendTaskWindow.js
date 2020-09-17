@@ -137,10 +137,10 @@ class ExtendTaskWindow extends React.PureComponent {
                   : null}
               </div>
               <div className="taskTimeContainer">
-                {//Время выполнения всего
-                this.getExecutionTimeAll()}
                 {//Время выполнения за день
                 this.getExecutionTimeDay()}
+                {//Время выполнения всего
+                this.getExecutionTimeAll()}
               </div>
             </div>
           </div>
