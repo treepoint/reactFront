@@ -64,81 +64,6 @@ export function setNextDayAlreadyComesMessageShowDate(date) {
   return { type: SET_NEXT_DAY_ALREADY_COMES_MESSAGE_SHOW_DATE, date };
 }
 
-export function logoff() {
-  return (dispatch, getStore) => {
-    //Сохраним текущую ширину и высоту экрана. Их обнулять не нужно
-    let windowWidth = getStore().windowWidth;
-    let windowHeight = getStore().windowHeight;
-
-    //Очистим стор
-    dispatch(clearState());
-
-    //Восстановим записи о ширине и высоте
-    dispatch(setWindowWidth(windowWidth));
-    dispatch(setWindowHeight(windowHeight));
-
-    //Очистим cookies
-    delete_cookie("token");
-    delete_cookie("user_id");
-    delete_cookie("refresh_token");
-
-    dispatch(push("/"));
-  };
-}
-
-export function restoreFromCookies() {
-  return dispatch => {
-    const refreshToken = read_cookie("refresh_token");
-
-    //Если есть refreshToken — по нему
-    if (refreshToken.length !== 0) {
-      dispatch(reauth(refreshToken));
-      return;
-    }
-  };
-}
-
-export function reauth(refreshToken) {
-  return (dispatch, getStore) => {
-    //Обновление токена
-    const url = APIURL + "/reauth";
-
-    //Пытаемся обновить данные по нему
-    Axios.post(url, { refreshToken }).then(response => {
-      //Unixtime в обычное время
-      let tokenExp = new Date(response.data.token.exp * 1000);
-
-      //Unixtime в обычное время
-      let refreshTokenExp = new Date(response.data.refreshToken.exp * 1000);
-
-      //Заготовим печеньки
-      bake_cookie("token", response.data.token.value, tokenExp);
-      bake_cookie("user_id", response.data.user.id, tokenExp);
-      bake_cookie(
-        "refresh_token",
-        response.data.refreshToken.value,
-        refreshTokenExp
-      );
-
-      //Проставим токен
-      dispatch(setToken(response.data.token.value));
-      //Пользователя
-      dispatch(setCurrentUserAndAdmin(response.data.user));
-      //Авторизацию
-      dispatch(setUserAuthState(true));
-      //Загрузим все данные приложения
-      dispatch(loadAllData());
-
-      //Если текущая локация — главная страница — переадресуемся на задачи
-      let currentPath = getStore().router.location.pathname;
-
-      if (currentPath === "/") {
-        dispatch(push("/tasks_manager"));
-      }
-    });
-  };
-}
-
 export function login() {
   return (dispatch, getState) => {
     //Создание токена
@@ -198,6 +123,85 @@ export function login() {
 
         dispatch(setAuthError(errorMessage));
       });
+  };
+}
+
+export function logoff() {
+  return (dispatch, getStore) => {
+    //Сбросим страницу на главную
+    dispatch(push("/"));
+
+    //Сохраним текущую ширину и высоту экрана. Их обнулять не нужно
+    let windowWidth = getStore().windowWidth;
+    let windowHeight = getStore().windowHeight;
+
+    //Очистим стор
+    dispatch(clearState());
+
+    //Восстановим записи о ширине и высоте
+    dispatch(setWindowWidth(windowWidth));
+    dispatch(setWindowHeight(windowHeight));
+
+    //Очистим cookies
+    delete_cookie("token");
+    delete_cookie("user_id");
+    delete_cookie("refresh_token");
+  };
+}
+
+export function restoreFromCookies() {
+  return dispatch => {
+    const refreshToken = read_cookie("refresh_token");
+
+    //Если есть refreshToken — по нему
+    if (refreshToken.length !== 0) {
+      dispatch(reauth(refreshToken));
+      return;
+    } else {
+      //Если refreshToken'а нет — на всякий случай выйдем, если токен был, но просрочился
+      dispatch(logoff());
+    }
+  };
+}
+
+export function reauth(refreshToken) {
+  return (dispatch, getStore) => {
+    //Обновление токена
+    const url = APIURL + "/reauth";
+
+    //Пытаемся обновить данные по нему
+    Axios.post(url, { refreshToken }).then(response => {
+      //Unixtime в обычное время
+      let tokenExp = new Date(response.data.token.exp * 1000);
+
+      //Unixtime в обычное время
+      let refreshTokenExp = new Date(response.data.refreshToken.exp * 1000);
+
+      //Заготовим печеньки
+      bake_cookie("token", response.data.token.value, tokenExp);
+      bake_cookie("user_id", response.data.user.id, tokenExp);
+      bake_cookie(
+        "refresh_token",
+        response.data.refreshToken.value,
+        refreshTokenExp
+      );
+
+      //Проставим токен
+      dispatch(setToken(response.data.token.value));
+      //Пользователя
+      dispatch(setCurrentUserAndAdmin(response.data.user));
+      //Авторизацию
+      dispatch(setUserAuthState(true));
+      //Загрузим все данные приложения
+      dispatch(loadAllData());
+
+      //Если текущая локация — главная страница — переадресуемся на задачи
+      let currentPath = getStore().router.location.pathname;
+
+      if (currentPath === "/") {
+        dispatch(push("/tasks_manager"));
+      }
+    });
   };
 }
 

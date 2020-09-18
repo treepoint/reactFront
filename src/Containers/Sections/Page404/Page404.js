@@ -2,7 +2,7 @@ import React from "react";
 //Подключаем модалки
 import {
   login,
-  registration,
+  registration
 } from "../../../Components/GlobalModalWindow/GLOBAL_MODAL_WINDOWS";
 import AnchorModalWindow from "../../../Components/AnchorModalWindow/AnchorModalWindow";
 //Импортируем компоненты
@@ -12,7 +12,7 @@ import Page from "../../../Components/Page/Page";
 class Page404 extends React.PureComponent {
   render() {
     return (
-      <Page title="Ничего не найдено. 404">
+      <Page title="Ничего не найдено или страница требует авторизации">
         <p>
           Возможно вы попытались зайти на страницу, недоступную для
           неавторизованного пользователя или данной страницы не существует.
