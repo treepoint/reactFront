@@ -10,10 +10,7 @@ import { getCurrentFormatDate, getFormatDate } from "../../Libs/TimeUtils";
 //Другие actions
 import { setToken } from "./token";
 import { setNotifications } from "./notifications";
-import {
-  setCurrentUserAndAdminByID,
-  setCurrentUserAndAdmin
-} from "./currentUser";
+import { setCurrentUserAndAdmin } from "./currentUser";
 import { fetchCategories } from "./categories";
 import { fetchTasksByDate } from "./tasks";
 import { fetchTasksLogByDate } from "./tasksLog";
@@ -90,34 +87,8 @@ export function logoff() {
 }
 
 export function restoreFromCookies() {
-  return (dispatch, getStore) => {
-    const token = read_cookie("token");
-    const userId = read_cookie("user_id");
+  return dispatch => {
     const refreshToken = read_cookie("refresh_token");
-
-    //Если есть обычный токен — попробуем по нему
-    if (token.length !== 0 && userId.length !== 0) {
-      //Токен из cookies
-      dispatch(setToken(token));
-
-      //Пользователя получим по ID. Если токен не рабочий — ничего не получим, все четко.
-      dispatch(setCurrentUserAndAdminByID(userId));
-
-      //Проставим авторизацию
-      dispatch(setUserAuthState(true));
-
-      //Загрузим все данные приложения
-      dispatch(loadAllData());
-
-      //Если текущая локация — главная страница — переадресуемся на задачи
-      let currentPath = getStore().router.location.pathname;
-
-      if (currentPath === "/") {
-        dispatch(push("/tasks_manager"));
-      }
-
-      return;
-    }
 
     //Если есть refreshToken — по нему
     if (refreshToken.length !== 0) {
