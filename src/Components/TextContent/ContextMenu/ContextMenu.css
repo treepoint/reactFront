@@ -28,16 +28,19 @@
   content: "";
 }
 
-.twitterPicker {
+.circle-picker {
   background: #f7f7f7 !important;
   border: 1px solid #9c9c9c !important;
+  padding-left: 12px;
+  padding-top: 12px;
+  border-radius: 6px;
 }
 
-.twitterPicker.hidden {
-  display: none;
+.circle-picker.hidden {
+  display: none !important;
 }
 
-.twitterPicker:before {
+.circle-picker:before {
   border: 11px solid transparent;
   border-bottom-color: transparent;
   border-bottom-color: #9c9c9c;
@@ -45,4 +48,15 @@
   bottom: 100%;
   left: 10px;
   content: "";
+}
+
+.circle-picker::after {
+  border: 11px solid transparent;
+  border-bottom-color: transparent;
+  border-bottom-color: #f7f7f7;
+  position: absolute;
+  bottom: 100%;
+  left: 10px;
+  content: "";
+  top: -21px;
 }

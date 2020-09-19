@@ -1,11 +1,9 @@
 import React from "react";
 //Подключаем компоненты
-import { TwitterPicker } from "react-color";
+import { CirclePicker } from "react-color";
 import Action from "../../Action/Action";
 import Blur from "../../Blur/Blur";
 //Подключаем изображения иконок и CSS
-import iconBold from "../../../Images/icon_bold.png";
-import iconItalic from "../../../Images/icon_italic.png";
 import iconBackgroundColor from "../../../Images/icon_backgroundColor.png";
 import iconBroom from "../../../Images/icon_broom.png";
 import "./ContextMenu.css";
@@ -28,6 +26,7 @@ class ContextMenu extends React.Component {
     let newState = Object.assign(
       {},
       {
+        //Пока bold и italic оставим как атавизмы, но потом можно будет и удалить
         bold: this.props.bold,
         italic: this.props.italic,
         backgroundColor: this.props.backgroundColor
@@ -43,29 +42,10 @@ class ContextMenu extends React.Component {
     event.stopPropagation();
 
     this.props.onChangeStyle({
+      //Пока bold и italic оставим как атавизмы, но потом можно будет и удалить
       bold: false,
       italic: false,
       backgroundColor: "#f7f7f7"
-    });
-  }
-
-  //Выставляем жирное начертание
-  setBold(event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    this.assignCellStyle({
-      bold: !this.props.bold
-    });
-  }
-
-  //Выставляем курсивное начертание
-  setItalic(event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    this.assignCellStyle({
-      italic: !this.props.italic
     });
   }
 
@@ -90,24 +70,12 @@ class ContextMenu extends React.Component {
 
   getBackgroundColorPicker() {
     return (
-      <div style={{ position: "absolute", top: "51px", left: "71px" }}>
-        <TwitterPicker
-          colors={[
-            "#88d154", //Бодряще зеленый
-            "#74bce5", //Уверенно голубой
-            "#ffd966", //Солнечно желтый
-            "#fc9558", //Подгорающе оранжевый
-            "#F78DA7", //Опасно розовый
-            "#EB144C", //Ожоги второй степени
-            "#cccccc", //Серый как твоя жизнь
-            "#303030", //Темно серый, как это описание
-            "#8174e5", //Цвет Донателло
-            "#f7f7f7" //По умолчанию
-          ]}
+      <div style={{ position: "absolute", top: "81px", left: "-22px" }}>
+        <CirclePicker
           className={
             !!this.state.isBackgroundColorPickerActive
-              ? "twitterPicker"
-              : "twitterPicker hidden"
+              ? "circle-picker"
+              : "circle-picker hidden"
           }
           onChange={(color, event) => this.setCellBackgroundColor(color, event)}
         />
@@ -157,18 +125,6 @@ class ContextMenu extends React.Component {
             this.props.onWheel(event);
           }}
         >
-          <Action
-            icon={iconBold}
-            style={actionStyle}
-            isPressed={this.props.bold}
-            onClick={event => this.setBold(event)}
-          />
-          <Action
-            icon={iconItalic}
-            style={actionStyle}
-            isPressed={this.props.italic}
-            onClick={event => this.setItalic(event)}
-          />
           <Action
             icon={iconBackgroundColor}
             style={actionStyle}
