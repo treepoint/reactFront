@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import Blur from "../Blur/Blur";
 import ReactCustomScroll from "react-scrollbars-custom";
 import TextareaAutosize from "react-textarea-autosize";
+import ChangeCellColorMenu from "./ChangeCellColorMenu/ChangeCellColorMenu";
+//CSS
 import "./TextareaScrollbar.css";
 
 class TextareaScrollbar extends React.Component {
@@ -173,7 +175,8 @@ class TextareaScrollbar extends React.Component {
           className={
             "textareaScrollbar" +
             (!!this.props.isHaveError ? " error" : "") +
-            (!!this.props.disabled ? " disabled" : "")
+            (!!this.props.disabled ? " disabled" : "") +
+            (!!this.props.isStylable ? " stylable" : "")
           }
           noScrollX
           style={{
@@ -197,53 +200,57 @@ class TextareaScrollbar extends React.Component {
             onContextMenu={event => this.onBlur(event)}
           />
         )}
-
-        {this.scrollWrapper(
-          <TextareaAutosize
-            autoFocus={this.props.autoFocus}
-            inputRef={tag => (this.textarea = tag)}
-            style={Object.assign(
-              {
-                minHeight: !!this.props.height
-                  ? !!this.state.isChrome
-                    ? this.props.height -
-                      (!!this.state.wideEditAreaIsHidden ? 7 : 1)
-                    : this.props.height
-                  : "100%",
-                width: !!this.props.width
-                  ? this.props.width -
-                    (!!this.state.wideEditAreaIsHidden ? 22 : 15)
-                  : "100%",
-                marginLeft: !!this.state.wideEditAreaIsHidden
-                  ? 0 + "px"
-                  : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
-                marginTop: !!this.state.wideEditAreaIsHidden
-                  ? 0 + "px"
-                  : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
-                textAlign: this.props.textAlign
-              },
-              this.props.style
-            )}
-            spellCheck={this.props.spellCheck}
-            className={this.getClassName()}
-            placeholder={this.props.placeholder}
-            //Задаем контент
-            value={this.state.value}
-            onFocus={this.props.onFocus}
-            disabled={this.props.disabled}
-            onClick={event => event.stopPropagation()}
-            onChange={event => this.onChange(event)}
-            //Обрабатываем двойной клик
-            onDoubleClick={() => this.showWideEditArea()}
-            //Обрабатываем контекстное меню
-            onContextMenu={this.props.onContextMenu}
-            //Обрабатываем потерю фокуса
-            onBlur={event => this.onBlur(event)}
-            onKeyPress={event => this.onKeyPress(event)}
-            minRows={this.props.minRows}
-            maxRows={this.props.maxRows}
+        <React.Fragment>
+          <ChangeCellColorMenu
+            isStylable={this.props.isStylable}
+            onChangeStyle={style => this.props.onChangeStyle(style)}
           />
-        )}
+
+          {this.scrollWrapper(
+            <TextareaAutosize
+              autoFocus={this.props.autoFocus}
+              inputRef={tag => (this.textarea = tag)}
+              style={Object.assign(
+                {
+                  minHeight: !!this.props.height
+                    ? !!this.state.isChrome
+                      ? this.props.height -
+                      (!!this.state.wideEditAreaIsHidden ? 7 : 1)
+                      : this.props.height
+                    : "100%",
+                  width: !!this.props.width
+                    ? this.props.width -
+                    (!!this.state.wideEditAreaIsHidden ? 22 : 15) - (!!this.props.isStylable ? 20 : 0)
+                    : "100%",
+                  marginLeft: !!this.state.wideEditAreaIsHidden
+                    ? 0 + "px"
+                    : -(!!this.props.isFixed ? 0 : this.props.scrollLeft) + "px",
+                  marginTop: !!this.state.wideEditAreaIsHidden
+                    ? 0 + "px"
+                    : -(!!this.props.isFixed ? 0 : this.props.scrollTop) + "px",
+                  textAlign: this.props.textAlign
+                },
+                this.props.style
+              )}
+              spellCheck={this.props.spellCheck}
+              className={this.getClassName()}
+              placeholder={this.props.placeholder}
+              //Задаем контент
+              value={this.state.value}
+              onFocus={this.props.onFocus}
+              disabled={this.props.disabled}
+              onClick={event => event.stopPropagation()}
+              onChange={event => this.onChange(event)}
+              //Обрабатываем двойной клик
+              onDoubleClick={() => this.showWideEditArea()}
+              //Обрабатываем потерю фокуса
+              onBlur={event => this.onBlur(event)}
+              onKeyPress={event => this.onKeyPress(event)}
+              minRows={this.props.minRows}
+              maxRows={this.props.maxRows}
+            />
+          )}
+        </React.Fragment>
       </React.Fragment>
     );
   }

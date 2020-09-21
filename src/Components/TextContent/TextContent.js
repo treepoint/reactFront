@@ -2,9 +2,8 @@ import React from "react";
 //Подключаем redux
 import { connect } from "react-redux";
 //Подключаем компоненты
-import ContextMenu from "./ContextMenu/ContextMenu";
 import TextareaScrollbar from "../TextareaScrollbar/TextareaScrollbar";
-//Подключаем красивые скроллы
+//Подключаем CSS
 import "./TextContent.css";
 
 class TextContent extends React.Component {
@@ -20,20 +19,6 @@ class TextContent extends React.Component {
     return navigator.userAgent.indexOf("Chrome") + 1;
   }
 
-  //Срабатывает при вызове контекстного меню
-  showContextMenu(event) {
-    //Если не отключена возможность редактировать контент, и не отключена стилизация и это не шапка
-    if (
-      !this.props.disabled &&
-      !!this.props.isStylable &&
-      !this.props.isHeader
-    ) {
-      event.stopPropagation();
-      event.preventDefault();
-      this.setState({ contextMenuIsHidden: !this.state.contextMenuIsHidden });
-    }
-  }
-
   //Получаем стиль ячейки заголовка на основании стиля контента
   getStyle() {
     if (this.props.isHeader) {
@@ -47,8 +32,8 @@ class TextContent extends React.Component {
         backgroundColor: !!this.props.isStandalone
           ? "fff"
           : !!this.props.disabled
-          ? "rgb(251, 251, 251)"
-          : null,
+            ? "rgb(251, 251, 251)"
+            : null,
         borderLeft: !!this.props.isStylable
           ? "8px solid " + this.props.backgroundColor
           : "none",
@@ -80,43 +65,13 @@ class TextContent extends React.Component {
         onFocus={() => this.setState({ isReadOnly: true })}
         disabled={this.props.disabled}
         onChange={value => this.props.onChangeValue(value)}
-        //Обрабатываем контекстное меню
-        onContextMenu={event => this.showContextMenu(event)}
+        onChangeStyle={style => this.props.onChangeStyle(style)}
       />
     );
   }
 
-  //Контекстное меню рисуем только если нужно
-  getContextMenu() {
-    if (!this.state.contextMenuIsHidden) {
-      return (
-        <ContextMenu
-          scrollLeft={!!this.props.isFixed ? 0 : this.props.scrollLeft}
-          scrollTop={!!this.props.isFixed ? 0 : this.props.scrollTop}
-          //Настройки стиля
-          bold={this.props.bold}
-          italic={this.props.italic}
-          backgroundColor={this.props.backgroundColor}
-          //Функции
-          setContextMenuHidden={() =>
-            this.setState({
-              contextMenuIsHidden: true
-            })
-          }
-          onChangeStyle={style => this.props.onChangeStyle(style)}
-          onWheel={event => this.setContextMenuHidden(event)}
-        />
-      );
-    }
-  }
-
   render() {
-    return (
-      <React.Fragment>
-        {this.getContextMenu()}
-        {this.getCellContent()}
-      </React.Fragment>
-    );
+    return (this.getCellContent());
   }
 }
 

@@ -1,31 +1,9 @@
-.contextMenu {
-  position: fixed;
-  width: max-content;
-  background: #f7f7f7;
-  padding-bottom: 2px;
-  border: 1px solid #9c9c9c;
-  min-width: 40px;
-  z-index: 1001;
-  border-radius: 4px;
+.editTextContentMenu {
   display: flex;
+  width: 35px;
+  left: 19px;
   outline: none;
-}
-
-.contextMenu:before {
-  border: 7px solid transparent;
-  border-top-color: #9c9c9c;
-  position: absolute;
-  top: 100%;
-  left: 9px;
-  content: "";
-}
-.contextMenu:after {
-  border: 6px solid transparent;
-  border-top-color: #f7f7f7;
-  position: absolute;
-  top: 100%;
-  left: 10px;
-  content: "";
+  padding-top: 3px;
 }
 
 .circle-picker {
@@ -34,6 +12,7 @@
   padding-left: 12px;
   padding-top: 12px;
   border-radius: 6px;
+  z-index: 10;
 }
 
 .circle-picker.hidden {
@@ -50,7 +29,7 @@
   content: "";
 }
 
-.circle-picker::after {
+.circle-picker:after {
   border: 11px solid transparent;
   border-bottom-color: transparent;
   border-bottom-color: #f7f7f7;
@@ -59,4 +38,8 @@
   left: 10px;
   content: "";
   top: -21px;
+}
+
+.changeCellColorMenuWrapper {
+  position: absolute;
 }

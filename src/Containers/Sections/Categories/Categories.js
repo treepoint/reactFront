@@ -53,7 +53,7 @@ class Categories extends React.Component {
           type: "string",
           disabled: true,
           value: "Название",
-          width: 300
+          width: 400
         },
         {
           key: "active_tasks_count",

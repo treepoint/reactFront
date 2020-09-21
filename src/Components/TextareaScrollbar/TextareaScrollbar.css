@@ -5,6 +5,7 @@
   overflow-y: hidden;
   text-overflow: ellipsis;
   border: none;
+  border-radius: 0;
   font-family: "Open Sans", "Source Sans Pro";
   font-size: 14px;
   resize: none;
@@ -32,6 +33,10 @@
 
 .textareaScrollbar {
   background: rgb(255, 255, 255);
+}
+
+.textareaScrollbar.stylable {
+  margin-left: 32px;
 }
 
 .textareaScrollbar.error {

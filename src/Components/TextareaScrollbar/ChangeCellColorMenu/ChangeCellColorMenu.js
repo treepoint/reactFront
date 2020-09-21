@@ -5,10 +5,9 @@ import Action from "../../Action/Action";
 import Blur from "../../Blur/Blur";
 //Подключаем изображения иконок и CSS
 import iconBackgroundColor from "../../../Images/icon_backgroundColor.png";
-import iconBroom from "../../../Images/icon_broom.png";
-import "./ContextMenu.css";
+import "./ChangeCellColorMenu.css";
 
-class ContextMenu extends React.Component {
+class ChangeCellColorMenu extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -23,7 +22,7 @@ class ContextMenu extends React.Component {
 
   //Склеиваем новое свойство стейта ячейки с текущим стейтом
   assignCellStyle(state) {
-    let newState = Object.assign(
+    let newStyle = Object.assign(
       {},
       {
         //Пока bold и italic оставим как атавизмы, но потом можно будет и удалить
@@ -34,7 +33,7 @@ class ContextMenu extends React.Component {
       state
     );
 
-    this.props.onChangeStyle(newState);
+    this.props.onChangeStyle(newStyle);
   }
 
   clearCellStyle(event) {
@@ -70,7 +69,7 @@ class ContextMenu extends React.Component {
 
   getBackgroundColorPicker() {
     return (
-      <div style={{ position: "absolute", top: "81px", left: "-22px" }}>
+      <div style={{ position: "absolute", top: "45px", left: "15px", zIndex: "10" }}>
         <CirclePicker
           className={
             !!this.state.isBackgroundColorPickerActive
@@ -84,58 +83,50 @@ class ContextMenu extends React.Component {
   }
 
   getBlur() {
-    return (
-      <Blur
-        onClick={event => {
-          this.props.setContextMenuHidden(event);
-          this.setState({
-            isBackgroundPickerActive: false
-          });
-        }}
-        onContextMenu={event => {
-          event.preventDefault(event);
-          this.setState({
-            isBackgroundPickerActive: false
-          });
-          this.props.setContextMenuHidden(event);
-        }}
-      />
-    );
+    if (this.state.isBackgroundColorPickerActive) {
+      return (
+        <Blur
+          onClick={event => {
+            this.setState({
+              isBackgroundColorPickerActive: false
+            });
+          }}
+        />
+      );
+    }
+  }
+
+  getBackgroundColorAction() {
+    if (this.props.isStylable) {
+      return (
+        <Action
+          icon={iconBackgroundColor}
+          style={{ marginLeft: "2px" }}
+          onClick={event => this.showBackgroundColorPicker(event)}
+        />
+      );
+    }
   }
 
   render() {
-    const actionStyle = {
-      marginLeft: "2px",
-      marginTop: "2px",
-      marginRight: "4px"
-    };
-
     return (
       <React.Fragment>
         {this.getBlur()}
-        <div
-          className="contextMenu"
-          style={{
-            marginLeft: -this.props.scrollLeft + 4 + "px",
-            marginTop: -this.props.scrollTop - 37 + "px"
-          }}
-          tabIndex="1"
-          onClick={event => this.onClick(event)}
-          onWheel={event => {
-            this.props.onWheel(event);
-          }}
-        >
-          <Action
-            icon={iconBackgroundColor}
-            style={actionStyle}
-            isPressed={this.state.isBackgroundColorPickerActive}
-            onClick={event => this.showBackgroundColorPicker(event)}
-          />
-          <Action
-            icon={iconBroom}
-            style={actionStyle}
-            onClick={event => this.clearCellStyle(event)}
-          />
+        <div className="changeCellColorMenuWrapper">
+          <div
+            className="editTextContentMenu"
+            style={{
+              marginLeft: -this.props.scrollLeft + 4 + "px",
+              marginTop: -this.props.scrollTop - 37 + "px"
+            }}
+            tabIndex="1"
+            onClick={event => this.onClick(event)}
+            onWheel={event => {
+              this.showBackgroundColorPicker(event);
+            }}
+          >
+            {this.getBackgroundColorAction()}
+          </div>
           {this.getBackgroundColorPicker()}
         </div>
       </React.Fragment>
@@ -143,4 +134,4 @@ class ContextMenu extends React.Component {
   }
 }
 
-export default ContextMenu;
+export default ChangeCellColorMenu;
