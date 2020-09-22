@@ -3,7 +3,7 @@
   "version": "0.9.8",
   "private": true,
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "github:treepoint/ckeditor5-build-classic#stable",
+    "@ckeditor/ckeditor5-build-classic": "github:treepoint/custom-ckeditor5#master",
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "axios": "^0.19.2",
     "connected-react-router": "^6.8.0",
