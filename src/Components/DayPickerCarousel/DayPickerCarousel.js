@@ -141,6 +141,7 @@ const mapStateToProps = (state) => {
   return {
     windowWidth: state.windowWidth,
     windowHeight: state.windowHeight,
+    nextDayAlreadyComesMessageShowDate: state.nextDayAlreadyComesMessageShowDate
   };
 };
 
