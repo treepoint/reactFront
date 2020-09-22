@@ -181,7 +181,7 @@ class TextareaScrollbar extends React.Component {
           noScrollX
           style={{
             height: this.props.height,
-            width: this.props.width - (!!this.props.isStylable ? 0 : 8)
+            width: this.props.width - (!!this.props.isStylable ? 29 : 8)
           }}
         >
           {children}
