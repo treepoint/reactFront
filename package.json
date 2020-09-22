@@ -1,6 +1,6 @@
 {
   "name": "todayTasksFront",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "github:treepoint/custom-ckeditor5#master",

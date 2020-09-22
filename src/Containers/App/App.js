@@ -36,7 +36,7 @@ class App extends React.PureComponent {
     this.props.restoreFromCookies();
 
     //Напишем номер версии
-    console.log("Номер сборки: 0.9.8");
+    console.log("Номер сборки: 0.9.9");
 
     //Проверяем не наступил ли следующий день, возможно стоит выдать аллерт об этом
     setInterval(this.props.checkNextDayAlreadyComes, 5000);
