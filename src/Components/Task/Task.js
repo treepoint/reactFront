@@ -18,7 +18,8 @@ import {
   getCurrentDateWithTimeFormat,
   getCurrentTimeFormat,
   getTimeFromMins,
-  getFormatDate
+  getFormatDate,
+  getCurrentFormatDate
 } from "../../Libs/TimeUtils";
 //Картинки
 import deleteIcon from "../../Images/icon_delete.png";
@@ -213,8 +214,8 @@ class Task extends React.Component {
             !!this.props.content.on_fire
               ? false
               : !!isNotTransparent
-              ? false
-              : true
+                ? false
+                : true
           }
           icon={!!this.props.content.on_fire ? iconFireRed : iconFire}
           hint="В огне!"
@@ -235,8 +236,8 @@ class Task extends React.Component {
           !!this.props.content.frozen
             ? false
             : !!isNotTransparent
-            ? false
-            : true
+              ? false
+              : true
         }
         icon={!!this.props.content.frozen ? iconFrozenBlue : iconFrozen}
         hint="Заморозить"
@@ -290,17 +291,17 @@ class Task extends React.Component {
             />
           </div>
         ) : (
-          <div className="taskMenuItem">
-            <Action
-              style={!!style ? style : { marginLeft: "6px" }}
-              lable={lable}
-              isTransparent={!!isNotTransparent ? false : true}
-              icon={completeIcon}
-              hint="Выполнить задачу"
-              onClick={() => this.completeTask(1)}
-            />
-          </div>
-        )}
+            <div className="taskMenuItem">
+              <Action
+                style={!!style ? style : { marginLeft: "6px" }}
+                lable={lable}
+                isTransparent={!!isNotTransparent ? false : true}
+                icon={completeIcon}
+                hint="Выполнить задачу"
+                onClick={() => this.completeTask(1)}
+              />
+            </div>
+          )}
       </React.Fragment>
     );
   }
@@ -353,8 +354,8 @@ class Task extends React.Component {
           : this.getTimeSpanAction()}
       </div>
     ) : (
-      <div className="taskActions">{this.getCompleteActions()}</div>
-    );
+        <div className="taskActions">{this.getCompleteActions()}</div>
+      );
   }
 
   //Все действия таска
@@ -368,15 +369,15 @@ class Task extends React.Component {
         {this.getCompleteActions()}
       </div>
     ) : (
-      //Для обычной таски
-      <div className="taskActions">
-        {this.getCompleteActions()}
-        {this.getOnFireAction()}
-        {this.getFrozenAction()}
-        {this.getNewDateAction()}
-        {this.getTimeSpanAction()}
-      </div>
-    );
+        //Для обычной таски
+        <div className="taskActions">
+          {this.getCompleteActions()}
+          {this.getOnFireAction()}
+          {this.getFrozenAction()}
+          {this.getNewDateAction()}
+          {this.getTimeSpanAction()}
+        </div>
+      );
   }
 
   /*
@@ -402,12 +403,12 @@ class Task extends React.Component {
             {this.getAllTaskActions()}
           </div>
         ) : (
-          //Только важные
-          <React.Fragment>
-            {this.getTaskMarksAction()}
-            {this.getShortActions()}
-          </React.Fragment>
-        )}
+            //Только важные
+            <React.Fragment>
+              {this.getTaskMarksAction()}
+              {this.getShortActions()}
+            </React.Fragment>
+          )}
         {/*Кнопка меню*/}
         {this.getTaskMenuAction()}
       </div>
@@ -505,17 +506,26 @@ class Task extends React.Component {
     );
   }
 
+  getCurrentTaskDate() {
+    let currentTaskDate =
+      !!this.props.content.moved_date
+        ? this.props.content.moved_date
+        : this.props.content.for_date;
+
+    if (currentTaskDate < getCurrentFormatDate()) {
+      return getCurrentFormatDate();
+    } else {
+      return currentTaskDate;
+    }
+  }
+
   /*
    * Модалка для переноса задачи на другую дату
    */
   getNewDateModalWindow() {
     return (
       <NewDateModalWindow
-        currentTaskDate={
-          !!this.props.content.moved_date
-            ? this.props.content.moved_date
-            : this.props.content.for_date
-        }
+        currentTaskDate={this.getCurrentTaskDate()}
         movedDate={this.state.movedDate}
         setState={state => this.setState(state)}
         moveTask={() => this.moveTask()}
