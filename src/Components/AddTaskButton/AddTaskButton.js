@@ -33,6 +33,7 @@ class AddTaskButton extends React.PureComponent {
             setCurrentStep={(stepName) => this.setCurrentStep(stepName)}
             createNewTask={(task) => this.createNewTask(task)}
             categories={this.props.categories}
+
             isBlurred={this.state.isBlurred}
             executeNow
           />
@@ -43,6 +44,7 @@ class AddTaskButton extends React.PureComponent {
             setCurrentStep={(stepName) => this.setCurrentStep(stepName)}
             createNewTask={(task) => this.createNewTask(task)}
             categories={this.props.categories}
+            projectId={this.props.currentProjectId}
             isBlurred={this.state.isBlurred}
           />
         );
@@ -100,6 +102,7 @@ class AddTaskButton extends React.PureComponent {
 const mapStateToProps = (state) => {
   return {
     categories: state.categories,
+    currentProjectId: state.userSettings.project_id
   };
 };
 

@@ -83,6 +83,7 @@ export function createTask(date, name, category_id, executeNow) {
       category_id: !!!category_id
         ? Object.keys(state.categories)[0]
         : category_id,
+      project_id: state.userSettings.project_id,
       name: name,
       description: null,
       create_date: date

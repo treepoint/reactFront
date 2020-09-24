@@ -2,18 +2,18 @@ import React from "react";
 //Redux
 import { connect } from "react-redux";
 import {
-  fetchCategories,
-  createCategory,
-  archiveCategory,
-  openCategory,
-  updateCategory
-} from "../../../Store/actions/categories";
+  fetchProjects,
+  createProject,
+  archiveProject,
+  openProject,
+  updateProject
+} from "../../../Store/actions/projects";
 //Компоненты
 import Table from "../../../Components/Table/Table";
 import Page from "../../../Components/Page/Page";
 import ConfirmModalWindow from "../../../Components/ConfirmModalWindow/ConfirmModalWindow";
 
-class Categories extends React.Component {
+class Projects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +24,7 @@ class Categories extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.userAuthState && !prevProps.userAuthState) {
-      this.props.fetchCategories();
+      this.props.fetchProjects();
     }
   }
 
@@ -73,19 +73,19 @@ class Categories extends React.Component {
       ]
     ];
 
-    let categories = this.props.categories;
-    let activeTasksCount = this.props.activeTasksCountByCategories;
+    let projects = this.props.projects;
+    let activeTasksCount = this.props.activeTasksCountByProjects;
 
-    for (var c in categories) {
+    for (var p in projects) {
       //Если категории не закрыты — отобразим их
       if (
-        (categories[c].close_date === null && !this.state.isArchived && categories[c].project_id === this.props.currentProjectId) ||
-        (categories[c].close_date !== null && this.state.isArchived && categories[c].project_id === this.props.currentProjectId)
+        (projects[p].close_date === null && !this.state.isArchived) ||
+        (projects[p].close_date !== null && this.state.isArchived)
       ) {
         let count = 0;
 
-        if (typeof activeTasksCount[categories[c].id] !== "undefined") {
-          count = activeTasksCount[categories[c].id].count;
+        if (typeof activeTasksCount[projects[p].id] !== "undefined") {
+          count = activeTasksCount[projects[p].id].count;
         }
 
         content.push([
@@ -93,14 +93,14 @@ class Categories extends React.Component {
             key: "id",
             type: "hidden",
             disabled: true,
-            value: categories[c].id
+            value: projects[p].id
           },
           {
             key: "name",
             type: "string",
             disabled: false,
-            value: categories[c].name,
-            style: categories[c].name_style
+            value: projects[p].name,
+            style: projects[p].name_style
           },
           {
             key: "active_tasks_count",
@@ -114,13 +114,13 @@ class Categories extends React.Component {
             type: "text",
             disabled: false,
             hidable: true,
-            value: categories[c].description
+            value: projects[p].description
           },
           {
             key: "close_date",
             type: "hidden",
             disabled: false,
-            value: categories[c].close_date
+            value: projects[p].close_date
           }
         ]);
       }
@@ -146,38 +146,37 @@ class Categories extends React.Component {
 
     return (
       <Page
-        title="Категории:"
+        title="Проекты:"
         isCustomContent={true}
         anchorLinksArray={anchorLinksArray}
       >
         <ConfirmModalWindow
-          title="Заархивировать категорию?"
-          message="Категория останется назначенной для текущих и выполненных задач, но будет недоступна для новых. 
-          Категории по которым были задачи будут доступны в архиве."
+          title="Заархивировать проект?"
+          message="Если в проекте есть активный задачи, то он будет доступен для выбора и будет отображаться в архиве до закрытия последней задачи."
           isHidden={this.state.archiveModalWindow.isHidden}
           onCancel={() => this.closeArchiveModal()}
           onConfirm={() =>
-            this.props.archiveCategory(this.state.archiveModalWindow.row.id)
+            this.props.archiveProject(this.state.archiveModalWindow.row.id)
           }
         />
         <Table
           isResizeble={true}
           isSingleLineMode={true}
-          saveRow={category => this.props.updateCategory(category)}
+          saveRow={project => this.props.updateProject(project)}
           addRow={
-            !!!this.state.isArchived ? () => this.props.createCategory() : null
+            !!!this.state.isArchived ? () => this.props.createProject() : null
           }
           archiveRow={
             !!!this.state.isArchived ? row => this.showArchiveModal(row) : null
           }
           dearchiveRow={
-            !!!this.state.isArchived ? null : id => this.props.openCategory(id)
+            !!!this.state.isArchived ? null : id => this.props.openProject(id)
           }
           isUpdating={this.props.isUpdating}
           notFoundMessage={
             !!!this.state.isArchived
-              ? "Нет активных категорий. Добавьте новую с помощью кнопки «+»."
-              : "Нет архивных категорий."
+              ? "Нет активных проектов. Добавьте новый с помощью кнопки «+»."
+              : "Нет архивных проектов."
           }
         >
           {this.getContent()}
@@ -189,32 +188,31 @@ class Categories extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    categories: state.categories,
-    activeTasksCountByCategories: state.activeTasksCountByCategories,
+    projects: state.projects,
+    activeTasksCountByProjects: state.activeTasksCountByProjects,
     userAuthState: state.userAuthState,
-    currentProjectId: state.userSettings.project_id,
-    isUpdating: state.categoriesIsUpdating
+    isUpdating: state.projectsIsUpdating
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchCategories: () => {
-      dispatch(fetchCategories());
+    fetchProjects: () => {
+      dispatch(fetchProjects());
     },
-    createCategory: () => {
-      dispatch(createCategory());
+    createProject: () => {
+      dispatch(createProject());
     },
-    archiveCategory: id => {
-      dispatch(archiveCategory(id));
+    archiveProject: id => {
+      dispatch(archiveProject(id));
     },
-    openCategory: id => {
-      dispatch(openCategory(id));
+    openProject: id => {
+      dispatch(openProject(id));
     },
-    updateCategory: category => {
-      dispatch(updateCategory(category));
+    updateProject: project => {
+      dispatch(updateProject(project));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default connect(mapStateToProps, mapDispatchToProps)(Projects);

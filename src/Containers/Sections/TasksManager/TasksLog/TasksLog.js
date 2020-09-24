@@ -47,7 +47,7 @@ class TasksLog extends React.PureComponent {
 
     //Отфильтруем за нужную дату
     for (var ts in tasks) {
-      if (tasks[ts].for_date === this.props.date) {
+      if (tasks[ts].for_date === this.props.date && tasks[ts].project_id === this.props.currentProjectId) {
         tasksForChosenDate[tasks[ts].id] = tasks[ts];
       }
     }
@@ -67,7 +67,7 @@ class TasksLog extends React.PureComponent {
 
     //Отфильтруем за нужную дату
     for (var tl in tasksLog) {
-      if (tasksLog[tl].for_date === this.props.date) {
+      if (tasksLog[tl].for_date === this.props.date && tasksLog[tl].project_id === this.props.currentProjectId) {
         tasksLogForChosenDate[tasksLog[tl].id] = tasksLog[tl];
       }
     }
@@ -207,6 +207,7 @@ const mapStateToProps = state => {
   return {
     tasks: state.tasks,
     tasksLog: state.tasksLog,
+    currentProjectId: state.userSettings.project_id,
     windowWidth: state.windowWidth
   };
 };

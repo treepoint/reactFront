@@ -190,6 +190,15 @@ class TextareaScrollbar extends React.Component {
     }
   }
 
+  getChangeCellColorMenu() {
+    if (!this.props.disabled) {
+      return (<ChangeCellColorMenu
+        isStylable={this.props.isStylable}
+        onChangeStyle={style => this.props.onChangeStyle(style)}
+      />)
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -201,11 +210,7 @@ class TextareaScrollbar extends React.Component {
           />
         )}
         <React.Fragment>
-          <ChangeCellColorMenu
-            isStylable={this.props.isStylable}
-            onChangeStyle={style => this.props.onChangeStyle(style)}
-          />
-
+          {this.getChangeCellColorMenu()}
           {this.scrollWrapper(
             <TextareaAutosize
               autoFocus={this.props.autoFocus}

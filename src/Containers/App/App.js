@@ -17,6 +17,7 @@ import Header from "../Header/Header";
 import Home from "../Sections/Home/Home";
 import TasksManager from "../Sections/TasksManager/TasksManager";
 import Categories from "../Sections/Categories/Categories";
+import Projects from "../Sections/Projects/Projects"
 import Statistic from "../Sections/Statistic/Statistic";
 import About from "../Sections/About/About";
 import Page404 from "../Sections/Page404/Page404";
@@ -25,6 +26,10 @@ import Bottom from "../Bottom/Bottom";
 import NotificationSystem from "../NotificationSystem/NotificationSystem";
 //Детектим изменения размеров окна
 import ReactResizeDetector from "react-resize-detector";
+//Некоторые константы API
+import {
+  uploadedFilesDirectory
+} from "../../Store/APIConfiguration";
 //Обои по умолчанию
 import defaultWallpaper from "../../Images/default_wallpaper.jpg";
 //CSS
@@ -59,6 +64,7 @@ class App extends React.PureComponent {
           <Route exact path="/" component={Home} />
           <Route path="/tasks_manager" component={TasksManager} />
           <Route path="/categories" component={Categories} />
+          <Route path="/projects" component={Projects} />
           <Route path="/statistic" component={Statistic} />
           <Route path="/admin" component={AdminPanelRouter} />
           <Route path="/about" component={About} />
@@ -89,7 +95,7 @@ class App extends React.PureComponent {
             className="wallpaper"
             style={
               !!this.props.wallpaper
-                ? { backgroundImage: "url(" + this.props.wallpaper + ")" }
+                ? { backgroundImage: "url(" + uploadedFilesDirectory + "/" + this.props.wallpaper + ")" }
                 : { background: "url(" + defaultWallpaper + ")" }
             }
           >

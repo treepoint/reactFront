@@ -35,6 +35,11 @@ class Tasks extends React.Component {
       }
     }
 
+    //Если поменяли проект — рендерим
+    if (prevProps.currentProjectId !== this.props.currentProjectId) {
+      return true;
+    }
+
     //Иначе — не рендерим
     return false;
   }
@@ -55,8 +60,8 @@ class Tasks extends React.Component {
     for (var c in categories) {
       //Добавляем если категория активна, или эта категория проставлена у задачи
       if (
-        categories[c].close_date === null ||
-        categories[c].id === task.category_id
+        (categories[c].close_date === null ||
+          categories[c].id === task.category_id) && categories[c].project_id === this.props.currentProjectId
       ) {
         categoriesList.push({
           value: categories[c].id,
@@ -78,7 +83,7 @@ class Tasks extends React.Component {
 
     //Отфильтруем за нужную дату. Так же проверим, что таск не перенесен
     for (var ts in tasks) {
-      if (tasks[ts].for_date === this.props.date) {
+      if (tasks[ts].for_date === this.props.date && tasks[ts].project_id === this.props.currentProjectId) {
         tasksForChosenDate[tasks[ts].id] = tasks[ts];
       }
     }
@@ -158,7 +163,7 @@ class Tasks extends React.Component {
       <div className="taskContainer">
         {this.getTasks()}
         {/*Если это не архив — покажем кнопку добавления тасков*/
-        !!!this.props.isAccomplished ? this.getAddTaskButton() : null}
+          !!!this.props.isAccomplished ? this.getAddTaskButton() : null}
       </div>
     );
   }
@@ -168,7 +173,8 @@ const mapStateToProps = state => {
   return {
     tasks: state.tasks,
     tasksIsFetching: state.tasksIsFetching,
-    categories: state.categories
+    categories: state.categories,
+    currentProjectId: state.userSettings.project_id,
   };
 };
 

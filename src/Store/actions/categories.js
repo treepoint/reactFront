@@ -3,8 +3,6 @@ import { APIURL, getHeaders } from "../APIConfiguration";
 import { setNotifications } from "./notifications";
 import { fetchActiveTasksCountByCategories } from "./statistics";
 import Axios from "axios";
-//Утилиты
-import { getCurrentDateWithTimeFormat } from "../../Libs/TimeUtils";
 
 const URL = APIURL + "/categories";
 
@@ -60,7 +58,7 @@ export function fetchCategories() {
 
 //Создать категорию
 export function createCategory() {
-  return dispatch => {
+  return (dispatch, getState) => {
     let headers = getHeaders();
 
     if (headers === null) {
@@ -69,6 +67,7 @@ export function createCategory() {
 
     const category = {
       name: "",
+      project_id: getState().userSettings.project_id,
       name_style: JSON.stringify({
         bold: false,
         italic: false,
@@ -125,7 +124,7 @@ export function archiveCategory(id) {
   return (dispatch, getStore) => {
     let category = getStore().categories[id];
 
-    category.close_date = getCurrentDateWithTimeFormat();
+    category.close_date = new Date();
 
     dispatch(updateCategory(category));
   };

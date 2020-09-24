@@ -15,7 +15,7 @@ class SumTime extends React.PureComponent {
 
     //Отфильтруем за нужную дату
     for (var tl in tasksLog) {
-      if (tasksLog[tl].for_date === this.props.forDate) {
+      if (tasksLog[tl].for_date === this.props.forDate && tasksLog[tl].project_id === this.props.currentProjectId) {
         tasksLogForChosenDate[tasksLog[tl].id] = tasksLog[tl];
       }
     }
@@ -40,7 +40,8 @@ class SumTime extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    tasksLog: state.tasksLog
+    tasksLog: state.tasksLog,
+    currentProjectId: state.userSettings.project_id
   };
 };
 

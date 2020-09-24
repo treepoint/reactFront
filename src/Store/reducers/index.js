@@ -15,7 +15,7 @@ import {
   windowHeight,
   windowWidth,
   title,
-  nextDayAlreadyComesMessageShowDate
+  nextDayAlreadyComesMessageShowDate,
 } from "./app";
 
 import {
@@ -26,6 +26,8 @@ import {
 } from "./currentUser";
 
 import { categories, categoriesIsUpdating } from "./categories";
+
+import { projects, projectsIsUpdating } from "./projects";
 
 import { users, usersIsUpdating } from "./users";
 
@@ -44,7 +46,8 @@ import {
   tasksStatisticByPeriod,
   totalStatisticByPeriod,
   statisticByDaysForPeriod,
-  activeTasksCountByCategories
+  activeTasksCountByCategories,
+  activeTasksCountByProjects
 } from "./statistics";
 
 const appReducer = history =>
@@ -77,6 +80,9 @@ const appReducer = history =>
     //categories
     categories,
     categoriesIsUpdating,
+    //projects
+    projects,
+    projectsIsUpdating,
     //users
     users,
     usersIsUpdating,
@@ -96,7 +102,8 @@ const appReducer = history =>
     tasksStatisticByPeriod,
     totalStatisticByPeriod,
     statisticByDaysForPeriod,
-    activeTasksCountByCategories
+    activeTasksCountByCategories,
+    activeTasksCountByProjects
   });
 
 const rootReducer = history => (state, action) => {
