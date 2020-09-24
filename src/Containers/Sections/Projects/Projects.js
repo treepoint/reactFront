@@ -152,8 +152,7 @@ class Projects extends React.Component {
       >
         <ConfirmModalWindow
           title="Заархивировать проект?"
-          message="Проект останется назначенным для текущих и выполненных задач, но будет недоступен для новых. 
-          Проекты, по которым были задачи, будут доступны в архиве. ПЕРЕПИСАТЬ"
+          message="Если в проекте есть активный задачи, то он будет доступен для выбора и будет отображаться в архиве до закрытия последней задачи."
           isHidden={this.state.archiveModalWindow.isHidden}
           onCancel={() => this.closeArchiveModal()}
           onConfirm={() =>
