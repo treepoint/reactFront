@@ -67,7 +67,7 @@ export function createCategory() {
 
     const category = {
       name: "",
-      project_id: getState().userSetting.project_id,
+      project_id: getState().userSettings.project_id,
       name_style: JSON.stringify({
         bold: false,
         italic: false,
