@@ -91,28 +91,28 @@ class FillNewTask extends React.PureComponent {
     //Соберем список категорий
     const categories = this.props.categories;
 
-    let category_id;
-
-    if (!this.state.category_id) {
-      let category_id = categories[Object.keys(categories)[0]].id;
-
-      //Запишем в стейт
-      this.setState({ category_id });
-    } else {
-      category_id = this.state.category_id;
-    }
-
     let categoriesList = [];
 
     for (var c in categories) {
       //Добавляем если категория активна, или эта категория проставлена у задачи
-      if (categories[c].close_date === null) {
+      if (categories[c].close_date === null && categories[c].project_id === this.props.projectId) {
         categoriesList.push({
           value: categories[c].id,
           label: categories[c].name,
           style: categories[c].name_style,
         });
       }
+    }
+
+    let category_id = 0;
+
+    if (!this.state.category_id && categoriesList[0]) {
+      let category_id = categoriesList[0].value;
+
+      //Запишем в стейт
+      this.setState({ category_id });
+    } else {
+      category_id = this.state.category_id;
     }
 
     //Соберем контент для селекта категорий с указанием текущей

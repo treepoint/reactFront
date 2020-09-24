@@ -1,8 +1,7 @@
 //Обвязка для API
 import {
   APIURL,
-  getHeaders,
-  uploadedFilesDirectory
+  getHeaders
 } from "../APIConfiguration";
 import { setNotifications } from "./notifications";
 import Axios from "axios";
@@ -46,7 +45,7 @@ export function fetchUserSettings() {
 
       if (response.data.wallpaper !== null) {
         Object.assign(userSettings, response.data, {
-          wallpaper: uploadedFilesDirectory + "/" + response.data.wallpaper
+          wallpaper: response.data.wallpaper
         });
       } else {
         Object.assign(userSettings, response.data, {
@@ -75,7 +74,7 @@ export function updateWallpapers(file) {
       .then(response => {
         dispatch(
           setUserSettings({
-            wallpaper: uploadedFilesDirectory + "/" + response.data.filename
+            wallpaper: response.data.filename
           })
         );
       })
@@ -83,6 +82,37 @@ export function updateWallpapers(file) {
         let message =
           "Не удалось обновить обои. Перезагрузите страницу и попробуйте снова.";
         dispatch(setNotifications({ message, type: "error" }));
+      });
+  };
+}
+
+//Обновить настройки
+export function updateUserSettings(userSettings) {
+  return (dispatch, getState) => {
+    dispatch(setIsUpdating(true));
+
+    let headers = getHeaders();
+
+    if (headers === null) {
+      return;
+    }
+
+    //Соберем новые настройки
+    let newUserSettings = Object.assign(getState().userSettings, userSettings);
+
+    Axios.put(URL + "/" + newUserSettings.id, newUserSettings, headers)
+      .then(response => {
+        if (typeof response.data === "object") {
+          //Обновим настройки
+          dispatch(setUserSettings(response.data));
+          dispatch(setIsUpdating(false));
+        }
+      })
+      .catch(error => {
+        let message =
+          "Не удалось переключиться на другой проект. Перезагрузите страницу и попробуйте снова.";
+        dispatch(setNotifications({ message, type: "error" }));
+        dispatch(setIsUpdating(false));
       });
   };
 }

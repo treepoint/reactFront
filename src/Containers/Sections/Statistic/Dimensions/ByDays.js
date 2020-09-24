@@ -103,16 +103,19 @@ class ByDays extends React.Component {
       let date = new Date(day.date);
       date = getDDdotMMandShortDatNameByDate(date);
 
-      if (today === date) {
-        data.push({
-          name: "Сегодня",
-          uv: day.execution_time,
-        });
-      } else {
-        data.push({
-          name: date,
-          uv: day.execution_time,
-        });
+      if (day.project_id === this.props.currentProjectId) {
+
+        if (today === date) {
+          data.push({
+            name: "Сегодня",
+            uv: day.execution_time,
+          });
+        } else {
+          data.push({
+            name: date,
+            uv: day.execution_time,
+          });
+        }
       }
     });
 
@@ -230,6 +233,7 @@ class ByDays extends React.Component {
 const mapStateToProps = (state) => {
   return {
     statisticByDaysForPeriod: state.statisticByDaysForPeriod,
+    currentProjectId: state.userSettings.project_id,
   };
 };
 

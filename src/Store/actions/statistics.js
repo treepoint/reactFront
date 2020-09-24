@@ -20,6 +20,9 @@ export const SET_STATISTIC_BY_DAYS_FOR_PERIOD =
 export const SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES =
   "SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES";
 
+export const SET_ACTIVE_TASKS_COUNT_BY_PROJECTS =
+  "SET_ACTIVE_TASKS_COUNT_BY_PROJECTS";
+
 export function setCategoriesStatisticByPeriod(object) {
   return { type: SET_CATEGORIES_STATISTIC_BY_PERIOD, object };
 }
@@ -36,8 +39,8 @@ export function clearTasksStatisticByPeriod(object) {
   return { type: CLEAR_TASKS_STATISTIC_BY_PERIOD, object };
 }
 
-export function setTotalStatisticByPeriod(number) {
-  return { type: SET_TOTAL_STATISTIC_BY_PERIOD, number };
+export function setTotalStatisticByPeriod(array) {
+  return { type: SET_TOTAL_STATISTIC_BY_PERIOD, array };
 }
 
 export function setStatisticByDaysForPeriod(array) {
@@ -46,6 +49,10 @@ export function setStatisticByDaysForPeriod(array) {
 
 export function setActiveTasksCountByCategories(object) {
   return { type: SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES, object };
+}
+
+export function setActiveTasksCountByProjects(object) {
+  return { type: SET_ACTIVE_TASKS_COUNT_BY_PROJECTS, object };
 }
 
 //Получить статистику по категориям за определенный период
@@ -122,7 +129,7 @@ export function fetchTotalStatisticByPeriod(dateFrom, dateTo) {
 
     Axios.get(URL, headers)
       .then(response => {
-        dispatch(setTotalStatisticByPeriod(response.data.execution_time));
+        dispatch(setTotalStatisticByPeriod(response.data));
       })
       .catch(error => {
         let message =
@@ -178,6 +185,29 @@ export function fetchActiveTasksCountByCategories() {
       .catch(error => {
         let message =
           "Не удалось получить количество активных задач в разрезе категорий. Перезагрузите страницу.";
+        dispatch(setNotifications({ message, type: "error" }));
+      });
+  };
+}
+
+//Получить количество активных задач в разрезе проектов
+export function fetchActiveTasksCountByProjects() {
+  return dispatch => {
+    let headers = getHeaders();
+
+    if (headers === null) {
+      return;
+    }
+
+    let URL = APIURL + "/statistic/active_tasks/by_projects";
+
+    Axios.get(URL, headers)
+      .then(response => {
+        dispatch(setActiveTasksCountByProjects(response.data));
+      })
+      .catch(error => {
+        let message =
+          "Не удалось получить количество активных задач в разрезе проектов. Перезагрузите страницу.";
         dispatch(setNotifications({ message, type: "error" }));
       });
   };

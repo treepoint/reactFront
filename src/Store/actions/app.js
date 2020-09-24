@@ -16,6 +16,7 @@ import { fetchTasksByDate } from "./tasks";
 import { fetchTasksLogByDate } from "./tasksLog";
 import { setModalWindowState } from "./globalModalWindow";
 import { fetchUserSettings } from "./userSettings";
+import { fetchProjects } from "./projects";
 
 export const SET_USER_AUTH_STATE = "SET_USER_AUTH_STATE";
 export const SET_AUTH_ERROR = "AUTH_ERROR";
@@ -211,6 +212,8 @@ export function loadAllData() {
     dispatch(fetchUserSettings());
     //Загрузим категории
     dispatch(fetchCategories());
+    //Загрузим проекты
+    dispatch(fetchProjects());
     //Загрузим задачи
     dispatch(fetchTasksByDate(getCurrentFormatDate()));
     //Загрузим лог задач

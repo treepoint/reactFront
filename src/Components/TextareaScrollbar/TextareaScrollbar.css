@@ -47,6 +47,10 @@
   background: rgba(255, 255, 255, 0);
 }
 
+.textareaScrollbar.disabled.stylable {
+  margin-left: 0px;
+}
+
 .textareaScrollbar:focus-within {
   outline: 1px solid rgb(96, 191, 255);
 }

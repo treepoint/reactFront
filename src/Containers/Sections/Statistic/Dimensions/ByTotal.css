@@ -1,4 +1,4 @@
-.statisticTotal {
+.byTotal {
   color: rgb(68, 68, 68);
   background: #fff;
   width: max-content;
@@ -11,7 +11,7 @@
   padding-top: 13px;
 }
 
-.statisticTotalLable {
+.byTotalLable {
   font-weight: bold;
   margin-right: 6px;
   color: #000;

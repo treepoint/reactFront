@@ -59,21 +59,24 @@ class ByCategories extends React.PureComponent {
     const statistic = this.props.categoriesStatisticByPeriod;
 
     for (var s in statistic) {
-      content.push([
-        {
-          key: "name",
-          type: "string",
-          disabled: true,
-          value: statistic[s].name,
-          style: statistic[s].name_style
-        },
-        {
-          key: "type_id",
-          type: "time",
-          disabled: true,
-          value: getTimeFromMins(statistic[s].execution_time)
-        }
-      ]);
+
+      if (statistic[s].project_id === this.props.currentProjectId) {
+        content.push([
+          {
+            key: "name",
+            type: "string",
+            disabled: true,
+            value: statistic[s].name,
+            style: statistic[s].name_style
+          },
+          {
+            key: "type_id",
+            type: "time",
+            disabled: true,
+            value: getTimeFromMins(statistic[s].execution_time)
+          }
+        ]);
+      }
     }
 
     return content;
@@ -93,7 +96,8 @@ class ByCategories extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    categoriesStatisticByPeriod: state.categoriesStatisticByPeriod
+    categoriesStatisticByPeriod: state.categoriesStatisticByPeriod,
+    currentProjectId: state.userSettings.project_id,
   };
 };
 

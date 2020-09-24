@@ -25,6 +25,11 @@ class DesktopHeaderNavigation extends React.PureComponent {
           isNeedAuth={true}
         />
         <HeaderNavigationLink
+          to="/projects"
+          value="Проекты"
+          isNeedAuth={true}
+        />
+        <HeaderNavigationLink
           to="/statistic"
           value="Статистика"
           isNeedAuth={true}

@@ -67,29 +67,32 @@ class ByTasks extends React.Component {
     const statistic = this.props.tasksStatisticByPeriod;
 
     for (var s in statistic) {
-      content.push([
-        {
-          key: "name",
-          type: "string",
-          disabled: true,
-          value: statistic[s].name,
-          style: statistic[s].name_style
-        },
-        {
-          key: "category_name",
-          type: "string",
-          hidable: true,
-          disabled: true,
-          value: statistic[s].category_name,
-          style: statistic[s].category_name_style
-        },
-        {
-          key: "type_id",
-          type: "time",
-          disabled: true,
-          value: getTimeFromMins(statistic[s].execution_time)
-        }
-      ]);
+
+      if (statistic[s].project_id === this.props.currentProjectId) {
+        content.push([
+          {
+            key: "name",
+            type: "string",
+            disabled: true,
+            value: statistic[s].name,
+            style: statistic[s].name_style
+          },
+          {
+            key: "category_name",
+            type: "string",
+            hidable: true,
+            disabled: true,
+            value: statistic[s].category_name,
+            style: statistic[s].category_name_style
+          },
+          {
+            key: "type_id",
+            type: "time",
+            disabled: true,
+            value: getTimeFromMins(statistic[s].execution_time)
+          }
+        ]);
+      }
     }
 
     return content;
@@ -109,7 +112,8 @@ class ByTasks extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    tasksStatisticByPeriod: state.tasksStatisticByPeriod
+    tasksStatisticByPeriod: state.tasksStatisticByPeriod,
+    currentProjectId: state.userSettings.project_id,
   };
 };
 

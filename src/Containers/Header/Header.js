@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Logo from "../../Components/Logo/Logo";
 import DesktopHeaderNavigation from "../../Components/DesktopHeaderNavigation/DesktopHeaderNavigation";
 import MobileHeaderNavigation from "../../Components/MobileHeaderNavigation/MobileHeaderNavigation";
+import ProjectSelecter from "../../Components/ProjectSelecter/ProjectSelecter"
 import Spacer from "../../Components/Spacer/Spacer";
 import LoginMenu from "../../Components/LoginMenu/LoginMenu";
 
@@ -27,9 +28,10 @@ class Header extends React.PureComponent {
         {!!this.isNeedMobileVersion() ? (
           <MobileHeaderNavigation />
         ) : (
-          <DesktopHeaderNavigation />
-        )}
+            <DesktopHeaderNavigation />
+          )}
         <Spacer />
+        <ProjectSelecter />
         <LoginMenu />
       </div>
     );

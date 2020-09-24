@@ -69,6 +69,17 @@ class MobileHeaderNavigation extends React.PureComponent {
           />
           <div className="menuDivider" />
           <HeaderNavigationLink
+            to="/projects"
+            value="Проекты"
+            isNeedAuth={true}
+            onClick={event =>
+              this.setState({
+                isMobileMenuHidden: !this.state.isMobileMenuHidden
+              })
+            }
+          />
+          <div className="menuDivider" />
+          <HeaderNavigationLink
             to="/statistic"
             value="Статистика"
             isNeedAuth={true}
