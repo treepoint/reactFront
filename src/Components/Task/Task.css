@@ -19,7 +19,7 @@
 }
 
 .task.frozen {
-  filter: grayscale(90%) brightness(100%) opacity(76%);
+  opacity: 0.70;
 }
 
 .taskMarks {
