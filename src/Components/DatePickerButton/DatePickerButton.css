@@ -1,6 +1,6 @@
 .datePickerButton {
-  font-family: "Open Sans", "Source Sans Pro";
-  font-size: 15px;
+  font-family: "Source Sans Pro";
+  font-size: 16px;
   height: 30px;
   border-radius: 4px;
   border: 1px solid #f4f4f4;
@@ -44,6 +44,6 @@
 }
 
 .react-datepicker {
-  font-family: "Open Sans", "Source Sans Pro";
-  font-size: 15px;
+  font-family: "Source Sans Pro";
+  font-size: 16px;
 }

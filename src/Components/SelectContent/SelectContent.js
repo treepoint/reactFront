@@ -71,7 +71,7 @@ class SelectContent extends React.PureComponent {
         minHeight: "34px",
         transition: "all",
         height: this.props.height + "px",
-        fontSize: "14px",
+        fontSize: "16px",
         boxShadow: "none",
         outline: !!state.isFocused ? "1px solid rgb(96, 191, 255)" : "none",
         outlineOffset: "-1px",
@@ -89,8 +89,8 @@ class SelectContent extends React.PureComponent {
       indicatorSeparator: (styles) => ({}),
       option: (styles, { data, isFocused, isSelected }) => ({
         ...styles,
-        fontFamily: '"Open Sans", "Source Sans Pro"',
-        fontSize: "14px",
+        fontFamily: '"Source Sans Pro"',
+        fontSize: "16px",
         color: "000000",
         minHeight: "32px",
         paddingLeft: "6px",
@@ -101,8 +101,8 @@ class SelectContent extends React.PureComponent {
         backgroundColor: !!isSelected
           ? "rgb(240, 240, 240)"
           : isFocused
-          ? "rgba(96, 191, 255, 0.17)"
-          : "none",
+            ? "rgba(96, 191, 255, 0.17)"
+            : "none",
       }),
       menu: (styles) => ({
         ...styles,
@@ -125,8 +125,8 @@ class SelectContent extends React.PureComponent {
       }),
       noOptionsMessage: (styles) => ({
         ...styles,
-        fontFamily: '"Open Sans", "Source Sans Pro"',
-        fontSize: "14px",
+        fontFamily: '"Source Sans Pro"',
+        fontSize: "16px",
       }),
     };
 

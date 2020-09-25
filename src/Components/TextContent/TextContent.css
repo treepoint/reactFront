@@ -6,8 +6,8 @@
   text-overflow: ellipsis;
   position: absolute !important;
   border: none;
-  font-family: "Open Sans", "Source Sans Pro";
-  font-size: 14px;
+  font-family: "Source Sans Pro";
+  font-size: 16px;
   resize: none;
   line-height: 30px;
 }
