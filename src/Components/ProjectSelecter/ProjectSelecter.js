@@ -61,7 +61,11 @@ class ProjectSelecter extends React.Component {
   }
 
   render() {
-    return <div className="projectSelector">{this.getProjectSelect()}</div>;
+    if (this.props.userAuthState) {
+      return <div className="projectSelector">{this.getProjectSelect()}</div>;
+    } else {
+      return null;
+    }
   }
 }
 
@@ -69,6 +73,7 @@ const mapStateToProps = state => {
   return {
     projects: state.projects,
     userSettings: state.userSettings,
+    userAuthState: state.userAuthState,
     activeTasksCountByProjects: state.activeTasksCountByProjects,
   };
 };
