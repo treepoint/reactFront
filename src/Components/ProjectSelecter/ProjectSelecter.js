@@ -34,7 +34,7 @@ class ProjectSelecter extends React.Component {
       ) {
         projectsList.push({
           value: projects[p].id,
-          label: projects[p].name,
+          label: projects[p].name + " (" + this.getActiveTasksCount(projects[p].id) + ")",
           style: projects[p].name_style
         });
       }
