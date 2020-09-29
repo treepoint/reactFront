@@ -5,8 +5,7 @@ import {
   CLEAR_TASKS_STATISTIC_BY_PERIOD,
   SET_TOTAL_STATISTIC_BY_PERIOD,
   SET_STATISTIC_BY_DAYS_FOR_PERIOD,
-  SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES,
-  SET_ACTIVE_TASKS_COUNT_BY_PROJECTS
+  SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES
 } from "../actions/statistics";
 
 export function categoriesStatisticByPeriod(state = {}, action) {
@@ -52,15 +51,6 @@ export function statisticByDaysForPeriod(state = [], action) {
 export function activeTasksCountByCategories(state = {}, action) {
   switch (action.type) {
     case SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES:
-      return action.object;
-    default:
-      return state;
-  }
-}
-
-export function activeTasksCountByProjects(state = {}, action) {
-  switch (action.type) {
-    case SET_ACTIVE_TASKS_COUNT_BY_PROJECTS:
       return action.object;
     default:
       return state;

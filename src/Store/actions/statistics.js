@@ -51,10 +51,6 @@ export function setActiveTasksCountByCategories(object) {
   return { type: SET_ACTIVE_TASKS_COUNT_BY_CATEGORIES, object };
 }
 
-export function setActiveTasksCountByProjects(object) {
-  return { type: SET_ACTIVE_TASKS_COUNT_BY_PROJECTS, object };
-}
-
 //Получить статистику по категориям за определенный период
 export function fetchCategoriesStatisticByPeriod(dateFrom, dateTo) {
   return dispatch => {
@@ -185,29 +181,6 @@ export function fetchActiveTasksCountByCategories() {
       .catch(error => {
         let message =
           "Не удалось получить количество активных задач в разрезе категорий. Перезагрузите страницу.";
-        dispatch(setNotifications({ message, type: "error" }));
-      });
-  };
-}
-
-//Получить количество активных задач в разрезе проектов
-export function fetchActiveTasksCountByProjects() {
-  return dispatch => {
-    let headers = getHeaders();
-
-    if (headers === null) {
-      return;
-    }
-
-    let URL = APIURL + "/statistic/active_tasks/by_projects";
-
-    Axios.get(URL, headers)
-      .then(response => {
-        dispatch(setActiveTasksCountByProjects(response.data));
-      })
-      .catch(error => {
-        let message =
-          "Не удалось получить количество активных задач в разрезе проектов. Перезагрузите страницу.";
         dispatch(setNotifications({ message, type: "error" }));
       });
   };

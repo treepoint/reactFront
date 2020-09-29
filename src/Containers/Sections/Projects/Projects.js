@@ -74,7 +74,6 @@ class Projects extends React.Component {
     ];
 
     let projects = this.props.projects;
-    let activeTasksCount = this.props.activeTasksCountByProjects;
 
     for (var p in projects) {
       //Если категории не закрыты — отобразим их
@@ -82,11 +81,6 @@ class Projects extends React.Component {
         (projects[p].close_date === null && !this.state.isArchived) ||
         (projects[p].close_date !== null && this.state.isArchived)
       ) {
-        let count = 0;
-
-        if (typeof activeTasksCount[projects[p].id] !== "undefined") {
-          count = activeTasksCount[projects[p].id].count;
-        }
 
         content.push([
           {
@@ -107,7 +101,7 @@ class Projects extends React.Component {
             type: "string",
             disabled: true,
             textAlign: "center",
-            value: count
+            value: projects[p].tasks_count
           },
           {
             key: "description",
@@ -189,7 +183,6 @@ class Projects extends React.Component {
 const mapStateToProps = state => {
   return {
     projects: state.projects,
-    activeTasksCountByProjects: state.activeTasksCountByProjects,
     userAuthState: state.userAuthState,
     isUpdating: state.projectsIsUpdating
   };

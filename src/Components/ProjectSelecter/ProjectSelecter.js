@@ -10,16 +10,6 @@ import "./ProjectSelecter.css";
 
 class ProjectSelecter extends React.Component {
 
-  //Получаем количество активных тасок по проекту
-  getActiveTasksCount(id) {
-    //Получаем все количества по всем проекта
-    const activeTasksCount = this.props.activeTasksCountByProjects;
-
-    if (typeof activeTasksCount[id] !== "undefined") {
-      return activeTasksCount[id].count;
-    }
-  }
-
   //Собираем список проектов
   getProjects() {
     //Соберем список категорий
@@ -30,11 +20,11 @@ class ProjectSelecter extends React.Component {
 
       //Добавляем если проект активен или по нему есть активные задачи
       if (
-        projects[p].close_date === null || this.getActiveTasksCount(projects[p].id) > 0
+        projects[p].close_date === null || projects[p].tasks_count > 0
       ) {
         projectsList.push({
           value: projects[p].id,
-          label: projects[p].name + " (" + this.getActiveTasksCount(projects[p].id) + ")",
+          label: projects[p].name + " (" + projects[p].tasks_count + ")",
           style: projects[p].name_style
         });
       }
@@ -74,7 +64,6 @@ const mapStateToProps = state => {
     projects: state.projects,
     userSettings: state.userSettings,
     userAuthState: state.userAuthState,
-    activeTasksCountByProjects: state.activeTasksCountByProjects,
   };
 };
 
