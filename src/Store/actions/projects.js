@@ -1,7 +1,6 @@
 //Обвязка для API
 import { APIURL, getHeaders } from "../APIConfiguration";
 import { setNotifications } from "./notifications";
-import { fetchActiveTasksCountByProjects } from "./statistics";
 import Axios from "axios";
 
 const URL = APIURL + "/projects";
@@ -40,9 +39,6 @@ export function fetchProjects() {
     if (headers === null) {
       return;
     }
-
-    //Получим количество активных задач в разрезе проектов
-    dispatch(fetchActiveTasksCountByProjects());
 
     Axios.get(URL, headers)
       .then(response => {

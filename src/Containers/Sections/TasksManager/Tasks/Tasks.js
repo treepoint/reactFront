@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchTasksByDate } from "../../../../Store/actions/tasks";
 import { setTitle } from "../../../../Store/actions/app";
+import { setProjects } from "../../../../Store/actions/projects"
 //Компоненты
 import Task from "../../../../Components/Task/Task";
 import AddTaskButton from "../../../../Components/AddTaskButton/AddTaskButton";
@@ -42,12 +43,6 @@ class Tasks extends React.Component {
 
     //Иначе — не рендерим
     return false;
-  }
-
-  setTasksCountInTitle(count) {
-    if (!this.props.isAccomplished) {
-      this.props.setTitle("Задачи на сегодня (" + count + ") | todayTasks");
-    }
   }
 
   //Категории по задаче
@@ -143,9 +138,19 @@ class Tasks extends React.Component {
       }
     }
 
-    this.setTasksCountInTitle(content.length);
+    //Обновим заголовок и количество задач в проект. Считаем по активным задачам
+    if (!this.props.isAccomplished) {
+      this.props.setTitle("Задачи на сегодня (" + content.length + ") | todayTasks");
 
-    //И вернем
+      //Получим проекты
+      let projects = Object.assign({}, this.props.projects);
+      //Обновим нужный
+      projects[this.props.currentProjectId].tasks_count = content.length;
+      //Обновим список проектов
+      this.props.setProjects(projects);
+    }
+
+    //И вернем сами задачи
     return content;
   }
 
@@ -172,6 +177,7 @@ class Tasks extends React.Component {
 const mapStateToProps = state => {
   return {
     tasks: state.tasks,
+    projects: state.projects,
     tasksIsFetching: state.tasksIsFetching,
     categories: state.categories,
     currentProjectId: state.userSettings.project_id,
@@ -185,6 +191,9 @@ const mapDispatchToProps = dispatch => {
     },
     setTitle: title => {
       dispatch(setTitle(title));
+    },
+    setProjects: project => {
+      dispatch(setProjects(project));
     }
   };
 };

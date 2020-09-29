@@ -46,8 +46,7 @@ import {
   tasksStatisticByPeriod,
   totalStatisticByPeriod,
   statisticByDaysForPeriod,
-  activeTasksCountByCategories,
-  activeTasksCountByProjects
+  activeTasksCountByCategories
 } from "./statistics";
 
 const appReducer = history =>
@@ -102,8 +101,7 @@ const appReducer = history =>
     tasksStatisticByPeriod,
     totalStatisticByPeriod,
     statisticByDaysForPeriod,
-    activeTasksCountByCategories,
-    activeTasksCountByProjects
+    activeTasksCountByCategories
   });
 
 const rootReducer = history => (state, action) => {
