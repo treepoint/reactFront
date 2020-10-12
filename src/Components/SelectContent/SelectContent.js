@@ -71,7 +71,7 @@ class SelectContent extends React.PureComponent {
         minHeight: "34px",
         transition: "all",
         height: this.props.height + "px",
-        fontSize: "16px",
+        fontSize: "15px",
         boxShadow: "none",
         outline: !!state.isFocused ? "1px solid rgb(96, 191, 255)" : "none",
         outlineOffset: "-1px",
@@ -89,8 +89,8 @@ class SelectContent extends React.PureComponent {
       indicatorSeparator: (styles) => ({}),
       option: (styles, { data, isFocused, isSelected }) => ({
         ...styles,
-        fontFamily: '"Source Sans Pro"',
-        fontSize: "16px",
+        fontFamily: '"Roboto"',
+        fontSize: "15px",
         color: "000000",
         minHeight: "32px",
         paddingLeft: "6px",
@@ -125,8 +125,8 @@ class SelectContent extends React.PureComponent {
       }),
       noOptionsMessage: (styles) => ({
         ...styles,
-        fontFamily: '"Source Sans Pro"',
-        fontSize: "16px",
+        fontFamily: '"Roboto"',
+        fontSize: "15px",
       }),
     };
 
