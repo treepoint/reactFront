@@ -172,23 +172,31 @@ export function deleteTaskLog(id) {
 
     const state = getState();
 
-    //При удалении лога нужно вычесть его время из задачи
+    //При удалении лога нужно вычесть его время из задачи во фронте. Но если этой задачи нет — вычитать нечего
     let taskLog = state.tasksLog[id];
     let task = state.tasks[taskLog.task_id];
-    //Получаем время исполнения таска
-    let executionTimeDay = task.execution_time_day;
-    let executionTimeToDay = task.execution_time_to_day;
-    //Вычитаем время выполнения из лога
-    task.execution_time_day = executionTimeDay - taskLog.execution_time;
-    task.execution_time_to_day = executionTimeToDay - taskLog.execution_time;
-    //Соберем таск в требуемый вид
-    task = { [taskLog.task_id]: task };
+
+    if (typeof task !== "undefined") {
+      //Получаем время исполнения таска
+      let executionTimeDay = task.execution_time_day;
+      let executionTimeToDay = task.execution_time_to_day;
+
+      //Вычитаем время выполнения из лога
+      task.execution_time_day = executionTimeDay - taskLog.execution_time;
+      task.execution_time_to_day = executionTimeToDay - taskLog.execution_time;
+
+      //Соберем таск в требуемый вид
+      task = { [taskLog.task_id]: task };
+    }
 
     Axios.delete(URL + "/" + id, headers)
       .then(response => {
         if (typeof response.data.affectedRows === "number") {
-          //Обновим таск
-          dispatch(setTasks(task));
+          //Обновим таск, если он еще существует
+          if (typeof task !== "undefined") {
+            dispatch(setTasks(task));
+          }
+
           //Удалим объект и обновим список
           dispatch(removeTaskLog(id));
         }

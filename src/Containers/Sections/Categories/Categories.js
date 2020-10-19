@@ -60,7 +60,7 @@ class Categories extends React.Component {
           type: "string",
           value: "Активных задач",
           disabled: true,
-          width: 138
+          width: 140
         },
         {
           key: "description",
