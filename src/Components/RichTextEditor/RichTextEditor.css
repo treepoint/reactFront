@@ -83,8 +83,8 @@
 
 .ck.ck-editor__main>.ck-editor__editable {
   position: sticky;
-  min-width: calc(100% - 19px);
-  max-width: calc(100% - 19px);
+  min-width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
 }
 
 .ck-editor__editable {
