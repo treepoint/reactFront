@@ -458,38 +458,6 @@ class Task extends React.Component {
         onCancel={() => this.setState({ isTaskPageHidden: true })}
         //Для обратки изменений
         saveTaskToDatabase={diff => this.saveTaskToDatabase(diff)}
-        updateTask={task => this.props.updateTask(task, this.props.date)}
-        deleteTask={() => this.props.deleteTask(this.props.content.id)}
-        createTaskLog={() =>
-          this.props.createTaskLog(this.props.content.id, this.props.date)
-        }
-        archiveTask={state => this.completeTask(state)}
-        //Для обработки модалок
-        showDeleteModalWindow={() =>
-          this.setState({ isDeleteModalWindowHidden: false })
-        }
-        showNewDateModalWindow={() =>
-          this.setState({ isNewDateModalWindowHidden: false })
-        }
-        //Экшены
-        getNewDateAction={(lable, style, isNotTransparent) =>
-          this.getNewDateAction(lable, style, isNotTransparent)
-        }
-        getOnFireAction={(lable, style, isNotTransparent) =>
-          this.getOnFireAction(lable, style, isNotTransparent)
-        }
-        getFrozenAction={(lable, style, isNotTransparent) =>
-          this.getFrozenAction(lable, style, isNotTransparent)
-        }
-        getDeleteTaskAction={(lable, style, isNotTransparent) =>
-          this.getDeleteTaskAction(lable, style, isNotTransparent)
-        }
-        getTimeSpanAction={(lable, style, isNotTransparent) =>
-          this.getTimeSpanAction(lable, style, isNotTransparent)
-        }
-        getCompleteActions={(lable, style, isNotTransparent) =>
-          this.getCompleteActions(lable, style, isNotTransparent)
-        }
       />
     );
   }

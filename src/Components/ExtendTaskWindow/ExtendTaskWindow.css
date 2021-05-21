@@ -11,7 +11,7 @@
 }
 
 .taskDescriptionContainer {
-  width: calc(100% - 210px);
+  width: calc(100%);
 }
 
 .taskName {
