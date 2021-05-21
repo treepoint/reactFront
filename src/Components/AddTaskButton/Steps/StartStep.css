@@ -20,12 +20,6 @@
   user-select: none;
 }
 
-.startStepVhHr {
-  height: 115px;
-  border-left: 1px dashed #c0c0c0;
-  margin: auto;
-}
-
 .startStepContainer {
   display: flex;
   flex-direction: row;
