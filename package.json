@@ -5,7 +5,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "github:treepoint/custom-ckeditor5#master",
     "@ckeditor/ckeditor5-react": "^2.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "connected-react-router": "^6.8.0",
     "html-to-text": "^5.1.1",
     "lodash.isequal": "^4.5.0",
