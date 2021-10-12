@@ -1,11 +1,12 @@
 {
   "name": "todayTasksFront",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "github:treepoint/custom-ckeditor5#master",
     "@ckeditor/ckeditor5-react": "^2.1.0",
-    "axios": "^0.21.1",
+    "ansi-regex": "^6.0.1",
+    "axios": "^0.21.4",
     "connected-react-router": "^6.8.0",
     "html-to-text": "^5.1.1",
     "lodash.isequal": "^4.5.0",

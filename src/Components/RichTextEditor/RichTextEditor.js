@@ -26,14 +26,8 @@ class RichTextEditor extends React.Component {
     this.onBlur();
   }
 
-  onChange(editor) {
-    const data = editor.getData();
-
-    this.setState({ data });
-  }
-
   onBlur(event) {
-    //Если что-то поменялось — отправим
+    //При закрытии окна — отправим
     if (this.state.data !== this.props.data) {
       this.props.onChange(this.state.data);
     }
@@ -41,6 +35,12 @@ class RichTextEditor extends React.Component {
     if (typeof this.props.onBlur === "function") {
       this.props.onBlur(event);
     }
+  }
+
+  onChange(editor) {
+    const data = editor.getData();
+
+    this.setState({ data });
   }
 
   render() {
@@ -52,9 +52,6 @@ class RichTextEditor extends React.Component {
         data={this.props.data}
         onChange={(event, editor) => {
           this.onChange(editor);
-        }}
-        onBlur={(event, editor) => {
-          this.onBlur(event, editor);
         }}
       />
     );
