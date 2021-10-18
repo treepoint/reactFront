@@ -1,5 +1,6 @@
 import React from "react";
 import PageNavigationLink from "./PageNavigationLink/PageNavigationLink";
+import Spacer from "../../Spacer/Spacer";
 import "./PageNavigation.css";
 
 class PageNavigation extends React.PureComponent {
@@ -15,18 +16,38 @@ class PageNavigation extends React.PureComponent {
       });
     }
     //Если якори
-    let achrorLinks = [];
+    let achrorLinksMain = [];
+    let achrorLinksSecondary = [];
+
     if (typeof this.props.anchorLinksArray !== "undefined") {
-      achrorLinks = this.props.anchorLinksArray.map((link, index) => {
-        return (
-          <PageNavigationLink
-            isAnchor={true}
-            isCurrent={link.isCurrent}
-            callback={link.callback}
-            value={link.value}
-            key={index}
-          />
-        );
+      achrorLinksMain = this.props.anchorLinksArray.map((link, index) => {
+        if (!link.isSecondaryOption) {
+          return (
+            <PageNavigationLink
+              isAnchor={true}
+              isCurrent={link.isCurrent}
+              callback={link.callback}
+              value={link.value}
+              isSecondaryOption={link.isSecondaryOption}
+              key={index}
+            />
+          );
+        } else return (null);
+      });
+
+      achrorLinksSecondary = this.props.anchorLinksArray.map((link, index) => {
+        if (link.isSecondaryOption) {
+          return (
+            <PageNavigationLink
+              isAnchor={true}
+              isCurrent={link.isCurrent}
+              callback={link.callback}
+              value={link.value}
+              isSecondaryOption={link.isSecondaryOption}
+              key={index}
+            />
+          );
+        } else return (null);
       });
     }
 
@@ -35,7 +56,9 @@ class PageNavigation extends React.PureComponent {
         {/*Рисуем основной заголовок*/}
         <div className="pageName">{this.props.title}</div>
         {routerLinks}
-        {achrorLinks}
+        {achrorLinksMain}
+        <Spacer />
+        {achrorLinksSecondary}
       </div>
     );
   }

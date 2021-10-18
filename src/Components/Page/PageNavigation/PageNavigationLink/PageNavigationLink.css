@@ -17,3 +17,11 @@
   color: rgb(40, 40, 40);
   border-bottom: 2px solid #1c9ccee8;
 }
+
+.pageNavigationLink.current.secondary {
+  opacity: 1;
+}
+
+.pageNavigationLink.secondary {
+  opacity: 0.8;
+}

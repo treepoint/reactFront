@@ -4,19 +4,26 @@ import { NavLink } from "react-router-dom";
 import "./PageNavigationLink.css";
 
 class PageNavigationLink extends React.Component {
+
+  getSecondary() {
+    if (this.props.isSecondaryOption === true) {
+      return " secondary";
+    } else return "";
+  }
+
   render() {
     return (
       <React.Fragment>
         {!!this.props.isAnchor ? (
           !!this.props.isCurrent ? (
             <div
-              className="pageNavigationLink current"
+              className={"pageNavigationLink current" + this.getSecondary()}
               onClick={this.props.callback}
             >
               {this.props.value}
             </div>
           ) : (
-            <div className="pageNavigationLink" onClick={this.props.callback}>
+            <div className={"pageNavigationLink" + this.getSecondary()} onClick={this.props.callback}>
               {this.props.value}
             </div>
           )

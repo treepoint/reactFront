@@ -18,8 +18,11 @@ class TasksManager extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isAccomplished: false,
-      date: getCurrentFormatDate()
+      tabsState: {isActiveNow: true,
+                  isAccomplished: false,
+                  isAllActive: false},
+      date: getCurrentFormatDate(),
+      prevDate: getCurrentFormatDate()
     };
   }
 
@@ -37,6 +40,10 @@ class TasksManager extends React.PureComponent {
 
   onPickDate(date) {
     this.setState({ date });
+
+    if (this.state.tabsState.isAllActive) {
+      this.setState({tabsState : {isActiveNow : true, isAllActive : false, isAccomplished: false}})
+    }
   }
 
   getCurrentTasksAndTaskLog = () => {
@@ -55,15 +62,48 @@ class TasksManager extends React.PureComponent {
     );
   };
 
-  getAccomplishedTasks = () => {
-    return <Tasks isAccomplished={true} date={this.state.date} />;
-  };
+  setTasksState(state) {
+    let tabsState = {isActiveNow: false, 
+                     isAccomplished: false, 
+                     isAllActive: false}
 
-  changeAccomplishedCurrentTasks() {
-    this.setState({ isAccomplished: !this.state.isAccomplished });
+    switch (state) {
+      case "activeNow" : tabsState = {tabsState, ...{isActiveNow: true}}; break;
+      case "accomplished" : tabsState = {tabsState, ...{isAccomplished: true}}; break;
+      case "allActive" : tabsState = {tabsState, ...{isAllActive: true}}; break;
+      default : break;
+    }
+
+    this.setState({ tabsState});
+
+    if (tabsState.isAllActive)  {
+      //CP2077 gracias
+      this.setState({date: "2077-01-01"});
+    }
+
+    if (tabsState.isAccomplished || tabsState.isActiveNow)  {
+      this.setState({date: this.state.prevDate});
+    }
+
     //Нужно, чтобы при переключении архив\задачи правильно позиционировать fixed элементы
     this.props.setScrollTop(0);
     this.props.setScrollLeft(0);
+  }
+
+  getTasks() {
+    return (
+      <div>
+        <div style={{ display: !this.state.tabsState.isActiveNow ? "none" : null }}>
+          <Tasks date={this.state.date} />
+        </div>
+        <div style={{ display: !this.state.tabsState.isAccomplished ? "none" : null }}>
+           <Tasks isAccomplished={true} date={this.state.date} />
+        </div>
+        <div style={{ display: !this.state.tabsState.isAllActive ? "none" : null }}>
+           <Tasks date={this.state.date} />
+        </div>
+      </div>
+    )
   }
 
   render() {
@@ -71,13 +111,19 @@ class TasksManager extends React.PureComponent {
     let anchorLinksArray = [
       {
         value: "Текущие",
-        callback: () => this.changeAccomplishedCurrentTasks(),
-        isCurrent: !this.state.isAccomplished
+        callback: () => this.setTasksState("activeNow"),
+        isCurrent: this.state.tabsState.isActiveNow
       },
       {
         value: "Выполненные",
-        callback: () => this.changeAccomplishedCurrentTasks(),
-        isCurrent: this.state.isAccomplished
+        callback: () => this.setTasksState("accomplished"),
+        isCurrent: this.state.tabsState.isAccomplished
+      },
+      {
+        value: "Все активные",
+        callback: () => this.setTasksState("allActive"),
+        isSecondaryOption: true,
+        isCurrent: this.state.tabsState.isAllActive
       }
     ];
 
@@ -107,16 +153,7 @@ class TasksManager extends React.PureComponent {
             //Обрабатываем скролл
             onScrollStop={() => this.handleScroll()}
           >
-            <div
-              style={{ display: !!this.state.isAccomplished ? "none" : null }}
-            >
-              <Tasks date={this.state.date} />
-            </div>
-            <div
-              style={{ display: !!!this.state.isAccomplished ? "none" : null }}
-            >
-              <Tasks isAccomplished={true} date={this.state.date} />
-            </div>
+          {this.getTasks()}
           </ReactCustomScroll>
         </Page>
         <TasksLog date={this.state.date} />
