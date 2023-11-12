@@ -6,7 +6,7 @@
     "@ckeditor/ckeditor5-build-classic": "github:treepoint/custom-ckeditor5#master",
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "ansi-regex": "^6.0.1",
-    "axios": "^0.21.4",
+    "axios": "^1.6.0",
     "connected-react-router": "^6.8.0",
     "html-to-text": "^5.1.1",
     "lodash.isequal": "^4.5.0",
